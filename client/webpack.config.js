@@ -3,10 +3,22 @@ const HtmlPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode: 'development',
-    entry: './client/index.js',
+    entry: './client/index.ts',
     output: {
         filename: '[name].js',
         path:path.join(__dirname, '../static')
+    },
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            }
+        ]
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js']
     },
     plugins: [
         new HtmlPlugin({
