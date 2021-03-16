@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config=client/webpack.config.js",
+    "build-client": "webpack --config=client/webpack.config.js",
     "build-server": "tsc -p ."
   },
   "repository": {
