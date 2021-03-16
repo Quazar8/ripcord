@@ -3,8 +3,7 @@ import React from 'react'
 const App = () => {
     return (
         <div>
-            App section:
-            <h1>Hello from Reactssss</h1>
+            <h1>Hello from Reacts</h1>
         </div>
     )
 }

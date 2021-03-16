@@ -6,7 +6,7 @@ export default {
     entry: './client/index.tsx',
     output: {
         filename: '[name].js',
-        path: path.resolve(path.dirname(''), '../build/client')
+        path: path.resolve('./build/client')
     },
     module: {
         rules: [
