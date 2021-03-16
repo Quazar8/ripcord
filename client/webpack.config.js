@@ -1,12 +1,12 @@
-const path = require('path')
-const HtmlPlugin = require('html-webpack-plugin')
+import path from 'path'
+import HtmlPlugin from 'html-webpack-plugin'
 
-module.exports = {
+export default {
     mode: 'development',
     entry: './client/index.tsx',
     output: {
         filename: '[name].js',
-        path:path.join(__dirname, '../build/client')
+        path: path.resolve(path.dirname(''), '../build/client')
     },
     module: {
         rules: [
