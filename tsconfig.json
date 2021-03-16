@@ -6,7 +6,8 @@
         "module": "es6",
         "allowJs": true,
         "noImplicitAny": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true
     },
     "include": ["./server/server.ts"],
     "exclude": ["node_modules"]
