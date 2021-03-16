@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "./server-build",
+        "outDir": "./build/server",
         "jsx": "react",
         "target": "es5",
         "module": "es6",

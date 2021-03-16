@@ -6,7 +6,7 @@ module.exports = {
     entry: './client/index.ts',
     output: {
         filename: '[name].js',
-        path:path.join(__dirname, '../static')
+        path:path.join(__dirname, '../build/client')
     },
     module: {
         rules: [
