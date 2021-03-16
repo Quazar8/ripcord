@@ -1,10 +1,13 @@
 {
     "compilerOptions": {
-        "outDir": "./static",
+        "outDir": "./server-build",
         "jsx": "react",
         "target": "es5",
         "module": "es6",
         "allowJs": true,
-        "noImplicitAny": true
-    }
+        "noImplicitAny": true,
+        "skipLibCheck": true
+    },
+    "include": ["./server/server.ts"],
+    "exclude": ["node_modules"]
 }
