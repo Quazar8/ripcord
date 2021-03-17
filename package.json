@@ -8,7 +8,7 @@
     "build:client": "webpack --config=client/webpack.config.js",
     "build:server": "tsc -p .",
     "server": "node build/server/server.js",
-    "server:dev": "tsc -w -p ."
+    "server:dev": "nodemon"
   },
   "repository": {
     "type": "git",
