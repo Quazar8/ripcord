@@ -24,5 +24,10 @@ export default {
         new HtmlPlugin({
             template: './client/index.html'
         })
-    ]
+    ],
+    devServer: {
+        port: 8000,
+        hot: true,
+        open: true
+    }
 }
