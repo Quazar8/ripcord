@@ -1,10 +1,10 @@
-import express from 'express'
+import express, { Application } from 'express'
 import path from 'path'
 
 import establishRouteEndpoints from './routes/routes.js'
 
-const app = express()
-const PORT = 8000
+const app: Application = express()
+const PORT: number = 8000
 
 app.use(express.static(path.join(path.dirname(''), '/build/client')))
 
