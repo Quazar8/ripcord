@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Application } from 'express'
 import path from 'path'
 
 const app = express()
