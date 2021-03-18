@@ -1,4 +1,5 @@
 {
-    "watch": "server/server.ts",
+    "watch": "server/",
+    "ext": "ts",
     "exec": "npm run build:server && npm run server"
 }
