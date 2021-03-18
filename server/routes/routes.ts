@@ -1,9 +1,9 @@
-import { Application, Request, Response } from 'express'
+import { Application } from 'express'
+
+import UserRoutes from './user/UserRoutes.js'
 
 const establishRouteEndpoints = (app: Application): void => {
-    app.post('/user/login', (req: Request, res: Response) => {
-        res.status(200).send('user login endpoint')
-    })
+    app.post('/user/login', UserRoutes.loginHandler)
 }
 
 export default establishRouteEndpoints
