@@ -26,7 +26,7 @@ export default {
         ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js']
+        extensions: ['.tsx', '.ts', '.js',]
     },
     plugins: [
         new HtmlPlugin({
