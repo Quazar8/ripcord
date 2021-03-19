@@ -7,7 +7,7 @@ const connectToDb = ():void => {
     })
 
     mongoose.connection.on('connected', () => {
-        console.log('Connected to the Ripcord mongo database')
+        console.log('\x1b[32m', 'Connected to the Ripcord mongo database')
     })
 }
 
