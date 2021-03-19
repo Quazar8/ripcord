@@ -14,5 +14,5 @@ app.use(express.static(path.join(path.dirname(''), '/build/client')))
 establishRouteEndpoints(app)
 
 app.listen(PORT, () => {
-    console.log(`Server listening at http://localhost:${PORT}`)
+    console.log('\x1b[33m%s\x1b[0m',`Server listening at http://localhost:${PORT}`)
 })
