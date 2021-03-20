@@ -20,11 +20,12 @@ const errorResponse = (errorMsg: string): ErrorResponse => {
 
 const successResponse = 
     (data: ResponseData = null, msg: string): SuccessResponse => {
-        return {
-            error: false,
-            msg,
-            data
-        }
+        
+    return {
+        error: false,
+        msg,
+        data
+    }
 }
 
 export {
