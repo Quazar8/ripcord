@@ -1,9 +1,7 @@
 import { model, Types, Schema } from 'mongoose'
 
-
 const UserSchema = new Schema ({
-    id: Types.ObjectId,
-    username: String,
+    username: { type: String, unique: true },
     password: String,
     registeredAt: Date
 })
