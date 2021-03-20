@@ -9,6 +9,7 @@ const PORT: number = 8000
 
 connectToDb()
 
+app.use(express.json())
 app.use(express.static(path.join(path.dirname(''), '/build/client')))
 
 establishRouteEndpoints(app)
