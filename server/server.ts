@@ -1,6 +1,7 @@
 import express, { Application } from 'express'
 import path from 'path'
 import { connectToDb } from './db/db.js'
+import configurePassport from './passport-config.js'
 
 import establishRouteEndpoints from './routes/routes.js'
 
@@ -11,6 +12,8 @@ connectToDb()
 
 app.use(express.json())
 app.use(express.static(path.join(path.dirname(''), '/build/client')))
+
+configurePassport()
 
 establishRouteEndpoints(app)
 
