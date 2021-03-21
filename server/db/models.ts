@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 const { Schema, model } = mongoose
 
 const UserSchema = new Schema ({
@@ -13,9 +13,12 @@ interface IUserModel {
     registeredAt: Date
 }
 
+interface IUserDoc extends Document, IUserModel {}
+
 const User = model('User', UserSchema)
 
 export {
     IUserModel,
+    IUserDoc,
     User
 }
