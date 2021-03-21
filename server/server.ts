@@ -1,4 +1,5 @@
 import express, { Application } from 'express'
+import passport from 'passport'
 import path from 'path'
 import { connectToDb } from './db/db.js'
 import configurePassport from './passport-config.js'
@@ -11,6 +12,7 @@ const PORT: number = 8000
 connectToDb()
 
 app.use(express.json())
+app.use(passport.initialize())
 app.use(express.static(path.join(path.dirname(''), '/build/client')))
 
 configurePassport()

@@ -16,7 +16,14 @@ const loginHandler = (req: Request, res: Response): void => {
             return
         }
 
-        res.status(200).send(successResponse({ user }, 'Reached login endpoint'))
+        req.logIn(user, (err) => {
+            if (err) {
+                res.status(500).send(errorResponse('Error logging you in'))
+                return
+            }
+
+            res.status(200).send(successResponse({ user }, 'Logged in successfully'))
+        })
     })
 }
 
