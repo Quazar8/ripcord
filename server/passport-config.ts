@@ -11,16 +11,6 @@ const opts: StrategyOptions = {
 }
 
 const configurePassport = (): void => {
-    passport.serializeUser((user: IUserDoc, done) => {
-        done(null, user._id)
-    })
-
-    passport.deserializeUser((id, done) => {
-        User.findById(id, (err, user) => {
-            done(err, user)
-        })
-    })
-
     passport.use(new Strategy(opts, (payload, done) => {
         User.findOne({ _id: payload.sub }, (err: Error, user: IUserModel) => {
             if (err) return done(err, false)

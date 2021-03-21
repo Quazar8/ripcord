@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { User, IUserDoc } from '../../db/models.js'
 import { errorResponse, successResponse } from '../../responses.js'
+import jwt from 'jsonwebtoken'
 
 const loginHandler = (req: Request, res: Response): void => {
     const { username, password } = req.body
@@ -16,13 +17,25 @@ const loginHandler = (req: Request, res: Response): void => {
             return
         }
 
-        req.logIn(user, (err) => {
+        const userToLog = {
+            username: user.username,
+            registeredAt: user.registeredAt
+        }
+
+        req.logIn(userToLog, { session: false }, (err) => {
             if (err) {
                 res.status(500).send(errorResponse('Error logging you in'))
                 return
             }
 
-            res.status(200).send(successResponse({ user }, 'Logged in successfully'))
+            const token = jwt.sign(userToLog, 'secret')
+            res.cookie('token', token, {
+                maxAge: 3600000 
+            })
+            res.status(200).send(successResponse({
+                user: userToLog,
+                token
+            }, 'Logged in'))
         })
     })
 }
