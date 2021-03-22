@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const NavLinks = () => {
     return (
         <div className = "nav-links-container">
-            <Link to = "">
+            <Link to = "/login">
                 Sign In
             </Link>
             <Link to = "">
