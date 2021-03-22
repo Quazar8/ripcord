@@ -1,10 +1,15 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const NavLinks = () => {
     return (
-        <div>
-            <a>Link 1</a>
-            <a>Link 2</a>
+        <div className = "nav-links-container">
+            <Link to = "">
+                Sign In
+            </Link>
+            <Link to = "">
+                Sign Up
+            </Link>
         </div>
     )
 }
