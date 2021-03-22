@@ -1,18 +1,15 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+
 import Navbar from './navbar/Navbar'
+import Main from './Main'
 
 const App = () => {
     return (
         <BrowserRouter>
             <div>
                 <Navbar />
-                <h1>Channel:</h1>
-                <div className = "received-msg"></div>
-                <label>
-                    Send:
-                    <input></input>
-                </label>
+                <Main />
             </div>
         </BrowserRouter>
     )
