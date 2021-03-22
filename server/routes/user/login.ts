@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { User, IUserDoc } from '../../db/models.js'
 import { errorResponse, successResponse } from '../../responses.js'
 import jwt from 'jsonwebtoken'
+import { jwtKey } from '../../global-vars.js'
 
 const loginHandler = (req: Request, res: Response): void => {
     const { username, password } = req.body
@@ -28,7 +29,7 @@ const loginHandler = (req: Request, res: Response): void => {
                 return
             }
 
-            const token = jwt.sign(userToLog, 'secret')
+            const token = jwt.sign(userToLog, jwtKey)
             res.cookie('token', token, {
                 maxAge: 3600000 
             })

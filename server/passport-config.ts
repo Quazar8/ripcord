@@ -1,13 +1,14 @@
 import { Error } from 'mongoose'
 import passport from 'passport'
 import passportJWT, { StrategyOptions } from 'passport-jwt'
-import { IUserModel, User, IUserDoc } from './db/models.js'
+import { IUserModel, User } from './db/models.js'
+import { jwtKey } from './global-vars.js'
 
 const { Strategy, ExtractJwt } = passportJWT
 
 const opts: StrategyOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'secret',
+    secretOrKey: jwtKey,
 }
 
 const configurePassport = (): void => {
