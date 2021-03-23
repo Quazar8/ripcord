@@ -6,7 +6,7 @@ export default {
     entry: './client/index.tsx',
     output: {
         filename: '[name].js',
-        path: path.resolve('./build/client')
+        path: path.resolve('./build/client'),
     },
     module: {
         rules: [
@@ -36,6 +36,7 @@ export default {
     devServer: {
         port: 8000,
         hot: true,
-        open: true
+        open: true,
+        historyApiFallback: true 
     }
 }
