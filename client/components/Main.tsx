@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import LoginForm from './user-forms/LoginForm'
 import HomeScreen from './home/HomeScreen'
+import NotFound from './others/NotFound'
 
 const Main = () => {
     return (
@@ -11,8 +12,11 @@ const Main = () => {
                 <Route path = "/login">
                     <LoginForm />
                 </Route>
-                <Route path = "/">
+                <Route exact path = "/">
                     <HomeScreen />
+                </Route>
+                <Route>
+                    <NotFound />
                 </Route>
             </Switch>
         </main>
