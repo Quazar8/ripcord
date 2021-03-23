@@ -35,11 +35,11 @@ const loginHandler = (req: Request, res: Response): void => {
                 maxAge: 3600000 
             })
 
-            const responseObj: SuccessResponseType<UserLoggedObj> = successResponse({
+            const responseObj: SuccessResponseType<UserLoggedObj>
+                     = successResponse<UserLoggedObj>({
                 username: user.username,
                 registeredAt: user.registeredAt,
-                token,
-                testField: 'lol'
+                token
             }, 'Logged in')
 
             res.status(200).send(responseObj)

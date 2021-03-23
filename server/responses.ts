@@ -3,10 +3,10 @@ type ErrorResponseType = {
     errorMsg: string
 }
 
-type SuccessResponseType<Object> = {
+type SuccessResponseType<T> = {
     error: false
     msg: string,
-    data: Object
+    data: T
 }
 
 const errorResponse = (errorMsg: string): ErrorResponseType => {
@@ -17,7 +17,7 @@ const errorResponse = (errorMsg: string): ErrorResponseType => {
 }
 
 const successResponse = 
-    (data: any = null, msg: string): SuccessResponseType<any> => {
+    <T>(data: T, msg: string): SuccessResponseType<T> => {
         
     return {
         error: false,
