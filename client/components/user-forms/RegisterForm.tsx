@@ -3,7 +3,18 @@ import React from 'react'
 const RegisterForm = () => {
     return (
         <form>
-            Register form component
+            <label>
+                username:
+                <input type = "text" />
+            </label>
+            <label>
+                Password:
+                <input type = "password" />
+            </label>
+            <label>
+                Confirm Password:
+                <input type = "password" />
+            </label>
         </form>
     )
 }
