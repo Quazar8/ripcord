@@ -7,7 +7,7 @@ const NavLinks = () => {
             <Link to = "/login">
                 Sign In
             </Link>
-            <Link to = "">
+            <Link to = "/register">
                 Sign Up
             </Link>
         </div>
