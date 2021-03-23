@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { User, IUserDoc } from '../../db/models.js'
-import { errorResponse, successResponse } from '../../responses.js'
+import { errorResponse, successResponse, SuccessResponseType } from '../../responses.js'
+import { UserLoggedObj } from './userTypes'
 import jwt from 'jsonwebtoken'
 import { jwtKey } from '../../global-vars.js'
 
@@ -33,10 +34,15 @@ const loginHandler = (req: Request, res: Response): void => {
             res.cookie('token', token, {
                 maxAge: 3600000 
             })
-            res.status(200).send(successResponse({
-                user: userToLog,
-                token
-            }, 'Logged in'))
+
+            const responseObj: SuccessResponseType<UserLoggedObj> = successResponse({
+                username: user.username,
+                registeredAt: user.registeredAt,
+                token,
+                testField: 'lol'
+            }, 'Logged in')
+
+            res.status(200).send(responseObj)
         })
     })
 }

@@ -1,17 +1,15 @@
-type ResponseData = Object | Array<Object> | null
-
-type ErrorResponse = {
+type ErrorResponseType = {
     error: true
     errorMsg: string
 }
 
-type SuccessResponse = {
+type SuccessResponseType<Object> = {
     error: false
-    msg: string
-    data: ResponseData
+    msg: string,
+    data: Object
 }
 
-const errorResponse = (errorMsg: string): ErrorResponse => {
+const errorResponse = (errorMsg: string): ErrorResponseType => {
     return {
         error: true,
         errorMsg
@@ -19,7 +17,7 @@ const errorResponse = (errorMsg: string): ErrorResponse => {
 }
 
 const successResponse = 
-    (data: ResponseData = null, msg: string): SuccessResponse => {
+    (data: any = null, msg: string): SuccessResponseType<any> => {
         
     return {
         error: false,
@@ -30,5 +28,6 @@ const successResponse =
 
 export {
     errorResponse,
-    successResponse
+    successResponse,
+    SuccessResponseType,
 }
