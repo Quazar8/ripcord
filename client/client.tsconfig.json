@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "target": "es5",
+        "module": "es6",
+        "allowJs": true,
+        "noImplicitAny": true,
+        "allowSyntheticDefaultImports": true
+    }
+}
