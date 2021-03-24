@@ -3,3 +3,8 @@ export interface UserLoggedObj {
     registeredAt: Date,
     token: string
 }
+
+export interface LoginEntryObj {
+    username: string,
+    password: string
+}

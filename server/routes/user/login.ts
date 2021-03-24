@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
 import { User, IUserDoc } from '../../db/models.js'
 import { errorResponse, successResponse, SuccessResponseType } from '../../responses.js'
-import { UserLoggedObj } from './userTypes'
+import { UserLoggedObj, LoginEntryObj } from './userTypes'
 import jwt from 'jsonwebtoken'
 import { jwtKey } from '../../global-vars.js'
 
 const loginHandler = (req: Request, res: Response): void => {
-    const { username, password } = req.body
+    const { username, password }: LoginEntryObj = req.body
 
     if (!username || !password) {
         res.status(400).send(errorResponse('Missing username or password'))
@@ -23,7 +23,7 @@ const loginHandler = (req: Request, res: Response): void => {
             username: user.username,
             registeredAt: user.registeredAt
         }
-        
+
         req.logIn(userToLog, { session: false }, (err) => {
             if (err) {
                 res.status(500).send(errorResponse('Error logging you in'))
