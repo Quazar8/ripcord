@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { User, IUserModel } from '../../db/models.js'
+import { User, IUserModel, IUserDoc } from '../../db/models.js'
 import { errorResponse, successResponse } from '../../responses.js'
 
 const registerHandler = (req: Request, res: Response): void => {
@@ -25,7 +25,7 @@ const registerHandler = (req: Request, res: Response): void => {
         })
     }
 
-    User.findOne({ username }, (err, user) => {
+    User.findOne({ username }, (err: Error, user: IUserDoc) => {
         if (user) {
             res.status(400).send(errorResponse('User already exists'))
             return
