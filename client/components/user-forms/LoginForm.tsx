@@ -1,17 +1,31 @@
-import React from 'react'
+import React, { FormEvent, useRef } from 'react'
 
 const LoginForm = () => {
+    const usernameRef = useRef<HTMLInputElement>()
+    const passwordRef = useRef<HTMLInputElement>()
+
+    const loginUser = (e: FormEvent) => {
+        e.preventDefault()
+        
+        const data = {
+            username: usernameRef.current.value,
+            password: passwordRef.current.value
+        }
+
+        console.log(data)
+    }
+
     return (
-        <form>
-            <h2>Sign In:</h2>
+        <form className = "user-form" onSubmit = { loginUser }>
             <label>
-                username:
-                <input type = "text" />
+                Username:
+                <input ref = { usernameRef } type = "text" />
             </label> 
             <label>
                 Password:
-                <input type = "password" />
+                <input ref = { passwordRef } type = "password" />
             </label>
+            <input type = "submit" value = "Login"/>
         </form>
     )
 }

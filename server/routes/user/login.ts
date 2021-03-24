@@ -23,7 +23,7 @@ const loginHandler = (req: Request, res: Response): void => {
             username: user.username,
             registeredAt: user.registeredAt
         }
-
+        
         req.logIn(userToLog, { session: false }, (err) => {
             if (err) {
                 res.status(500).send(errorResponse('Error logging you in'))

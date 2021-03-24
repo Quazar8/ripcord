@@ -2,9 +2,9 @@ import React from 'react'
 
 const RegisterForm = () => {
     return (
-        <form>
+        <form className = "user-form">
             <label>
-                username:
+                Username:
                 <input type = "text" />
             </label>
             <label>
@@ -15,6 +15,7 @@ const RegisterForm = () => {
                 Confirm Password:
                 <input type = "password" />
             </label>
+            <input type = "submit" value = "Register"/>
         </form>
     )
 }
