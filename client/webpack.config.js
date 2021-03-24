@@ -6,6 +6,7 @@ export default {
     entry: './client/index.tsx',
     output: {
         filename: '[name].js',
+        publicPath: '/',
         path: path.resolve('./build/client'),
     },
     module: {
@@ -44,4 +45,4 @@ export default {
         open: true,
         historyApiFallback: true 
     }
-}
+} 
