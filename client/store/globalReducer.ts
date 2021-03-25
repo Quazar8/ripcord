@@ -11,3 +11,8 @@ const reducer = (state, action) => {
 }
 
 const [state, dispatch] = useReducer(reducer, initialState)
+
+export {
+    state,
+    dispatch
+}
