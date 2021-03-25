@@ -1,4 +1,5 @@
 import React, { FormEvent, useRef } from 'react'
+import { loginServer } from '../../api/userApi' 
 
 const LoginForm = () => {
     const usernameRef = useRef<HTMLInputElement>()
@@ -12,7 +13,13 @@ const LoginForm = () => {
             password: passwordRef.current.value
         }
 
-        console.log(data)
+        if (!data.username || !data.password) {
+            return
+        }
+
+        loginServer(data).then(resp => {
+            console.log(resp)
+        })
     }
 
     return (
