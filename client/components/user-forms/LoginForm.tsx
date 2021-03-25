@@ -1,13 +1,13 @@
-import React, { FormEvent, useRef } from 'react'
+import React, { FormEvent, KeyboardEvent, useRef } from 'react'
 import { loginServer } from '../../api/userApi' 
 
 const LoginForm = () => {
     const usernameRef = useRef<HTMLInputElement>()
     const passwordRef = useRef<HTMLInputElement>()
 
-    const loginUser = (e: FormEvent) => {
-        e.preventDefault()
-        
+    const loginUser = (e: FormEvent | null) => {
+        e?.preventDefault()
+
         const data = {
             username: usernameRef.current.value,
             password: passwordRef.current.value
@@ -22,8 +22,18 @@ const LoginForm = () => {
         })
     }
 
+    const submitOnEnter = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            loginUser(null)
+        }
+    }
+
     return (
-        <form className = "user-form" onSubmit = { loginUser }>
+        <form 
+            className = "user-form" 
+            onSubmit = { loginUser }
+            onKeyPress = { submitOnEnter }
+        >
             <label>
                 Username:
                 <input ref = { usernameRef } type = "text" />
