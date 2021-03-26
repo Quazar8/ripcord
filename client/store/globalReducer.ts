@@ -10,9 +10,18 @@ const initialState: GlobalState = {
     notifications: []
 }
 
+const pushNotification = (currentState: GlobalState, notification: Notification): GlobalState => {
+    const newState = Object.assign({}, currentState)
+    newState.notifications.push(notification)
+    
+    return newState
+}
+
 const reducer = 
         (state: GlobalState, action: Action<GlobalType, GlobalActionTypes>): GlobalState => {
     switch (action.type) {
+        case GlobalActionTypes.PushNotification:
+            return pushNotification(state, action.payload)
         default: return state
     }
 }
