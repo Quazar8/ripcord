@@ -6,6 +6,7 @@ export enum GlobalActionTypes {
 }
 
 export type Notification = {
+    id: string
     msg: string
     type: 'info' | 'error' | 'success'
 }
