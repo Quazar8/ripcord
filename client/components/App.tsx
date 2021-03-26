@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import Navbar from './navbar/Navbar'
 import Main from './Main'
+import NotificationsContainer from './others/notifications/NotificationsContainer'
 
 const App = () => {
     return (
@@ -10,6 +11,7 @@ const App = () => {
             <div>
                 <Navbar />
                 <Main />
+                <NotificationsContainer />
             </div>
         </BrowserRouter>
     )
