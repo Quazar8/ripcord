@@ -1,5 +1,5 @@
 import { Action } from './StoreTypes'
-import { GlobalType, GlobalActionTypes, Notification } from './globalActions'
+import { GlobalPayloads, GlobalActionTypes, Notification } from './globalActions'
 
 export type GlobalState = {
     notifications: Array<Notification>
@@ -17,7 +17,7 @@ const pushNotification = (currentState: GlobalState = globalInit, notification: 
 }
 
 export const globalReducer = 
-        (state: GlobalState, action: Action<GlobalActionTypes, GlobalType>): GlobalState => {
+        (state: GlobalState, action: Action<GlobalActionTypes, GlobalPayloads>): GlobalState => {
     switch (action.type) {
         case GlobalActionTypes.PushNotification:
             return pushNotification(state, action.payload)

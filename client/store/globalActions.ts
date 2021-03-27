@@ -11,7 +11,7 @@ export type Notification = {
     type: 'info' | 'error' | 'success'
 }
 
-export type GlobalType = Notification
+export type GlobalPayloads = Notification
 
 export const addNotification =
         (data: Notification): Action<GlobalActionTypes, Notification> => {
