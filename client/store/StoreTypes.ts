@@ -1,4 +1,4 @@
-export type Action<Enumerator, P> = {
-    type: Enumerator
+export type Action<T, P> = {
+    type: T
     payload: P
 }
