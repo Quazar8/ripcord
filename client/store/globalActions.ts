@@ -14,7 +14,7 @@ export type Notification = {
 export type GlobalType = Notification
 
 export const addNotification =
-        (data: Notification): Action<Notification, GlobalActionTypes> => {
+        (data: Notification): Action<GlobalActionTypes, Notification> => {
     return {
         type: GlobalActionTypes.PushNotification,
         payload: data

@@ -1,24 +1,23 @@
-import { Dispatch, useReducer } from 'react'
 import { Action } from './StoreTypes'
 import { GlobalType, GlobalActionTypes, Notification } from './globalActions'
 
-type GlobalState = {
+export type GlobalState = {
     notifications: Array<Notification>
 }
 
-const initialState: GlobalState = {
+export const globalInit: GlobalState = {
     notifications: []
 }
 
-const pushNotification = (currentState: GlobalState, notification: Notification): GlobalState => {
+const pushNotification = (currentState: GlobalState = globalInit, notification: Notification): GlobalState => {
     const newState = Object.assign({}, currentState)
     newState.notifications.push(notification)
 
     return newState
 }
 
-const reducer = 
-        (state: GlobalState, action: Action<GlobalType, GlobalActionTypes>): GlobalState => {
+export const globalReducer = 
+        (state: GlobalState, action: Action<GlobalActionTypes, GlobalType>): GlobalState => {
     switch (action.type) {
         case GlobalActionTypes.PushNotification:
             return pushNotification(state, action.payload)
@@ -26,9 +25,3 @@ const reducer =
     }
 }
 
-export const useGlobalReducer = (): 
-        [GlobalState, Dispatch<Action<GlobalType, GlobalActionTypes>>] => {
-    const [state, dispatch] = useReducer(reducer, initialState)
-
-    return  [state, dispatch]
-}
