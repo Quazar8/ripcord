@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { StoreProvider } from '../store/StoreProvider'
 
 import Navbar from './navbar/Navbar'
 import Main from './Main'
@@ -8,11 +9,13 @@ import NotificationsContainer from './others/notifications/NotificationsContaine
 const App = () => {
     return (
         <BrowserRouter>
-            <div>
-                <Navbar />
-                <Main />
-                <NotificationsContainer />
-            </div>
+            <StoreProvider>
+                <div>
+                    <Navbar />
+                    <Main />
+                    <NotificationsContainer />
+                </div>
+            </StoreProvider>
         </BrowserRouter>
     )
 }
