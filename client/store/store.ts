@@ -1,3 +1,4 @@
+import { useReducer, useMemo } from 'react'
 import { GlobalState, globalInit, globalReducer} from './globalReducer'
 import { GlobalAction } from './globalActions'
 
@@ -26,3 +27,11 @@ const combineReducers =
 )
 
 const rootReducer = combineReducers({ globalReducer })
+
+export const useStore = () => {
+    const [state, dispatch] = useReducer(rootReducer, initialState)
+
+    const store = useMemo(() => [state, dispatch], [state])
+
+    return store
+}
