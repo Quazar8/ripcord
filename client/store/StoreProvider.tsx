@@ -1,5 +1,7 @@
-import React, { createContext, PropsWithChildren, ReactChild, ReactChildren } from 'react'
-import { useStore } from './store'
+import React, { createContext, Dispatch, PropsWithChildren, ReactChild, ReactChildren } from 'react'
+import { useStore, CombinedState, AppAction } from './store'
+
+type store = null
 
 export const StoreContext = createContext(null)
 
