@@ -2,11 +2,11 @@ import { useReducer, useMemo } from 'react'
 import { GlobalState, globalInit, globalReducer} from './globalReducer'
 import { GlobalAction } from './globalActions'
 
-type AppAction = GlobalAction
+export type AppAction = GlobalAction
 
 type AppState = GlobalState
 
-type CombinedState = {
+export type CombinedState = {
     global: GlobalState
     [key: string]: AppState
 }
