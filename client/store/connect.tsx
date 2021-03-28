@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { StoreContext } from './StoreProvider'
 
 export const connect = (El: typeof Component) => {
-    return <El />
+    const context = StoreContext
+    return <El storeState = { context } />
 }
