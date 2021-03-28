@@ -1,9 +1,9 @@
-import React, { createContext } from 'react'
+import React, { createContext, PropsWithChildren, ReactChild, ReactChildren } from 'react'
 import { useStore } from './store'
 
 export const StoreContext = createContext(null)
 
-export const StoreProvider = ({ children }) => {
+export const StoreProvider = ({ children }: PropsWithChildren<Object>) => {
     const store = useStore()
 
     return (

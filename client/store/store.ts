@@ -2,14 +2,18 @@ import { useReducer, useMemo } from 'react'
 import { GlobalState, globalInit, globalReducer} from './globalReducer'
 import { GlobalAction } from './globalActions'
 
-type AppActions = GlobalAction
+type AppAction = GlobalAction
+
+type AppState = GlobalState
 
 type CombinedState = {
     global: GlobalState
+    [key: string]: AppState
 }
 
 type ReducerSlices = {
     globalReducer: (state: GlobalState, action: GlobalAction) => GlobalState
+    [key: string]: (state: AppState, action: AppAction) => AppState
 }
 
 const initialState: CombinedState = {
@@ -17,8 +21,8 @@ const initialState: CombinedState = {
 }
 
 const combineReducers = 
-    (slices: ReducerSlices) => (state: CombinedState, action: AppActions) => (
-    Object.keys(slices).reduce((acc, prop) => ({
+    (slices: ReducerSlices) => (state: CombinedState, action: AppAction) => (
+    Object.keys(slices).reduce((acc, prop: string) => ({
             ...acc,
             [prop]: slices[prop](acc[prop], action)
         }),
