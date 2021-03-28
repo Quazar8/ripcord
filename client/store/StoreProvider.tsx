@@ -1,7 +1,7 @@
 import React, { createContext, Dispatch, PropsWithChildren, ReactChild, ReactChildren } from 'react'
 import { useStore, CombinedState, AppAction } from './store'
 
-type store = null
+type store = (CombinedState | Dispatch<AppAction>)[]
 
 export const StoreContext = createContext(null)
 
