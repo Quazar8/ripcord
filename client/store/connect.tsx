@@ -1,4 +1,4 @@
-import React, { Component, ComponentFactory, ComponentType, Dispatch, FunctionComponent, FunctionComponentFactory, JSXElementConstructor, ReactElement, useContext } from 'react'
+import React, { Dispatch, FunctionComponent, useContext } from 'react'
 import { StoreContext } from './StoreProvider'
 import { AppAction, CombinedState } from './store'
 
