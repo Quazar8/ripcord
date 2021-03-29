@@ -9,16 +9,18 @@ export type MapDispatchFn = (dispatch: Dispatch<AppAction>) => Object
 export type Connector = (mapState: MapStateFn, mapDispatch: MapDispatchFn) => (El: FunctionComponent<any>) => () => JSX.Element
 
 export const connect: Connector = (mapState, mapDispatch) => (El) => {
-    const [state, dispatch] = useContext(StoreContext)
+    return () => {
+        const [state, dispatch] = useContext(StoreContext)
 
-    const stateToImport = mapState(state)
+        const stateToImport = mapState(state)
 
-    const dispMethodsToImport = mapDispatch(dispatch)
+        const dispMethodsToImport = mapDispatch(dispatch)
 
-    return () => (
-        <El 
-            { ...stateToImport }
-            { ...dispMethodsToImport }
-        />
-    )
+        return  (
+            <El 
+                { ...stateToImport }
+                { ...dispMethodsToImport }
+            />
+        )
+    }
 }
