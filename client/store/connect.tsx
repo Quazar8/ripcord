@@ -1,4 +1,4 @@
-import React, { Component, Dispatch, useContext } from 'react'
+import React, { Component, ComponentFactory, ComponentType, Dispatch, FunctionComponent, FunctionComponentFactory, JSXElementConstructor, ReactElement, useContext } from 'react'
 import { StoreContext } from './StoreProvider'
 import { AppAction, CombinedState } from './store'
 
@@ -6,7 +6,7 @@ export type MapStateFn = (state: CombinedState) => Object
 
 export type MapDispatchFn = (dispatch: Dispatch<AppAction>) => Object
 
-export type Connector = (mapState: MapStateFn, mapDispatch: MapDispatchFn) => (El: typeof Component) => JSX.Element
+export type Connector = (mapState: MapStateFn, mapDispatch: MapDispatchFn) => (El: FunctionComponent<any>) => () => JSX.Element
 
 export const connect: Connector = (mapState, mapDispatch) => (El) => {
     const [state, dispatch] = useContext(StoreContext)
@@ -15,7 +15,7 @@ export const connect: Connector = (mapState, mapDispatch) => (El) => {
 
     const dispMethodsToImport = mapDispatch(dispatch)
 
-    return (
+    return () => (
         <El 
             { ...stateToImport }
             { ...dispMethodsToImport }
