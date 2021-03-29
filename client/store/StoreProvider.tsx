@@ -1,9 +1,9 @@
-import React, { createContext, Dispatch, PropsWithChildren, ReactChild, ReactChildren } from 'react'
+import React, { Context, createContext, Dispatch, PropsWithChildren, ReactChild, ReactChildren } from 'react'
 import { useStore, CombinedState, AppAction } from './store'
 
-type store = (CombinedState | Dispatch<AppAction>)[]
+type StoreType = (CombinedState | Dispatch<AppAction>)[]
 
-export const StoreContext = createContext(null)
+export const StoreContext: Context<StoreType> = createContext([])
 
 export const StoreProvider = ({ children }: PropsWithChildren<Object>) => {
     const store = useStore()

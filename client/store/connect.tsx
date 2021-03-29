@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, useContext } from 'react'
 import { StoreContext } from './StoreProvider'
 
 export const connect = (mapState, mapDispatch) => (El: typeof Component) => {
-    const [state, dispatch] = StoreContext
+    const [state, dispatch] = useContext(StoreContext)
 
     const stateToImport = mapState(state)
 
