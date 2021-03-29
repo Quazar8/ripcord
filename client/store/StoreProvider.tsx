@@ -1,12 +1,12 @@
-import React, { Context, createContext, Dispatch, PropsWithChildren, ReactChild, ReactChildren } from 'react'
-import { useStore, CombinedState, AppAction } from './store'
+import React, { Context, createContext, Dispatch, PropsWithChildren } from 'react'
+import { useStore, StoreType, initialState } from './store'
 
-type StoreType = (CombinedState | Dispatch<AppAction>)[]
+const initialContext: StoreType = [initialState, (value) => {}]
 
-export const StoreContext: Context<StoreType> = createContext([])
+export const StoreContext: Context<StoreType> = createContext(initialContext)
 
 export const StoreProvider = ({ children }: PropsWithChildren<Object>) => {
-    const store = useStore()
+    const store: StoreType = useStore()
 
     return (
         <StoreContext.Provider value = { store }>

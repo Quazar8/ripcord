@@ -18,7 +18,7 @@ type ReducerSlices = {
     [key: string]: (state: AppState, action: AppAction) => AppState
 }
 
-const initialState: CombinedState = {
+export const initialState: CombinedState = {
     global: globalInit
 }
 
