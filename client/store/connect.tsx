@@ -6,7 +6,9 @@ export type MapStateFn = (state: CombinedState) => Object
 
 export type MapDispatchFn = (dispatch: Dispatch<AppAction>) => Object
 
-export const connect = (mapState: MapStateFn, mapDispatch: MapDispatchFn) => (El: typeof Component) => {
+export type Connector = (mapState: MapStateFn, mapDispatch: MapDispatchFn) => (El: typeof Component) => JSX.Element
+
+export const connect: Connector = (mapState, mapDispatch) => (El) => {
     const [state, dispatch] = useContext(StoreContext)
 
     const stateToImport = mapState(state)
