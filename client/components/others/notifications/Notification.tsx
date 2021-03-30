@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Notification = () => {
+const Notification = ({ msg, type }) => {
     return (
         <div className = "notification">
             Success Notification
