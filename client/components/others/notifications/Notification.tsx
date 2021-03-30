@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 type Props = {
     msg: string,
@@ -6,8 +6,9 @@ type Props = {
 }
 
 const Notification = ({ msg, type }: Props) => {
+    const [className, setClassName] = useState('notification')
     return (
-        <div className = "notification">
+        <div className = { className }>
             { msg }
         </div>
     )
