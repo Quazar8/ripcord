@@ -1,8 +1,7 @@
 import React from 'react'
 import { addNotification, Notification } from '../../../store/globalActions'
 import { connect, MapStateFn, MapDispatchFn } from '../../../store/connect'
-import Notification from './Notification'
-import Notification from './Notification'
+import NotificationComp from './Notification'
 
 type Props = {
     notifications: Notification[],
@@ -22,7 +21,7 @@ const NotificationsContainerView = ({ notifications, pushNotification }: Props) 
         <section className = "notification-container">
             {
                 notifications.map((n, i) => (
-                    <Notification  />
+                    <NotificationComp key = { i } { ...n } />
                 ))
             }
             <button onClick = { appendNotification }>Add Notification</button>
