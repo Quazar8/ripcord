@@ -8,7 +8,7 @@ type Props = {
 const Notification = ({ msg, type }: Props) => {
     return (
         <div className = "notification">
-            Success Notification
+            { msg }
         </div>
     )
 }
