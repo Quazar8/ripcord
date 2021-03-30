@@ -6,8 +6,9 @@ type Props = {
 }
 
 const Notification = ({ msg, type }: Props) => {
+    const className = 'notification ' + type
     return (
-        <div className = {''}>
+        <div className = { className }>
             { msg }
         </div>
     )
