@@ -1,7 +1,9 @@
 import React, { FormEvent, KeyboardEvent, useRef } from 'react'
 import { loginServer } from '../../api/userApi' 
+import { connect, MapDispatchFn } from '../../store/connect'
+import { addNotification, Notification } from '../../store/globalActions'
 
-const LoginForm = () => {
+const LoginFormView = () => {
     const usernameRef = useRef<HTMLInputElement>()
     const passwordRef = useRef<HTMLInputElement>()
 
@@ -46,5 +48,13 @@ const LoginForm = () => {
         </form>
     )
 }
+
+const mapDispatch: MapDispatchFn = (dispatch) => ({
+    pushNotification: (data: Notification) => {
+        dispatch(addNotification(data))
+    }
+})
+
+const LoginForm = connect(null, mapDispatch)(LoginFormView)
 
 export default LoginForm
