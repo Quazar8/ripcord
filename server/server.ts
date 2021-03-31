@@ -1,6 +1,8 @@
 import express, { Application } from 'express'
 import passport from 'passport'
 import path from 'path'
+import webpack, { Configuration } from 'webpack'
+import webpackConfig from './webpack.config.js'
 import { connectToDb } from './db/db.js'
 import configurePassport from './passport-config.js'
 
@@ -18,6 +20,21 @@ app.use(express.static(path.join(path.dirname(''), '/build/client')))
 configurePassport()
 
 establishRouteEndpoints(app)
+
+const config: Configuration = {
+    ...webpackConfig,
+    mode: 'development'
+}
+
+webpack(config, (err, state) => {
+    if (err || state.hasErrors()) {
+        console.log('Error compiling webpack')
+        return
+    }
+
+    console.log('Webpack compiled')
+})
+
 
 app.listen(PORT, () => {
     console.log('\x1b[33m%s\x1b[0m',`Server listening at http://localhost:${PORT}`)
