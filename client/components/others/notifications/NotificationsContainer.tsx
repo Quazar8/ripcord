@@ -3,18 +3,19 @@ import { addNotification, Notification } from '../../../store/globalActions'
 import { connect, MapStateFn, MapDispatchFn } from '../../../store/connect'
 import NotificationComp from './Notification'
 
-type Props = {
-    notifications: Notification[],
-    pushNotification: (data: Notification) => void
+type StateProps = {
+    notifications: Notification[]
 }
+
+type DispProps = {
+    pushNotification: (type: Notification['type'], msg: Notification['msg']) => void
+}
+
+type Props = StateProps & DispProps
 
 const NotificationsContainerView = ({ notifications, pushNotification }: Props) => {
     const appendNotification = () => {
-        pushNotification({
-            id: '' + Date.now(),
-            msg: 'test notification',
-            type: 'info'
-        })
+        pushNotification('info', 'test notification')
     }
 
     return (
@@ -29,20 +30,20 @@ const NotificationsContainerView = ({ notifications, pushNotification }: Props) 
     )
 }
 
-const mapState: MapStateFn = state => {
+const mapState: MapStateFn = (state): StateProps => {
     return {
         notifications: state.global.notifications
     }
 }
 
-const mapDispath: MapDispatchFn = dispatch => {
+const mapDispatch: MapDispatchFn = (dispatch): DispProps => {
     return {
-        pushNotification: (data: Notification) => {
-            dispatch(addNotification(data))
+        pushNotification: (type, msg) => {
+            dispatch(addNotification(type, msg))
         }
     }
 }
 
-const NotificationsContainer = connect(mapState, mapDispath)(NotificationsContainerView)
+const NotificationsContainer = connect(mapState, mapDispatch)(NotificationsContainerView)
 
 export default NotificationsContainer
