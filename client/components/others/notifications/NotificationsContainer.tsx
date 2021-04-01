@@ -30,13 +30,13 @@ const NotificationsContainerView = ({ notifications, pushNotification }: Props) 
     )
 }
 
-const mapState: MapStateFn = (state): StateProps => {
+const mapState: MapStateFn<StateProps> = (state) => {
     return {
         notifications: state.global.notifications
     }
 }
 
-const mapDispatch: MapDispatchFn = (dispatch): DispProps => {
+const mapDispatch: MapDispatchFn<DispProps> = (dispatch) => {
     return {
         pushNotification: (type, msg) => {
             dispatch(addNotification(type, msg))
