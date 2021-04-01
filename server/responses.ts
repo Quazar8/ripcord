@@ -1,22 +1,24 @@
-type ErrorResponseType = {
+export type ErrorResponseType = {
     error: true
     errorMsg: string
 }
 
-type SuccessResponseType<T> = {
+export type SuccessResponseType<T> = {
     error: false
     msg: string,
     data: T
 }
 
-const errorResponse = (errorMsg: string): ErrorResponseType => {
+export type ServerResponse<T> = ErrorResponseType | SuccessResponseType<T>
+
+export const errorResponse = (errorMsg: string): ErrorResponseType => {
     return {
         error: true,
         errorMsg
     }
 }
 
-const successResponse = 
+export const successResponse = 
     <T>(data: T, msg: string): SuccessResponseType<T> => {
         
     return {
@@ -24,10 +26,4 @@ const successResponse =
         msg,
         data
     }
-}
-
-export {
-    errorResponse,
-    successResponse,
-    SuccessResponseType,
 }
