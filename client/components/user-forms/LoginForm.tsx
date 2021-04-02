@@ -23,13 +23,19 @@ const LoginFormView = ({ pushNotification }: DispProps) => {
             return
         }
 
-        const resp = await loginServer(data)
-
-        if (resp.error) {
-            pushNotification('error', resp.errorMsg)
-        } else {
-            pushNotification('success', 'Logged in successfully')
+        try {
+            const resp = await loginServer(data)
+            
+            if (resp.error) {
+                pushNotification('error', resp.errorMsg)
+            } else {
+                pushNotification('success', 'Logged in successfully')
+            }
+        } catch (err) {
+            pushNotification('error', 'There has been an error trying ' +
+                'to get response from the server')
         }
+     
     }
 
     const submitOnEnter = (e: KeyboardEvent) => {
