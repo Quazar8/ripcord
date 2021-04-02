@@ -21,6 +21,8 @@ export const globalReducer =
     switch (action.type) {
         case GlobalActionTypes.PushNotification:
             return pushNotification(state, action.payload)
+        case GlobalActionTypes.RemoveNotification:
+            return state
         default: return state
     }
 }
