@@ -1,10 +1,10 @@
 import React, { FormEvent, KeyboardEvent, useRef } from 'react'
 import { loginServer } from '../../api/userApi' 
 import { connect, MapDispatchFn } from '../../store/connect'
-import { addNotification, Notification } from '../../store/globalActions'
+import {  pushNotification } from '../../store/globalActions'
 
 type DispProps = {
-    pushNotification: (type: Notification['type'], msg: Notification['msg']) => void
+    pushNotification: ReturnType<typeof pushNotification>
 }
 
 const LoginFormView = ({ pushNotification }: DispProps) => {
@@ -54,9 +54,7 @@ const LoginFormView = ({ pushNotification }: DispProps) => {
 }
 
 const mapDispatch: MapDispatchFn<DispProps> = (dispatch) => ({
-    pushNotification: (type, msg) => {
-        dispatch(addNotification(type, msg))
-    }
+    pushNotification: pushNotification(dispatch)
 })
 
 const LoginForm = connect(null, mapDispatch)(LoginFormView)

@@ -1,3 +1,4 @@
+import { Dispatch } from 'react'
 import { Action } from './StoreTypes'
 
 export enum GlobalActionTypes {
@@ -31,3 +32,8 @@ export const addNotification =
         payload: notification
     }
 }
+
+export const pushNotification = (dispatch: Dispatch<GlobalAction>) =>
+    (type: Notification['type'], msg: Notification['msg']) => {
+        dispatch(addNotification(type, msg))
+    }
