@@ -33,6 +33,13 @@ export const addNotification =
     }
 }
 
+const removeNotification = (id: Notification['id']) => {
+    return {
+        type: GlobalActionTypes.RemoveNotification,
+        payload: id
+    }
+}
+
 export const pushNotification = (dispatch: Dispatch<GlobalAction>) =>
     (type: Notification['type'], msg: Notification['msg']) => {
         dispatch(addNotification(type, msg))
