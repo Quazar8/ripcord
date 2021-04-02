@@ -12,7 +12,7 @@ export type Notification = {
     type: 'info' | 'error' | 'success'
 }
 
-export type GlobalPayloads = Notification
+export type GlobalPayloads = Notification | string
 
 export type GlobalAction = Action<GlobalActionTypes, GlobalPayloads>
 
@@ -33,11 +33,15 @@ export const addNotification =
     }
 }
 
-const removeNotification = (id: Notification['id']) => {
+const removeNotificationAction = (id: Notification['id']) => {
     return {
         type: GlobalActionTypes.RemoveNotification,
         payload: id
     }
+}
+
+export const removeNotification = (dispatch: Dispatch<GlobalAction>) => (id: Notification['id']) => {
+    dispatch(removeNotificationAction(id))
 }
 
 export const pushNotification = (dispatch: Dispatch<GlobalAction>) =>
