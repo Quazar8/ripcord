@@ -2,7 +2,7 @@ import passport from 'passport'
 import { Request, Response, NextFunction } from 'express'
 import { errorResponse } from './responses.js'
 
-const isLogged = 
+export const isLogged = 
     (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate('jwt', { session: false },(err, user) => {
         if (err) {
@@ -17,6 +17,6 @@ const isLogged =
     })
 }
 
-export {
-    isLogged
+export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+    res.status(500).send(errorResponse('Something went wrong :|'))
 }

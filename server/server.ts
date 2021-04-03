@@ -5,6 +5,7 @@ import webpack, { Configuration } from 'webpack'
 import webpackConfig from './webpack.config.js'
 import { connectToDb } from './db/db.js'
 import configurePassport from './passport-config.js'
+import { errorHandler } from './middlewares.js'
 
 import establishRouteEndpoints from './routes/routes.js'
 
@@ -13,9 +14,11 @@ const PORT: number = 8000
 
 connectToDb()
 
+
 app.use(express.json())
 app.use(passport.initialize())
 app.use(express.static(path.join(path.dirname(''), '/build/client')))
+app.use(errorHandler)
 
 configurePassport()
 
