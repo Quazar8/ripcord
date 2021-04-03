@@ -16,17 +16,17 @@ const pushNotification = (currentState: GlobalState = globalInit, notification: 
     return newState
 }
 
-const removeNotification = (state) => {
+const removeNotification = (state, payload) => {
     return state
 }
 
 export const globalReducer = 
-        (state: GlobalState, action: Action<GlobalActionTypes, GlobalPayloads>): GlobalState => {
+        (state: GlobalState, action: Action<GlobalActionTypes, any>): GlobalState => {
     switch (action.type) {
         case GlobalActionTypes.PushNotification:
             return pushNotification(state, action.payload)
         case GlobalActionTypes.RemoveNotification:
-            return removeNotification(state)
+            return removeNotification(state, action.payload)
         default: return state
     }
 }
