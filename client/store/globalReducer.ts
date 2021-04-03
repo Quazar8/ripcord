@@ -16,7 +16,7 @@ const pushNotification = (currentState: GlobalState = globalInit, notification: 
     return newState
 }
 
-const removeNotification = (state, payload) => {
+const removeNotification = (state: GlobalState, payload: Notification['id']) => {
     return state
 }
 
