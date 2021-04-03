@@ -16,17 +16,9 @@ export type GlobalPayloads = Notification | string
 
 export type GlobalAction = Action<GlobalActionTypes, GlobalPayloads>
 
-type AddNotificationAction = Action<GlobalActionTypes.PushNotification, Notification>
 
 export const addNotification =
-        (type: Notification['type'], msg: Notification['msg']): AddNotificationAction => {
-
-    const notification: Notification = {
-        id: '' + Date.now(),
-        msg,
-        type
-    }
-
+        (notification: Notification) => {
     return {
         type: GlobalActionTypes.PushNotification,
         payload: notification
@@ -40,11 +32,12 @@ const removeNotificationAction = (id: Notification['id']) => {
     }
 }
 
-export const removeNotification = (dispatch: Dispatch<GlobalAction>) => (id: Notification['id']) => {
-    dispatch(removeNotificationAction(id))
-}
-
 export const pushNotification = (dispatch: Dispatch<GlobalAction>) =>
     (type: Notification['type'], msg: Notification['msg']) => {
-        dispatch(addNotification(type, msg))
-    }
+        const notification: Notification = {
+            id: '' + Date.now(),
+            type,
+            msg
+        }
+        dispatch(addNotification(notification))
+}
