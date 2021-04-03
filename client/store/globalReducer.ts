@@ -2,7 +2,7 @@ import { Action } from './StoreTypes'
 import { GlobalPayloads, GlobalActionTypes, Notification } from './globalActions'
 
 export type GlobalState = {
-    notifications: Array<Notification>
+    notifications: Notification[]
 }
 
 export const globalInit: GlobalState = {
