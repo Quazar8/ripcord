@@ -15,8 +15,8 @@ const LoginFormView = ({ pushNotification }: DispProps) => {
         e?.preventDefault()
 
         const data = {
-            username: usernameRef.current.value,
-            password: passwordRef.current.value
+            username: usernameRef.current.value.trim(),
+            password: passwordRef.current.value.trim()
         }
 
         if (!data.username || !data.password) {
