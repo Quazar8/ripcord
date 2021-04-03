@@ -39,5 +39,6 @@ export const pushNotification = (dispatch: Dispatch<GlobalAction>) =>
             type,
             msg
         }
+        dispatch()
         dispatch(addNotification(notification))
 }
