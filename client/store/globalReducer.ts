@@ -10,7 +10,7 @@ export const globalInit: GlobalState = {
 }
 
 const pushNotification = (currentState: GlobalState = globalInit, notification: Notification): GlobalState => {
-    const newState = Object.assign({}, currentState)
+    const newState = { ...currentState }
     newState.notifications.push(notification)
 
     return newState
