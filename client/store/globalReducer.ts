@@ -17,7 +17,15 @@ const pushNotification = (currentState: GlobalState = globalInit, notification: 
 }
 
 const removeNotification = (state: GlobalState, payload: Notification['id']) => {
-    return state
+    const newState = {...state}
+    for (let [i, not] of newState.notifications.entries()) {
+        if (not.id === payload) {
+            newState.notifications.splice(i)
+            break
+        }
+    }
+
+    return newState
 }
 
 export const globalReducer = 
