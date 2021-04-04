@@ -20,8 +20,10 @@ const loginHandler = (req: Request, res: Response): void => {
         }
 
         const userToLog = {
+            id: user._id,
             username: user.username,
-            registeredAt: user.registeredAt
+            registeredAt: user.registeredAt,
+            loggingAt: Date.now()
         }
 
         req.logIn(userToLog, { session: false }, (err) => {
