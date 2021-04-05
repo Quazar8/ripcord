@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import passport from 'passport'
 import path from 'path'
 import webpack, { Configuration } from 'webpack'
+import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackConfig from './webpack.config.js'
 import { connectToDb } from './db/db.js'
 import configurePassport from './passport-config.js'
@@ -14,29 +15,36 @@ const PORT: number = 8000
 
 connectToDb()
 
-
 app.use(express.json())
 app.use(passport.initialize())
-app.use(express.static(path.join(path.dirname(''), '/build/client')))
+const config: Configuration = {
+    ...webpackConfig,
+    mode: 'development'
+}
+
+
+const compiler = webpack(config)
+console.log(path.resolve('./build/client'))
+app.use(webpackDevMiddleware(compiler, {
+    publicPath: '/'
+}))
+
+// app.use(express.static(path.join(path.dirname(''), '/build/client')))
 app.use(errorHandler)
 
 configurePassport()
 
 establishRouteEndpoints(app)
 
-const config: Configuration = {
-    ...webpackConfig,
-    mode: 'development'
-}
+// webpack(config, (err, state) => {
+//     if (err || state.hasErrors()) {
+//         console.log('Error compiling webpack')
+//         return
+//     }
 
-webpack(config, (err, state) => {
-    if (err || state.hasErrors()) {
-        console.log('Error compiling webpack')
-        return
-    }
+//     console.log('Webpack compiled')
+// })
 
-    console.log('Webpack compiled')
-})
 
 
 app.listen(PORT, () => {
