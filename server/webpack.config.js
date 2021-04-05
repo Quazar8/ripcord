@@ -1,9 +1,10 @@
 import path from 'path'
 import HtmlPlugin from 'html-webpack-plugin'
+import webpack from 'webpack'
 
 export default {
     mode: 'development',
-    entry: './client/index.tsx',
+    entry: ['./client/index.tsx', 'webpack-hot-middleware/client'],
     output: {
         filename: '[name].js',
         publicPath: '/',
@@ -37,7 +38,8 @@ export default {
     plugins: [
         new HtmlPlugin({
             template: './client/index.html'
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
         port: 3000,
