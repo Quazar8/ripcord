@@ -1,5 +1,5 @@
 {
     "watch": "server/",
     "ext": "ts",
-    "exec": "npm run build:server && node DEV=true ./build/server.js"
+    "exec": "npm run build:server && node ./build/server.js"
 }
