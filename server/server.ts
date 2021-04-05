@@ -23,32 +23,31 @@ const config: Configuration = {
     mode: 'development'
 }
 
-
 const compiler = webpack(config)
-console.log(path.resolve('./build/client'))
-app.use(webpackDevMiddleware(compiler, {
-    publicPath: '/'
-}))
 
-app.use(webpackHotMiddleware(compiler))
+if (process.env.DEV) {
+    app.use(webpackDevMiddleware(compiler, {
+        publicPath: '/'
+    }))
 
-// app.use(express.static(path.join(path.dirname(''), '/build/client')))
+    app.use(webpackHotMiddleware(compiler))
+} else {
+    compiler.run((err, stats) => {
+        if (err || stats.hasErrors()) {
+            console.log('Error compiling webpack')
+        } else {
+            console.log('Webpack compiled')
+        }
+    })
+
+    app.use(express.static(path.join(path.dirname(''), '/build/client')))
+}
+
 app.use(errorHandler)
 
 configurePassport()
 
 establishRouteEndpoints(app)
-
-// webpack(config, (err, state) => {
-//     if (err || state.hasErrors()) {
-//         console.log('Error compiling webpack')
-//         return
-//     }
-
-//     console.log('Webpack compiled')
-// })
-
-
 
 app.listen(PORT, () => {
     console.log('\x1b[33m%s\x1b[0m',`Server listening at http://localhost:${PORT}`)
