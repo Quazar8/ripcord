@@ -25,7 +25,7 @@ const config: Configuration = {
 
 const compiler = webpack(config)
 
-console.log('Environment', process.env.NODE_ENV)
+console.log('\x1b[35m%s\x1b[33m%s\x1b[0m','Environment: ', process.env.NODE_ENV)
 if (process.env.NODE_ENV.trim() === 'development') {
     app.use(webpackDevMiddleware(compiler, {
         publicPath: '/'
