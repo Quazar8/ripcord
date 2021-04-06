@@ -4,7 +4,7 @@ import path from 'path'
 import webpack, { Configuration } from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-import webpackConfig from './webpack.config.js'
+import webpackConfig from './webpack/webpack.config.js'
 import { connectToDb } from './db/db.js'
 import configurePassport from './passport-config.js'
 import { errorHandler } from './middlewares.js'
@@ -18,6 +18,9 @@ connectToDb()
 
 app.use(express.json())
 app.use(passport.initialize())
+configurePassport()
+app.use(errorHandler)
+
 const config: Configuration = {
     ...webpackConfig,
     mode: 'development'
@@ -26,7 +29,7 @@ const config: Configuration = {
 const compiler = webpack(config)
 
 console.log('\x1b[35m%s\x1b[33m%s\x1b[0m','Environment: ', process.env.NODE_ENV)
-if (process.env.NODE_ENV.trim() === 'development') {
+if (process.env.NODE_ENV?.trim() === 'development') {
     app.use(webpackDevMiddleware(compiler, {
         publicPath: '/'
     }))
@@ -43,10 +46,6 @@ if (process.env.NODE_ENV.trim() === 'development') {
 
     app.use(express.static(path.join(path.dirname(''), '/build/client')))
 }
-
-app.use(errorHandler)
-
-configurePassport()
 
 establishRouteEndpoints(app)
 
