@@ -25,7 +25,7 @@ const config: Configuration = {
 
 const compiler = webpack(config)
 
-if (process.env.DEV) {
+if (process.env.NODE_ENV === 'development') {
     app.use(webpackDevMiddleware(compiler, {
         publicPath: '/'
     }))
