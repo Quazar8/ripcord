@@ -2,7 +2,7 @@ import passport from 'passport'
 import { Request, Response, NextFunction } from 'express'
 import { errorResponse } from './responses.js'
 
-export const isLogged = 
+export const authenticateUser = 
     (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate('jwt', { session: false },(err, user) => {
         if (err) {
@@ -12,9 +12,9 @@ export const isLogged =
 
         if (user) next(null)
         else {
-            res.status(400).send('User doesn\'t exist')
+            res.status(400).send(errorResponse('User doesn\'t exist'))
         }
-    })
+    })(req, res, next)
 }
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
