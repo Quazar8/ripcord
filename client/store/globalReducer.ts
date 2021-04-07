@@ -33,7 +33,7 @@ const removeNotification = (state: GlobalState, payload: Notification['id']) => 
 }
 
 const recordUserInfo = (state: GlobalState, user: IUser): GlobalState => {
-    return state
+    return { ...state, user }
 }
 
 export const globalReducer = 
