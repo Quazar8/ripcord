@@ -12,10 +12,13 @@ export type Notification = {
     type: 'info' | 'error' | 'success'
 }
 
+export interface IUser {
+    username: string,
+}
+
 export type GlobalPayloads = Notification | string
 
 export type GlobalAction = Action<GlobalActionTypes, GlobalPayloads>
-
 
 export const addNotification =
         (notification: Notification) => {
@@ -39,6 +42,7 @@ export const pushNotification = (dispatch: Dispatch<GlobalAction>) =>
             type,
             msg
         }
+        
         dispatch(addNotification(notification))
         setTimeout(() => {
             dispatch(removeNotificationAction(notification.id))
