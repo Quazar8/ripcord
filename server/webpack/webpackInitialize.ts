@@ -4,6 +4,7 @@ import webpack, { Configuration } from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackConfig from './webpack.config.js'
+import { isDev } from '../utils.js'
 
 const initializeWebpack = (app: Application) => {
     const config: Configuration = {
@@ -14,7 +15,7 @@ const initializeWebpack = (app: Application) => {
     const compiler = webpack(config)
 
     console.log('\x1b[35m%s\x1b[33m%s\x1b[0m','Environment: ', process.env.NODE_ENV)
-    if (process.env.NODE_ENV?.trim() === 'development') {
+    if (isDev()) {
         app.use(webpackDevMiddleware(compiler, {
             publicPath: '/'
         }))
