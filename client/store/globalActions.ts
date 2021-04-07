@@ -3,7 +3,8 @@ import { Action } from './StoreTypes'
 
 export enum GlobalActionTypes {
     PushNotification,
-    RemoveNotification
+    RemoveNotification,
+    RecordUserInfo
 }
 
 export type Notification = {
@@ -16,7 +17,7 @@ export interface IUser {
     username: string,
 }
 
-export type GlobalPayloads = Notification | string
+export type GlobalPayloads = Notification | string | IUser
 
 export type GlobalAction = Action<GlobalActionTypes, GlobalPayloads>
 
@@ -27,6 +28,11 @@ export const addNotification =
         payload: notification
     }
 }
+
+export const recordUserAction = (user: IUser): GlobalAction => ({
+    type: GlobalActionTypes.RecordUserInfo,
+    payload: user
+})
 
 const removeNotificationAction = (id: Notification['id']) => {
     return {

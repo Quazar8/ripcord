@@ -1,5 +1,5 @@
 import { Action } from './StoreTypes'
-import { GlobalPayloads, GlobalActionTypes, Notification } from './globalActions'
+import { GlobalActionTypes, Notification } from './globalActions'
 
 export type GlobalState = {
     notifications: Notification[]
