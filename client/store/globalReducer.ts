@@ -1,5 +1,5 @@
 import { Action } from './StoreTypes'
-import { GlobalActionTypes, Notification } from './globalActions'
+import { GlobalActionTypes, Notification, IUser } from './globalActions'
 
 export type GlobalState = {
     notifications: Notification[]
@@ -28,6 +28,10 @@ const removeNotification = (state: GlobalState, payload: Notification['id']) => 
     return newState
 }
 
+const recordUserInfo = (state: GlobalState, user: IUser): GlobalState => {
+    return state
+}
+
 export const globalReducer = 
         (state: GlobalState, action: Action<GlobalActionTypes, any>): GlobalState => {
     switch (action.type) {
@@ -35,6 +39,8 @@ export const globalReducer =
             return pushNotification(state, action.payload)
         case GlobalActionTypes.RemoveNotification:
             return removeNotification(state, action.payload)
+        case GlobalActionTypes.RecordUserInfo:
+            return recordUserInfo(state, action.payload)
         default: return state
     }
 }
