@@ -2,11 +2,15 @@ import { Action } from './StoreTypes'
 import { GlobalActionTypes, Notification, IUser } from './globalActions'
 
 export type GlobalState = {
-    notifications: Notification[]
+    notifications: Notification[],
+    user: IUser
 }
 
 export const globalInit: GlobalState = {
-    notifications: []
+    notifications: [],
+    user: {
+        username: ''
+    }
 }
 
 const pushNotification = (currentState: GlobalState = globalInit, notification: Notification): GlobalState => {
