@@ -2,9 +2,7 @@ import { IUserModel } from '../../db/models'
 
 export type UserInfo = Omit<IUserModel, 'password'>
 
-export type UserLoggedObj = {
-    username: string,
-    registeredAt: Date,
+export type UserLoggedObj = Pick<IUserModel, 'username' | 'registeredAt'> & {
     token: string
 }
 
