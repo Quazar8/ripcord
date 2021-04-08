@@ -1,7 +1,7 @@
 import { Error } from 'mongoose'
 import passport from 'passport'
 import passportJWT, { StrategyOptions } from 'passport-jwt'
-import { IUserModel, User } from './db/models.js'
+import { IUserDoc, User } from './db/models.js'
 import { UserInfo } from './routes/user/userTypes'
 import { jwtKey } from './global-vars.js'
 
@@ -14,7 +14,7 @@ const opts: StrategyOptions = {
 
 const configurePassport = (): void => {
     passport.use(new Strategy(opts, (payload, done) => {
-        User.findOne({ _id: payload.id }, (err: Error, user: IUserModel) => {
+        User.findOne({ _id: payload.id }, (err: Error, user: IUserDoc) => {
             if (err) return done(err, false)
 
             if (user) {
@@ -22,7 +22,7 @@ const configurePassport = (): void => {
                     username: user.username,
                     registeredAt: user.registeredAt
                 }
-                
+
                 return done(null, reqUser)
             }
             else return done(null, false)
