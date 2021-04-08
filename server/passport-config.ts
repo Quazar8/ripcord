@@ -13,7 +13,7 @@ const opts: StrategyOptions = {
 
 const configurePassport = (): void => {
     passport.use(new Strategy(opts, (payload, done) => {
-        User.findOne({ _id: payload.sub }, (err: Error, user: IUserModel) => {
+        User.findOne({ _id: payload.id }, (err: Error, user: IUserModel) => {
             if (err) return done(err, false)
 
             if (user) return done(null, user)

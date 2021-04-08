@@ -1,16 +1,19 @@
 import passport from 'passport'
 import { Request, Response, NextFunction } from 'express'
-import { errorResponse } from './responses.js'
+import { errorResponse, successResponse } from './responses.js'
 
 export const authenticateUser = 
     (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate('jwt', { session: false },(err, user) => {
+    passport.authenticate('jwt', { session: false }, (err, user) => {
         if (err) {
             res.status(500).send(errorResponse('Error authenticating user'))
             return
         }
 
-        if (user) next(null)
+        if (user) {
+            req.user = user
+            next(null)
+        }
         else {
             res.status(400).send(errorResponse('User doesn\'t exist'))
         }
