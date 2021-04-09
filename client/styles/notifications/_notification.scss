@@ -2,14 +2,17 @@
     width: 50%;
 }
 
-.info {
-    background: blue;
+.notifications-container {
+    .info {
+        background: blue;
+    }
+
+    .success {
+        background: green;
+    }
+
+    .error {
+        background: red;
+    }
 }
 
-.success {
-    background: green;
-}
-
-.error {
-    background: red;
-}
