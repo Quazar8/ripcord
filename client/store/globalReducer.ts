@@ -24,7 +24,7 @@ const removeNotification = (state: GlobalState, payload: Notification['id']) => 
     const newState = {...state}
     for (let [i, not] of newState.notifications.entries()) {
         if (not.id === payload) {
-            newState.notifications.splice(i)
+            newState.notifications.splice(i, 1)
             break
         }
     }

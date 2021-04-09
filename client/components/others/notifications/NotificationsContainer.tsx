@@ -9,7 +9,7 @@ type StateProps = {
 
 const NotificationsContainerView = ({ notifications }: StateProps) => {
     return (
-        <section className = "notification-container">
+        <section className = "notifications-container">
             {
                 notifications.map((n, i) => (
                     <NotificationComp key = { i } { ...n } />
