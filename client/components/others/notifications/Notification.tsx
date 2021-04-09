@@ -7,9 +7,22 @@ type Props = {
 
 const Notification = ({ msg, type }: Props) => {
     const className = 'notification ' + type
+    const iconChar = (() => {
+        switch (type) {
+            case 'error': return 'X'
+            case 'success': return '\U2713'
+            default: return 'I'
+        }
+    })()
+
     return (
         <div className = { className }>
-            { msg }
+            <div className = "message">
+                { msg }
+            </div>
+            <div className = "icon">
+                { iconChar }
+            </div>
         </div>
     )
 }

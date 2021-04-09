@@ -32,6 +32,7 @@ const LoginFormView = ({ pushNotification }: DispProps) => {
             } else {
                 pushNotification('success', 'Logged in successfully')
             }
+            
         } catch (err) {
             pushNotification('error', 'There has been an error trying ' +
                 'to get response from the server')
