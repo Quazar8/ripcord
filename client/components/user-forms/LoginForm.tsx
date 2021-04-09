@@ -20,6 +20,7 @@ const LoginFormView = ({ pushNotification }: DispProps) => {
         }
 
         if (!data.username || !data.password) {
+            pushNotification('error', 'Fields cannot be empty')
             return
         }
 
