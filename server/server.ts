@@ -1,3 +1,4 @@
+import http from 'http'
 import express, { Application } from 'express'
 import passport from 'passport'
 import { connectToDb } from './db/db.js'
@@ -20,6 +21,8 @@ initializeWebpack(app)
 
 establishRouteEndpoints(app)
 
-app.listen(PORT, () => {
+const server = http.createServer(app)
+
+server.listen(PORT, () => {
     console.log('\x1b[33m%s\x1b[0m',`Server listening at http://localhost:${PORT}`)
 })
