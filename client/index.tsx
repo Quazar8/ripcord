@@ -7,4 +7,8 @@ import './styles/index.scss'
 
 render(
     <App />
-, document.getElementById('root'))
+, document.getElementById('root'));
+
+(module as any).hot.accept((err: Error) => {
+    window.location.reload()
+})

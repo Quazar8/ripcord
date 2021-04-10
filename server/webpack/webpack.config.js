@@ -4,7 +4,7 @@ import webpack from 'webpack'
 
 export default {
     mode: 'development',
-    entry: ['./client/index.tsx', 'webpack-hot-middleware/client'],
+    entry: ['webpack-hot-middleware/client','./client/index.tsx'],
     output: {
         filename: '[name].js',
         publicPath: '/',
