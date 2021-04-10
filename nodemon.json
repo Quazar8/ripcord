@@ -1,5 +1,5 @@
 {
     "watch": "server/",
     "ext": "ts",
-    "exec": "SET NODE_ENV=development && npm run build:server && npm run server"
+    "exec": "SET NODE_ENV=development && npm run server"
 }
