@@ -6,6 +6,11 @@ import configurePassport from './passport-config.js'
 import { errorHandler } from './middlewares.js'
 import initializeWebpack from './webpack/webpackInitialize.js'
 import establishRouteEndpoints from './routes/routes.js'
+import { isDev } from './utils.js'
+
+if (!isDev()) {
+    process.env.NODE_ENV = 'production'
+}
 
 const app: Application = express()
 const PORT: number = 8000
