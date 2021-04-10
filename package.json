@@ -7,7 +7,7 @@
   "scripts": {
     "build:client": "webpack --config=server/webpack/webpack.config.js",
     "build:server": "tsc -p .",
-    "server": "node build/server/server.js",
+    "server": "tsc -p . && node build/server/server.js",
     "dev": "nodemon"
   },
   "repository": {
