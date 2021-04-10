@@ -1,7 +1,7 @@
 import http from 'http'
 import express, { Application } from 'express'
 import passport from 'passport'
-import socketIO from 'socket.io'
+import socketIO, { Socket } from 'socket.io'
 import { connectToDb } from './db/db.js'
 import configurePassport from './passport-config.js'
 import { errorHandler } from './middlewares.js'
@@ -30,7 +30,7 @@ establishRouteEndpoints(app)
 const server = http.createServer(app)
 const io = socketIO(server)
 
-io.onconnection((socket) => {
+io.onconnection((socket: Socket) => {
     console.log('socket connected')
 })
 
