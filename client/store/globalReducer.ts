@@ -36,6 +36,10 @@ const recordUserInfo = (state: GlobalState, user: IUser): GlobalState => {
     return { ...state, user }
 }
 
+const removeUserInfo = (state: GlobalState): GlobalState => {
+    return state
+}
+
 export const globalReducer = 
         (state: GlobalState, action: Action<GlobalActionTypes, any>): GlobalState => {
     switch (action.type) {
@@ -45,6 +49,8 @@ export const globalReducer =
             return removeNotification(state, action.payload)
         case GlobalActionTypes.RecordUserInfo:
             return recordUserInfo(state, action.payload)
+        case GlobalActionTypes.RemoveUserInfo:
+            return removeUserInfo(state)
         default: return state
     }
 }
