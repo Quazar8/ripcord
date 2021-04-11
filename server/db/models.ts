@@ -7,18 +7,12 @@ const UserSchema = new Schema ({
     registeredAt: { type: Date, default: () => Date.now() }
 })
 
-interface IUserModel {
+export interface IUserModel {
     username: string,
     password: string,
     registeredAt: Date
 }
 
-interface IUserDoc extends Document, IUserModel {}
+export interface IUserDoc extends Document, IUserModel {}
 
-const User = model('User', UserSchema)
-
-export {
-    IUserModel,
-    IUserDoc,
-    User
-}
+export const User = model('User', UserSchema)
