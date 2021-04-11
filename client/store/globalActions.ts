@@ -35,6 +35,11 @@ export const recordUserAction = (user: IUser): GlobalAction => ({
     payload: user
 })
 
+export const removeUserInfoAction = (): GlobalAction => ({
+    type: GlobalActionTypes.RemoveUserInfo,
+    payload: null
+})
+
 const removeNotificationAction = (id: Notification['id']) => {
     return {
         type: GlobalActionTypes.RemoveNotification,
