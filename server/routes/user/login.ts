@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { User, IUserDoc } from '../../db/models.js'
+import { User, IUserDoc } from '../../db/models/models.js'
 import { errorResponse, successResponse, SuccessResponseType } from '../../responses.js'
 import { UserLoggedObj, LoginEntryObj } from './userTypes'
 import jwt from 'jsonwebtoken'
@@ -23,7 +23,7 @@ const loginHandler = (req: Request, res: Response): void => {
             id: user._id,
             username: user.username,
             registeredAt: user.registeredAt,
-            loggingAt: Date.now()
+            // loggingAt: Date.now()
         }
 
         req.logIn(userToLog, { session: false }, (err) => {

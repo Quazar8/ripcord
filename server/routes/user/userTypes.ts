@@ -1,4 +1,4 @@
-import { IUserModel } from '../../db/models'
+import { IUserModel } from '../../db/models/models'
 
 export type UserInfo = Omit<IUserModel, 'password'>
 

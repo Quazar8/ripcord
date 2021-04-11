@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { User, IUserModel, IUserDoc } from '../../db/models.js'
+import { User, IUserModel, IUserDoc } from '../../db/models/models.js'
 import { errorResponse, successResponse } from '../../responses.js'
 
 const registerHandler = (req: Request, res: Response): void => {
