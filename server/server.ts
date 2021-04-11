@@ -1,7 +1,7 @@
 import http from 'http'
 import express, { Application } from 'express'
 import passport from 'passport'
-import * as socketIO from 'socket.io'
+import * as SocketIO from 'socket.io'
 import { connectToDb } from './db/db.js'
 import configurePassport from './passport-config.js'
 import { errorHandler } from './middlewares.js'
@@ -28,11 +28,12 @@ initializeWebpack(app)
 establishRouteEndpoints(app)
 
 const server = http.createServer(app)
-const io = new socketIO(server)
+const SIO = SocketIO.listen
+console.log(SIO)
 
-io.onconnection((socket: socketIO.Server) => {
-    console.log('socket connected')
-})
+// io.onconnection((socket: SocketIO.Server) => {
+//     console.log('socket connected')
+// })
 
 server.listen(PORT, () => {
     console.log('\x1b[33m%s\x1b[0m',`Server listening at http://localhost:${PORT}`)
