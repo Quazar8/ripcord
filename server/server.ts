@@ -1,7 +1,7 @@
 import http from 'http'
 import express, { Application } from 'express'
 import passport from 'passport'
-import socketIO, { Socket } from 'socket.io'
+import * as socketIO from 'socket.io'
 import { connectToDb } from './db/db.js'
 import configurePassport from './passport-config.js'
 import { errorHandler } from './middlewares.js'
@@ -28,9 +28,9 @@ initializeWebpack(app)
 establishRouteEndpoints(app)
 
 const server = http.createServer(app)
-const io = socketIO(server)
+const io = new socketIO(server)
 
-io.onconnection((socket: Socket) => {
+io.onconnection((socket: socketIO.Server) => {
     console.log('socket connected')
 })
 
