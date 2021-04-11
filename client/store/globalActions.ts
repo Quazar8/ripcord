@@ -4,7 +4,8 @@ import { Action } from './StoreTypes'
 export enum GlobalActionTypes {
     PushNotification,
     RemoveNotification,
-    RecordUserInfo
+    RecordUserInfo,
+    RemoveUserInfo
 }
 
 export type Notification = {
