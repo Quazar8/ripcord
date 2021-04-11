@@ -37,7 +37,8 @@ const recordUserInfo = (state: GlobalState, user: IUser): GlobalState => {
 }
 
 const removeUserInfo = (state: GlobalState): GlobalState => {
-    return state
+    const newState = { ...state, user: globalInit.user }
+    return newState
 }
 
 export const globalReducer = 
