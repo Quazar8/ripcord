@@ -1,5 +1,10 @@
 .notification {
     width: 100%;
+    display: flex;
+    padding: 4%;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+    font-size: 1.4vw;
 }
 
 .notifications-container {
