@@ -33,6 +33,10 @@ const socketServer = new ws.Server({
     server: server
 })
 
+socketServer.on('connection', (socket) => {
+    console.log('user connected')
+})
+
 server.listen(PORT, () => {
     console.log('\x1b[33m%s\x1b[0m',`Server listening at http://localhost:${PORT}`)
 })
