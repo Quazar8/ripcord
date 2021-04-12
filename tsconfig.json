@@ -6,8 +6,11 @@
         "allowJs": true,
         "noImplicitAny": true,
         "skipLibCheck": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "declaration": true
     },
-    "include": ["./server/server.ts"],
+    "include": [
+        "./server/server.ts",
+    ],
     "exclude": ["node_modules"]
 }
