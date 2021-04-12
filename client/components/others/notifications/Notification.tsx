@@ -10,7 +10,7 @@ const Notification = ({ msg, type }: Props) => {
     const iconChar = (() => {
         switch (type) {
             case 'error': return 'X'
-            case 'success': return '\U2713'
+            case 'success': return '\u2713'
             default: return 'I'
         }
     })()
