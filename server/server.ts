@@ -30,7 +30,7 @@ establishRouteEndpoints(app)
 const server = http.createServer(app)
 
 const socketServer = new ws.Server({
-    port: 3000
+    server: server
 })
 
 server.listen(PORT, () => {
