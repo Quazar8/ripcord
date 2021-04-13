@@ -33,8 +33,14 @@ const socketServer = new ws.Server({
     server: server
 })
 
+socketServer.once('listening', () => {
+    console.log('ws server is listening')
+})
+
 socketServer.on('connection', (socket) => {
-    console.log('user connected')
+    socket.on('message', (msg) => {
+        console.log('received message', msg)
+    })
 })
 
 server.listen(PORT, () => {
