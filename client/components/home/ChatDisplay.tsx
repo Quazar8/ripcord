@@ -7,6 +7,11 @@ type DIspProps = {
 }
 
 const ChatDisplayView = ({ pushNotification }: DIspProps) => {
+    const socket = new WebSocket('ws://localhost:8000')
+    socket.onopen = (ev) => {
+        console.log('socket connection is opened')
+    }
+    
     const sendMsg = () => {
         pushNotification('info', 'Not implemented yet')
     }
