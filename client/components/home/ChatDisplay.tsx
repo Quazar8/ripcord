@@ -1,4 +1,10 @@
 import React from 'react'
+import { connect, MapDispatchFn } from '../../store/connect'
+import { pushNotification } from '../../store/globalActions'
+
+type DIspProps = {
+    pushNotification: ReturnType<typeof pushNotification>
+}
 
 const ChatDisplay = () => {
     return (
@@ -9,5 +15,9 @@ const ChatDisplay = () => {
         </section>
     )
 }
+
+const mapDispatch: MapDispatchFn<DIspProps> = (dispatch) => ({
+    pushNotification: pushNotification(dispatch)
+})
 
 export default ChatDisplay
