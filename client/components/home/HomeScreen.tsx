@@ -1,9 +1,11 @@
 import React from 'react'
 
+import ChatDisplay from './ChatDisplay'
+
 const HomeScreen = () => {
     return (
         <section className = "home-screen">
-            Home Screen section            
+            <ChatDisplay />            
         </section>
     )
 }
