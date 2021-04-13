@@ -6,7 +6,7 @@ type DIspProps = {
     pushNotification: ReturnType<typeof pushNotification>
 }
 
-const ChatDisplay = () => {
+const ChatDisplayView = () => {
     return (
         <section className="chat-display">
             <div className="chat-monitor"></div>
@@ -19,5 +19,7 @@ const ChatDisplay = () => {
 const mapDispatch: MapDispatchFn<DIspProps> = (dispatch) => ({
     pushNotification: pushNotification(dispatch)
 })
+
+const ChatDisplay = connect(null, mapDispatch)(ChatDisplayView)
 
 export default ChatDisplay
