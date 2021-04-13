@@ -6,12 +6,16 @@ type DIspProps = {
     pushNotification: ReturnType<typeof pushNotification>
 }
 
-const ChatDisplayView = () => {
+const ChatDisplayView = ({ pushNotification }: DIspProps) => {
+    const sendMsg = () => {
+        pushNotification('info', 'Not implemented yet')
+    }
+
     return (
-        <section className="chat-display">
-            <div className="chat-monitor"></div>
-            <input placeholder="send a message" type="text" />
-            <button>Send</button>
+        <section className = "chat-display">
+            <div className = "chat-monitor"></div>
+            <input placeholder = "send a message" type = "text" />
+            <button onClick = { sendMsg } >Send</button>
         </section>
     )
 }
