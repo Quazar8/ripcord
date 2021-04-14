@@ -1,18 +1,13 @@
 import React, { FormEvent, KeyboardEvent, useRef } from 'react'
-import { ResolvePlugin } from 'webpack'
-import { ErrorResponseType, ServerResponse } from '../../../server/responses'
 import { UserLoggedObj } from '../../../server/routes/user/userTypes'
 import { loginServer } from '../../api/userApi' 
 import { connect, MapDispatchFn } from '../../store/connect'
 import {  pushNotification, recordUserAction } from '../../store/globalActions'
+import { resHasError } from '../../api/utils'
 
 type DispProps = {
     pushNotification: ReturnType<typeof pushNotification>
     recordUser: (user: UserLoggedObj) => void
-}
-
-const respIsError = (resp: ServerResponse<UserLoggedObj>): resp is ErrorResponseType => {
-    return resp.error
 }
 
 const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
@@ -35,7 +30,7 @@ const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
         try {
             const resp = await loginServer(data)
             
-            if (respIsError(resp)) {
+            if (resHasError(resp)) {
                 pushNotification('error', resp.errorMsg)
             } else {
                 recordUser(resp.data)
