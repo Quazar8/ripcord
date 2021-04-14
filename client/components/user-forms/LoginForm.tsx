@@ -1,4 +1,5 @@
 import React, { FormEvent, KeyboardEvent, useRef } from 'react'
+import { ResolvePlugin } from 'webpack'
 import { ErrorResponseType, ServerResponse } from '../../../server/responses'
 import { UserLoggedObj } from '../../../server/routes/user/userTypes'
 import { loginServer } from '../../api/userApi' 
@@ -10,7 +11,9 @@ type DispProps = {
     recordUser: (user: UserLoggedObj) => void
 }
 
-
+const respIsError = (resp: ServerResponse<UserLoggedObj>): resp is ErrorResponseType => {
+    return resp.error
+}
 
 const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
     const usernameRef = useRef<HTMLInputElement>()
@@ -32,10 +35,10 @@ const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
         try {
             const resp = await loginServer(data)
             
-            if (resp.error) {
+            if (respIsError(resp)) {
                 pushNotification('error', resp.errorMsg)
             } else {
-                
+                recordUser(resp.data)
                 pushNotification('success', 'Logged in successfully')
             }
             
