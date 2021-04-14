@@ -33,9 +33,7 @@ const removeNotification = (state: GlobalState, payload: Notification['id']) => 
 }
 
 const recordUserInfo = (state: GlobalState, user: IUser): GlobalState => {
-    const newState = {...state}
-    console.log('newState', newState)
-    return state
+    return {...state, user}
 }
 
 const removeUserInfo = (state: GlobalState): GlobalState => {
