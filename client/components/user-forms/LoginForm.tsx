@@ -1,13 +1,18 @@
 import React, { FormEvent, KeyboardEvent, useRef } from 'react'
+import { ErrorResponseType, ServerResponse } from '../../../server/responses'
+import { UserLoggedObj } from '../../../server/routes/user/userTypes'
 import { loginServer } from '../../api/userApi' 
 import { connect, MapDispatchFn } from '../../store/connect'
-import {  pushNotification } from '../../store/globalActions'
+import {  pushNotification, recordUserAction } from '../../store/globalActions'
 
 type DispProps = {
     pushNotification: ReturnType<typeof pushNotification>
+    recordUser: (user: UserLoggedObj) => void
 }
 
-const LoginFormView = ({ pushNotification }: DispProps) => {
+
+
+const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
     const usernameRef = useRef<HTMLInputElement>()
     const passwordRef = useRef<HTMLInputElement>()
 
@@ -30,6 +35,7 @@ const LoginFormView = ({ pushNotification }: DispProps) => {
             if (resp.error) {
                 pushNotification('error', resp.errorMsg)
             } else {
+                
                 pushNotification('success', 'Logged in successfully')
             }
             
@@ -37,7 +43,6 @@ const LoginFormView = ({ pushNotification }: DispProps) => {
             pushNotification('error', 'There has been an error trying ' +
                 'to get response from the server')
         }
-     
     }
 
     const submitOnEnter = (e: KeyboardEvent) => {
@@ -66,7 +71,10 @@ const LoginFormView = ({ pushNotification }: DispProps) => {
 }
 
 const mapDispatch: MapDispatchFn<DispProps> = (dispatch) => ({
-    pushNotification: pushNotification(dispatch)
+    pushNotification: pushNotification(dispatch),
+    recordUser: (user: UserLoggedObj) => {
+        dispatch(recordUserAction(user))
+    }
 })
 
 const LoginForm = connect(null, mapDispatch)(LoginFormView)
