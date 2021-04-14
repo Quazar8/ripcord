@@ -33,7 +33,9 @@ const removeNotification = (state: GlobalState, payload: Notification['id']) => 
 }
 
 const recordUserInfo = (state: GlobalState, user: IUser): GlobalState => {
-    return { ...state, user }
+    const newState = {...state}
+    console.log('newState', newState)
+    return state
 }
 
 const removeUserInfo = (state: GlobalState): GlobalState => {
@@ -42,7 +44,7 @@ const removeUserInfo = (state: GlobalState): GlobalState => {
 }
 
 export const globalReducer = 
-        (state: GlobalState, action: Action<GlobalActionTypes, any>): GlobalState => {
+        (state: GlobalState = globalInit, action: Action<GlobalActionTypes, any>): GlobalState => {
     switch (action.type) {
         case GlobalActionTypes.PushNotification:
             return pushNotification(state, action.payload)
