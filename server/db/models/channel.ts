@@ -7,6 +7,12 @@ export type Message = {
     createdAt: Date
 }
 
+export interface IChannel {
+    participantOne: string,
+    participantTwo: string,
+    messages: Message[]
+}
+
 const channelSchema = new Schema({
     participantOne: String,
     participantTwo: String,
