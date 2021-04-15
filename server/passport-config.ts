@@ -3,18 +3,18 @@ import passport from 'passport'
 import passportJWT, { StrategyOptions } from 'passport-jwt'
 import { IUserDoc, User } from './db/models/models.js'
 import { UserInfo } from './routes/user/userTypes'
-import { jwtKey } from './global-vars.js'
+import { jwtKey, jwtCookieName } from './global-vars.js'
 import { Request } from 'express'
 
 const { Strategy, ExtractJwt } = passportJWT
 
 const cookieExtractor: passportJWT.JwtFromRequestFunction = (req: Request): string => {
     if (req && req.cookies) {
-        return req.cookies['token']
+        return req.cookies[jwtCookieName]
     }
 
     return null
-} 
+}
 
 const opts: StrategyOptions = {
     jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
