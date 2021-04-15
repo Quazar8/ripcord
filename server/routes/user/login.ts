@@ -3,7 +3,7 @@ import { User, IUserDoc } from '../../db/models/models.js'
 import { errorResponse, successResponse, SuccessResponseType } from '../../responses.js'
 import { UserLoggedObj, LoginEntryObj } from './userTypes'
 import jwt from 'jsonwebtoken'
-import { jwtKey } from '../../configVars.js'
+import { jwtKey, jwtCookieName } from '../../configVars.js'
 
 const loginHandler = (req: Request, res: Response): void => {
     const { username, password }: LoginEntryObj = req.body
@@ -33,7 +33,7 @@ const loginHandler = (req: Request, res: Response): void => {
             }
 
             const token = jwt.sign(userToLog, jwtKey)
-            res.cookie('token', token, {
+            res.cookie( jwtCookieName, token, {
                 expires: new Date(Date.now() + 30*24*3600),
                 secure: true
             })
