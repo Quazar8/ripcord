@@ -3,7 +3,7 @@ import { User, IUserDoc } from '../../db/models/models.js'
 import { errorResponse, successResponse, SuccessResponseType } from '../../responses.js'
 import { UserLoggedObj, LoginEntryObj } from './userTypes'
 import jwt from 'jsonwebtoken'
-import { jwtKey } from '../../global-vars.js'
+import { jwtKey } from '../../configVars.js'
 
 const loginHandler = (req: Request, res: Response): void => {
     const { username, password }: LoginEntryObj = req.body
