@@ -14,6 +14,7 @@ export const websocketServer = (server: Server) => {
     socketServer.on('connection', (socket, req) => {
         console.log('ws cookie', req.headers.cookie)
         passport.authenticate('jwt', (err, user) => {
+            console.log('ws user', user)
         })(req)
         socket.on('message', (msg) => {
             console.log('received message', msg)
