@@ -2,6 +2,10 @@ import ws from 'ws'
 import { Server } from 'http'
 import passport from 'passport'
 
+const cookieReader = () => {
+    
+}
+
 export const websocketServer = (server: Server) => {
     const socketServer = new ws.Server({
         server: server
