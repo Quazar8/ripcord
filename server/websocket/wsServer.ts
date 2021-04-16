@@ -3,7 +3,7 @@ import { Server } from 'http'
 import passport from 'passport'
 
 const cookieReader = () => {
-    
+    throw new Error('not incorporated')
 }
 
 export const websocketServer = (server: Server) => {
