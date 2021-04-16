@@ -17,9 +17,7 @@ const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
 
     const history = useHistory()
 
-    const loginUser = async (e: FormEvent | null) => {
-        e?.preventDefault()
-
+    const loginUser = async () => {
         const data = {
             username: usernameRef.current.value.trim(),
             password: passwordRef.current.value.trim()
@@ -32,7 +30,6 @@ const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
 
         try {
             const resp = await loginServer(data)
-            
             if (resHasError(resp)) {
                 pushNotification('error', resp.errorMsg)
             } else {
@@ -45,19 +42,19 @@ const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
             pushNotification('error', 'There has been an error trying ' +
                 'to get response from the server')
         }
+
     }
 
-    const submitOnEnter = (e: KeyboardEvent) => {
-        if (e.key === 'Enter') {
-            loginUser(null)
-        }
+    const submitForm = (e: FormEvent) => {
+        e.preventDefault()
+        loginUser()
     }
 
     return (
         <form 
             className = "user-form" 
-            onSubmit = { loginUser }
-            onKeyPress = { submitOnEnter }
+            onSubmit = { submitForm }
+            autoComplete = "off"
         >
             <label>
                 Username:
