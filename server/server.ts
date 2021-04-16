@@ -1,6 +1,7 @@
 import http from 'http'
 import express, { Application } from 'express'
 import passport from 'passport'
+import cookieParser from 'cookie-parser'
 import { connectToDb } from './db/db.js'
 import configurePassport from './passport-config.js'
 import { errorHandler } from './middlewares.js'
@@ -19,6 +20,7 @@ const PORT: number = 8000
 connectToDb()
 
 app.use(express.json())
+app.use(cookieParser())
 app.use(passport.initialize())
 configurePassport()
 app.use(errorHandler)
