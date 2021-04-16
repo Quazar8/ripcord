@@ -1,4 +1,5 @@
 import React, { FormEvent, KeyboardEvent, useRef } from 'react'
+import { useHistory } from 'react-router-dom'
 import { UserLoggedObj } from '../../../server/routes/user/userTypes'
 import { loginServer } from '../../api/userApi' 
 import { connect, MapDispatchFn } from '../../store/connect'
@@ -13,6 +14,8 @@ type DispProps = {
 const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
     const usernameRef = useRef<HTMLInputElement>()
     const passwordRef = useRef<HTMLInputElement>()
+
+    const history = useHistory()
 
     const loginUser = async (e: FormEvent | null) => {
         e?.preventDefault()
@@ -34,6 +37,7 @@ const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
                 pushNotification('error', resp.errorMsg)
             } else {
                 recordUser(resp.data)
+                history.goBack()
                 pushNotification('success', 'Logged in successfully')
             }
             
