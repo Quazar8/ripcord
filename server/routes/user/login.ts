@@ -35,7 +35,6 @@ const loginHandler = (req: Request, res: Response): void => {
             const token = jwt.sign(userToLog, jwtKey)
             res.cookie( jwtCookieName, token, {
                 expires: new Date(Date.now() + 30*24*3600),
-                secure: true
             })
 
             const responseObj: SuccessResponseType<UserLoggedObj>
