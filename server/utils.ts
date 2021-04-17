@@ -15,7 +15,7 @@ export const getCookies = (headerCookie: string): Cookies => {
         const [name, val] = strCookie.split('=')
 
         if (!val) {
-            console.log('Get Cookeis Method: Cookie in wrong formaat')
+            console.log('Get Cookeis Method: Cookie in wrong format')
             continue
         }
         
