@@ -7,10 +7,18 @@ export type Cookies = {
 }
 
 export const getCookies = (headerCookie: string): Cookies => {
-    let cookieArr = headerCookie.split(', ')
-    let cookies: Cookies = {}
+    if (!headerCookie) return null
+
+    const cookieArr = headerCookie.split(', ')
+    const cookies: Cookies = {}
     for (let strCookie of cookieArr) {
-        let [name, val] = strCookie.split('=')
+        const [name, val] = strCookie.split('=')
+        
+        if (!val) {
+            console.log('Get Cookeis Method: Cookie in wrong formaat')
+            continue
+        }
+        
         cookies[name] = val
     }
 
