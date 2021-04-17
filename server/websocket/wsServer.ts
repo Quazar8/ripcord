@@ -14,10 +14,6 @@ export const websocketServer = (server: Server) => {
         noServer: true
     })
 
-    socketServer.once('listening', () => {
-        console.log('ws server is listening')
-    })
-
     socketServer.on('connection', (socket: ws, req: IncMessWCookies, user: UserInfo) => {
         console.log('user connected', user)
         socket.on('message', (msg) => {
