@@ -10,7 +10,6 @@ type IncMessWCookies = IncomingMessage & {
 
 export const websocketServer = (server: Server) => {
     const socketServer = new ws.Server({
-        server: server,
         noServer: true
     })
 
@@ -31,13 +30,13 @@ export const websocketServer = (server: Server) => {
         req.cookies = getCookies(req.headers.cookie)
         passport.authenticate('jwt', (err, user) => {
             if (!user) {
-                socket.write('HTTP/1.1 491 Unaauthorized\r\n\r\n')
+                socket.write('HTTP/1.1 491 Unauthorized\r\n\r\n')
                 socket.destroy()
                 return
             }
 
             socketServer.handleUpgrade(req, socket, head, (doneSocket) => {
-                console.log('emiting conenction event')
+                console.log('emiting connection event')
                 socketServer.emit('connection', doneSocket, req)
             })
         })(req)
