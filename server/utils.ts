@@ -9,11 +9,11 @@ export type Cookies = {
 export const getCookies = (headerCookie: string): Cookies => {
     if (!headerCookie) return null
 
-    const cookieArr = headerCookie.split(', ')
+    const cookieArr = headerCookie.split('; ')
     const cookies: Cookies = {}
     for (let strCookie of cookieArr) {
         const [name, val] = strCookie.split('=')
-        
+
         if (!val) {
             console.log('Get Cookeis Method: Cookie in wrong formaat')
             continue
