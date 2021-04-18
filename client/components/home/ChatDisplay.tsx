@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { connect, MapDispatchFn } from '../../store/connect'
 import { pushNotification } from '../../store/globalActions'
 
@@ -7,15 +7,19 @@ type DIspProps = {
 }
 
 const ChatDisplayView = ({ pushNotification }: DIspProps) => {
-    const socket = new WebSocket('ws://localhost:8000')
-    socket.onopen = (ev) => {
-        console.log('socket connection is opened')
-    }
+    let socket: WebSocket = null
+
+    useEffect(() => {
+        socket = new WebSocket('ws://localhost:8000')
+        socket.onopen = (ev) => {
+            console.log('socket connection is opened')
+        }
+    }, [])
 
     const sendInputRef: React.MutableRefObject<HTMLInputElement> = useRef(null)
     
     const sendMsg = () => {
-        socket.send(sendInputRef.current.value)
+        socket?.send(sendInputRef.current.value)
         pushNotification('info', 'Not implemented yet')
     }
 
