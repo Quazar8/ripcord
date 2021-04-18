@@ -25,9 +25,11 @@ const ChatDisplayView = ({ pushNotification }: DIspProps) => {
     const sendInputRef: React.MutableRefObject<HTMLInputElement> = useRef(null)
     
     const sendMsg = () => {
-        if (socket?.readyState === 1) {
-            socket?.send(sendInputRef.current.value)
+        const msg = sendInputRef.current.value
+        if (socket?.readyState === 1 && msg) {
+            socket?.send(msg)
         }
+        
         pushNotification('info', 'Not implemented yet')
     }
 
