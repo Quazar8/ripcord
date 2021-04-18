@@ -1,9 +1,11 @@
 import { Action } from './StoreTypes'
 import { GlobalActionTypes, Notification, IUser } from './globalActions'
 
+export type UserState = IUser
+
 export type GlobalState = {
     notifications: Notification[],
-    user: IUser
+    user: UserState
 }
 
 export const globalInit: GlobalState = {
