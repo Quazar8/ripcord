@@ -8,10 +8,14 @@ type StateProps = {
     user: UserState
 }
 
-const HomeScreenView = () => {
+const HomeScreenView = ({ user }: StateProps) => {
     return (
         <section className = "home-screen">
-            <ChatDisplay />            
+            {
+                user.username
+                ? <ChatDisplay />
+                : <h2>You need to be logged to chat</h2>
+            }
         </section>
     )
 }
