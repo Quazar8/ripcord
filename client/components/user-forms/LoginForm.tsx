@@ -1,10 +1,11 @@
-import React, { FormEvent, KeyboardEvent, useRef } from 'react'
+import React, { FormEvent, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { UserLoggedObj } from '../../../server/routes/user/userTypes'
 import { loginServer } from '../../api/userApi' 
-import { connect, MapDispatchFn } from '../../store/connect'
 import {  pushNotification, recordUserAction } from '../../store/globalActions'
 import { resHasError } from '../../api/utils'
+import { connect, MapDispatchFn } from '../../store/store'
+
 
 type DispProps = {
     pushNotification: ReturnType<typeof pushNotification>

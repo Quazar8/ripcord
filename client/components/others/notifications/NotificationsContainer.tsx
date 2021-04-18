@@ -1,6 +1,6 @@
 import React from 'react'
 import { Notification } from '../../../store/globalActions'
-import { connect, MapStateFn } from '../../../store/connect'
+import { connect, MapStateFn } from '../../../store/store'
 import NotificationComp from './Notification'
 
 type StateProps = {

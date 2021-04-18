@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { StoreProvider } from '../store/StoreProvider'
+import { StoreProvider } from '../store/store'
 
 import Navbar from './navbar/Navbar'
 import Main from './Main'

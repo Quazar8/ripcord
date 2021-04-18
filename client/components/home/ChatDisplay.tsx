@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { connect, MapDispatchFn } from '../../store/connect'
+import { connect, MapDispatchFn } from '../../store/store'
 import { pushNotification } from '../../store/globalActions'
 
 type DIspProps = {
