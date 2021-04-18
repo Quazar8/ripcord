@@ -14,12 +14,20 @@ const ChatDisplayView = ({ pushNotification }: DIspProps) => {
         socket.onopen = (ev) => {
             console.log('socket connection is opened')
         }
+
+        socket.onerror = (ev) => {
+            console.log('Error connecting socket')
+            pushNotification('error', 'Error connecting to the chat.')
+        }
+
     }, [])
 
     const sendInputRef: React.MutableRefObject<HTMLInputElement> = useRef(null)
     
     const sendMsg = () => {
-        socket?.send(sendInputRef.current.value)
+        if (socket?.readyState === 1) {
+            socket?.send(sendInputRef.current.value)
+        }
         pushNotification('info', 'Not implemented yet')
     }
 
