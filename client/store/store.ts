@@ -1,6 +1,9 @@
 import { useReducer, useMemo, Dispatch } from 'react'
 import { GlobalState, globalInit, globalReducer} from './globalReducer'
 import { GlobalAction } from './globalActions'
+export * from './StoreProvider'
+export * from './connect'
+export * from './StoreTypes'
 
 export type AppAction = GlobalAction
 
