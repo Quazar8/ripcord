@@ -9,7 +9,7 @@ const enableUserRoutes = (app: Application) => {
 
     app.post('/user/register', registerHandler)
 
-    app.post('/user/fromToken', userInfoFromToken)
+    app.post('/user/loggedUserInfo', userInfoFromToken)
 }
 
 export default enableUserRoutes

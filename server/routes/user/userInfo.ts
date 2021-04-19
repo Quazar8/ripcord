@@ -1,6 +1,19 @@
-import { Request, Response } from "express";
-import { successResponse } from "../../responses.js";
+import { Request, Response } from "express"
+import passport from 'passport'
+import { successResponse } from "../../responses.js"
+import { UserInfo } from "./userTypes.js"
 
 export const userInfoFromToken = (req: Request, res: Response) => {
-    res.status(200).send(successResponse({}, 'User Info from token reached'))
+    passport.authenticate('jwt', (err, user: UserInfo) => {
+        if (err) {
+            return
+        } 
+
+        if (user) {
+            res.status(200).send(successResponse(user, ''))
+            return
+        }
+
+        res.status(200).send(successResponse({}, 'No user'))
+    })(req, res)
 }
