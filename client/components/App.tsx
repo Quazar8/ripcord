@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { StoreProvider, connect, MapDispatchFn } from '../store/store'
+import { StoreProvider, connect, MapDispatchFn, MapStateFn } from '../store/store'
 
 import Navbar from './navbar/Navbar'
 import Main from './Main'
@@ -8,23 +8,31 @@ import NotificationsContainer from './others/notifications/NotificationsContaine
 import { UserState } from '../store/globalReducer'
 import { recordUserAction } from '../store/globalActions'
 
+type StateProps = {
+    user: UserState
+}
+
 type DispProps = {
     recordUser: (user: UserState) => void
 }
 
-const AppView = () => {
+type Props = StateProps & DispProps
+
+const AppView = ({ user }: Props) => {
     return (
         <BrowserRouter>
-            <StoreProvider>
-                <div>
-                    <Navbar />
-                    <Main />
-                    <NotificationsContainer />
-                </div>
-            </StoreProvider>
+            <div>
+                <Navbar />
+                <Main />
+                <NotificationsContainer />
+            </div>
         </BrowserRouter>
     )
 }
+
+const mapState: MapStateFn<StateProps> = (state) => ({
+    user: state.global.user
+})
 
 const mapDispatch: MapDispatchFn<DispProps> = (dispatch) => ({
     recordUser: (user: UserState) => {
@@ -32,6 +40,6 @@ const mapDispatch: MapDispatchFn<DispProps> = (dispatch) => ({
     }
 })
 
-const App = connect(null, mapDispatch)(AppView)
+const App = connect(mapState, mapDispatch)(AppView)
 
 export default App
