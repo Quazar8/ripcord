@@ -2,7 +2,7 @@ import React from 'react'
 import { MapStateFn, connect } from '../../store/store'
 import { UserState } from '../../store/globalReducer'
 
-import ChatDisplay from './ChatDisplay'
+import ChatApp from './ChatApp'
 
 type StateProps = {
     user: UserState
@@ -13,7 +13,7 @@ const HomeScreenView = ({ user }: StateProps) => {
         <section className = "home-screen">
             {
                 user.username
-                ? <ChatDisplay />
+                ? <ChatApp />
                 : <h2>You need to be logged to chat</h2>
             }
         </section>
