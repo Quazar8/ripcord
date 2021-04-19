@@ -1,4 +1,4 @@
-import { Action } from './StoreTypes'
+import { Action } from './storeComponents/StoreTypes'
 import { GlobalActionTypes, Notification, IUser } from './globalActions'
 
 export type UserState = IUser

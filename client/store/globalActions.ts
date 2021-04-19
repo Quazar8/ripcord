@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { Action } from './StoreTypes'
+import { Action } from './storeComponents/StoreTypes'
 
 export enum GlobalActionTypes {
     PushNotification,

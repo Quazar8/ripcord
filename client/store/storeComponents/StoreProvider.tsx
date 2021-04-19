@@ -1,5 +1,5 @@
-import React, { Context, createContext, PropsWithChildren, ReactNode } from 'react'
-import { useStore, StoreType, initialState } from './store'
+import React, { Context, createContext, PropsWithChildren } from 'react'
+import { useStore, StoreType, initialState } from '../store'
 
 const initialContext: StoreType = [initialState, (value) => {}]
 

@@ -1,6 +1,6 @@
 import React, { Dispatch, FunctionComponent, useContext } from 'react'
 import { StoreContext } from './StoreProvider'
-import { AppAction, CombinedState } from './store'
+import { AppAction, CombinedState } from '../store'
 
 export type MapStateFn<S> = ((state: CombinedState) => S) | null
 
