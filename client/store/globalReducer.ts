@@ -15,7 +15,7 @@ export const globalInit: GlobalState = {
     }
 }
 
-const pushNotification = (currentState: GlobalState = globalInit, notification: Notification): GlobalState => {
+const pushNotification = (currentState: GlobalState, notification: Notification): GlobalState => {
     const newState = { ...currentState }
     newState.notifications.push(notification)
 
@@ -23,19 +23,19 @@ const pushNotification = (currentState: GlobalState = globalInit, notification: 
 }
 
 const removeNotification = (state: GlobalState, payload: Notification['id']) => {
-    const newState = {...state}
+    const newState = { ...state }
     for (let [i, not] of newState.notifications.entries()) {
         if (not.id === payload) {
             newState.notifications.splice(i, 1)
             break
         }
     }
-
+    
     return newState
 }
 
 const recordUserInfo = (state: GlobalState, user: IUser): GlobalState => {
-    return {...state, user}
+    return Object.assign({}, state, { user })
 }
 
 const removeUserInfo = (state: GlobalState): GlobalState => {

@@ -1,15 +1,15 @@
 import React, { FormEvent, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
-import { UserLoggedObj } from '../../../server/routes/user/userTypes'
 import { loginServer } from '../../api/userApi' 
 import {  pushNotification, recordUserAction } from '../../store/globalActions'
 import { resHasError } from '../../api/utils'
 import { connect, MapDispatchFn } from '../../store/store'
+import { UserState } from '../../store/globalReducer'
 
 
 type DispProps = {
     pushNotification: ReturnType<typeof pushNotification>
-    recordUser: (user: UserLoggedObj) => void
+    recordUser: (user: UserState) => void
 }
 
 const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
@@ -72,7 +72,7 @@ const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
 
 const mapDispatch: MapDispatchFn<DispProps> = (dispatch) => ({
     pushNotification: pushNotification(dispatch),
-    recordUser: (user: UserLoggedObj) => {
+    recordUser: (user: UserState) => {
         dispatch(recordUserAction(user))
     }
 })

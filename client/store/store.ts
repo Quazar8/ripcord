@@ -17,7 +17,7 @@ export type CombinedState = {
 export type StoreType = [CombinedState, Dispatch<AppAction>]
 
 type ReducerSlices = {
-    globalReducer: (state: GlobalState, action: GlobalAction) => GlobalState
+    global: (state: GlobalState, action: GlobalAction) => GlobalState
     [key: string]: (state: AppState, action: AppAction) => AppState
 }
 
@@ -35,12 +35,12 @@ const combineReducers =
     )
 )
 
-const rootReducer = combineReducers({ globalReducer })
+const rootReducer = combineReducers({ global: globalReducer })
 
 export const useStore = () => {
     const [state, dispatch] = useReducer(rootReducer, initialState)
 
     const store: StoreType = useMemo(() => [state, dispatch], [state])
-
+    console.log('state', state)
     return store
 }
