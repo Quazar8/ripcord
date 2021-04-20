@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { connect, MapDispatchFn, MapStateFn } from '../store/store'
 import { getCookies } from '../../server/utils'
 import { jwtCookieName } from '../../server/configVars'
+import { getUserInfoWToken } from '../api/userApi'
 
 import Navbar from './navbar/Navbar'
 import Main from './Main'
@@ -21,10 +22,20 @@ type DispProps = {
 type Props = StateProps & DispProps
 
 const AppView = ({ user }: Props) => {
-    useEffect(() => {
+    const retrieveUserFromToken = async () => {
+        const res = await getUserInfoWToken()
+
+        if (res.error) {
+            return
+        }
+
+        console.log('res', res)
+    }    
+
+    useEffect(() => { 
         const token = getCookies(document.cookie)[jwtCookieName]
         if (!user.username && token) {
-            console.log('document cookie', token)
+            retrieveUserFromToken()
         }
     }, [user.username])
 

@@ -7,6 +7,6 @@ export const loginServer = async (data: LoginEntryObj): Promise<ServerResponse<U
     return res.json()
 }
 
-export const getUseInfoIfLogged = async (): Promise<ServerResponse<UserLoggedObj>> => {
+export const getUserInfoWToken = async (): Promise<ServerResponse<UserLoggedObj>> => {
     return (await fetch(baseUrl + '/user/loggedUserInfo', getQueryOptions(true))).json()
 }
