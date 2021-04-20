@@ -7,7 +7,7 @@ export type Cookies = {
 }
 
 export const getCookies = (headerCookie: string): Cookies => {
-    if (!headerCookie) return null
+    if (!headerCookie) return {}
 
     const cookieArr = headerCookie.split('; ')
     const cookies: Cookies = {}
