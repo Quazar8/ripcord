@@ -1,7 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { UserState } from '../../store/globalReducer'
 
-const NavLinks = () => {
+type Props = {
+    user: UserState
+}
+
+const NavLinks = ({ user }: Props) => {
     return (
         <div className = "nav-links-container">
             <Link to = "/login">

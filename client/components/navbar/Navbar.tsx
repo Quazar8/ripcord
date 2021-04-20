@@ -8,10 +8,10 @@ type StateProps = {
     user: UserState
 }
 
-const NavbarView = () => {
+const NavbarView = ({ user }: StateProps) => {
     return (
         <nav className = "main-navbar">
-            <NavLinks />
+            <NavLinks user = { user }/>
         </nav>
     )
 }
