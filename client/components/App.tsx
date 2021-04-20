@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { connect, MapDispatchFn, MapStateFn } from '../store/store'
 import { getCookies } from '../../server/utils'
 import { jwtCookieName } from '../../server/configVars'
+import { resHasError } from '../api/utils'
 import { getUserInfoWToken } from '../api/userApi'
 
 import Navbar from './navbar/Navbar'
@@ -21,15 +22,15 @@ type DispProps = {
 
 type Props = StateProps & DispProps
 
-const AppView = ({ user }: Props) => {
+const AppView = ({ user, recordUser }: Props) => {
     const retrieveUserFromToken = async () => {
         const res = await getUserInfoWToken()
 
-        if (res.error) {
+        if (resHasError(res)) {
             return
         }
 
-        console.log('res', res)
+        recordUser(res.data)
     }    
 
     useEffect(() => { 
