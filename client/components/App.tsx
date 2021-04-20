@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { StoreProvider, connect, MapDispatchFn, MapStateFn } from '../store/store'
+import { connect, MapDispatchFn, MapStateFn } from '../store/store'
+import { getCookies } from '../../server/utils'
+import { jwtCookieName } from '../../server/configVars'
 
 import Navbar from './navbar/Navbar'
 import Main from './Main'
@@ -19,6 +21,13 @@ type DispProps = {
 type Props = StateProps & DispProps
 
 const AppView = ({ user }: Props) => {
+    useEffect(() => {
+        const token = getCookies(document.cookie)[jwtCookieName]
+        if (!user.username && token) {
+            console.log('document cookie', token)
+        }
+    }, [user.username])
+
     return (
         <BrowserRouter>
             <div>
