@@ -1,11 +1,15 @@
 .nav-links-container {
-    display: flex;
-    justify-content: space-evenly;
-    font-size: 2vw;
     width: 15%;
-    
+
     a {
         text-decoration: none;
         color: rgb(253, 223, 223);
     }
+}
+
+.default-links-container {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 2vw;
+    width: 100%;
 }

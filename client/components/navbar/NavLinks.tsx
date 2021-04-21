@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { UserState } from '../../store/globalReducer'
+
+import DefaultLinks from './DefaultLinks'
 
 type Props = {
     user: UserState
@@ -9,12 +10,7 @@ type Props = {
 const NavLinks = ({ user }: Props) => {
     return (
         <div className = "nav-links-container">
-            <Link to = "/login">
-                Sign In
-            </Link>
-            <Link to = "/register">
-                Sign Up
-            </Link>
+            <DefaultLinks />
         </div>
     )
 }
