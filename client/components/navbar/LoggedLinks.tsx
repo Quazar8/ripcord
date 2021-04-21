@@ -8,7 +8,7 @@ type DispProps = {
     removeUserFromState: () => void
 }
 
-const LoggedLinksView = () => {
+const LoggedLinksView = ({ removeUserFromState }: DispProps) => {
     const logoutHandler = async () => {
         const res = await logoutUser()
         
@@ -16,12 +16,12 @@ const LoggedLinksView = () => {
             return
         }
 
-
+        removeUserFromState()
     }
 
     return (
         <div className = "logged-links-container">
-            <button>Log out</button>
+            <button onClick = { logoutHandler }>Log out</button>
         </div>
     )
 }
