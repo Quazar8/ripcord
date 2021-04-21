@@ -2,6 +2,7 @@ import React from 'react'
 import { UserState } from '../../store/globalReducer'
 
 import DefaultLinks from './DefaultLinks'
+import LoggedLinks from './LoggedLinks'
 
 type Props = {
     user: UserState
@@ -10,7 +11,11 @@ type Props = {
 const NavLinks = ({ user }: Props) => {
     return (
         <div className = "nav-links-container">
-            <DefaultLinks />
+            {
+                user.username
+                ? <LoggedLinks />
+                : <DefaultLinks />
+            }
         </div>
     )
 }
