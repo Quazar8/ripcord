@@ -15,7 +15,7 @@ export const authenticateUser =
             next(null)
         }
         else {
-            res.status(400).send(errorResponse('User doesn\'t exist'))
+            res.status(400).send(errorResponse('User is not logged in'))
         }
     })(req, res, next)
 }
