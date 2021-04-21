@@ -13,3 +13,27 @@
     font-size: 2vw;
     width: 100%;
 }
+
+.logged-links-container {
+    $color: white;
+    $background-color: hsl(240, 55%, 10%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5vw;
+    color: $color;
+
+    button {
+        color: inherit;
+        font-size: inherit;
+        background: $background-color;
+        border-radius: 10rem;
+        padding: 2% 6%;
+    }
+
+    button:hover {
+        cursor: pointer;
+        background: $color;
+        color: $background-color;
+    }
+}
