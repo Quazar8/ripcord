@@ -7,7 +7,8 @@ type Props = {
 const NamePlate = ( { username }: Props ) => {
     return (
         <div className = "nameplate">
-            { username }
+            <div className = "name-container">{ username }</div>
+            <div className = "status-circle"></div>
         </div>
     )
 }

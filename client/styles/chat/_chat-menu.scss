@@ -1,0 +1,21 @@
+.chat-menu {
+    width: 15%;
+}
+
+.nameplate {
+    display: flex;
+    align-items: center;
+    padding: 4%;
+    font-size: 1.5vw;
+
+    .name-container {
+        margin-right: 10%;
+    }
+
+    .status-circle {
+        background-color: yellow;
+        border-radius: 50%;
+        width: 0.7vw;
+        height: 0.7vw;
+    }
+}
