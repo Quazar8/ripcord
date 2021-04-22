@@ -14,8 +14,12 @@
 
     .status-circle {
         background-color: yellow;
+        box-shadow: 2px 2px 5px yellow,
+            -2px -2px 5px yellow,
+            -2px 2px 5px yellow,
+            2px -2px 5px yellow;
         border-radius: 50%;
-        width: 0.7vw;
-        height: 0.7vw;
+        width: 0.5vw;
+        height: 0.5vw;
     }
 }
