@@ -2,7 +2,7 @@ import React from 'react'
 import { MapStateFn, connect } from '../../store/store'
 import { UserState } from '../../store/globalReducer'
 
-import ChatApp from './ChatApp'
+import ChatApp from '../chat/ChatApp'
 
 type StateProps = {
     user: UserState
