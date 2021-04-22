@@ -9,10 +9,10 @@ type StateProps = {
     user: UserState
 }
 
-const ChatAppView = () => {
+const ChatAppView = ({ user }: StateProps) => {
     return (
         <section className = "chat-app">
-            <ChatMenu />
+            <ChatMenu user = { user } />
             <ChatDisplay />
         </section>
     )
