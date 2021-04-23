@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 const DefaultLinks = () => {
     return (
         <div className = "default-links-container">
-            <Link to = "/login">
+            <Link className = "link-button" to = "/login">
                 Sign In
             </Link>
-            <Link to = "/register">
+            <Link className = "link-button" to = "/register">
                 Sign Up
             </Link>
         </div>

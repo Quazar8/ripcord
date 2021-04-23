@@ -21,7 +21,7 @@ const LoggedLinksView = ({ removeUserFromState }: DispProps) => {
 
     return (
         <div className = "logged-links-container">
-            <button onClick = { logoutHandler }>Log out</button>
+            <button className = "link-button" onClick = { logoutHandler }>Log out</button>
         </div>
     )
 }
