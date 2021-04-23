@@ -5,14 +5,16 @@ export type UserState = IUser
 
 export type GlobalState = {
     notifications: Notification[],
-    user: UserState
+    user: UserState,
+    showUserOptions: boolean
 }
 
 export const globalInit: GlobalState = {
     notifications: [],
     user: {
         username: ''
-    }
+    },
+    showUserOptions: false
 }
 
 const pushNotification = (currentState: GlobalState, notification: Notification): GlobalState => {
@@ -34,14 +36,19 @@ const removeNotification = (state: GlobalState, payload: Notification['id']) => 
     return newState
 }
 
-const recordUserInfo = (state: GlobalState, user: IUser): GlobalState => {
-    return Object.assign({}, state, { user })
+const recordUserInfo = (state: GlobalState, user: UserState): GlobalState => {
+    return { ...state, user}
 }
 
 const removeUserInfo = (state: GlobalState): GlobalState => {
     const newState = { ...state, user: globalInit.user }
     return newState
 }
+
+const toggleUserMenu = (state: GlobalState, show: boolean): GlobalState => ({
+    ...state,
+    showUserOptions: show
+})
 
 export const globalReducer = 
         (state: GlobalState = globalInit, action: Action<GlobalActionTypes, any>): GlobalState => {
@@ -54,6 +61,8 @@ export const globalReducer =
             return recordUserInfo(state, action.payload)
         case GlobalActionTypes.RemoveUserInfo:
             return removeUserInfo(state)
+        case GlobalActionTypes.ToggleUserMenu:
+            return toggleUserMenu(state, action.payload)
         default: return state
     }
 }
