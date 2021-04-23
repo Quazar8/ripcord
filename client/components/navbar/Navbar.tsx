@@ -9,6 +9,8 @@ type StateProps = {
 }
 
 const NavbarView = ({ user }: StateProps) => {
+    if (user.username) return null
+    
     return (
         <nav className = "main-navbar">
             <NavLinks user = { user }/>
