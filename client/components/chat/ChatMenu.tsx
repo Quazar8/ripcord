@@ -1,8 +1,8 @@
 import React from 'react'
 import { UserState } from '../../store/globalReducer'
-import NamePlate from './Nameplate'
 
 import Nameplate from './Nameplate'
+import ChatMenuButtons from './ChatMenuButtons'
 
 type Props = {
     user: UserState
@@ -11,7 +11,8 @@ type Props = {
 const ChatMenu = ({ user }: Props) => {
     return (
         <section className = "chat-menu">
-            <NamePlate username = { user.username } />
+            <ChatMenuButtons />
+            <Nameplate username = { user.username } />
         </section>
     )
 }
