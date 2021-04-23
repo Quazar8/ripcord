@@ -35,7 +35,7 @@ const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
                 pushNotification('error', resp.errorMsg)
             } else {
                 recordUser(resp.data)
-                history.goBack()
+                history.push('/')
                 pushNotification('success', 'Logged in successfully')
             }
             
