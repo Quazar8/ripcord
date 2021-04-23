@@ -2,6 +2,7 @@
 @use './user-forms.scss';
 @use './notifications/notifications-container.scss';
 @use './chat/chat-app.scss';
+@use './home/home.scss';
 
 * {
     padding: 0;
@@ -15,4 +16,8 @@ html {
     background-repeat: no-repeat;
     color: white;
     font-family: sans-serif;
+}
+
+body, #root, .app-container, main {
+    height: 100%;
 }

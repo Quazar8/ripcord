@@ -42,7 +42,7 @@ const AppView = ({ user, recordUser }: Props) => {
 
     return (
         <BrowserRouter>
-            <div>
+            <div className = "app-container">
                 <Navbar />
                 <Main />
                 <NotificationsContainer />
