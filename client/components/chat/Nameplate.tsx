@@ -1,10 +1,11 @@
 import React from 'react'
 
 type Props = {
-    username: string
+    username: string,
+    showUserMenuFn: () => void
 }
 
-const NamePlate = ( { username }: Props ) => {
+const NamePlate = ( { username, showUserMenuFn }: Props ) => {
     return (
         <div className = "nameplate">
             <div className = "name-container">{ username }</div>

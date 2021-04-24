@@ -5,14 +5,18 @@ import Nameplate from './Nameplate'
 import ChatMenuButtons from './ChatMenuButtons'
 
 type Props = {
-    user: UserState
+    user: UserState,
+    showUserMenuFn: () => void
 }
 
-const ChatMenu = ({ user }: Props) => {
+const ChatMenu = ({ user, showUserMenuFn }: Props) => {
     return (
         <section className = "chat-menu">
             <ChatMenuButtons />
-            <Nameplate username = { user.username } />
+            <Nameplate 
+                username = { user.username } 
+                showUserMenuFn = { showUserMenuFn }
+            />
         </section>
     )
 }
