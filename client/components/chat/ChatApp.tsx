@@ -7,21 +7,23 @@ import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
 
 type StateProps = {
-    user: UserState
+    user: UserState,
+    showUserMenu: boolean
 }
 
-const ChatAppView = ({ user }: StateProps) => {
+const ChatAppView = ({ user, showUserMenu }: StateProps) => {
     return (
         <section className = "chat-app">
             <ChatMenu user = { user } />
             <ChatDisplay />
-            <UserMenu />
+            <UserMenu showUserMenu = { showUserMenu } />
         </section>
     )
 }
 
 const mapState: MapStateFn<StateProps> = (state) => ({
-    user: state.global.user
+    user: state.global.user,
+    showUserMenu: state.global.showUserOptions
 })
 
 const ChatApp = connect(mapState, null)(ChatAppView)

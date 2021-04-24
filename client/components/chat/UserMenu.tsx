@@ -1,6 +1,12 @@
 import React from 'react'
 
-const UserMenu = () => {
+type Props = {
+    showUserMenu: boolean
+}
+
+const UserMenu = ({ showUserMenu }: Props) => {
+    if (showUserMenu) return null
+    
     return (
         <section className = "user-menu">
             User Menu Component
