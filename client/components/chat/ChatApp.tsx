@@ -13,12 +13,13 @@ type StateProps = {
 }
 
 type DispProps = {
-    showUserMenuFn: () => void
+    showUserMenuFn: () => void,
+    hideUserMenuFn: () => void
 }
 
 type Props = StateProps & DispProps
 
-const ChatAppView = ({ user, showUserMenu, showUserMenuFn }: Props) => {
+const ChatAppView = ({ user, showUserMenu, showUserMenuFn, hideUserMenuFn }: Props) => {
     return (
         <section className = "chat-app">
             <ChatMenu 
@@ -26,7 +27,10 @@ const ChatAppView = ({ user, showUserMenu, showUserMenuFn }: Props) => {
                 showUserMenuFn = { showUserMenuFn }
             />
             <ChatDisplay />
-            <UserMenu showUserMenu = { showUserMenu } />
+            <UserMenu 
+                showUserMenu = { showUserMenu }
+                hideUserMenuFn = { hideUserMenuFn }
+            />
         </section>
     )
 }
@@ -39,6 +43,9 @@ const mapState: MapStateFn<StateProps> = (state) => ({
 const mapDisp: MapDispatchFn<DispProps> = (dispatch) => ({
     showUserMenuFn: () => {
         dispatch(toggleUserMenuAction(true))
+    },
+    hideUserMenuFn: () => {
+        dispatch(toggleUserMenuAction(false))
     }
 })
 
