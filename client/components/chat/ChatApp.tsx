@@ -1,6 +1,7 @@
 import React from 'react'
 import { UserState } from '../../store/globalReducer'
-import { connect, MapStateFn } from '../../store/store'
+import { connect, MapDispatchFn, MapStateFn } from '../../store/store'
+import { toggleUserMenuAction } from '../../store/globalActions'
 
 import ChatDisplay from './ChatDisplay'
 import ChatMenu from './ChatMenu'
@@ -11,12 +12,18 @@ type StateProps = {
     showUserMenu: boolean
 }
 
-const ChatAppView = ({ user, showUserMenu }: StateProps) => {
+type DispProps = {
+    showUserMenuFn: () => void
+}
+
+type Props = StateProps & DispProps
+
+const ChatAppView = ({ user, showUserMenu, showUserMenuFn }: Props) => {
     return (
         <section className = "chat-app">
             <ChatMenu 
                 user = { user }
-                showUserMenuFn = { () => {} }
+                showUserMenuFn = { showUserMenuFn }
             />
             <ChatDisplay />
             <UserMenu showUserMenu = { showUserMenu } />
@@ -29,6 +36,12 @@ const mapState: MapStateFn<StateProps> = (state) => ({
     showUserMenu: state.global.showUserOptions
 })
 
-const ChatApp = connect(mapState, null)(ChatAppView)
+const mapDisp: MapDispatchFn<DispProps> = (dispatch) => ({
+    showUserMenuFn: () => {
+        dispatch(toggleUserMenuAction(true))
+    }
+})
+
+const ChatApp = connect(mapState, mapDisp)(ChatAppView)
 
 export default ChatApp
