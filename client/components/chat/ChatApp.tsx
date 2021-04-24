@@ -4,6 +4,7 @@ import { connect, MapStateFn } from '../../store/store'
 
 import ChatDisplay from './ChatDisplay'
 import ChatMenu from './ChatMenu'
+import UserMenu from './UserMenu'
 
 type StateProps = {
     user: UserState
@@ -14,6 +15,7 @@ const ChatAppView = ({ user }: StateProps) => {
         <section className = "chat-app">
             <ChatMenu user = { user } />
             <ChatDisplay />
+            <UserMenu />
         </section>
     )
 }
