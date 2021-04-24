@@ -8,7 +8,12 @@ type Props = {
 const NamePlate = ( { username, showUserMenuFn }: Props ) => {
     return (
         <div className = "nameplate">
-            <div className = "name-container">{ username }</div>
+            <div 
+                className = "name-container"
+                onClick = { showUserMenuFn }
+            >
+                { username }
+            </div>
             <div className = "status-circle"></div>
         </div>
     )
