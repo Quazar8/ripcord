@@ -6,7 +6,8 @@ export type UserState = IUser
 export type GlobalState = {
     notifications: Notification[],
     user: UserState,
-    showUserOptions: boolean
+    showUserOptions: boolean,
+    showFriendsWindow: boolean
 }
 
 export const globalInit: GlobalState = {
@@ -14,7 +15,8 @@ export const globalInit: GlobalState = {
     user: {
         username: ''
     },
-    showUserOptions: false
+    showUserOptions: false,
+    showFriendsWindow: false
 }
 
 const pushNotification = (currentState: GlobalState, notification: Notification): GlobalState => {
@@ -49,6 +51,11 @@ const toggleUserMenu = (state: GlobalState, show: boolean): GlobalState => ({
     showUserOptions: show
 })
 
+const toggleFriendsWindow = (state: GlobalState, show: boolean): GlobalState => ({
+    ...state,
+    showFriendsWindow: show
+})
+
 export const globalReducer = 
         (state: GlobalState = globalInit, action: Action<GlobalActionTypes, any>): GlobalState => {
     switch (action.type) {
@@ -62,6 +69,8 @@ export const globalReducer =
             return removeUserInfo(state)
         case GlobalActionTypes.ToggleUserMenu:
             return toggleUserMenu(state, action.payload)
+        case GlobalActionTypes.ToggleFriendsWindow:
+            return toggleFriendsWindow(state, action.payload)
         default: return state
     }
 }
