@@ -41,8 +41,7 @@ const recordUserInfo = (state: GlobalState, user: UserState): GlobalState => {
 }
 
 const removeUserInfo = (state: GlobalState): GlobalState => {
-    const newState = { ...state, user: globalInit.user }
-    return newState
+    return { ...state, user: globalInit.user, showUserOptions: globalInit.showUserOptions }
 }
 
 const toggleUserMenu = (state: GlobalState, show: boolean): GlobalState => ({
