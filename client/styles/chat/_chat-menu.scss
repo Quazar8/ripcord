@@ -18,6 +18,10 @@
         color: white;
         font-size: 1.2vw;
         padding: 4% 0;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
 
