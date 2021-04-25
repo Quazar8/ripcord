@@ -13,7 +13,9 @@ const UserMenu = ({ showUserMenu, hideUserMenuFn }: Props) => {
             <div className = "menu-bar">
                 <button onClick = { hideUserMenuFn }>X</button>
             </div>
-            User Menu Component
+            <div className = "menu-content-container">
+                <button>Log out</button>
+            </div>
         </section>
     )
 }
