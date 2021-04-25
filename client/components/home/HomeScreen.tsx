@@ -1,29 +1,22 @@
 import React from 'react'
-import { MapStateFn, connect } from '../../store/store'
-import { UserState } from '../../store/globalReducer'
+import Navbar from '../navbar/Navbar'
 
 import ChatApp from '../chat/ChatApp'
+import { UserState } from '../../store/globalReducer'
 
-type StateProps = {
+type Props = {
     user: UserState
 }
 
-const HomeScreenView = ({ user }: StateProps) => {
+const HomeScreen = ({ user }: Props) => {
+    if (user.username) return <ChatApp />
+
     return (
         <section className = "home-screen">
-            {
-                user.username
-                ? <ChatApp />
-                : <h2>You need to be logged to chat</h2>
-            }
+            <Navbar />
+            <h2> You need to be logged in to chat</h2>
         </section>
     )
 }
-
-const mapState: MapStateFn<StateProps> = state => ({
-    user: state.global.user
-})
-
-const HomeScreen = connect(mapState, null)(HomeScreenView)
 
 export default HomeScreen

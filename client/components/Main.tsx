@@ -5,8 +5,13 @@ import LoginForm from './user-forms/LoginForm'
 import RegisterForm from './user-forms/RegisterForm'
 import HomeScreen from './home/HomeScreen'
 import NotFound from './others/NotFound'
+import { UserState } from '../store/globalReducer'
 
-const Main = () => {
+type Props = {
+    user: UserState
+}
+
+const Main = ({ user }: Props) => {
     return (
         <main>
             <Switch>
@@ -17,7 +22,7 @@ const Main = () => {
                     <RegisterForm />
                 </Route>
                 <Route exact path = "/">
-                    <HomeScreen />
+                    <HomeScreen user = { user }/>
                 </Route>
                 <Route>
                     <NotFound />

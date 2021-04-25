@@ -6,7 +6,6 @@ import { jwtCookieName } from '../../server/configVars'
 import { resHasError } from '../api/utils'
 import { getUserInfoWToken } from '../api/userApi'
 
-import Navbar from './navbar/Navbar'
 import Main from './Main'
 import NotificationsContainer from './others/notifications/NotificationsContainer'
 import { UserState } from '../store/globalReducer'
@@ -43,8 +42,7 @@ const AppView = ({ user, recordUser }: Props) => {
     return (
         <BrowserRouter>
             <div className = "app-container">
-                <Navbar />
-                <Main />
+                <Main user = { user }/>
                 <NotificationsContainer />
             </div>
         </BrowserRouter>
