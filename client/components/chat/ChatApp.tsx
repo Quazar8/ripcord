@@ -1,7 +1,9 @@
 import React from 'react'
 import { UserState } from '../../store/globalReducer'
 import { connect, MapDispatchFn, MapStateFn } from '../../store/store'
-import { toggleUserMenuAction } from '../../store/globalActions'
+import { toggleUserMenuAction, removeUserInfoAction } from '../../store/globalActions'
+import { logoutUser } from '../../api/userApi'
+import { resHasError } from '../../api/utils'
 
 import ChatDisplay from './ChatDisplay'
 import ChatMenu from './ChatMenu'
@@ -14,22 +16,24 @@ type StateProps = {
 
 type DispProps = {
     showUserMenuFn: () => void,
-    hideUserMenuFn: () => void
+    hideUserMenuFn: () => void,
+    logoutFn: () => void
 }
 
 type Props = StateProps & DispProps
 
-const ChatAppView = ({ user, showUserMenu, showUserMenuFn, hideUserMenuFn }: Props) => {
+const ChatAppView = ( props: Props) => {
     return (
         <section className = "chat-app">
             <ChatMenu 
-                user = { user }
-                showUserMenuFn = { showUserMenuFn }
+                user = { props.user }
+                showUserMenuFn = { props.showUserMenuFn }
             />
             <ChatDisplay />
             <UserMenu 
-                showUserMenu = { showUserMenu }
-                hideUserMenuFn = { hideUserMenuFn }
+                showUserMenu = { props.showUserMenu }
+                hideUserMenuFn = { props.hideUserMenuFn }
+                logoutFn = { props.logoutFn }
             />
         </section>
     )
@@ -46,6 +50,13 @@ const mapDisp: MapDispatchFn<DispProps> = (dispatch) => ({
     },
     hideUserMenuFn: () => {
         dispatch(toggleUserMenuAction(false))
+    },
+    logoutFn: async () => {
+        const res = await logoutUser()
+
+        if (resHasError(res)) return
+
+        dispatch(removeUserInfoAction())
     }
 })
 

@@ -2,19 +2,20 @@ import React from 'react'
 
 type Props = {
     showUserMenu: boolean,
-    hideUserMenuFn: () => void
+    hideUserMenuFn: () => void,
+    logoutFn: () => void
 }
 
-const UserMenu = ({ showUserMenu, hideUserMenuFn }: Props) => {
-    if (!showUserMenu) return null
+const UserMenu = (props: Props) => {
+    if (!props.showUserMenu) return null
 
     return (
         <section className = "user-menu">
             <div className = "menu-bar">
-                <button onClick = { hideUserMenuFn }>X</button>
+                <button onClick = { props.hideUserMenuFn }>X</button>
             </div>
             <div className = "menu-content-container">
-                <button>Log out</button>
+                <button onClick = { props.logoutFn }>Log out</button>
             </div>
         </section>
     )
