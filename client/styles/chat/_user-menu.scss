@@ -21,6 +21,12 @@
             width: 3vw;
             height: 3vw;
             text-align: center;
+            transition: transform 0.3s ease-out;
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.1);
+            }
         }
     }
 
