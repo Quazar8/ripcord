@@ -5,7 +5,7 @@ import { toggleUserMenuAction, removeUserInfoAction } from '../../store/globalAc
 import { logoutUser } from '../../api/userApi'
 import { resHasError } from '../../api/utils'
 
-import ChatDisplay from './ChatDisplay'
+import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
 
@@ -22,14 +22,14 @@ type DispProps = {
 
 type Props = StateProps & DispProps
 
-const ChatAppView = ( props: Props) => {
+const ChatAppView = (props: Props) => {
     return (
         <section className = "chat-app">
             <ChatMenu 
                 user = { props.user }
                 showUserMenuFn = { props.showUserMenuFn }
             />
-            <ChatDisplay />
+            <RightWindow />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
                 hideUserMenuFn = { props.hideUserMenuFn }
