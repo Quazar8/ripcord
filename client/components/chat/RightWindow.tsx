@@ -1,7 +1,11 @@
 import React from 'react'
 import ChatDisplay from './ChatDisplay'
 
-const RightWindow = () => {
+type Props = {
+    showFriendsWindow: boolean
+}
+
+const RightWindow = (props: Props) => {
     return (
         <section className = "right-window">
             <ChatDisplay />

@@ -11,7 +11,8 @@ import UserMenu from './UserMenu'
 
 type StateProps = {
     user: UserState,
-    showUserMenu: boolean
+    showUserMenu: boolean,
+    showFriendsWindow: boolean
 }
 
 type DispProps = {
@@ -29,7 +30,9 @@ const ChatAppView = (props: Props) => {
                 user = { props.user }
                 showUserMenuFn = { props.showUserMenuFn }
             />
-            <RightWindow />
+            <RightWindow 
+                showFriendsWindow = { props.showFriendsWindow }
+            />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
                 hideUserMenuFn = { props.hideUserMenuFn }
@@ -41,7 +44,8 @@ const ChatAppView = (props: Props) => {
 
 const mapState: MapStateFn<StateProps> = (state) => ({
     user: state.global.user,
-    showUserMenu: state.global.showUserOptions
+    showUserMenu: state.global.showUserOptions,
+    showFriendsWindow: state.global.showFriendsWindow
 })
 
 const mapDisp: MapDispatchFn<DispProps> = (dispatch) => ({
