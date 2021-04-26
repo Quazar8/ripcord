@@ -18,7 +18,7 @@ type StateProps = {
 type DispProps = {
     showUserMenuFn: () => void,
     hideUserMenuFn: () => void,
-    showFriendsWindowFn: () => void,
+    toggleFriendsWindowFn: () => void,
     logoutFn: () => void
 }
 
@@ -30,7 +30,7 @@ const ChatAppView = (props: Props) => {
             <ChatMenu 
                 user = { props.user }
                 showUserMenuFn = { props.showUserMenuFn }
-                showFriendsWindowFn = { props.showFriendsWindowFn }
+                toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
             />
             <RightWindow 
                 showFriendsWindow = { props.showFriendsWindow }
@@ -50,7 +50,7 @@ const mapState: MapStateFn<StateProps> = (state) => ({
     showFriendsWindow: state.global.showFriendsWindow
 })
 
-const mapDisp: MapDispatchFn<DispProps> = (dispatch) => ({
+const mapDisp: MapDispatchFn<DispProps> = (dispatch, state) => ({
     showUserMenuFn: () => {
         dispatch(toggleUserMenuAction(true))
     },
@@ -64,8 +64,8 @@ const mapDisp: MapDispatchFn<DispProps> = (dispatch) => ({
 
         dispatch(removeUserInfoAction())
     },
-    showFriendsWindowFn: () => {
-        dispatch(toggleFriendsWindow(true))
+    toggleFriendsWindowFn: () => {
+        dispatch(toggleFriendsWindow(!state.global.showFriendsWindow))
     }
 })
 

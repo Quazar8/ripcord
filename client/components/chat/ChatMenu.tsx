@@ -7,14 +7,14 @@ import ChatMenuButtons from './ChatMenuButtons'
 type Props = {
     user: UserState,
     showUserMenuFn: () => void,
-    showFriendsWindowFn: () => void
+    toggleFriendsWindowFn: () => void
 }
 
 const ChatMenu = (props: Props) => {
     return (
         <section className = "chat-menu">
             <ChatMenuButtons 
-                showFriendsWindowFn = { props.showFriendsWindowFn }
+                toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
             />
             <Nameplate 
                 username = { props.user.username } 
