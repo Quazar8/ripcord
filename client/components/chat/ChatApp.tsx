@@ -1,7 +1,7 @@
 import React from 'react'
 import { UserState } from '../../store/globalReducer'
 import { connect, MapDispatchFn, MapStateFn } from '../../store/store'
-import { toggleUserMenuAction, removeUserInfoAction } from '../../store/globalActions'
+import { toggleUserMenuAction, removeUserInfoAction, toggleFriendsWindow } from '../../store/globalActions'
 import { logoutUser } from '../../api/userApi'
 import { resHasError } from '../../api/utils'
 
@@ -12,12 +12,13 @@ import UserMenu from './UserMenu'
 type StateProps = {
     user: UserState,
     showUserMenu: boolean,
-    showFriendsWindow: boolean
+    showFriendsWindow: boolean,
 }
 
 type DispProps = {
     showUserMenuFn: () => void,
     hideUserMenuFn: () => void,
+    showFriendsWindowFn: () => void,
     logoutFn: () => void
 }
 
@@ -29,6 +30,7 @@ const ChatAppView = (props: Props) => {
             <ChatMenu 
                 user = { props.user }
                 showUserMenuFn = { props.showUserMenuFn }
+                showFriendsWindowFn = { props.showFriendsWindowFn }
             />
             <RightWindow 
                 showFriendsWindow = { props.showFriendsWindow }
@@ -61,6 +63,9 @@ const mapDisp: MapDispatchFn<DispProps> = (dispatch) => ({
         if (resHasError(res)) return
 
         dispatch(removeUserInfoAction())
+    },
+    showFriendsWindowFn: () => {
+        dispatch(toggleFriendsWindow(true))
     }
 })
 
