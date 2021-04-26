@@ -1,9 +1,13 @@
 import React from 'react'
 
-const ChatMenuButtons = () => {
+type Props = {
+    showFriendsWindowFn: () => void
+}
+
+const ChatMenuButtons = (props: Props) => {
     return (
         <div className = "chat-menu-buttons-container">
-            <button>Friends (Not Implemented)</button>
+            <button onClick = { props.showFriendsWindowFn }>Friends (Not Implemented)</button>
         </div>
     )
 }

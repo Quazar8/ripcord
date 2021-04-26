@@ -13,7 +13,9 @@ type Props = {
 const ChatMenu = (props: Props) => {
     return (
         <section className = "chat-menu">
-            <ChatMenuButtons />
+            <ChatMenuButtons 
+                showFriendsWindowFn = { props.showFriendsWindowFn }
+            />
             <Nameplate 
                 username = { props.user.username } 
                 showUserMenuFn = { props.showUserMenuFn }
