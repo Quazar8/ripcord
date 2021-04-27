@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { User, IUserModel, IUserDoc } from '../../db/models/models.js'
 import { errorResponse, successResponse } from '../../responses.js'
+import { loginUser } from './login.js'
 
 const registerHandler = (req: Request, res: Response): void => {
     const { username, password, confirmPassword } = req.body 
@@ -18,8 +19,8 @@ const registerHandler = (req: Request, res: Response): void => {
         }
 
         const user = new User(userCandiate)
-        user.save().then(() => {
-            res.status(200).send(successResponse(null, 'User registered'))
+        user.save().then((user: IUserDoc) => {
+            loginUser(req, res, user)
         }).catch(err => {
             console.error(err)
             res.status(500).send(errorResponse('Error ocured registering the user'))
@@ -27,6 +28,11 @@ const registerHandler = (req: Request, res: Response): void => {
     }
 
     User.findOne({ username }, (err: Error, user: IUserDoc) => {
+        if (err) {
+            res.status(500).send(errorResponse('Something went wrong'))
+            return
+        }
+
         if (user) {
             res.status(400).send(errorResponse('User already exists'))
             return
