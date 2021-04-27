@@ -8,6 +8,10 @@ export const loginServer = async (data: LoginEntryObj): Promise<ServerResponse<U
     return res.json()
 }
 
+export const registerUser = async(data: LoginEntryObj): Promise<ServerResponse<UserLoggedObj>> => {
+    return (await fetch(baseUrl + UserUrls.register, postQueryOptions(data))).json()
+}
+
 export const getUserInfoWToken = async (): Promise<ServerResponse<UserLoggedObj>> => {
     return (await fetch(baseUrl + UserUrls.getLoggedUser, getQueryOptions(true))).json()
 }
