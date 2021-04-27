@@ -6,17 +6,19 @@ import registerHandler from './register.js'
 import { userInfoFromToken } from './userInfo.js'
 import { logoutHandler } from './logout.js'
 import { findFriend } from './findUser.js'
+import UserUrls from './UserUrls.js'
+
 
 const enableUserRoutes = (app: Application) => {
-    app.post('/user/login', loginHandler)
+    app.post(UserUrls.login, loginHandler)
 
-    app.post('/user/register', registerHandler)
+    app.post(UserUrls.register, registerHandler)
 
-    app.get('/user/loggedUserInfo', userInfoFromToken)
+    app.get(UserUrls.getLoggedUser, userInfoFromToken)
 
-    app.get('/user/logout', authenticateUser, logoutHandler)
+    app.get(UserUrls.logout, authenticateUser, logoutHandler)
 
-    app.get('/user/find/friend', authenticateUser, findFriend)
+    app.get(UserUrls.findFriend, authenticateUser, findFriend)
 }
 
 export default enableUserRoutes
