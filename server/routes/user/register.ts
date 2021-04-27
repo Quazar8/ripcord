@@ -13,7 +13,8 @@ const registerHandler = (req: Request, res: Response): void => {
         const userCandiate: IUserModel = {
             username,
             password,
-            registeredAt: new Date(Date.now())
+            registeredAt: new Date(Date.now()),
+            friendsIds: []
         }
 
         const user = new User(userCandiate)
