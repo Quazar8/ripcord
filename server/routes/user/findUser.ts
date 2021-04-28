@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { IUserDoc, User } from '../../db/models/models.js'
-import { UserInfo } from "./userTypes.js";
+import { UserInfo } from "./UserTypes.js";
 import { Document } from "mongoose";
 
 type FoundFriendInfo = Pick<UserInfo, 'username' | 'id'>

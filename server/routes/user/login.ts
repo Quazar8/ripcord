@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { User, IUserDoc } from '../../db/models/models.js'
 import { errorResponse, ServerResponse, successResponse } from '../../responses.js'
-import { UserLoggedObj, LoginEntryObj } from './userTypes'
+import { UserLoggedObj, LoginEntryObj } from './UserTypes'
 import jwt from 'jsonwebtoken'
 import { jwtKey, jwtCookieName } from '../../configVars.js'
 
