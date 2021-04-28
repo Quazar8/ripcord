@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
-import { successResponse, errorResponse } from '../../responses.js'
+import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { IUserDoc, User } from '../../db/models/models.js'
 import { UserInfo } from "./userTypes.js";
 import { Document } from "mongoose";
+
+export type FindFriendRes = ServerResponse<{
+    found: UserInfo
+}>
 
 const isUserDoc = (doc: Document): doc is IUserDoc => {
     return doc?._id
@@ -16,6 +20,8 @@ export const findFriend = async (req: Request, res: Response) => {
     }
 
     const found = await User.findOne({ username })
+    
+    let response: FindFriendRes = null
     if (isUserDoc(found)) {
         const userInfo: UserInfo = {
             id: found._id,
@@ -24,8 +30,10 @@ export const findFriend = async (req: Request, res: Response) => {
             friendsIds: found.friendsIds
         }
 
-        res.send(successResponse({ found: userInfo }, ''))
+        response = successResponse({ found: userInfo }, '')
     } else {
-        res.send(successResponse({}, 'No user found'))
+        response = successResponse({ found: null }, 'No user found')
     }
+
+    res.send(response)
 }
