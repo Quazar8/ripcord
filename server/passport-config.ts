@@ -28,6 +28,7 @@ const configurePassport = (): void => {
 
             if (user) {
                 const reqUser: UserInfo = {
+                    id: user._id,
                     username: user.username,
                     registeredAt: user.registeredAt,
                     friendsIds: user.friendsIds
