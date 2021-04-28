@@ -4,8 +4,10 @@ import { IUserDoc, User } from '../../db/models/models.js'
 import { UserInfo } from "./userTypes.js";
 import { Document } from "mongoose";
 
+type FoundFriendInfo = Pick<UserInfo, 'username' | 'id'>
+
 export type FindFriendRes = ServerResponse<{
-    found: UserInfo
+    found: FoundFriendInfo
 }>
 
 const isUserDoc = (doc: Document): doc is IUserDoc => {
@@ -23,11 +25,9 @@ export const findFriend = async (req: Request, res: Response) => {
     
     let response: FindFriendRes = null
     if (isUserDoc(found)) {
-        const userInfo: UserInfo = {
+        const userInfo: FoundFriendInfo = {
             id: found._id,
             username: found.username,
-            registeredAt: found.registeredAt,
-            friendsIds: found.friendsIds
         }
 
         response = successResponse({ found: userInfo }, '')
