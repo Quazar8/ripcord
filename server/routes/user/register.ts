@@ -1,7 +1,9 @@
 import { Request, Response } from 'express'
 import { User, IUserModel, IUserDoc } from '../../db/models/models.js'
-import { errorResponse, successResponse } from '../../responses.js'
-import { loginUser } from './login.js'
+import { errorResponse } from '../../responses.js'
+import { LoginResponse, loginUser } from './login.js'
+
+export type RegisterResponse = LoginResponse
 
 const registerHandler = (req: Request, res: Response): void => {
     const { username, password, confirmPassword } = req.body 

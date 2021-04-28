@@ -1,9 +1,11 @@
 import { Request, Response } from 'express'
 import { User, IUserDoc } from '../../db/models/models.js'
-import { errorResponse, successResponse, SuccessResponseType } from '../../responses.js'
+import { errorResponse, ServerResponse, successResponse } from '../../responses.js'
 import { UserLoggedObj, LoginEntryObj } from './userTypes'
 import jwt from 'jsonwebtoken'
 import { jwtKey, jwtCookieName } from '../../configVars.js'
+
+export type LoginResponse = ServerResponse<UserLoggedObj>
 
 export const loginUser = (req: Request, res: Response, user: IUserDoc) => {
     const userToLog = {
@@ -29,14 +31,13 @@ export const loginUser = (req: Request, res: Response, user: IUserDoc) => {
             sameSite: 'lax'
         })
 
-        const responseObj: SuccessResponseType<UserLoggedObj>
-                    = successResponse<UserLoggedObj>({
+        const response: LoginResponse = successResponse({
             username: user.username,
             registeredAt: user.registeredAt,
             token
         }, 'Logged in')
 
-        res.status(200).send(responseObj)
+        res.status(200).send(response)
     })
 }
 
