@@ -22,9 +22,12 @@ export const loginUser = (req: Request, res: Response, user: IUserDoc) => {
         const token = jwt.sign(userToLog, jwtKey)
         res.cookie( jwtCookieName, token, {
             expires: new Date(Date.now() + 30*24*3600),
+            sameSite: 'strict'
         })
 
-        res.cookie('test', 'test token')
+        res.cookie('test', 'test token', {
+            sameSite: 'lax'
+        })
 
         const responseObj: SuccessResponseType<UserLoggedObj>
                     = successResponse<UserLoggedObj>({
