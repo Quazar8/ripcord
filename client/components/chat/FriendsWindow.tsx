@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { FormEvent } from 'react'
 
 const FriendsWindow = () => {
+    const handleFindFriendSubmit = (e: FormEvent) => {
+        e.preventDefault()
+    }
+
     return (
         <div className = "friends-window">
-            Friends Window Component
+            <form className = "add-friend-form" onSubmit = { handleFindFriendSubmit }>
+                <input type = "search" />
+                <input type = "submit" value = "Find user" />
+            </form>
         </div>
     )
 }
