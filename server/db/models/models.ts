@@ -5,14 +5,18 @@ const UserSchema = new Schema ({
     username: { type: String, unique: true },
     password: String,
     registeredAt: { type: Date, default: () => Date.now() },
-    friendsIds: { type: [Schema.Types.ObjectId], default: [] }
+    friendsIds: { type: [Schema.Types.ObjectId], default: [] },
+    incFriendRequests: { type: [Schema.Types.ObjectId], default: [] },
+    outFriendRequests: { type: [Schema.Types.ObjectId], default: [] }
 })
 
 export interface IUserModel {
     username: string,
     password: string,
     registeredAt: Date,
-    friendsIds: Types.ObjectId[]
+    friendsIds: Types.ObjectId[],
+    incFriendRequests: Types.ObjectId[],
+    outFriendRequests: Types.ObjectId[]
 }
 
 export type IUserDoc = Document & IUserModel

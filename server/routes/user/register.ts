@@ -13,14 +13,16 @@ const registerHandler = (req: Request, res: Response): void => {
     }
 
     const saveUser = () => {
-        const userCandiate: IUserModel = {
+        const userCandidate: IUserModel = {
             username,
             password,
             registeredAt: new Date(Date.now()),
-            friendsIds: []
+            friendsIds: [],
+            outFriendRequests: [],
+            incFriendRequests: []
         }
 
-        const user = new User(userCandiate)
+        const user = new User(userCandidate)
         user.save().then((user: IUserDoc) => {
             loginUser(req, res, user)
         }).catch(err => {
