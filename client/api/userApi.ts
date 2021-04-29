@@ -6,7 +6,7 @@ import { LoginResponse,
          RegisterResponse, 
          LogoutResponse, 
          UserFromTokenResponse, 
-         FindFriendRes } from '../../server/routes/user/ResponseTypes'
+         AddFriendRes } from '../../server/routes/user/ResponseTypes'
 
 export const loginServer = async (data: LoginEntryObj): Promise<LoginResponse> => {
     const res = await fetch(baseUrl + UserUrls.login, postQueryOptions(data))
@@ -25,7 +25,7 @@ export const logoutUser = async (): Promise<LogoutResponse> => {
     return (await fetch(baseUrl + UserUrls.logout, getQueryOptions(true))).json()
 }
 
-export const findFriend = async (username: string): Promise<FindFriendRes> => {
+export const addFriend = async (username: string): Promise<AddFriendRes> => {
     let url = baseUrl + UserUrls.findFriend
     url += `?username=${username}`
 

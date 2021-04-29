@@ -1,20 +1,18 @@
 import { Request, Response } from "express";
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { IUserDoc, User } from '../../db/models/models.js'
-import { UserInfo } from "./UserTypes.js";
-import { Document } from "mongoose";
+import { Document } from "mongoose"
 
-type FoundFriendInfo = Pick<UserInfo, 'username' | 'id'>
-
-export type FindFriendRes = ServerResponse<{
-    found: FoundFriendInfo
+export type AddFriendRes = ServerResponse<{
+    found: boolean,
+    sentRequest: boolean
 }>
 
 const isUserDoc = (doc: Document): doc is IUserDoc => {
     return doc?._id
 }
 
-export const findFriend = async (req: Request, res: Response) => {
+export const addFriend = async (req: Request, res: Response) => {
     const { username } = req.query
     if (!username) {
         res.status(400).send(errorResponse('Bad request'))
@@ -23,16 +21,17 @@ export const findFriend = async (req: Request, res: Response) => {
 
     const found = await User.findOne({ username })
     
-    let response: FindFriendRes = null
+    let response: AddFriendRes = null
     if (isUserDoc(found)) {
-        const userInfo: FoundFriendInfo = {
-            id: found._id,
-            username: found.username,
-        }
-
-        response = successResponse({ found: userInfo }, '')
+        response = successResponse({ 
+            found: true,
+            sentRequest: false
+        } , '')
     } else {
-        response = successResponse({ found: null }, 'No user found')
+        response = successResponse({
+            sentRequest: false,
+            found: false
+        }, 'No user found')
     }
 
     res.send(response)
