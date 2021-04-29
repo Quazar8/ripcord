@@ -5,6 +5,12 @@ import * as net from 'net'
 import { getCookies, Cookies } from '../utils.js'
 import { UserInfo } from '../routes/user/UserTypes'
 
+type OnlineUsers = {
+    [key: string]: ws
+}
+
+export const onlineUsers: OnlineUsers = {}
+
 type IncMessWCookies = IncomingMessage & {
     cookies: Cookies
 }
@@ -16,6 +22,8 @@ export const websocketServer = (server: Server) => {
 
     socketServer.on('connection', (socket: ws, req: IncMessWCookies, user: UserInfo) => {
         console.log('user connected', user)
+        onlineUsers[user.id.toHexString()] = socket
+
         socket.on('message', (msg) => {
             console.log('received message', msg)
         })
