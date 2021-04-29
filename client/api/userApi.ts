@@ -1,21 +1,30 @@
 import { baseUrl, postQueryOptions, getQueryOptions } from './reqOptions'
-import { LoginEntryObj, UserLoggedObj } from '../../server/routes/user/userTypes'
-import { ServerResponse } from '../../server/responses'
+import { LoginEntryObj } from '../../server/routes/user/userTypes'
 import UserUrls from '../../server/routes/user/UserUrls'
 
-export const loginServer = async (data: LoginEntryObj): Promise<ServerResponse<UserLoggedObj>> => {
+import { LoginResponse,
+         RegisterResponse, 
+         LogoutResponse, 
+         UserFromTokenResponse, 
+         FindFriendRes } from '../../server/routes/user/ResponseTypes'
+
+export const loginServer = async (data: LoginEntryObj): Promise<LoginResponse> => {
     const res = await fetch(baseUrl + UserUrls.login, postQueryOptions(data))
     return res.json()
 }
 
-export const registerUser = async(data: LoginEntryObj): Promise<ServerResponse<UserLoggedObj>> => {
+export const registerUser = async(data: LoginEntryObj): Promise<RegisterResponse> => {
     return (await fetch(baseUrl + UserUrls.register, postQueryOptions(data))).json()
 }
 
-export const getUserInfoWToken = async (): Promise<ServerResponse<UserLoggedObj>> => {
+export const getUserInfoWToken = async (): Promise<UserFromTokenResponse> => {
     return (await fetch(baseUrl + UserUrls.getLoggedUser, getQueryOptions(true))).json()
 }
 
-export const logoutUser = async (): Promise<ServerResponse<Object>> => {
+export const logoutUser = async (): Promise<LogoutResponse> => {
     return (await fetch(baseUrl + UserUrls.logout, getQueryOptions(true))).json()
+}
+
+export const findFriend = async (): Promise<FindFriendRes> => {
+    return (await fetch(baseUrl + UserUrls.findFriend, getQueryOptions(true))).json()
 }
