@@ -25,6 +25,9 @@ export const logoutUser = async (): Promise<LogoutResponse> => {
     return (await fetch(baseUrl + UserUrls.logout, getQueryOptions(true))).json()
 }
 
-export const findFriend = async (): Promise<FindFriendRes> => {
-    return (await fetch(baseUrl + UserUrls.findFriend, getQueryOptions(true))).json()
+export const findFriend = async (username: string): Promise<FindFriendRes> => {
+    let url = baseUrl + UserUrls.findFriend
+    url += `?username=${username}`
+
+    return (await fetch(url, getQueryOptions(true))).json()
 }
