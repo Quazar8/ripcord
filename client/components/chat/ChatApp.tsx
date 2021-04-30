@@ -46,6 +46,10 @@ const ChatAppView = (props: Props) => {
             console.log('received message', msg.data)
         }
 
+        return () => {
+            socket.close()
+        }
+
     }, [])
 
     return (
