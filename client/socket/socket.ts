@@ -2,7 +2,7 @@ import { pushNotification } from '../store/globalActions'
 
 export let socket: WebSocket = null
 
-export const establishWS = () => {
+export const establishWS = (dispNotification: ReturnType<typeof pushNotification>) => {
     if (socket !== null) {
         return
     }
@@ -13,8 +13,10 @@ export const establishWS = () => {
         console.log('socket connection is opened')
     }
 
+        dispNotification('error', 'Error connecting to the chat service')
     socket.onerror = (ev) => {
         console.log('Error connecting socket')
+        dispNotification('error', 'Error connecting to the chat service')
         // socket = establishWS()
     }
 
