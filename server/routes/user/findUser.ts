@@ -1,9 +1,8 @@
 import { Response } from "express";
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { IUserDoc, User } from '../../db/models/models.js'
-import { } from '../user/UserTypes'
 import { onlineUsers } from '../../websocket/wsServer.js'
-import { Document } from "mongoose"
+import { Document, Types } from "mongoose"
 import { ReqWUser } from '../../types/RequestTypes'
 
 export type AddFriendRes = ServerResponse<{
@@ -24,20 +23,33 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
 
     const found = await User.findOne({ username })
     
-    let response: AddFriendRes = null
-    if (isUserDoc(found)) {
-        found.incFriendRequests.push(req.user.id)
+    let updateUser = async (requesterId: Types.ObjectId, foundFriend: IUserDoc): Promise<AddFriendRes> => {
+        let resp: AddFriendRes = null
+        foundFriend.incFriendRequests.push(requesterId)
 
         try {
-            const updated = await found.save()
-            response = successResponse({ 
+            await foundFriend.save()
+            const socket = onlineUsers[foundFriend.id]
+            console.log('socket', socket.send)
+            if (socket) {
+                socket.send(JSON.stringify({ type: 'Friend-Notice'}))
+            }
+
+            resp = successResponse({
                 found: true,
-                sentRequest: false
+                sentRequest: true
             }, '')
-        } 
-        catch {
-            response = errorResponse('Something went wrong')
         }
+        catch {
+            resp = errorResponse('Something went wrong')
+        }        
+
+        return resp
+    }
+
+    let response: AddFriendRes = null
+    if (isUserDoc(found)) {
+        response = await updateUser(req.user.id, found)
     } else {
         response = successResponse({
             sentRequest: false,
