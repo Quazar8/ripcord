@@ -27,6 +27,11 @@ export const websocketServer = (server: Server) => {
         socket.on('message', (msg) => {
             console.log('received message', msg)
         })
+
+        socket.onclose = (ev) => {
+            console.log(`connection with ${user.username} is closed`)
+            delete onlineUsers[user.id.toHexString()]
+        }
     })
 
     server.on('upgrade', (req: IncMessWCookies, socket: net.Socket, head) => {
@@ -39,7 +44,6 @@ export const websocketServer = (server: Server) => {
             }
 
             socketServer.handleUpgrade(req, socket, head, (doneSocket) => {
-                console.log('emiting connection event')
                 socketServer.emit('connection', doneSocket, req, user)
             })
         })(req)
