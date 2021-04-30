@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { establishWS, socket } from '../../socket/socket'
 import { UserState } from '../../store/globalReducer'
 import { connect, MapDispatchFn, MapStateFn } from '../../store/store'
 import { logoutUser } from '../../api/userApi'
@@ -29,27 +30,12 @@ type DispProps = {
 type Props = StateProps & DispProps
 
 const ChatAppView = (props: Props) => {
-    let socket: WebSocket = null
-
     useEffect(() => {
-        socket = new WebSocket('ws://localhost:8000')
-        socket.onopen = (ev) => {
-            console.log('socket connection is opened')
-        }
-
-        socket.onerror = (ev) => {
-            console.log('Error connecting socket')
-            props.dispNotification('error', 'Error connecting to the chat.')
-        }
-
-        socket.onmessage = (msg) => {
-            console.log('received message', msg.data)
-        }
+        establishWS()
 
         return () => {
             socket.close()
         }
-
     }, [])
 
     return (
