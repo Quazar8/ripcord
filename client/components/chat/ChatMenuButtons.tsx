@@ -1,5 +1,7 @@
 import React from 'react'
 
+import NotifAttach from '../others/notifications/NotifAttach'
+
 type Props = {
     toggleFriendsWindowFn: () => void
 }
@@ -7,7 +9,10 @@ type Props = {
 const ChatMenuButtons = (props: Props) => {
     return (
         <div className = "chat-menu-buttons-container">
-            <button onClick = { props.toggleFriendsWindowFn }>Friends (Not Implemented)</button>
+            <div className = "button-container">
+                <button onClick = { props.toggleFriendsWindowFn }>Friends (Not Implemented)</button>
+                <NotifAttach amount = { 2 } />
+            </div>
         </div>
     )
 }

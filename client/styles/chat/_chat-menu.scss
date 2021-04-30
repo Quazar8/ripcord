@@ -12,6 +12,10 @@
     display: flex;
     flex-direction: column;
 
+    .button-container {
+        position: relative;
+    }
+
     button {
         background: inherit;
         border: none;
