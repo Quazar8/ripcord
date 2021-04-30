@@ -7,28 +7,13 @@ type DIspProps = {
 }
 
 const ChatDisplayView = ({ pushNotification }: DIspProps) => {
-    let socket: WebSocket = null
-
-    useEffect(() => {
-        socket = new WebSocket('ws://localhost:8000')
-        socket.onopen = (ev) => {
-            console.log('socket connection is opened')
-        }
-
-        socket.onerror = (ev) => {
-            console.log('Error connecting socket')
-            pushNotification('error', 'Error connecting to the chat.')
-        }
-
-    }, [])
-
-    const sendInputRef: React.MutableRefObject<HTMLInputElement> = useRef(null)
+    const sendInputRef = useRef<HTMLInputElement>(null)
     
     const sendMsg = () => {
-        const msg = sendInputRef.current.value
-        if (socket?.readyState === 1 && msg) {
-            socket?.send(msg)
-        }
+        // const msg = sendInputRef.current.value
+        // if (socket?.readyState === 1 && msg) {
+        //     socket?.send(msg)
+        // }
         
         pushNotification('info', 'Not implemented yet')
     }
