@@ -55,7 +55,7 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
 
     let response: AddFriendRes = null
     if (isUserDoc(found)) {
-        if (found._id === req.user.id) {
+        if (req.user.id.equals(found._id)) {
             response = errorResponse('You cannot add yourself')
         } else {
             response = await updateUser(req.user.id, found)
