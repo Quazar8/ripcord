@@ -4,6 +4,7 @@ import { IUserDoc, User } from '../../db/models/models.js'
 import { onlineUsers } from '../../websocket/wsServer.js'
 import { Document, Types } from "mongoose"
 import { ReqWUser } from '../../types/RequestTypes'
+import { WSMessage, WSDataType } from '../../types/WebsocketTypes'
 
 export type AddFriendRes = ServerResponse<{
     found: boolean,
@@ -30,9 +31,14 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
         try {
             await foundFriend.save()
             const socket = onlineUsers[foundFriend.id]
-            console.log('socket', socket.send)
+            
             if (socket) {
-                socket.send(JSON.stringify({ type: 'Friend-Notice'}))
+                const msg: WSMessage<null> = {
+                    type: WSDataType.FRIEND_REQUEST,
+                    payload: null
+                }
+
+                socket.send(JSON.stringify(msg))
             }
 
             resp = successResponse({
