@@ -1,7 +1,7 @@
-import React, { Dispatch, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { establishWS, socket } from '../../socket/socket'
 import { UserState } from '../../store/globalReducer'
-import { AppAction, connect, MapDispatchFn, MapStateFn } from '../../store/store'
+import { connect, MapDispatchFn, MapStateFn } from '../../store/store'
 import { logoutUser } from '../../api/userApi'
 import { resHasError } from '../../api/utils'
 import { toggleUserMenuAction, 
@@ -47,6 +47,7 @@ const ChatAppView = (props: Props) => {
             />
             <RightWindow 
                 showFriendsWindow = { props.showFriendsWindow }
+                dispNotification = { props.dispNotification }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
