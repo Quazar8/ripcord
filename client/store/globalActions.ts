@@ -7,7 +7,8 @@ export enum GlobalActionTypes {
     RecordUserInfo,
     RemoveUserInfo,
     ToggleUserMenu,
-    ToggleFriendsWindow
+    ToggleFriendsWindow,
+    FriendNotification
 }
 
 export type Notification = {
@@ -72,3 +73,8 @@ export const toggleFriendsWindow = (show: boolean): GlobalAction => ({
     type: GlobalActionTypes.ToggleFriendsWindow,
     payload: show
 })
+
+export const friendNotificationAction = (): GlobalAction => ({
+    type: GlobalActionTypes.FriendNotification,
+    payload: null
+}) 

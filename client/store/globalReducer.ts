@@ -4,10 +4,11 @@ import { GlobalActionTypes, Notification, IUser } from './globalActions'
 export type UserState = IUser
 
 export type GlobalState = {
-    notifications: Notification[],
-    user: UserState,
-    showUserOptions: boolean,
+    notifications: Notification[]
+    user: UserState
+    showUserOptions: boolean
     showFriendsWindow: boolean
+    friendNotification: number
 }
 
 export const globalInit: GlobalState = {
@@ -16,7 +17,8 @@ export const globalInit: GlobalState = {
         username: ''
     },
     showUserOptions: false,
-    showFriendsWindow: false
+    showFriendsWindow: false,
+    friendNotification: 0
 }
 
 const pushNotification = (currentState: GlobalState, notification: Notification): GlobalState => {
@@ -56,6 +58,13 @@ const toggleFriendsWindow = (state: GlobalState, show: boolean): GlobalState => 
     showFriendsWindow: show
 })
 
+const addFriendNotification = (state: GlobalState): GlobalState => {
+    return {
+        ...state,
+        friendNotification: state.friendNotification + 1
+    }
+}
+
 export const globalReducer = 
         (state: GlobalState = globalInit, action: Action<GlobalActionTypes, any>): GlobalState => {
     switch (action.type) {
@@ -71,6 +80,8 @@ export const globalReducer =
             return toggleUserMenu(state, action.payload)
         case GlobalActionTypes.ToggleFriendsWindow:
             return toggleFriendsWindow(state, action.payload)
+        case GlobalActionTypes.FriendNotification:
+            return addFriendNotification(state)
         default: return state
     }
 }
