@@ -4,7 +4,7 @@ import { IUserDoc, User } from '../../db/models/models.js'
 import { onlineUsers } from '../../websocket/wsServer.js'
 import { Document, Types } from "mongoose"
 import { ReqWUser } from '../../types/RequestTypes'
-import { WSMessage, WSDataType } from '../../types/WebsocketTypes'
+import { WSMessage, WSDataType } from '../../types/WebsocketTypes.js'
 
 export type AddFriendRes = ServerResponse<{
     found: boolean,
@@ -23,7 +23,7 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
     }
 
     const found = await User.findOne({ username })
-    
+
     let updateUser = async (requesterId: Types.ObjectId, foundFriend: IUserDoc): Promise<AddFriendRes> => {
         let resp: AddFriendRes = null
         foundFriend.incFriendRequests.push(requesterId)
@@ -31,7 +31,7 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
         try {
             await foundFriend.save()
             const socket = onlineUsers[foundFriend.id]
-            
+
             if (socket) {
                 const msg: WSMessage<null> = {
                     type: WSDataType.FRIEND_REQUEST,
@@ -55,7 +55,11 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
 
     let response: AddFriendRes = null
     if (isUserDoc(found)) {
-        response = await updateUser(req.user.id, found)
+        if (found._id === req.user.id) {
+            response = errorResponse('You cannot add yourself')
+        } else {
+            response = await updateUser(req.user.id, found)
+        }
     } else {
         response = successResponse({
             sentRequest: false,
