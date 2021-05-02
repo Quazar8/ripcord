@@ -1,4 +1,5 @@
 import { Dispatch } from 'react'
+import { UserClientInfo } from '../../server/routes/user/UserTypes'
 import { Action } from './storeComponents/StoreTypes'
 
 export enum GlobalActionTypes {
@@ -17,11 +18,7 @@ export type Notification = {
     type: 'info' | 'error' | 'success'
 }
 
-export interface IUser {
-    username: string,
-}
-
-export type GlobalPayloads = Notification | string | IUser
+export type GlobalPayloads = Notification | string | UserClientInfo 
 
 export type GlobalAction = Action<GlobalActionTypes, any>
 
@@ -33,7 +30,7 @@ export const addNotification =
     }
 }
 
-export const recordUserAction = (user: IUser): GlobalAction => ({
+export const recordUserAction = (user: UserClientInfo): GlobalAction => ({
     type: GlobalActionTypes.RecordUserInfo,
     payload: user
 })

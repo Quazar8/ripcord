@@ -1,24 +1,30 @@
 import { Action } from './storeComponents/StoreTypes'
-import { GlobalActionTypes, Notification, IUser } from './globalActions'
+import { GlobalActionTypes, Notification } from './globalActions'
+import { UserClientInfo } from '../../server/routes/user/UserTypes'
 
-export type UserState = IUser
+export type UserState = UserClientInfo
 
 export type GlobalState = {
     notifications: Notification[]
     user: UserState
     showUserOptions: boolean
     showFriendsWindow: boolean
-    friendNotification: number
+    friendNotifications: number
 }
 
 export const globalInit: GlobalState = {
     notifications: [],
     user: {
-        username: ''
+        username: '',
+        registeredAt: new Date(),
+        incFriendRequests: [],
+        outFriendRequests: [],
+        id: null,
+        friendsIds: []
     },
     showUserOptions: false,
     showFriendsWindow: false,
-    friendNotification: 0
+    friendNotifications: 0
 }
 
 const pushNotification = (currentState: GlobalState, notification: Notification): GlobalState => {
@@ -41,7 +47,10 @@ const removeNotification = (state: GlobalState, payload: Notification['id']) => 
 }
 
 const recordUserInfo = (state: GlobalState, user: UserState): GlobalState => {
-    return { ...state, user}
+    return { ...state,
+             user,
+            // friendNotifications: user.glob
+        }
 }
 
 const removeUserInfo = (state: GlobalState): GlobalState => {
@@ -61,7 +70,7 @@ const toggleFriendsWindow = (state: GlobalState, show: boolean): GlobalState => 
 const addFriendNotification = (state: GlobalState): GlobalState => {
     return {
         ...state,
-        friendNotification: state.friendNotification + 1
+        friendNotifications: state.friendNotifications + 1
     }
 }
 
