@@ -5,6 +5,8 @@ type Props = {
 }
 
 const NotifAttach = (props: Props) => {
+    if (props.amount === 0) return null
+
     return (
         <div className = "notification-attachment">
             { props.amount }
