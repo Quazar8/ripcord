@@ -49,7 +49,7 @@ const removeNotification = (state: GlobalState, payload: Notification['id']) => 
 const recordUserInfo = (state: GlobalState, user: UserState): GlobalState => {
     return { ...state,
              user,
-            // friendNotifications: user.glob
+            friendNotifications: user.incFriendRequests.length
         }
 }
 

@@ -65,7 +65,7 @@ const mapState: MapStateFn<StateProps> = (state) => ({
     user: state.global.user,
     showUserMenu: state.global.showUserOptions,
     showFriendsWindow: state.global.showFriendsWindow,
-    friendNotifications: state.global.friendNotification
+    friendNotifications: state.global.friendNotifications
 })
 
 const mapDisp: MapDispatchFn<DispProps> = (dispatch, state) => ({
