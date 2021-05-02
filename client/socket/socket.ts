@@ -1,8 +1,19 @@
 import { Dispatch } from 'react'
-import { pushNotification } from '../store/globalActions'
+import { pushNotification, friendNotificationAction } from '../store/globalActions'
 import { AppAction } from '../store/store'
+import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
 
 export let socket: WebSocket = null
+
+const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
+    const data: WSMessage<any> = JSON.parse(dataStr)
+
+    switch (data.type) {
+        case WSDataType.FRIEND_REQUEST:
+            dispatch(friendNotificationAction()); break;
+        default: break;
+    }
+}
 
 export const establishWS = (dispatch: Dispatch<AppAction>) => {
     if (socket !== null && socket.readyState === socket.OPEN) {
@@ -27,5 +38,6 @@ export const establishWS = (dispatch: Dispatch<AppAction>) => {
 
     socket.onmessage = (msg) => {
         console.log('received message', msg.data)
+        handleMessage(msg.data, dispatch)
     }
 }
