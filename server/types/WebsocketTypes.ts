@@ -2,7 +2,7 @@ export enum WSDataType {
     FRIEND_REQUEST
 }
 
-export type WSMessage<P> = {
+export type WSMessage = {
     type: WSDataType,
-    payload: P
+    payload: any
 }
