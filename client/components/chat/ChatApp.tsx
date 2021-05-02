@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { Dispatch, useEffect } from 'react'
 import { establishWS, socket } from '../../socket/socket'
 import { UserState } from '../../store/globalReducer'
-import { connect, MapDispatchFn, MapStateFn } from '../../store/store'
+import { AppAction, connect, MapDispatchFn, MapStateFn } from '../../store/store'
 import { logoutUser } from '../../api/userApi'
 import { resHasError } from '../../api/utils'
 import { toggleUserMenuAction, 
@@ -24,14 +24,15 @@ type DispProps = {
     hideUserMenuFn: () => void
     toggleFriendsWindowFn: () => void
     logoutFn: () => void
-    dispNotification: ReturnType<typeof pushNotification>
+    dispNotification: ReturnType<typeof pushNotification>,
+    dispatch: Dispatch<AppAction>
 }
 
 type Props = StateProps & DispProps
 
 const ChatAppView = (props: Props) => {
     useEffect(() => {
-        establishWS(props.dispNotification)
+        establishWS(props.dispatch)
 
         return () => {
             socket.close()
@@ -81,7 +82,8 @@ const mapDisp: MapDispatchFn<DispProps> = (dispatch, state) => ({
     toggleFriendsWindowFn: () => {
         dispatch(toggleFriendsWindow(!state.global.showFriendsWindow))
     },
-    dispNotification: pushNotification(dispatch)
+    dispNotification: pushNotification(dispatch),
+    dispatch
 })
 
 const ChatApp = connect(mapState, mapDisp)(ChatAppView)

@@ -1,11 +1,15 @@
+import { Dispatch } from 'react'
 import { pushNotification } from '../store/globalActions'
+import { AppAction } from '../store/store'
 
 export let socket: WebSocket = null
 
-export const establishWS = (dispNotification: ReturnType<typeof pushNotification>) => {
+export const establishWS = (dispatch: Dispatch<AppAction>) => {
     if (socket !== null && socket.readyState === socket.OPEN) {
         return
     }
+
+    const dispNotification = pushNotification(dispatch)
 
     socket = new WebSocket('ws://localhost:8000')
 
@@ -17,7 +21,7 @@ export const establishWS = (dispNotification: ReturnType<typeof pushNotification
         console.log('Error connecting socket')
         dispNotification('error', 'Error connecting to the chat service')
         setTimeout(() => {
-            establishWS(dispNotification)
+            establishWS(dispatch)
         }, 2000)
     }
 
