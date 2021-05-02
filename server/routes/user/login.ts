@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
 import { User, IUserDoc } from '../../db/models/models.js'
 import { errorResponse, ServerResponse, successResponse } from '../../responses.js'
-import { UserLoggedObj, LoginEntryObj } from './UserTypes'
+import { UserClientInfo, LoginEntryObj } from './UserTypes'
 import jwt from 'jsonwebtoken'
 import { jwtKey, jwtCookieName } from '../../configVars.js'
 
-export type LoginResponse = ServerResponse<UserLoggedObj>
+export type LoginResponse = ServerResponse<UserClientInfo>
 
 export const loginUser = (req: Request, res: Response, user: IUserDoc) => {
     const userToLog = {
@@ -33,8 +33,11 @@ export const loginUser = (req: Request, res: Response, user: IUserDoc) => {
 
         const response: LoginResponse = successResponse({
             username: user.username,
+            id: user._id,
+            incFriendRequests: user.incFriendRequests,
+            outFriendRequests: user.outFriendRequests,
             registeredAt: user.registeredAt,
-            token
+            friendsIds: user.friendsIds
         }, 'Logged in')
 
         res.status(200).send(response)

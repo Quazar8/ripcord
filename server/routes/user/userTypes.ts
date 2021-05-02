@@ -5,8 +5,6 @@ export type UserInfo = Omit<IUserModel, 'password'> & {
     id: Types.ObjectId
 }
 
-export type UserLoggedObj = Pick<IUserModel, 'username' | 'registeredAt'> & {
-    token: string
-}
+export type UserClientInfo = UserInfo
 
 export type LoginEntryObj = Pick<IUserModel, 'password' | 'username'>
