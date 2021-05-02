@@ -16,7 +16,8 @@ import UserMenu from './UserMenu'
 type StateProps = {
     user: UserState
     showUserMenu: boolean
-    showFriendsWindow: boolean
+    showFriendsWindow: boolean,
+    friendNotifications: number
 }
 
 type DispProps = {
@@ -45,6 +46,7 @@ const ChatAppView = (props: Props) => {
                 user = { props.user }
                 showUserMenuFn = { props.showUserMenuFn }
                 toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
+                friendNotifications = { props.friendNotifications }
             />
             <RightWindow 
                 showFriendsWindow = { props.showFriendsWindow }
@@ -62,7 +64,8 @@ const ChatAppView = (props: Props) => {
 const mapState: MapStateFn<StateProps> = (state) => ({
     user: state.global.user,
     showUserMenu: state.global.showUserOptions,
-    showFriendsWindow: state.global.showFriendsWindow
+    showFriendsWindow: state.global.showFriendsWindow,
+    friendNotifications: state.global.friendNotification
 })
 
 const mapDisp: MapDispatchFn<DispProps> = (dispatch, state) => ({

@@ -12,7 +12,9 @@ type Props = {
 const RightWindow = (props: Props) => {
     let AuxComponent: JSX.Element = null
     if (props.showFriendsWindow) {
-       AuxComponent = <FriendsWindow dispNotification = { props.dispNotification } />
+       AuxComponent = <FriendsWindow 
+            dispNotification = { props.dispNotification }
+        />
     }
 
     return (

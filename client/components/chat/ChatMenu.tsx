@@ -5,9 +5,10 @@ import Nameplate from './Nameplate'
 import ChatMenuButtons from './ChatMenuButtons'
 
 type Props = {
-    user: UserState,
-    showUserMenuFn: () => void,
+    user: UserState
+    showUserMenuFn: () => void
     toggleFriendsWindowFn: () => void
+    friendNotifications: number
 }
 
 const ChatMenu = (props: Props) => {
@@ -15,6 +16,7 @@ const ChatMenu = (props: Props) => {
         <section className = "chat-menu">
             <ChatMenuButtons 
                 toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
+                friendNotifications = { props.friendNotifications }
             />
             <Nameplate 
                 username = { props.user.username } 
