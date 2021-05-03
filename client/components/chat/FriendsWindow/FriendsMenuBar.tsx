@@ -1,9 +1,23 @@
 import React from 'react'
+import { Subwindows } from './FriendsWindow'
 
-const FriendsMenuBar = () => {
+type Props = {
+    showCertainSubwindow: (name: Subwindows) => void
+}
+
+const FriendsMenuBar = ({ showCertainSubwindow }: Props) => {
+    const showFriendsList = () => {
+        showCertainSubwindow(Subwindows.FriendsList)
+    }
+
+    const showAddFriend = () => {
+        showCertainSubwindow(Subwindows.AddFriend)
+    }
+
     return (
         <nav className = "friends-menu-bar">
-            <button>Add</button>
+            <button onClick = { showFriendsList }>Friends</button>
+            <button onClick = { showAddFriend }>Add</button>
         </nav>
     )
 }

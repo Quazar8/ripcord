@@ -9,6 +9,11 @@ type Props = {
     dispNotification: ReturnType<typeof pushNotification>
 }
 
+export enum Subwindows {
+    AddFriend,
+    FriendsList
+}   
+
 const FriendsWindow = (props: Props) => {
     const [showSubwindow, setShowSubWindow] = useState({
         addFriend: false,
@@ -29,10 +34,32 @@ const FriendsWindow = (props: Props) => {
         default: SubWindow = null
     }
 
+    const setAllPropsToFalse = (obj: typeof showSubwindow) => {
+        for (let key in obj) {
+            obj[key] = false
+        }
+    }
+
+    const showCertainSubwindow = (name: Subwindows) => {
+        const newState = { ...showSubwindow }
+        setAllPropsToFalse(newState)
+        
+        switch (name) {
+            case Subwindows.AddFriend:
+                newState.addFriend = true; break;
+            case Subwindows.FriendsList:
+                newState.friendsList = true; break;
+            default: break;
+        }
+
+        setShowSubWindow(newState)
+    }
 
     return (
         <div className = "friends-window">
-            <FriendsMenuBar />
+            <FriendsMenuBar 
+                showCertainSubwindow = { showCertainSubwindow }
+            />
             { SubWindow }
         </div>
     )
