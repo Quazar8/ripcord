@@ -12,10 +12,12 @@ type Props = {
 export enum Subwindows {
     AddFriend,
     FriendsList
-}   
+}
 
 const FriendsWindow = (props: Props) => {
-    const [showSubwindow, setShowSubWindow] = useState({
+    const [showSubwindow, setShowSubWindow] = useState<{
+        [key:string]: boolean
+    }>({
         addFriend: false,
         friendsList: true
     })
@@ -35,7 +37,7 @@ const FriendsWindow = (props: Props) => {
     }
 
     const setAllPropsToFalse = (obj: typeof showSubwindow) => {
-        for (let key in obj) {
+        for (let key of Object.keys(obj)) {
             obj[key] = false
         }
     }
