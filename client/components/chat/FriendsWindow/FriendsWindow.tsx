@@ -3,6 +3,7 @@ import { pushNotification } from '../../../store/globalActions'
 
 import AddFriend from './AddFriend'
 import FriendsMenuBar from './FriendsMenuBar'
+import FriendsList from './FriendsList'
 
 type Props = {
     dispNotification: ReturnType<typeof pushNotification>
@@ -15,6 +16,7 @@ const FriendsWindow = (props: Props) => {
             <AddFriend 
                 dispNotification = { props.dispNotification }
             />
+            <FriendsList />
         </div>
     )
 }
