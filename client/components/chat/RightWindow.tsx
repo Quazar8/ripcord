@@ -2,7 +2,7 @@ import React from 'react'
 import ChatDisplay from './ChatDisplay'
 import { pushNotification } from '../../store/globalActions'
 
-import FriendsWindow from './FriendsWindow'
+import FriendsWindow from './FriendsWindow/FriendsWindow'
 
 type Props = {
     showFriendsWindow: boolean,
