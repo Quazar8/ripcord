@@ -73,6 +73,10 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
     res.send(response)
 }
 
+export const pendingFriendRequests = (req: ReqWUser, res: Response) => {
+    res.send(successResponse({}, 'Pending endpoint'))
+}
+
 export const onlineFriends = async (req: ReqWUser, res: Response) => {
     let response: OnlineFriendsRes = null
     if (!req.user) {
