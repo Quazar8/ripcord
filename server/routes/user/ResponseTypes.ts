@@ -1,5 +1,5 @@
 export { LoginResponse } from './login'
 export { RegisterResponse } from './register'
-export { AddFriendRes } from './findUser'
+export { AddFriendRes } from './friends'
 export { LogoutResponse } from './logout'
 export { UserFromTokenResponse } from './userInfo'

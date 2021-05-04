@@ -5,7 +5,7 @@ import loginHandler from './login.js'
 import registerHandler from './register.js'
 import { userInfoFromToken } from './userInfo.js'
 import { logoutHandler } from './logout.js'
-import { addFriend } from './findUser.js'
+import { addFriend } from './friends.js'
 import UserUrls from './UserUrls.js'
 
 
