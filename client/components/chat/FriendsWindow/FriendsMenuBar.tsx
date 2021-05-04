@@ -14,10 +14,15 @@ const FriendsMenuBar = ({ showCertainSubwindow }: Props) => {
         showCertainSubwindow(Subwindows.AddFriend)
     }
 
+    const showPending = () => {
+        showCertainSubwindow(Subwindows.Pending)
+    }
+
     return (
         <nav className = "friends-menu-bar">
             <button onClick = { showFriendsList }>Friends</button>
             <button onClick = { showAddFriend }>Add</button>
+            <button onClick = { showPending }>Pending</button>
         </nav>
     )
 }

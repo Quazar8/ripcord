@@ -4,6 +4,7 @@ import { pushNotification } from '../../../store/globalActions'
 import AddFriend from './AddFriend'
 import FriendsMenuBar from './FriendsMenuBar'
 import FriendsList from './FriendsList'
+import Pending from './Pending'
 
 type Props = {
     dispNotification: ReturnType<typeof pushNotification>
@@ -11,15 +12,17 @@ type Props = {
 
 export enum Subwindows {
     AddFriend,
-    FriendsList
+    FriendsList,
+    Pending
 }
 
 const FriendsWindow = (props: Props) => {
     const [showSubwindow, setShowSubWindow] = useState<{
         [key:string]: boolean
     }>({
+        friendsList: true,
         addFriend: false,
-        friendsList: true
+        pending: false
     })
 
     let SubWindow = null
@@ -32,6 +35,9 @@ const FriendsWindow = (props: Props) => {
             break;
         case showSubwindow.friendsList:
             SubWindow = <FriendsList /> 
+            break;
+        case showSubwindow.pending:
+            SubWindow = <Pending />
             break;
         default: SubWindow = null
     }
@@ -51,6 +57,8 @@ const FriendsWindow = (props: Props) => {
                 newState.addFriend = true; break;
             case Subwindows.FriendsList:
                 newState.friendsList = true; break;
+            case Subwindows.Pending:
+                newState.pending = true; break;
             default: break;
         }
 
