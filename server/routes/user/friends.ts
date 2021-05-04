@@ -5,11 +5,14 @@ import { onlineUsers } from '../../websocket/wsServer.js'
 import { Document, Types } from "mongoose"
 import { ReqWUser } from '../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../types/WebsocketTypes.js'
+import { FriendClientInfo } from "../../types/UserTypes.js";
 
 export type AddFriendRes = ServerResponse<{
     found: boolean,
     sentRequest: boolean
 }>
+
+export type OnlineFriendsRes = ServerResponse<FriendClientInfo[]>
 
 const isUserDoc = (doc: Document): doc is IUserDoc => {
     return doc?._id
@@ -70,11 +73,28 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
     res.send(response)
 }
 
-export const onlineFriends = (req: ReqWUser, res: Response) => {
+export const onlineFriends = async (req: ReqWUser, res: Response) => {
+    let response: OnlineFriendsRes = null
     if (!req.user) {
-        res.send(errorResponse('Something went wrong'))
+        response = errorResponse('Something went wrong')
+        res.status(500).send(response)
         return
     }
 
-    res.send(successResponse({}, 'Online friends endpoint'))
+    const friends = []
+    for (let id of req.user.friendsIds) {
+        const friend = await User.findById(id)
+        if (isUserDoc(friend)) {
+            const friendInfo: FriendClientInfo = {
+                id: friend._id,
+                username: friend.username
+            }
+
+            friends.push(friendInfo)
+        }
+    }
+
+    response = successResponse(friends, '')
+
+    res.send(response)
 }

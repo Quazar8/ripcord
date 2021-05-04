@@ -8,3 +8,8 @@ export type UserInfo = Omit<IUserModel, 'password'> & {
 export type UserClientInfo = UserInfo
 
 export type LoginEntry = Pick<IUserModel, 'password' | 'username'>
+
+export type FriendClientInfo = {
+    id: Types.ObjectId,
+    username: string
+}
