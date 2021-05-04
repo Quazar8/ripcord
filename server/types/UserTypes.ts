@@ -13,3 +13,9 @@ export type FriendClientInfo = {
     id: Types.ObjectId,
     username: string
 }
+
+export type PendingFriendInfo = {
+    id: Types.ObjectId,
+    username: string,
+    type: 'Incoming' | 'Outgoing'
+}

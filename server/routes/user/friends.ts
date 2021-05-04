@@ -5,7 +5,7 @@ import { onlineUsers } from '../../websocket/wsServer.js'
 import { Document, Types } from "mongoose"
 import { ReqWUser } from '../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../types/WebsocketTypes.js'
-import { FriendClientInfo } from "../../types/UserTypes.js";
+import { FriendClientInfo, PendingFriendInfo } from "../../types/UserTypes.js";
 
 export type AddFriendRes = ServerResponse<{
     found: boolean,
@@ -13,6 +13,11 @@ export type AddFriendRes = ServerResponse<{
 }>
 
 export type OnlineFriendsRes = ServerResponse<FriendClientInfo[]>
+
+export type PendingFriendsRes = ServerResponse<{
+    incoming: PendingFriendInfo[],
+    outgoing: PendingFriendInfo[]
+}>
 
 const isUserDoc = (doc: Document): doc is IUserDoc => {
     return doc?._id
@@ -73,15 +78,55 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
     res.send(response)
 }
 
-export const pendingFriendRequests = (req: ReqWUser, res: Response) => {
-    res.send(successResponse({}, 'Pending endpoint'))
+export const pendingFriendRequests = async (req: ReqWUser, res: Response) => {
+    let response: PendingFriendsRes = null
+    if (!req.user) {
+        response = errorResponse('No user provided')
+        res.status(400).send(response)
+        return
+    }
+
+    const incoming: PendingFriendInfo[] = []
+    for (let id of req.user.incFriendRequests) {
+        let user = await User.findById(id)
+        if (isUserDoc(user)) {
+            const info: PendingFriendInfo = {
+                id: user._id,
+                username: user.username,
+                type: 'Incoming'
+            }
+
+            incoming.push(info)
+        }
+    }
+
+    const outgoing: PendingFriendInfo[] = []
+    for (let id of req.user.outFriendRequests) {
+        let user = await User.findById(id)
+        if (isUserDoc(user)) {
+            const info: PendingFriendInfo = {
+                id: user._id,
+                username: user.username,
+                type: 'Outgoing'
+            }
+
+            outgoing.push(info)
+        }
+    }
+    
+    response = successResponse({
+        incoming,
+        outgoing
+    }, '')
+
+    res.send(response)
 }
 
 export const onlineFriends = async (req: ReqWUser, res: Response) => {
     let response: OnlineFriendsRes = null
     if (!req.user) {
-        response = errorResponse('Something went wrong')
-        res.status(500).send(response)
+        response = errorResponse('No user provided')
+        res.status(400).send(response)
         return
     }
 
