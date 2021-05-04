@@ -1,6 +1,6 @@
 import { Action } from './storeComponents/StoreTypes'
 import { GlobalActionTypes, Notification } from './globalActions'
-import { UserClientInfo } from '../../server/routes/user/UserTypes'
+import { UserClientInfo } from '../../server/types/UserTypes'
 
 export type UserState = UserClientInfo
 

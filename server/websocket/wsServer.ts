@@ -3,7 +3,7 @@ import { Server, IncomingMessage } from 'http'
 import passport from 'passport'
 import * as net from 'net'
 import { getCookies, Cookies } from '../utils.js'
-import { UserInfo } from '../routes/user/UserTypes'
+import { UserInfo } from '../types/UserTypes'
 
 type OnlineUsers = {
     [key: string]: ws

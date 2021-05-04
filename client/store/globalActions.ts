@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { UserClientInfo } from '../../server/routes/user/UserTypes'
+import { UserClientInfo } from '../../server/types/UserTypes'
 import { Action } from './storeComponents/StoreTypes'
 
 export enum GlobalActionTypes {

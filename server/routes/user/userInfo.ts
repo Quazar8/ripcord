@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import passport from 'passport'
 import { errorResponse, ServerResponse, successResponse } from "../../responses.js"
-import { UserInfo } from "./UserTypes.js"
+import { UserInfo } from "../../types/UserTypes.js"
 
 export type UserFromTokenResponse = ServerResponse<UserInfo>
 

@@ -1,5 +1,5 @@
 import { baseUrl, postQueryOptions, getQueryOptions } from './reqOptions'
-import { LoginEntryObj } from '../../server/routes/user/userTypes'
+import { LoginEntry } from '../../server/types/userTypes'
 import UserUrls from '../../server/routes/user/UserUrls'
 
 import { LoginResponse,
@@ -8,12 +8,12 @@ import { LoginResponse,
          UserFromTokenResponse, 
          AddFriendRes } from '../../server/routes/user/ResponseTypes'
 
-export const loginServer = async (data: LoginEntryObj): Promise<LoginResponse> => {
+export const loginServer = async (data: LoginEntry): Promise<LoginResponse> => {
     const res = await fetch(baseUrl + UserUrls.login, postQueryOptions(data))
     return res.json()
 }
 
-export const registerUser = async(data: LoginEntryObj): Promise<RegisterResponse> => {
+export const registerUser = async(data: LoginEntry): Promise<RegisterResponse> => {
     return (await fetch(baseUrl + UserUrls.register, postQueryOptions(data))).json()
 }
 

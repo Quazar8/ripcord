@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { UserInfo } from "../routes/user/UserTypes";
+import { UserInfo } from "./UserTypes";
 
 export type ReqWUser = Request & {
     user: UserInfo

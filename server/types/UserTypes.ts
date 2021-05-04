@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import { IUserModel } from '../../db/models/models'
+import { IUserModel } from '../db/models/models'
 
 export type UserInfo = Omit<IUserModel, 'password'> & {
     id: Types.ObjectId
@@ -7,4 +7,4 @@ export type UserInfo = Omit<IUserModel, 'password'> & {
 
 export type UserClientInfo = UserInfo
 
-export type LoginEntryObj = Pick<IUserModel, 'password' | 'username'>
+export type LoginEntry = Pick<IUserModel, 'password' | 'username'>
