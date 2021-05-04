@@ -5,9 +5,8 @@ import loginHandler from './login.js'
 import registerHandler from './register.js'
 import { userInfoFromToken } from './userInfo.js'
 import { logoutHandler } from './logout.js'
-import { addFriend } from './friends.js'
+import { addFriend, onlineFriends } from './friends.js'
 import UserUrls from './UserUrls.js'
-
 
 const enableUserRoutes = (app: Application) => {
     app.post(UserUrls.login, loginHandler)
@@ -19,6 +18,8 @@ const enableUserRoutes = (app: Application) => {
     app.get(UserUrls.logout, authenticateUser, logoutHandler)
 
     app.get(UserUrls.findFriend, authenticateUser, addFriend)
+
+    app.get(UserUrls.onlineFriends, authenticateUser, onlineFriends)
 }
 
 export default enableUserRoutes

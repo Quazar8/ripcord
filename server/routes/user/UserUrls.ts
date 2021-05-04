@@ -3,5 +3,6 @@ export default {
     register: '/user/register',
     getLoggedUser: '/user/loggedUserInfo',
     logout: '/user/logout',
-    findFriend: '/user/find/friend'
+    findFriend: '/user/find/friend',
+    onlineFriends: '/user/friends/online'
 }

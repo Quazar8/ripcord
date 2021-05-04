@@ -69,3 +69,12 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
 
     res.send(response)
 }
+
+export const onlineFriends = (req: ReqWUser, res: Response) => {
+    if (!req.user) {
+        res.send(errorResponse('Something went wrong'))
+        return
+    }
+
+    res.send(successResponse({}, 'Online friends endpoint'))
+}
