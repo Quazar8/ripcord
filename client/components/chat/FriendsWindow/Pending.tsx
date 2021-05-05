@@ -33,7 +33,7 @@ export const Pending = () => {
 
     return (
         <div className = "pending-subwindow">
-            <div>
+            <div className = "subsection">
                 <span>Incoming:</span>
                 {
                     pending.incoming.map((r, i) => (
@@ -45,7 +45,7 @@ export const Pending = () => {
                     ))
                 }
             </div>
-            <div>
+            <div className = "subsection">
                 <span>Outgoing:</span>
                 {
                     pending.outgoing.map((r, i) => (

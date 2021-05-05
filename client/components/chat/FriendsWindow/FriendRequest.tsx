@@ -6,10 +6,18 @@ type Props = {
     type: 'INC' | 'OUT'
 }
 
-const FriendRequest = ({ candidate }: Props) => {
+const FriendRequest = ({ candidate, type }: Props) => {
     return (
         <div className = "friend-request">
             <h3>{ candidate.username }</h3>
+            <div className = "button-container">
+                {
+                    type === 'INC'
+                    ? <button>&#10004;</button>
+                    : null
+                }
+                <button>&#10006;</button>
+            </div>
         </div>
     )
 }

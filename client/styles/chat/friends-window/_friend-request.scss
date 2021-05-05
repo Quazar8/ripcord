@@ -1,0 +1,11 @@
+.friend-request {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+
+    .button-container {
+        width: 15%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
