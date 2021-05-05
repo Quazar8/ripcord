@@ -13,10 +13,10 @@ const FriendRequest = ({ candidate, type }: Props) => {
             <div className = "button-container">
                 {
                     type === 'INC'
-                    ? <button>&#10004;</button>
+                    ? <button className = "approve">&#10004;</button>
                     : null
                 }
-                <button>&#10006;</button>
+                <button className = "cancel">&#10006;</button>
             </div>
         </div>
     )

@@ -1,11 +1,39 @@
 .friend-request {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 70%;
+    padding: 2%;
+    margin: 0.5% 0;
 
     .button-container {
         width: 15%;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: flex-end;
+    }
+
+    button {
+        border-radius: 50%;
+        border: 0.1vw solid white;
+        color: white;
+        background: inherit;
+        height: 3vw;
+        width: 3vw;
+        font-size: 1.5vw;
+        transition: background-color 0.2s ease-out;
+    }
+
+    .approve:hover {
+        cursor: pointer;
+        background: rgb(84, 224, 84);
+    }
+
+    .cancel:hover {
+        cursor: pointer;
+        background: red;
+    }
+
+    button:last-child {
+        margin: 0 0 0 15%
     }
 }
