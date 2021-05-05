@@ -4,6 +4,8 @@ import { PendingFriendInfo } from '../../../../server/types/UserTypes'
 import { getFriendRequests } from '../../../api/userApi'
 import { resHasError } from '../../../api/utils'
 
+import FriendRequest from './FriendRequest'
+
 type PendingState = {
     incoming: PendingFriendInfo[]
     outgoing: PendingFriendInfo[]
@@ -35,7 +37,10 @@ export const Pending = () => {
                 <span>Incoming:</span>
                 {
                     pending.incoming.map((r, i) => (
-                        <h3 key = { i }>{ r.username }</h3>
+                        <FriendRequest 
+                            key = { i }
+                            candidate = { r }
+                        />
                     ))
                 }
             </div>
@@ -43,7 +48,10 @@ export const Pending = () => {
                 <span>Outgoing:</span>
                 {
                     pending.outgoing.map((r, i) => (
-                        <h3 key = { i }>{ r.username }</h3>
+                        <FriendRequest 
+                            key = { i }
+                            candidate = { r }
+                        />
                     ))
                 }
             </div>
