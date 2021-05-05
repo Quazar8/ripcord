@@ -40,6 +40,7 @@ export const Pending = () => {
                         <FriendRequest 
                             key = { i }
                             candidate = { r }
+                            type = 'INC'
                         />
                     ))
                 }
@@ -51,6 +52,7 @@ export const Pending = () => {
                         <FriendRequest 
                             key = { i }
                             candidate = { r }
+                            type = 'OUT'
                         />
                     ))
                 }
