@@ -7,8 +7,9 @@ type Props = {
 }
 
 const FriendRequest = ({ candidate, type }: Props) => {
+    let classAppend = type === 'INC' ? 'incoming' : 'outgoing'
     return (
-        <div className = "friend-request">
+        <div className = {"friend-request" + ' ' + classAppend}>
             <h3>{ candidate.username }</h3>
             <div className = "button-container">
                 {

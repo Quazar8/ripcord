@@ -1,22 +1,44 @@
+@use '../../utils/utils.scss';
+
+@keyframes backgroundPos {
+    from {
+        background-position-x: 0%;
+    }
+    to {
+        background-position-x: 100%;
+    }
+}
+
 .friend-request {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 70%;
     padding: 2%;
-    margin: 0.5% 0;
+    margin: 1% 0;
+    
+    @include utils.boxShadow(0rem, 0rem, 0.1rem, hsl(0, 8%, 65%));
+
+    h3 {
+        width: 85%;
+        word-break: break-word;
+        font-weight: normal;
+        font-size: 1.6vw;
+        letter-spacing: 0.1vw;
+    }
 
     .button-container {
         width: 15%;
         display: flex;
         justify-content: flex-end;
+        align-content: center;
     }
 
     button {
         border-radius: 50%;
         border: 0.1vw solid white;
         color: white;
-        background: inherit;
+        background: transparent;
         height: 3vw;
         width: 3vw;
         font-size: 1.5vw;
@@ -35,5 +57,19 @@
 
     button:last-child {
         margin: 0 0 0 15%
+    }
+}
+
+.pending-subwindow {
+    .incoming {
+        background: linear-gradient(135deg, hsl(0, 12%, 30%), hsl(115, 80%, 32%));
+        background-size: 200% 100%;
+        animation: backgroundPos 2s ease-in-out alternate infinite;
+    }
+
+    .outgoing {
+        background: linear-gradient(135deg, hsl(0, 12%, 30%), hsl(209, 57%, 50%));
+        background-size: 200% 100%;
+        animation: backgroundPos 2s ease-in-out alternate infinite;
     }
 }
