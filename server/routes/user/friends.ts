@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { request, Response } from "express";
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { IUserDoc, User } from '../../db/models/models.js'
 import { onlineUsers } from '../../websocket/wsServer.js'
@@ -24,20 +24,27 @@ const isUserDoc = (doc: Document): doc is IUserDoc => {
 }
 
 export const addFriend = async (req: ReqWUser, res: Response) => {
+    let response: AddFriendRes = null
+    let status: number = 200
+
     const { username } = req.query
     if (!username) {
-        res.status(400).send(errorResponse('Bad request'))
+        response = errorResponse('Bad request')
+        res.status(400).send(response)
         return
     }
 
-    const found = await User.findOne({ username })
+    try {
+        const found = await User.findOne({ username })
+        const issuer = await User.findById(req.user.id)
 
-    let updateUser = async (requesterId: Types.ObjectId, foundFriend: IUserDoc): Promise<AddFriendRes> => {
-        let resp: AddFriendRes = null
-        foundFriend.incFriendRequests.push(requesterId)
+        let updateUser = async (requester: IUserDoc, foundFriend: IUserDoc): Promise<AddFriendRes> => {
+            let resp: AddFriendRes = null
+            foundFriend.incFriendRequests.push(requester._id)
+            requester.outFriendRequests.push(foundFriend._id)
 
-        try {
             await foundFriend.save()
+            await requester.save()
             const socket = onlineUsers[foundFriend.id]
 
             if (socket) {
@@ -53,29 +60,30 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
                 found: true,
                 sentRequest: true
             }, '')
+
+            return resp
         }
-        catch {
-            resp = errorResponse('Something went wrong')
-        }        
 
-        return resp
-    }
-
-    let response: AddFriendRes = null
-    if (isUserDoc(found)) {
-        if (req.user.id.equals(found._id)) {
-            response = errorResponse('You cannot add yourself')
+        if (isUserDoc(found) && isUserDoc(issuer)) {
+            if (req.user.id.equals(found._id)) {
+                response = errorResponse('You cannot add yourself')
+                status = 400
+            } else {
+                response = await updateUser(issuer, found)
+            }
         } else {
-            response = await updateUser(req.user.id, found)
+            response = successResponse({
+                sentRequest: false,
+                found: false
+            }, 'No user found')
         }
-    } else {
-        response = successResponse({
-            sentRequest: false,
-            found: false
-        }, 'No user found')
+    }
+    catch {
+        response = errorResponse('Something went wrong')
+        status = 500
     }
 
-    res.send(response)
+    res.status(status).send(response)
 }
 
 export const pendingFriendRequests = async (req: ReqWUser, res: Response) => {
@@ -93,7 +101,6 @@ export const pendingFriendRequests = async (req: ReqWUser, res: Response) => {
             const info: PendingFriendInfo = {
                 id: user._id,
                 username: user.username,
-                type: 'Incoming'
             }
 
             incoming.push(info)
@@ -107,7 +114,6 @@ export const pendingFriendRequests = async (req: ReqWUser, res: Response) => {
             const info: PendingFriendInfo = {
                 id: user._id,
                 username: user.username,
-                type: 'Outgoing'
             }
 
             outgoing.push(info)
