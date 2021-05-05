@@ -1,8 +1,8 @@
-import { request, Response } from "express";
+import { Response } from "express";
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { IUserDoc, User } from '../../db/models/models.js'
-import { onlineUsers } from '../../websocket/wsServer.js'
-import { Document, Types } from "mongoose"
+import { sendSocketMsg } from '../../websocket/onlineUsers.js'
+import { Document } from "mongoose"
 import { ReqWUser } from '../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../types/WebsocketTypes.js'
 import { FriendClientInfo, PendingFriendInfo } from "../../types/UserTypes.js";
@@ -45,16 +45,13 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
 
             await foundFriend.save()
             await requester.save()
-            const socket = onlineUsers[foundFriend.id]
 
-            if (socket) {
-                const msg: WSMessage<null> = {
-                    type: WSDataType.FRIEND_REQUEST,
-                    payload: null
-                }
-
-                socket.send(JSON.stringify(msg))
+            const msg: WSMessage<null> = {
+                type: WSDataType.FRIEND_REQUEST,
+                payload: null
             }
+
+            sendSocketMsg(foundFriend._id, msg)
 
             resp = successResponse({
                 found: true,
@@ -65,7 +62,7 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
         }
 
         if (isUserDoc(found) && isUserDoc(issuer)) {
-            if (req.user.id.equals(found._id)) {
+            if (issuer._id.equals(found._id)) {
                 response = errorResponse('You cannot add yourself')
                 status = 400
             } else {
@@ -78,8 +75,9 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
             }, 'No user found')
         }
     }
-    catch {
+    catch (err) {
         response = errorResponse('Something went wrong')
+        console.error(err)
         status = 500
     }
 
