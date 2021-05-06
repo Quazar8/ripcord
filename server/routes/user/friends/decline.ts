@@ -6,11 +6,12 @@ import { ReqWUser } from "../../../types/RequestTypes";
 import { isUserDoc } from '../../../types/UserTypes.js'
 
 export type DeclineFriendRequestRes = ServerResponse<{
-    declined: boolean
+    removed: boolean
 }>
 
 export type DeclineFriendRequestData = {
-    declinedId: Types.ObjectId
+    declinedId: Types.ObjectId,
+    declineInc: boolean
 }
 
 export const declineRequest = async (req: ReqWUser, res: Response) => {
@@ -22,9 +23,9 @@ export const declineRequest = async (req: ReqWUser, res: Response) => {
         return
     }
 
-    const { declinedId }: DeclineFriendRequestData = req.body
-    if (!declinedId) {
-        response = errorResponse('No user provided')
+    const { declinedId, declineInc }: DeclineFriendRequestData = req.body
+    if (!declinedId || declineInc === undefined) {
+        response = errorResponse('No all request fields are provided')
         res.status(400).send(response)
         return
     }
@@ -33,17 +34,23 @@ export const declineRequest = async (req: ReqWUser, res: Response) => {
         let index = decliner.incFriendRequests.indexOf(requester._id)
         if (index > -1) {
             decliner.incFriendRequests.splice(index, 1)
+        } else {
+            status = 400
+            return errorResponse('User id is not present in the friend requests')
         }
 
         index = requester.outFriendRequests.indexOf(decliner._id)
         if (index > -1) {
             requester.outFriendRequests.splice(index, 1)
+        } else {
+            status = 400
+            return errorResponse('User id is not present in the friend requests')
         }
 
         await decliner.save()
         await requester.save()
 
-        return successResponse({ declined: true })
+        return successResponse({ removed: true })
     }
 
     try {
@@ -51,8 +58,10 @@ export const declineRequest = async (req: ReqWUser, res: Response) => {
         const user = await User.findById(req.user.id)
 
         if (isUserDoc(declinedUser) && isUserDoc(user)) {
-            response = await updateUsers(declinedUser, user)
+            response = declineInc ? await updateUsers(declinedUser, user)
+                                  : await updateUsers(user, declinedUser)
         } else {
+            status = 400
             response = errorResponse('Wrong user id\'s')
         }
 
