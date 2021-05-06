@@ -2,10 +2,9 @@ import { Response } from "express";
 import { successResponse, errorResponse, ServerResponse } from '../../../responses.js'
 import { IUserDoc, User } from '../../../db/models/models.js'
 import { sendSocketMsg } from '../../../websocket/onlineUsers.js'
-import { Document } from "mongoose"
 import { ReqWUser } from '../../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../../types/WebsocketTypes.js'
-import { FriendClientInfo, PendingFriendInfo } from "../../../types/UserTypes.js";
+import { FriendClientInfo, PendingFriendInfo, isUserDoc } from "../../../types/UserTypes.js";
 
 export type AddFriendRes = ServerResponse<{
     found: boolean,
@@ -19,9 +18,7 @@ export type PendingFriendsRes = ServerResponse<{
     outgoing: PendingFriendInfo[]
 }>
 
-const isUserDoc = (doc: Document): doc is IUserDoc => {
-    return doc?._id
-}
+
 
 export const addFriend = async (req: ReqWUser, res: Response) => {
     let response: AddFriendRes = null
