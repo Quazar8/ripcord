@@ -74,3 +74,7 @@ export const declineRequest = async (req: ReqWUser, res: Response) => {
 
     res.status(status).send(response)
 }
+
+export const acceptFriendRequest = (req: ReqWUser, res: Response) => {
+    res.send(successResponse({}, 'Accept Fr endpoint'))
+}
