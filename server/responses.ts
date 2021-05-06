@@ -5,7 +5,7 @@ export type ErrorResponseType = {
 
 export type SuccessResponseType<T> = {
     error: false
-    msg: string,
+    msg?: string,
     data: T
 }
 
@@ -19,7 +19,7 @@ export const errorResponse = (errorMsg: string): ErrorResponseType => {
 }
 
 export const successResponse = 
-    <T>(data: T, msg: string): SuccessResponseType<T> => {
+    <T>(data: T, msg?: string): SuccessResponseType<T> => {
         
     return {
         error: false,
