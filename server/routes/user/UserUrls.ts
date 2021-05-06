@@ -5,5 +5,6 @@ export default {
     logout: '/user/logout',
     findFriend: '/user/find/friend',
     onlineFriends: '/user/friends/online',
-    pendingFriendRequests: '/user/friends/pending'
+    pendingFriendRequests: '/user/friends/pending',
+    declineFriendRequest: '/user/friends/decline'
 }
