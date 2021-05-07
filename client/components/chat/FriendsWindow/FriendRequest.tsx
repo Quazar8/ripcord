@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { DeclineFriendRequestData } from '../../../../server/types/UserRequestData'
+import { DeclineFriendRequestData, AcceptFriendRequestData } from '../../../../server/types/UserRequestData'
 import { PendingFriendInfo } from '../../../../server/types/UserTypes'
 
-import { cancelOrDeclineFrReq } from '../../../api/userApi'
+import { cancelOrDeclineFrReq, acceptFriendRequest } from '../../../api/userApi'
 import { resHasError } from '../../../api/utils'
 
 type Props = {
@@ -32,6 +32,22 @@ const FriendRequest = ({ candidate, type }: Props) => {
         }
     }
 
+    const approveRequest = async () => {
+        if (type === 'OUT') return
+
+        let data: AcceptFriendRequestData = {
+            acceptedId: candidate.id
+        }
+
+        const res = await acceptFriendRequest(data)
+
+        if (resHasError(res)) {
+            console.error(res.errorMsg)
+        } else {
+            setShow(false)
+        }
+    }
+
     if (!show) return null
 
     return (
@@ -40,7 +56,7 @@ const FriendRequest = ({ candidate, type }: Props) => {
             <div className = "button-container">
                 {
                     type === 'INC'
-                    ? <button className = "approve">&#10004;</button>
+                    ? <button onClick = { approveRequest } className = "approve">&#10004;</button>
                     : null
                 }
                 <button 
