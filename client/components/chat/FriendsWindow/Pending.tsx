@@ -41,6 +41,7 @@ export const Pending = () => {
                             key = { i }
                             candidate = { r }
                             type = 'INC'
+
                         />
                     ))
                 }
