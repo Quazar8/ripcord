@@ -1,4 +1,4 @@
-import { Response } from "express";
+import e, { Response } from "express";
 import { Types } from "mongoose";
 import { IUserDoc, User } from "../../../db/models/models.js";
 import { errorResponse, ServerResponse, successResponse } from "../../../responses.js";
@@ -100,12 +100,38 @@ export const acceptFriendRequest = async (req: ReqWUser, res: Response) => {
         return
     }
 
+    const updateUsers = async (user: IUserDoc, acceptedUser: IUserDoc): Promise<AcceptFriendRequestRes> => {
+        let index = user.incFriendRequests.indexOf(acceptedUser._id)
+        if (index > -1) {
+            user.incFriendRequests.splice(index, 1)
+        } else {
+            return errorResponse('User doesn\'t have a friend request')
+        }
+
+        index = acceptedUser.outFriendRequests.indexOf(user._id)
+        if (index > -1) {
+            user.outFriendRequests.splice(index, 1)
+        } else {
+            return errorResponse('Other user haven\'t send a friend request')
+        }
+
+        user.friendsIds.push(acceptedUser._id)
+        acceptedUser.friendsIds.push(user._id)
+
+        await user.save()
+        await acceptedUser.save()
+
+        return successResponse({
+            accepted: true
+        })
+    }
+
     try {
         const acceptedUser = await User.findById(acceptedId)
         const user = await User.findById(req.user.id)
         
         if (isUserDoc(acceptedUser) && isUserDoc(user)) {
-
+            response = await updateUsers(user, acceptedUser)
         } else {
             response = errorResponse('Incorrect users provided')
             status = 400
