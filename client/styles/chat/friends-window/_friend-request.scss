@@ -1,11 +1,11 @@
 @use '../../utils/utils.scss';
 
 @keyframes backgroundPos {
-    from {
-        background-position-x: 0%;
+    0% {
+        background-position-x: -50%;
     }
-    to {
-        background-position-x: 100%;
+    100% {
+        background-position-x: 150%;
     }
 }
 
@@ -62,14 +62,14 @@
 
 .pending-subwindow {
     .incoming {
-        background: linear-gradient(135deg, hsl(0, 12%, 30%), hsl(115, 80%, 32%));
+        background: linear-gradient(135deg, hsl(0, 12%, 30%), hsl(115, 80%, 32%), hsl(0, 12%, 30%));
         background-size: 200% 100%;
-        animation: backgroundPos 2s ease-in-out alternate infinite;
+        animation: backgroundPos 7s linear infinite;
     }
 
     .outgoing {
-        background: linear-gradient(135deg, hsl(0, 12%, 30%), hsl(209, 57%, 50%));
+        background: linear-gradient(135deg, hsl(0, 12%, 30%), hsl(209, 57%, 50%), hsl(0, 12%, 30%));
         background-size: 200% 100%;
-        animation: backgroundPos 2s ease-in-out alternate infinite;
+        animation: backgroundPos 7s linear infinite;
     }
 }
