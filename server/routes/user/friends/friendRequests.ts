@@ -109,8 +109,9 @@ export const acceptFriendRequest = async (req: ReqWUser, res: Response) => {
         }
 
         index = acceptedUser.outFriendRequests.indexOf(user._id)
+        console.log('index', index)
         if (index > -1) {
-            user.outFriendRequests.splice(index, 1)
+            acceptedUser.outFriendRequests.splice(index, 1)
         } else {
             return errorResponse('Other user haven\'t send a friend request')
         }
@@ -136,7 +137,6 @@ export const acceptFriendRequest = async (req: ReqWUser, res: Response) => {
             response = errorResponse('Incorrect users provided')
             status = 400
         }
-
 
     } catch (err) {
         console.error(err)
