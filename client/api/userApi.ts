@@ -7,7 +7,10 @@ import { LoginResponse,
          LogoutResponse, 
          UserFromTokenResponse, 
          AddFriendRes,
-         PendingFriendsRes } from '../../server/routes/user/ResponseTypes'
+         PendingFriendsRes, 
+         DeclineFriendRequestRes} from '../../server/routes/user/ResponseTypes'
+
+import { DeclineFriendRequestData } from '../../server/types/UserRequestData'
 
 export const loginServer = async (data: LoginEntry): Promise<LoginResponse> => {
     const res = await fetch(baseUrl + UserUrls.login, postQueryOptions(data))
@@ -35,4 +38,8 @@ export const addFriend = async (username: string): Promise<AddFriendRes> => {
 
 export const getFriendRequests = async (): Promise<PendingFriendsRes> => {
     return (await fetch(baseUrl + UserUrls.pendingFriendRequests, getQueryOptions(true))).json()
+}
+
+export const cancelOrDeclineFrReq = async (data: DeclineFriendRequestData): Promise<DeclineFriendRequestRes> => {
+    return (await fetch(baseUrl + UserUrls.declineFriendRequest, postQueryOptions(data))).json()
 }

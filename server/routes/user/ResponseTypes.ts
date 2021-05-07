@@ -1,5 +1,6 @@
 export { LoginResponse } from './login'
 export { RegisterResponse } from './register'
-export { AddFriendRes, PendingFriendsRes, OnlineFriendsRes } from './friends/friends'
 export { LogoutResponse } from './logout'
 export { UserFromTokenResponse } from './userInfo'
+export { AddFriendRes, PendingFriendsRes, OnlineFriendsRes } from './friends/friends'
+export { AcceptFriendRequestRes, DeclineFriendRequestRes } from './friends/friendRequests'

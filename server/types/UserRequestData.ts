@@ -1,0 +1,1 @@
+export { AcceptFriendRequestData, DeclineFriendRequestData } from '../routes/user/friends/friendRequests'
