@@ -14,6 +14,14 @@ export type DeclineFriendRequestData = {
     declineInc: boolean
 }
 
+export type AcceptFriendRequestRes = ServerResponse<{
+    accepted: boolean
+}>
+
+export type AcceptFriendRequestData = {
+    acceptedId: Types.ObjectId
+}
+
 export const declineRequest = async (req: ReqWUser, res: Response) => {
     let response: DeclineFriendRequestRes = null
     let status = 200
@@ -75,6 +83,40 @@ export const declineRequest = async (req: ReqWUser, res: Response) => {
     res.status(status).send(response)
 }
 
-export const acceptFriendRequest = (req: ReqWUser, res: Response) => {
-    res.send(successResponse({}, 'Accept Fr endpoint'))
+export const acceptFriendRequest = async (req: ReqWUser, res: Response) => {
+    let response: AcceptFriendRequestRes = null
+    let status: number = 200
+
+    if (!req.user) {
+        response = errorResponse('User is missing')
+        res.status(400).send(response)
+        return
+    }
+
+    const { acceptedId }: AcceptFriendRequestData = req.body
+    if (!acceptedId) {
+        response = errorResponse('Missing entry fields')
+        res.status(400).send(response)
+        return
+    }
+
+    try {
+        const acceptedUser = await User.findById(acceptedId)
+        const user = await User.findById(req.user.id)
+        
+        if (isUserDoc(acceptedUser) && isUserDoc(user)) {
+
+        } else {
+            response = errorResponse('Incorrect users provided')
+            status = 400
+        }
+
+
+    } catch (err) {
+        console.error(err)
+        response = errorResponse('Something went wrong')
+        status = 500
+    }
+
+    res.status(status).send(response)
 }
