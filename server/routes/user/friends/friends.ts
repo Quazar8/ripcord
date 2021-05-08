@@ -11,8 +11,6 @@ export type AddFriendRes = ServerResponse<{
     sentRequest: boolean
 }>
 
-export type OnlineFriendsRes = ServerResponse<FriendClientInfo[]>
-
 export type PendingFriendsRes = ServerResponse<{
     incoming: PendingFriendInfo[],
     outgoing: PendingFriendInfo[]
@@ -122,32 +120,6 @@ export const pendingFriendRequests = async (req: ReqWUser, res: Response) => {
         incoming,
         outgoing
     }, '')
-
-    res.send(response)
-}
-
-export const onlineFriends = async (req: ReqWUser, res: Response) => {
-    let response: OnlineFriendsRes = null
-    if (!req.user) {
-        response = errorResponse('No user provided')
-        res.status(400).send(response)
-        return
-    }
-
-    const friends = []
-    for (let id of req.user.friendsIds) {
-        const friend = await User.findById(id)
-        if (isUserDoc(friend)) {
-            const friendInfo: FriendClientInfo = {
-                id: friend._id,
-                username: friend.username
-            }
-
-            friends.push(friendInfo)
-        }
-    }
-
-    response = successResponse(friends, '')
 
     res.send(response)
 }
