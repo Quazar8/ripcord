@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { successResponse, errorResponse, ServerResponse } from '../../../responses.js'
 import { IUserDoc, User } from '../../../db/models/models.js'
-import { sendSocketMsg } from '../../../websocket/onlineUsers.js'
+import { onlineUsers, sendSocketMsg } from '../../../websocket/onlineUsers.js'
 import { ReqWUser } from '../../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../../types/WebsocketTypes.js'
 import { FriendClientInfo, PendingFriendInfo, isUserDoc } from "../../../types/UserTypes.js";
@@ -153,5 +153,47 @@ export const onlineFriends = async (req: ReqWUser, res: Response) => {
 }
 
 export const getFriends = async (req: ReqWUser, res: Response) => {
-    res.send(successResponse({}))
+    let response: GetFriendsRes = null
+    let status: number = 200
+
+    if (!req.user) {
+        response = errorResponse('No user provided')
+        res.status(400).send(response)
+        return
+    }
+
+    try {
+        const online = []
+        const offline = []
+
+        for (let id of req.user.friendsIds) {
+            const friend = await User.findById(id)
+            if (!isUserDoc(friend)) {
+                console.error('Retrieving friends error: Friend info cannot be retrieved by id')
+                continue
+            }
+
+            const friendInfo: FriendClientInfo = {
+                id: friend._id,
+                username: friend.username
+            }
+
+            if (onlineUsers[id.toHexString()]) {
+                online.push(friendInfo)
+            } else {
+                offline.push(friendInfo)
+            }
+        }
+
+        response = successResponse({
+            online,
+            offline
+        })
+    } 
+    catch (err) {
+        response = errorResponse('Something went wrong')
+        status = 500
+    }
+
+    res.send(response)
 }
