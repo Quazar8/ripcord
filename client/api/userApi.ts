@@ -9,7 +9,8 @@ import { LoginResponse,
          AddFriendRes,
          PendingFriendsRes, 
          DeclineFriendRequestRes,
-         AcceptFriendRequestRes} from '../../server/routes/user/ResponseTypes'
+         AcceptFriendRequestRes,
+         GetFriendsRes } from '../../server/routes/user/ResponseTypes'
 
 import { DeclineFriendRequestData,
          AcceptFriendRequestData } from '../../server/types/UserRequestData'
@@ -48,4 +49,8 @@ export const cancelOrDeclineFrReq = async (data: DeclineFriendRequestData): Prom
 
 export const acceptFriendRequest = async (data: AcceptFriendRequestData): Promise<AcceptFriendRequestRes> => {
     return (await fetch(baseUrl + UserUrls.acceptFriendRequest, postQueryOptions(data))).json()
+}
+
+export const retrieveFriends = async (): Promise<GetFriendsRes> => {
+    return (await fetch(baseUrl + UserUrls.getFriends, getQueryOptions(true))).json()
 }
