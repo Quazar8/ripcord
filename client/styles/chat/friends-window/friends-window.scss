@@ -1,5 +1,6 @@
 @use 'friend-request';
 @use 'pending-subwindow';
+@use 'friends-list';
 
 .friends-window {
     background: hsl(0, 7%, 29%);
