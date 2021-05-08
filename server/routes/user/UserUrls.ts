@@ -7,5 +7,6 @@ export default {
     onlineFriends: '/user/friends/online',
     pendingFriendRequests: '/user/friends/pending',
     declineFriendRequest: '/user/friends/decline',
-    acceptFriendRequest: '/user/friends/accept'
+    acceptFriendRequest: '/user/friends/accept',
+    getFriends: '/user/friends/list'
 }

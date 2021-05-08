@@ -1,4 +1,4 @@
-import e, { Response } from "express";
+import { Response } from "express";
 import { Types } from "mongoose";
 import { IUserDoc, User } from "../../../db/models/models.js";
 import { errorResponse, ServerResponse, successResponse } from "../../../responses.js";

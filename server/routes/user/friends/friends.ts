@@ -18,7 +18,10 @@ export type PendingFriendsRes = ServerResponse<{
     outgoing: PendingFriendInfo[]
 }>
 
-
+export type GetFriendsRes = ServerResponse<{
+    online: FriendClientInfo[],
+    offline: FriendClientInfo[]
+}>
 
 export const addFriend = async (req: ReqWUser, res: Response) => {
     let response: AddFriendRes = null
@@ -147,4 +150,8 @@ export const onlineFriends = async (req: ReqWUser, res: Response) => {
     response = successResponse(friends, '')
 
     res.send(response)
+}
+
+export const getFriends = async (req: ReqWUser, res: Response) => {
+    res.send(successResponse({}))
 }
