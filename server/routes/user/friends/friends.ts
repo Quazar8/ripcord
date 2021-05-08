@@ -147,10 +147,12 @@ export const getFriends = async (req: ReqWUser, res: Response) => {
 
             const friendInfo: FriendClientInfo = {
                 id: friend._id,
-                username: friend.username
+                username: friend.username,
+                status: 'Offline'
             }
 
             if (onlineUsers[id.toHexString()]) {
+                friendInfo.status = 'Online'
                 online.push(friendInfo)
             } else {
                 offline.push(friendInfo)
@@ -167,5 +169,5 @@ export const getFriends = async (req: ReqWUser, res: Response) => {
         status = 500
     }
 
-    res.send(response)
+    res.status(status).send(response)
 }
