@@ -7,31 +7,33 @@ import { resHasError } from '../../api/utils'
 import { toggleUserMenuAction, 
          removeUserInfoAction, 
          toggleFriendsWindow,
-         pushNotification } from '../../store/globalActions'
+         pushNotification,
+         showChatDisplayAction} from '../../store/globalActions'
 
 import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
 
-type StateProps = {
+type ChatStateProps = {
     user: UserState
     showUserMenu: boolean
     showFriendsWindow: boolean,
     friendNotifications: number
 }
 
-type DispProps = {
+type ChatDispProps = {
     showUserMenuFn: () => void
     hideUserMenuFn: () => void
     toggleFriendsWindowFn: () => void
     logoutFn: () => void
     dispNotification: ReturnType<typeof pushNotification>,
-    dispatch: Dispatch<AppAction>
+    dispatch: Dispatch<AppAction>,
+    showChatDisplayFn: () => void
 }
 
-type Props = StateProps & DispProps
+export type ChatAppProps = ChatStateProps & ChatDispProps
 
-const ChatAppView = (props: Props) => {
+const ChatAppView = (props: ChatAppProps) => {
     useEffect(() => {
         establishWS(props.dispatch)
 
@@ -51,6 +53,7 @@ const ChatAppView = (props: Props) => {
             <RightWindow 
                 showFriendsWindow = { props.showFriendsWindow }
                 dispNotification = { props.dispNotification }
+                showChatDisplayFn = { props.showChatDisplayFn }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -61,14 +64,14 @@ const ChatAppView = (props: Props) => {
     )
 }
 
-const mapState: MapStateFn<StateProps> = (state) => ({
+const mapState: MapStateFn<ChatStateProps> = (state) => ({
     user: state.global.user,
     showUserMenu: state.global.showUserOptions,
     showFriendsWindow: state.global.showFriendsWindow,
     friendNotifications: state.global.friendNotifications
 })
 
-const mapDisp: MapDispatchFn<DispProps> = (dispatch, state) => ({
+const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     showUserMenuFn: () => {
         dispatch(toggleUserMenuAction(true))
     },
@@ -86,7 +89,10 @@ const mapDisp: MapDispatchFn<DispProps> = (dispatch, state) => ({
         dispatch(toggleFriendsWindow(!state.global.showFriendsWindow))
     },
     dispNotification: pushNotification(dispatch),
-    dispatch
+    dispatch,
+    showChatDisplayFn: () => {
+        dispatch(showChatDisplayAction())
+    }
 })
 
 const ChatApp = connect(mapState, mapDisp)(ChatAppView)
