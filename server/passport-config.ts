@@ -33,7 +33,8 @@ const configurePassport = (): void => {
                     registeredAt: user.registeredAt,
                     friendsIds: user.friendsIds,
                     incFriendRequests: user.incFriendRequests,
-                    outFriendRequests: user.outFriendRequests
+                    outFriendRequests: user.outFriendRequests,
+                    channelIds: user.channelIds
                 }
 
                 return done(null, reqUser)
