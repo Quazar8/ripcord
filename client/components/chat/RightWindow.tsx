@@ -4,11 +4,9 @@ import { ChatAppProps } from './ChatApp'
 
 import FriendsWindow from './FriendsWindow/FriendsWindow'
 
-type Props = {
-    showFriendsWindow: ChatAppProps['showFriendsWindow'],
-    dispNotification: ChatAppProps['dispNotification']
-    showChatDisplayFn: ChatAppProps['showChatDisplayFn']
-}
+type Props = Pick<ChatAppProps, 'dispNotification'
+                 | 'showChatDisplayFn' | 'showFriendsWindow'
+                 | 'recipientId'>
 
 type RightContextType = Pick<Props, 'dispNotification' 
     | 'showChatDisplayFn'>
@@ -36,7 +34,10 @@ const RightWindow = (props: Props) => {
             <RightWindowContext.Provider
                 value = { contextValue }
             >
-                <ChatDisplay />
+                <ChatDisplay 
+                    dispNotification = { props.dispNotification }
+                    recipientId = { props.recipientId }
+                />
                 { AuxComponent }
             </RightWindowContext.Provider>
         </section>

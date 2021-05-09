@@ -19,7 +19,8 @@ type ChatStateProps = {
     user: UserState
     showUserMenu: boolean
     showFriendsWindow: boolean,
-    friendNotifications: number
+    friendNotifications: number,
+    recipientId: Types._ObjectId
 }
 
 type ChatDispProps = {
@@ -55,6 +56,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 showFriendsWindow = { props.showFriendsWindow }
                 dispNotification = { props.dispNotification }
                 showChatDisplayFn = { props.showChatDisplayFn }
+                recipientId = { props.recipientId }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -69,7 +71,8 @@ const mapState: MapStateFn<ChatStateProps> = (state) => ({
     user: state.global.user,
     showUserMenu: state.global.showUserOptions,
     showFriendsWindow: state.global.showFriendsWindow,
-    friendNotifications: state.global.friendNotifications
+    friendNotifications: state.global.friendNotifications,
+    recipientId: state.global.chat.recipientId
 })
 
 const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({

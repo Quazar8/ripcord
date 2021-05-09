@@ -1,21 +1,18 @@
-import React, { useRef, useEffect } from 'react'
-import { connect, MapDispatchFn } from '../../store/store'
-import { pushNotification } from '../../store/globalActions'
+import React, { useRef } from 'react'
+import { ChatAppProps } from './ChatApp'
 
-type DIspProps = {
-    pushNotification: ReturnType<typeof pushNotification>
-}
+type Props = Pick<ChatAppProps, 'dispNotification' |
+                  'recipientId'>
 
-const ChatDisplayView = ({ pushNotification }: DIspProps) => {
+const ChatDisplay = (props: Props) => {
+    if (!props.recipientId) return (
+        <h2>No open conversations</h2>
+    )
+
     const sendInputRef = useRef<HTMLInputElement>(null)
     
     const sendMsg = () => {
-        // const msg = sendInputRef.current.value
-        // if (socket?.readyState === 1 && msg) {
-        //     socket?.send(msg)
-        // }
-        
-        pushNotification('info', 'Not implemented yet')
+        props.dispNotification('info', 'Not implemented yet')
     }
 
     return (
@@ -26,11 +23,5 @@ const ChatDisplayView = ({ pushNotification }: DIspProps) => {
         </section>
     )
 }
-
-const mapDispatch: MapDispatchFn<DIspProps> = (dispatch) => ({
-    pushNotification: pushNotification(dispatch)
-})
-
-const ChatDisplay = connect(null, mapDispatch)(ChatDisplayView)
 
 export default ChatDisplay
