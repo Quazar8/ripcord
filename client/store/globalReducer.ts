@@ -75,6 +75,13 @@ const addFriendNotification = (state: GlobalState): GlobalState => {
     }
 }
 
+const showChatDisplay = (state: GlobalState): GlobalState => {
+    return {
+        ...state,
+        showFriendsWindow: false
+    }
+}
+
 export const globalReducer = 
         (state: GlobalState = globalInit, action: Action<GlobalActionTypes, any>): GlobalState => {
     switch (action.type) {
@@ -92,6 +99,8 @@ export const globalReducer =
             return toggleFriendsWindow(state, action.payload)
         case GlobalActionTypes.FriendNotification:
             return addFriendNotification(state)
+        case GlobalActionTypes.SHowChatDisplay:
+            return showChatDisplay(state)
         default: return state
     }
 }

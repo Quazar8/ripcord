@@ -6,7 +6,10 @@ import { resHasError } from '../../../api/utils'
 
 import FriendsPlate from './FriendPlate'
 
-const FriendsList = () => {
+type Props = {
+}
+
+const FriendsList = (props: Props) => {
     const [friendsList, setFriendsList] = useState<{
         online: FriendClientInfo[],
         offline: FriendClientInfo[]

@@ -10,9 +10,10 @@ type Props = {
     showChatDisplayFn: ChatAppProps['showChatDisplayFn']
 }
 
-type RightWIndowContext = Pick<Props, 'dispNotification' | 'showChatDisplayFn'>
+type RightContextType = Pick<Props, 'dispNotification' 
+    | 'showChatDisplayFn'>
 
-export const rightWindowContext = createContext({
+export const RightWindowContext = createContext<RightContextType>({
     dispNotification: () => {},
     showChatDisplayFn: () => {}
 })
@@ -22,14 +23,22 @@ const RightWindow = (props: Props) => {
     if (props.showFriendsWindow) {
        AuxComponent = <FriendsWindow 
             dispNotification = { props.dispNotification }
-            showChatDisplayFn = { props.showChatDisplayFn }
         />
+    }
+
+    const contextValue: RightContextType = {
+        dispNotification: props.dispNotification,
+        showChatDisplayFn: props.showChatDisplayFn
     }
 
     return (
         <section className = "right-window">
-            <ChatDisplay />
-            { AuxComponent }
+            <RightWindowContext.Provider
+                value = { contextValue }
+            >
+                <ChatDisplay />
+                { AuxComponent }
+            </RightWindowContext.Provider>
         </section>
     )
 }
