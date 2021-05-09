@@ -1,3 +1,4 @@
+import { Types } from 'mongoose'
 import { Dispatch } from 'react'
 import { UserClientInfo } from '../../server/types/UserTypes'
 import { Action } from './storeComponents/StoreTypes'
@@ -77,7 +78,7 @@ export const friendNotificationAction = (): GlobalAction => ({
     payload: null
 })
 
-export const showChatDisplayAction = (): GlobalAction => ({
+export const showChatDisplayAction = (recipientId: Types._ObjectId): GlobalAction => ({
     type: GlobalActionTypes.SHowChatDisplay,
-    payload: null
+    payload: recipientId
 })

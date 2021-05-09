@@ -13,6 +13,7 @@ import { toggleUserMenuAction,
 import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
+import { Types } from 'mongoose'
 
 type ChatStateProps = {
     user: UserState
@@ -28,7 +29,7 @@ type ChatDispProps = {
     logoutFn: () => void
     dispNotification: ReturnType<typeof pushNotification>,
     dispatch: Dispatch<AppAction>,
-    showChatDisplayFn: () => void
+    showChatDisplayFn: (recipientId: Types._ObjectId) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -90,8 +91,8 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     dispNotification: pushNotification(dispatch),
     dispatch,
-    showChatDisplayFn: () => {
-        dispatch(showChatDisplayAction())
+    showChatDisplayFn: (recipientId: Types._ObjectId) => {
+        dispatch(showChatDisplayAction(recipientId))
     }
 })
 

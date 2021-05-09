@@ -1,6 +1,7 @@
 import { Action } from './storeComponents/StoreTypes'
 import { GlobalActionTypes, Notification } from './globalActions'
 import { UserClientInfo } from '../../server/types/UserTypes'
+import { Types } from 'mongoose'
 
 export type UserState = UserClientInfo
 
@@ -9,7 +10,10 @@ export type GlobalState = {
     user: UserState
     showUserOptions: boolean
     showFriendsWindow: boolean
-    friendNotifications: number
+    friendNotifications: number,
+    chat: {
+        recipientId: Types._ObjectId
+    }
 }
 
 export const globalInit: GlobalState = {
@@ -25,7 +29,10 @@ export const globalInit: GlobalState = {
     },
     showUserOptions: false,
     showFriendsWindow: false,
-    friendNotifications: 0
+    friendNotifications: 0,
+    chat: {
+        recipientId: null
+    }
 }
 
 const pushNotification = (currentState: GlobalState, notification: Notification): GlobalState => {
@@ -75,10 +82,13 @@ const addFriendNotification = (state: GlobalState): GlobalState => {
     }
 }
 
-const showChatDisplay = (state: GlobalState): GlobalState => {
+const showChatDisplay = (state: GlobalState, recipientId: Types._ObjectId): GlobalState => {
     return {
         ...state,
-        showFriendsWindow: false
+        showFriendsWindow: false,
+        chat: {
+            recipientId
+        }
     }
 }
 
@@ -100,7 +110,7 @@ export const globalReducer =
         case GlobalActionTypes.FriendNotification:
             return addFriendNotification(state)
         case GlobalActionTypes.SHowChatDisplay:
-            return showChatDisplay(state)
+            return showChatDisplay(state, action.payload)
         default: return state
     }
 }

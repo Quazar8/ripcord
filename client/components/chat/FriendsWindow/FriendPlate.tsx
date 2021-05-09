@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FriendClientInfo } from '../../../../server/types/userTypes'
+import { RightWindowContext } from '../RightWindow'
 
 type Props = {
     friend: FriendClientInfo
@@ -8,8 +9,15 @@ type Props = {
 const FriendPlate = ({ friend }: Props) => {
     let appendClass = friend.status === 'Online'
                         ? 'online' : 'offline'
+
+    const { showChatDisplayFn } = useContext(RightWindowContext)
+
+    const openChatWUser = () => {
+        showChatDisplayFn(friend.id)
+    }
+
     return (
-        <div className = {"friend-plate" + ' ' + appendClass}>
+        <div onClick = { openChatWUser } className = {"friend-plate" + ' ' + appendClass}>
             <h3>{ friend.username }</h3>
             {
                 friend.status === 'Online'
