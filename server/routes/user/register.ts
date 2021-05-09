@@ -19,7 +19,8 @@ const registerHandler = (req: Request, res: Response): void => {
             registeredAt: new Date(Date.now()),
             friendsIds: [],
             outFriendRequests: [],
-            incFriendRequests: []
+            incFriendRequests: [],
+            channelIds: []
         }
 
         const user = new User(userCandidate)

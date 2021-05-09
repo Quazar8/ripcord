@@ -27,17 +27,17 @@ const configurePassport = (): void => {
             if (err) return done(err, false)
 
             if (user) {
-                const reqUser: UserInfo = {
-                    id: user._id,
-                    username: user.username,
-                    registeredAt: user.registeredAt,
-                    friendsIds: user.friendsIds,
-                    incFriendRequests: user.incFriendRequests,
-                    outFriendRequests: user.outFriendRequests,
-                    channelIds: user.channelIds
-                }
+                // const reqUser: UserInfo = {
+                //     id: user._id,
+                //     username: user.username,
+                //     registeredAt: user.registeredAt,
+                //     friendsIds: user.friendsIds,
+                //     incFriendRequests: user.incFriendRequests,
+                //     outFriendRequests: user.outFriendRequests,
+                //     channelIds: user.channelIds
+                // }
 
-                return done(null, reqUser)
+                return done(null, user)
             }
             else return done(null, false)
         })
