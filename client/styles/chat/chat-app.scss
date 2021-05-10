@@ -1,6 +1,7 @@
 @use 'chat-menu';
 @use 'user-menu';
 @use 'right-window';
+@use 'chat-display';
 
 .chat-app {
     display: flex;

@@ -1,0 +1,62 @@
+.chat-display {
+    $monitor-bg: hsl(0, 1%, 21%);
+    background: hsl(0, 8%, 30%);
+    height: 100%;
+    padding: 2%;
+
+    .user-info {
+        height: 10%;
+        
+        h2, h4 {
+            font-weight: normal;
+        }
+
+        h2 {
+            font-size: 2vw;
+        }
+
+        h4 {
+            font-size: 1vw;
+        }
+    }
+
+    .chat-monitor {
+        height: 75%;
+        background: hsl(0, 1%, 21%);
+        border-radius: 1%;
+    }
+
+    .user-field {
+        display: flex;
+        height: 15%;
+        margin-top: 1%;
+        
+        button {
+            width: 10%;
+            background: inherit;
+            font-size: 1.3vw;
+            font-weight: bold;
+            border: none;
+            color: white;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .user-input {
+        background: $monitor-bg;
+        width: 90%;
+        padding: 1%;
+        height: 100%;
+        font-size: 1.5vw;
+        word-break: break-word;
+        overflow: scroll;
+        scrollbar-width: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

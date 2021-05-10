@@ -17,9 +17,21 @@ const ChatDisplay = (props: Props) => {
 
     return (
         <section className = "chat-display">
+            <div className = "user-info">
+                <h2>Test name</h2>
+                <h4>Test status</h4>
+            </div>
             <div className = "chat-monitor"></div>
-            <input ref = { sendInputRef } placeholder = "send a message" type = "text" />
-            <button onClick = { sendMsg } >Send</button>
+            <div className = "user-field">
+                <div 
+                    className = "user-input"
+                    contentEditable
+                >
+                </div>
+                <button>
+                    Send
+                </button>
+            </div>
         </section>
     )
 }
