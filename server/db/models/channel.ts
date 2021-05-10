@@ -1,21 +1,18 @@
-import mongoose from 'mongoose'
+import mongoose, { Types } from 'mongoose'
+import { Message } from '../../types/ChatTypes'
 const { Schema, model } = mongoose
 
-export type Message = {
-    id: string,
-    author: string,
-    createdAt: Date
-}
-
 export interface IChannel {
-    participantOne: string,
-    participantTwo: string,
+    participantOne: Types.ObjectId,
+    participantTwo: Types.ObjectId,
+    createdAt: Date,
     messages: Message[]
 }
 
 const channelSchema = new Schema({
-    participantOne: String,
-    participantTwo: String,
+    participantOne: Schema.Types.ObjectId,
+    participantTwo: Schema.Types.ObjectId,
+    createdAt: { type: Date, default: new Date()},
     messages: Array<Message>
 })
 

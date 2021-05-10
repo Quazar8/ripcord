@@ -1,5 +1,5 @@
 export default {
-    chatChannelInfoFn: (channelId: string) => (
-        `/chat/channel/${channelId}`
+    chatChannelInfoFn: (recipientId: string) => (
+        `/chat/channel/${recipientId}`
     )
 }
