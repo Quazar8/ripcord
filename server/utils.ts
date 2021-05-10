@@ -24,3 +24,14 @@ export const getCookies = (headerCookie: string): Cookies => {
 
     return cookies
 }
+
+const tryCatchWrapper = (fn: CallableFunction): boolean => {
+    try {
+        fn()
+        return true
+    }
+    catch(err) {
+        console.error(err)
+        return false
+    }
+}
