@@ -20,7 +20,7 @@ const registerHandler = (req: Request, res: Response): void => {
             friendsIds: [],
             outFriendRequests: [],
             incFriendRequests: [],
-            channelIds: []
+            channels: {}
         }
 
         const user = new User(userCandidate)
