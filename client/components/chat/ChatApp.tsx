@@ -20,7 +20,7 @@ type ChatStateProps = {
     showUserMenu: boolean
     showFriendsWindow: boolean,
     friendNotifications: number,
-    recipientId: Types._ObjectId
+    recipientId: Types.ObjectId
 }
 
 type ChatDispProps = {
@@ -30,7 +30,7 @@ type ChatDispProps = {
     logoutFn: () => void
     dispNotification: ReturnType<typeof pushNotification>,
     dispatch: Dispatch<AppAction>,
-    showChatDisplayFn: (recipientId: Types._ObjectId) => void
+    showChatDisplayFn: (recipientId: Types.ObjectId) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -94,7 +94,7 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     dispNotification: pushNotification(dispatch),
     dispatch,
-    showChatDisplayFn: (recipientId: Types._ObjectId) => {
+    showChatDisplayFn: (recipientId: Types.ObjectId) => {
         dispatch(showChatDisplayAction(recipientId))
     }
 })

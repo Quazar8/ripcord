@@ -11,7 +11,7 @@ export enum GlobalActionTypes {
     ToggleUserMenu,
     ToggleFriendsWindow,
     FriendNotification,
-    SHowChatDisplay
+    ShowChatDisplay
 }
 
 export type Notification = {
@@ -78,7 +78,7 @@ export const friendNotificationAction = (): GlobalAction => ({
     payload: null
 })
 
-export const showChatDisplayAction = (recipientId: Types._ObjectId): GlobalAction => ({
-    type: GlobalActionTypes.SHowChatDisplay,
+export const showChatDisplayAction = (recipientId: Types.ObjectId): GlobalAction => ({
+    type: GlobalActionTypes.ShowChatDisplay,
     payload: recipientId
 })

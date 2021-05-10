@@ -12,7 +12,7 @@ export type GlobalState = {
     showFriendsWindow: boolean
     friendNotifications: number,
     chat: {
-        recipientId: Types._ObjectId
+        recipientId: Types.ObjectId
     }
 }
 
@@ -82,7 +82,7 @@ const addFriendNotification = (state: GlobalState): GlobalState => {
     }
 }
 
-const showChatDisplay = (state: GlobalState, recipientId: Types._ObjectId): GlobalState => {
+const showChatDisplay = (state: GlobalState, recipientId: Types.ObjectId): GlobalState => {
     return {
         ...state,
         showFriendsWindow: false,
@@ -109,7 +109,7 @@ export const globalReducer =
             return toggleFriendsWindow(state, action.payload)
         case GlobalActionTypes.FriendNotification:
             return addFriendNotification(state)
-        case GlobalActionTypes.SHowChatDisplay:
+        case GlobalActionTypes.ShowChatDisplay:
             return showChatDisplay(state, action.payload)
         default: return state
     }
