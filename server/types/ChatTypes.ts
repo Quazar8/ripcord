@@ -15,7 +15,7 @@ export type Message = {
 
 export type ChannelDoc = Document & IChannel
 
-export const isChannelDoc = (channel: ChannelDoc): channel is ChannelDoc => {
+export const isChannelDoc = (channel: Document): channel is ChannelDoc => {
     return channel?._id
 }
 
