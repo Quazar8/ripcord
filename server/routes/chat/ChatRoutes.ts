@@ -4,7 +4,7 @@ import { authenticateUser } from '../../middlewares.js'
 import { chatChannelInfoHandler } from './chatChannelInfo.js'
 
 const enableChatRoutes = (app: Application) => {
-    app.post(ChatUrls.chatChannelInfoFn(':recipientId'), authenticateUser, chatChannelInfoHandler)
+    app.get(ChatUrls.chatChannelInfoFn(':recipientId'), authenticateUser, chatChannelInfoHandler)
 }
 
 export default enableChatRoutes
