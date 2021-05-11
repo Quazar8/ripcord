@@ -12,7 +12,7 @@ export interface IChannel {
 const channelSchema = new Schema<IChannel>({
     participantOne: Schema.Types.ObjectId,
     participantTwo: Schema.Types.ObjectId,
-    createdAt: { type: Date, default: new Date(Date.now()) },
+    createdAt: { type: Date, default: new Date() },
     messages: { type: Array, default: [] }
 })
 
