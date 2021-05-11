@@ -1,5 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
+import { resHasError } from '../../api/utils'
+import { getChannelInfo } from '../../api/chatApi'
 import { ChatAppProps } from './ChatApp'
+import { ChannelClientInfo, RecipientInfo } from '../../../server/types/ChatTypes'
 
 type Props = Pick<ChatAppProps, 'dispNotification' |
                   'recipientId'>
@@ -8,6 +11,37 @@ const ChatDisplay = (props: Props) => {
     if (!props.recipientId) return (
         <h2>No open conversations</h2>
     )
+
+    const [info, setInfo] = useState<{
+        recipient: RecipientInfo,
+        channel: ChannelClientInfo
+    }>({
+        recipient: {
+            id: null,
+            username: ''
+        },
+        channel: {
+            id: null,
+            messages: [],
+            participantOne: null,
+            participantTwo: null
+        }
+    })
+    
+    const fetchInfo = async () => {
+        const res = await getChannelInfo(props.recipientId)
+        if (resHasError(res)) {
+            console.error(res.errorMsg)
+            return
+        }
+
+        setInfo(res.data)
+    }
+
+    useEffect(() => {
+        fetchInfo()
+    }, [props.recipientId])
+    
 
     const sendInputRef = useRef<HTMLInputElement>(null)
     
@@ -18,8 +52,8 @@ const ChatDisplay = (props: Props) => {
     return (
         <section className = "chat-display">
             <div className = "user-info">
-                <h2>Test name</h2>
-                <h4>Test status</h4>
+                <h2>{ info.recipient.username }</h2>
+                <h4></h4>
             </div>
             <div className = "chat-monitor"></div>
             <div className = "user-field">
