@@ -1,6 +1,6 @@
 import { Document, Types } from "mongoose";
 import { IChannel } from "../db/models/channel";
-import { IUserModel } from "../db/models/models";
+import { IUserModel } from "../db/models/user";
 
 export type RecipientInfo = Pick<IUserModel, 'username'> & {
     id: Types.ObjectId

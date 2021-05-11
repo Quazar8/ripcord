@@ -1,3 +1,5 @@
+// import crypto from 'crypto'
+
 export const isDev = (): boolean => {
     return process.env.NODE_ENV?.trim() === 'development'
 }
@@ -25,7 +27,7 @@ export const getCookies = (headerCookie: string): Cookies => {
     return cookies
 }
 
-const tryCatchWrapper = (fn: CallableFunction): boolean => {
+export const tryCatchWrapper = (fn: CallableFunction): boolean => {
     try {
         fn()
         return true
@@ -35,3 +37,9 @@ const tryCatchWrapper = (fn: CallableFunction): boolean => {
         return false
     }
 }
+
+// export const genId = (bytes: number): string => {
+//     let id = crypto.randomBytes(bytes).toString('hex')
+
+//     return id + '_' + Date.now()
+// }

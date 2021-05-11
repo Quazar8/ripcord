@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { Types } from "mongoose";
-import { IUserDoc, User } from "../../../db/models/models.js";
+import { IUserDoc, User } from "../../../db/models/user.js";
 import { errorResponse, ServerResponse, successResponse } from "../../../responses.js";
 import { ReqWUser } from "../../../types/RequestTypes";
 import { isUserDoc } from '../../../types/UserTypes.js'

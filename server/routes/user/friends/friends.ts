@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { successResponse, errorResponse, ServerResponse } from '../../../responses.js'
-import { IUserDoc, User } from '../../../db/models/models.js'
+import { IUserDoc, User } from '../../../db/models/user.js'
 import { onlineUsers, sendSocketMsg } from '../../../websocket/onlineUsers.js'
 import { ReqWUser } from '../../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../../types/WebsocketTypes.js'

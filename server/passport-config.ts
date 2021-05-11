@@ -1,7 +1,7 @@
 import { Error } from 'mongoose'
 import passport from 'passport'
 import passportJWT, { StrategyOptions } from 'passport-jwt'
-import { IUserDoc, User } from './db/models/models.js'
+import { IUserDoc, User } from './db/models/user.js'
 import { UserInfo } from './types/UserTypes'
 import { jwtKey, jwtCookieName } from './configVars.js'
 import { Request } from 'express'

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { User, IUserModel, IUserDoc } from '../../db/models/models.js'
+import { User, IUserModel, IUserDoc } from '../../db/models/user.js'
 import { errorResponse } from '../../responses.js'
 import { LoginResponse, loginUser } from './login.js'
 

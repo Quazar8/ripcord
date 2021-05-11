@@ -5,7 +5,7 @@ import * as net from 'net'
 import { getCookies, Cookies } from '../utils.js'
 import { UserInfo } from '../types/UserTypes'
 import { onlineUsers } from './onlineUsers.js'
-import { IUserDoc } from '../db/models/models.js'
+import { IUserDoc } from '../db/models/user.js'
 
 type IncMessWCookies = IncomingMessage & {
     cookies: Cookies

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { User, IUserDoc } from '../../db/models/models.js'
+import { User, IUserDoc } from '../../db/models/user.js'
 import { errorResponse, ServerResponse, successResponse } from '../../responses.js'
 import { UserClientInfo, LoginEntry } from '../../types/UserTypes'
 import jwt from 'jsonwebtoken'

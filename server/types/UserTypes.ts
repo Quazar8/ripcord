@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
-import { IUserModel } from '../db/models/models'
-import { IUserDoc } from '../db/models/models.js'
+import { IUserModel } from '../db/models/user'
+import { IUserDoc } from '../db/models/user.js'
 import { Document } from 'mongoose'
 
 export const isUserDoc = (doc: Document): doc is IUserDoc => {

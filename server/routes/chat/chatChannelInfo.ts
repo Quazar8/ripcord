@@ -2,7 +2,7 @@ import { Response } from "express";
 import { ReqWUser } from '../../types/RequestTypes'
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { RecipientInfo, ChannelClientInfo, ChannelDoc, isChannelDoc } from '../../types/ChatTypes.js'
-import { IUserDoc, User } from "../../db/models/models.js";
+import { IUserDoc, User } from "../../db/models/user.js";
 import { isUserDoc } from "../../types/UserTypes.js";
 import { Types } from "mongoose";
 import { IChannel, Channel } from '../../db/models/channel.js'
