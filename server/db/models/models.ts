@@ -1,7 +1,7 @@
 import mongoose, { Document, Types } from 'mongoose'
 const { Schema, model } = mongoose
 
-const UserSchema = new Schema ({
+const UserSchema = new Schema<IUserModel> ({
     username: { type: String, unique: true },
     password: String,
     registeredAt: { type: Date, default: () => Date.now() },
