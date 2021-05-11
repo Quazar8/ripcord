@@ -78,7 +78,7 @@ export const friendNotificationAction = (): GlobalAction => ({
     payload: null
 })
 
-export const showChatDisplayAction = (recipientId: Types.ObjectId): GlobalAction => ({
+export const showChatDisplayAction = (recipientId: string): GlobalAction => ({
     type: GlobalActionTypes.ShowChatDisplay,
     payload: recipientId
 })

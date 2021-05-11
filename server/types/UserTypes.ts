@@ -16,7 +16,7 @@ export type UserClientInfo = UserInfo
 export type LoginEntry = Pick<IUserModel, 'password' | 'username'>
 
 export type FriendClientInfo = {
-    id: Types.ObjectId
+    id: string
     username: string,
     status: 'Online' | 'Offline'
 }

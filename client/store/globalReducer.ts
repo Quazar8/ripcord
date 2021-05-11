@@ -12,7 +12,7 @@ export type GlobalState = {
     showFriendsWindow: boolean
     friendNotifications: number,
     chat: {
-        recipientId: Types.ObjectId
+        recipientId: string
     }
 }
 
@@ -82,7 +82,7 @@ const addFriendNotification = (state: GlobalState): GlobalState => {
     }
 }
 
-const showChatDisplay = (state: GlobalState, recipientId: Types.ObjectId): GlobalState => {
+const showChatDisplay = (state: GlobalState, recipientId: string): GlobalState => {
     return {
         ...state,
         showFriendsWindow: false,
