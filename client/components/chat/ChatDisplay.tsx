@@ -74,7 +74,7 @@ const ChatDisplay = (props: Props) => {
                     contentEditable
                 >
                 </div>
-                <button>
+                <button onClick = { sendMsg }>
                     Send
                 </button>
             </div>
