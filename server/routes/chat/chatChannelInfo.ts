@@ -30,6 +30,12 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
         res.status(400).send(response)
         return
     }
+    
+    if (req.user._id.equals(recipientId)) {
+        response = errorResponse('Cannot open a channel with yourself')
+        res.status(400).send(response)
+        return
+    }
 
     const channelObj = (idOne: Types.ObjectId, idTwo: Types.ObjectId): IChannel => {
         return {
