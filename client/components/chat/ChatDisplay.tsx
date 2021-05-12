@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, KeyboardEvent } from 'react'
 import { resHasError } from '../../api/utils'
 import { getChannelInfo } from '../../api/chatApi'
 import { ChatAppProps } from './ChatApp'
@@ -52,6 +52,12 @@ const ChatDisplay = (props: Props) => {
         props.dispNotification('info', 'Not implemented yet')
     }
 
+    const handleInputKeyPress = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            sendMsg()
+        }
+    }
+
     const messages = info.channel.messages.map((m, i) => (
         <ChatMessage message = { m } key = { i } />
     ))
@@ -74,6 +80,7 @@ const ChatDisplay = (props: Props) => {
                     className = "user-input"
                     contentEditable
                     ref = { messageInputRef }
+                    onKeyPress = { handleInputKeyPress }
                 >
                 </div>
                 <button onClick = { sendMsg }>
