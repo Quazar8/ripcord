@@ -10,7 +10,8 @@ export type Message = {
     authorId: Types.ObjectId,
     authorName: string,
     date: Date,
-    edited: boolean
+    edited: boolean,
+    content: string
 }
 
 export type ChannelDoc = Document & IChannel
