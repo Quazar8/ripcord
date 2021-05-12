@@ -45,9 +45,10 @@ const ChatDisplay = (props: Props) => {
     }, [props.recipientId])
     
 
-    const sendInputRef = useRef<HTMLInputElement>(null)
+    const messageInputRef = useRef<HTMLDivElement>(null)
     
     const sendMsg = () => {
+        console.log(messageInputRef.current.innerText)
         props.dispNotification('info', 'Not implemented yet')
     }
 
@@ -72,6 +73,7 @@ const ChatDisplay = (props: Props) => {
                 <div 
                     className = "user-input"
                     contentEditable
+                    ref = { messageInputRef }
                 >
                 </div>
                 <button onClick = { sendMsg }>
