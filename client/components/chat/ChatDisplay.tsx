@@ -53,7 +53,7 @@ const ChatDisplay = (props: Props) => {
 
     const messages = info.channel.messages.map((m, i) => (
         <ChatMessage message = { m } key = { i } />
-    )) 
+    ))
 
     return (
         <section className = "chat-display">
@@ -62,7 +62,11 @@ const ChatDisplay = (props: Props) => {
                 <h4></h4>
             </div>
             <div className = "chat-monitor">
-                { messages }
+                { 
+                    messages.length > 0
+                    ? messages
+                    : <h2>No chat history as of yet</h2>
+                }
             </div>
             <div className = "user-field">
                 <div 
