@@ -76,7 +76,7 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
             recipient.channels = {}
         }
 
-        const channelId = requester.channels[recipient._id]
+        const channelId = requester.channels[recipient._id.toHexString()]
         if (!channelId) {
             const newChannel = new Channel(channelObj(requester._id, recipient._id))
             const created = await newChannel.save()
@@ -85,8 +85,8 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
                 return errorResponse('Couldn\'t create new channel')
             }
 
-            requester.channels[recipient._id] = created._id
-            recipient.channels[requester._id] = created._id
+            requester.channels[recipient._id.toHexString()] = created._id
+            recipient.channels[requester._id.toHexString()] = created._id
 
             await requester.save()
             await recipient.save()

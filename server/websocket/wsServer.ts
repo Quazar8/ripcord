@@ -7,7 +7,6 @@ import messageHandler from './messageHandler.js'
 import { getCookies, Cookies } from '../utils.js'
 import { IUserDoc } from '../db/models/user.js'
 import { WSMessage } from '../types/WebsocketTypes.js'
-import { ChatMessagePayload } from '../types/ChatTypes.js'
 
 type IncMessWCookies = IncomingMessage & {
     cookies: Cookies
@@ -20,7 +19,7 @@ export const websocketServer = (server: Server) => {
 
     socketServer.on('connection', (socket: ws, req: IncMessWCookies, user: IUserDoc) => {
         console.log('user connected', user)
-        onlineUsers[user._id] = socket
+        onlineUsers[user._id.toHexString()] = socket
 
         socket.on('message', (msg: string) => {
             let json: WSMessage<any> = JSON.parse(msg)
@@ -29,7 +28,7 @@ export const websocketServer = (server: Server) => {
 
         socket.onclose = (ev) => {
             console.log(`connection with ${user.username} is closed`)
-            delete onlineUsers[user._id]
+            delete onlineUsers[user._id.toHexString()]
         }
     })
 

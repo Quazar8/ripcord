@@ -146,7 +146,7 @@ export const getFriends = async (req: ReqWUser, res: Response) => {
             }
 
             const friendInfo: FriendClientInfo = {
-                id: friend._id,
+                id: friend._id.toHexString(),
                 username: friend.username,
                 status: UserStatus.Offline
             }
