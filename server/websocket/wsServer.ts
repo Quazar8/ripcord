@@ -3,7 +3,6 @@ import { Server, IncomingMessage } from 'http'
 import passport from 'passport'
 import * as net from 'net'
 import { getCookies, Cookies } from '../utils.js'
-import { UserInfo } from '../types/UserTypes'
 import { onlineUsers } from './onlineUsers.js'
 import { IUserDoc } from '../db/models/user.js'
 

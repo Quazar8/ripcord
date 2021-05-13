@@ -1,5 +1,6 @@
 export enum WSDataType {
-    FRIEND_REQUEST
+    FRIEND_REQUEST,
+    CHAT_MESSAGE
 }
 
 export type WSMessage<P> = {

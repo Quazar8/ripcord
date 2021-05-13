@@ -1,11 +1,13 @@
 import React, { useRef, useEffect, useState, KeyboardEvent } from 'react'
+import { socket } from '../../socket/socket'
 import { resHasError } from '../../api/utils'
 import { getChannelInfo } from '../../api/chatApi'
 import { ChatAppProps } from './ChatApp'
-import { ChannelClientInfo, RecipientInfo } from '../../../server/types/ChatTypes'
 
+import { ChannelClientInfo, RecipientInfo, ChatMessagePayload } from '../../../server/types/ChatTypes'
 import ChatMessage from './ChatMessage'
 import { UserStatus } from '../../../server/types/UserTypes'
+import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
 
 type Props = Pick<ChatAppProps, 'dispNotification' |
                   'recipientId'>
@@ -50,8 +52,20 @@ const ChatDisplay = (props: Props) => {
     const messageInputRef = useRef<HTMLDivElement>(null)
     
     const sendMsg = () => {
-        console.log(messageInputRef.current.innerText)
-        props.dispNotification('info', 'Not implemented yet')
+        const content = messageInputRef.current.innerText
+        if (!info.channel || !content || !socket) {
+            return
+        }
+
+        const msg: WSMessage<ChatMessagePayload> = {
+            type: WSDataType.CHAT_MESSAGE,
+            payload: {
+                content,
+                channelId: info.channel.id
+            }
+        }
+
+        socket.send(JSON.stringify(msg))
     }
 
     const handleInputKeyPress = (e: KeyboardEvent) => {
