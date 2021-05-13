@@ -75,9 +75,20 @@ const ChatDisplay = (props: Props) => {
         }
     }
 
-    const messages = info.channel.messages.map((m, i) => (
-        <ChatMessage message = { m } key = { i } />
-    ))
+    const messages = info.channel.messages.map((m, i) => {
+        let authorname = info.recipient.username
+        if (m.authorId !== info.recipient.id) {
+            authorname = 'You' 
+        }
+
+        return (
+            <ChatMessage 
+                message = { m } 
+                key = { i }
+                authorName = { '' }
+            />
+        )
+    })
 
     return (
         <section className = "chat-display">

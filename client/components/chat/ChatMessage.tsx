@@ -3,12 +3,13 @@ import { Message } from '../../../server/types/ChatTypes'
 
 type Props = {
     message: Message
+    authorName: string
 }
 
-export const ChatMessage = ({ message }: Props) => {
+export const ChatMessage = ({ message, authorName }: Props) => {
     return (
         <div className = "message">
-            <h4>{ message.authorName }</h4>
+            <h4>{ authorName }:</h4>
             <p>{ message.content }</p>
         </div>
     )

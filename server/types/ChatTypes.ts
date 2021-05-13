@@ -10,7 +10,6 @@ export type RecipientInfo = Pick<IUserModel, 'username'> & {
 
 export type Message = {
     authorId: Types.ObjectId
-    authorName: string
     date: Date
     edited: boolean
     content: string
