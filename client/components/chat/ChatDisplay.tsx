@@ -70,6 +70,7 @@ const ChatDisplay = (props: Props) => {
 
     const handleInputKeyPress = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
+            e.preventDefault()
             sendMsg()
         }
     }
