@@ -2,9 +2,12 @@ import ws from 'ws'
 import { Server, IncomingMessage } from 'http'
 import passport from 'passport'
 import * as net from 'net'
-import { getCookies, Cookies } from '../utils.js'
 import { onlineUsers } from './onlineUsers.js'
+import messageHandler from './messageHandler.js'
+import { getCookies, Cookies } from '../utils.js'
 import { IUserDoc } from '../db/models/user.js'
+import { WSMessage } from '../types/WebsocketTypes.js'
+import { ChatMessagePayload } from '../types/ChatTypes.js'
 
 type IncMessWCookies = IncomingMessage & {
     cookies: Cookies
@@ -19,8 +22,9 @@ export const websocketServer = (server: Server) => {
         console.log('user connected', user)
         onlineUsers[user._id] = socket
 
-        socket.on('message', (msg) => {
-            console.log('received message', msg)
+        socket.on('message', (msg: string) => {
+            let json: WSMessage<any> = JSON.parse(msg)
+            messageHandler(json, user)
         })
 
         socket.onclose = (ev) => {
