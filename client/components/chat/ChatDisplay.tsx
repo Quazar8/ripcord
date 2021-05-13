@@ -68,8 +68,8 @@ const ChatDisplay = (props: Props) => {
         socket.send(JSON.stringify(msg))
     }
 
-    const handleInputKeyPress = (e: KeyboardEvent) => {
-        if (e.key === 'Enter') {
+    const handleInputKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault()
             sendMsg()
         }
@@ -97,7 +97,7 @@ const ChatDisplay = (props: Props) => {
                     className = "user-input"
                     contentEditable
                     ref = { messageInputRef }
-                    onKeyPress = { handleInputKeyPress }
+                    onKeyDown = { handleInputKeyDown }
                 >
                 </div>
                 <button onClick = { sendMsg }>
