@@ -5,6 +5,7 @@ import { ChatAppProps } from './ChatApp'
 import { ChannelClientInfo, RecipientInfo } from '../../../server/types/ChatTypes'
 
 import ChatMessage from './ChatMessage'
+import { UserStatus } from '../../../server/types/UserTypes'
 
 type Props = Pick<ChatAppProps, 'dispNotification' |
                   'recipientId'>
@@ -20,7 +21,8 @@ const ChatDisplay = (props: Props) => {
     }>({
         recipient: {
             id: null,
-            username: ''
+            username: '',
+            status: UserStatus.Offline
         },
         channel: {
             id: null,

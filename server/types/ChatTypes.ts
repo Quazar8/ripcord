@@ -1,9 +1,11 @@
 import { Document, Types } from "mongoose";
 import { IChannel } from "../db/models/channel";
 import { IUserModel } from "../db/models/user";
+import { UserStatus } from "./UserTypes";
 
 export type RecipientInfo = Pick<IUserModel, 'username'> & {
-    id: Types.ObjectId
+    id: Types.ObjectId,
+    status: UserStatus
 }
 
 export type Message = {

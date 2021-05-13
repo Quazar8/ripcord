@@ -4,7 +4,7 @@ import { IUserDoc, User } from '../../../db/models/user.js'
 import { onlineUsers, sendSocketMsg } from '../../../websocket/onlineUsers.js'
 import { ReqWUser } from '../../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../../types/WebsocketTypes.js'
-import { FriendClientInfo, PendingFriendInfo, isUserDoc } from "../../../types/UserTypes.js";
+import { FriendClientInfo, PendingFriendInfo, isUserDoc, UserStatus } from "../../../types/UserTypes.js";
 
 export type AddFriendRes = ServerResponse<{
     found: boolean,
@@ -148,11 +148,11 @@ export const getFriends = async (req: ReqWUser, res: Response) => {
             const friendInfo: FriendClientInfo = {
                 id: friend._id,
                 username: friend.username,
-                status: 'Offline'
+                status: UserStatus.Offline
             }
 
             if (onlineUsers[id.toHexString()]) {
-                friendInfo.status = 'Online'
+                friendInfo.status = UserStatus.Online
                 online.push(friendInfo)
             } else {
                 offline.push(friendInfo)

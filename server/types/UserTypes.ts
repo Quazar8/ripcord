@@ -15,10 +15,15 @@ export type UserClientInfo = UserInfo
 
 export type LoginEntry = Pick<IUserModel, 'password' | 'username'>
 
+export enum UserStatus {
+    Online = 'Online',
+    Offline = 'Offline'
+}
+
 export type FriendClientInfo = {
     id: string
     username: string,
-    status: 'Online' | 'Offline'
+    status: UserStatus
 }
 
 export type PendingFriendInfo = {

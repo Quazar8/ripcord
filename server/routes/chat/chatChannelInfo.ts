@@ -1,9 +1,10 @@
 import { Response } from "express";
 import { ReqWUser } from '../../types/RequestTypes'
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
+import { isOnline } from '../../websocket/onlineUsers.js'
 import { RecipientInfo, ChannelClientInfo, ChannelDoc, isChannelDoc } from '../../types/ChatTypes.js'
 import { IUserDoc, User } from "../../db/models/user.js";
-import { isUserDoc } from "../../types/UserTypes.js";
+import { isUserDoc, UserStatus } from "../../types/UserTypes.js";
 import { Types } from "mongoose";
 import { IChannel, Channel } from '../../db/models/channel.js'
 
@@ -56,7 +57,8 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
 
         const recipientInfo: RecipientInfo = {
             id: recipient._id,
-            username: recipient.username
+            username: recipient.username,
+            status: isOnline(recipient._id) ? UserStatus.Online : UserStatus.Offline
         }
 
         return {
