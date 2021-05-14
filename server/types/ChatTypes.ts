@@ -5,7 +5,8 @@ import { UserStatus } from "./UserTypes";
 
 export type RecipientInfo = Pick<IUserModel, 'username'> & {
     id: Types.ObjectId
-    status: UserStatus
+    status: UserStatus,
+    username: string
 }
 
 export type Message = {

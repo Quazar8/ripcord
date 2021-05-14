@@ -38,15 +38,6 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
         return
     }
 
-    const channelObj = (idOne: Types.ObjectId, idTwo: Types.ObjectId): IChannel => {
-        return {
-            participantOne: idOne,
-            participantTwo: idTwo,
-            createdAt: new Date(),
-            messages: []
-        }
-    }
-
     const responseData = (channel: ChannelDoc, recipient: UserDoc): ChatChannelInfoData => {
         const channelInfo: ChannelClientInfo = {
             id: channel._id,
@@ -78,20 +69,21 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
 
         const channelId = requester.channels[recipient._id.toHexString()]
         if (!channelId) {
-            const newChannel = new Channel(channelObj(requester._id, recipient._id))
-            const created = await newChannel.save()
-
-            if (!isChannelDoc(created)) {
-                return errorResponse('Couldn\'t create new channel')
-            }
-
-            requester.channels[recipient._id.toHexString()] = created._id
-            recipient.channels[requester._id.toHexString()] = created._id
-
-            await requester.save()
-            await recipient.save()
-
-            return successResponse(responseData(created, recipient))
+            return successResponse({
+                channel: {
+                    id: null,
+                    messages: [],
+                    participantOne: requester._id,
+                    participantTwo: recipient._id,
+                },
+                recipient: {
+                    id: recipient._id,
+                    username: recipient.username,
+                    status: isOnline(requester._id) 
+                            ? UserStatus.Online 
+                            : UserStatus.Offline
+                }
+            }) as ChatChannelInfoRes
         }
         
         const channel = await Channel.findById(channelId)
