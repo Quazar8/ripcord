@@ -25,7 +25,8 @@ export const globalInit: GlobalState = {
         outFriendRequests: [],
         id: null,
         friendsIds: [],
-        channels: {}
+        channels: {},
+        activeChannels: []
     },
     showUserOptions: false,
     showFriendsWindow: false,

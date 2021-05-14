@@ -38,7 +38,8 @@ export const loginUser = (req: Request, res: Response, user: UserDoc) => {
             outFriendRequests: user.outFriendRequests,
             registeredAt: user.registeredAt,
             friendsIds: user.friendsIds,
-            channels: user.channels
+            channels: user.channels,
+            activeChannels: user.activeChannels
         }, 'Logged in')
 
         res.status(200).send(response)

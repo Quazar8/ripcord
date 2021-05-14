@@ -8,7 +8,8 @@ const UserSchema = new Schema<IUserModel> ({
     friendsIds: { type: [Schema.Types.ObjectId], default: [] },
     incFriendRequests: { type: [Schema.Types.ObjectId], default: [] },
     outFriendRequests: { type: [Schema.Types.ObjectId], default: [] },
-    channels: {}
+    channels: {},
+    activeChannels: { type: [Schema.Types.ObjectId], default: [] }
 })
 
 export interface IUserModel {
@@ -20,7 +21,8 @@ export interface IUserModel {
     outFriendRequests: Types.ObjectId[],
     channels: {
         [UserId: string]: [ChannelId: string]
-    }
+    },
+    activeChannels: Types.ObjectId[]
 }
 
 export const User = model('User', UserSchema)
