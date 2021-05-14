@@ -85,7 +85,7 @@ const ChatDisplay = (props: Props) => {
             <ChatMessage 
                 message = { m } 
                 key = { i }
-                authorName = { '' }
+                authorName = { authorname }
             />
         )
     })
