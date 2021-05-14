@@ -20,7 +20,14 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: IUserDoc) 
             return
         }
 
-        console.log('chat message', payload)
+        channel.messages.push({
+            content: payload.content,
+            authorId: byUser._id,
+            edited: false,
+            date: new Date()
+        })
+
+        await channel.save()
     } 
     catch (err) {
         console.error(err)
