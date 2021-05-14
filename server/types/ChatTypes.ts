@@ -30,5 +30,6 @@ export type ChannelClientInfo = {
 
 export type ChatMessagePayload = {
     channelId: string
-    content: string
+    content: string,
+    authorId: string
 }

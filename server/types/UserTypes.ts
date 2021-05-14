@@ -11,7 +11,7 @@ export const isUserDoc = (doc: Document): doc is UserDoc => {
 }
 
 export type UserInfo = Omit<IUserModel, 'password'> & {
-    id: Types.ObjectId
+    id: string
 }
 
 export type UserClientInfo = UserInfo

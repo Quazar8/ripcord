@@ -33,7 +33,7 @@ export const loginUser = (req: Request, res: Response, user: UserDoc) => {
 
         const response: LoginResponse = successResponse({
             username: user.username,
-            id: user._id,
+            id: user._id.toHexString(),
             incFriendRequests: user.incFriendRequests,
             outFriendRequests: user.outFriendRequests,
             registeredAt: user.registeredAt,

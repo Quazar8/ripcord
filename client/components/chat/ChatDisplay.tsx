@@ -10,7 +10,7 @@ import { UserStatus } from '../../../server/types/UserTypes'
 import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
 
 type Props = Pick<ChatAppProps, 'dispNotification' |
-                  'recipientId'>
+                  'recipientId' | 'user'>
 
 const ChatDisplay = (props: Props) => {
     if (!props.recipientId) return (
@@ -61,7 +61,8 @@ const ChatDisplay = (props: Props) => {
             type: WSDataType.CHAT_MESSAGE,
             payload: {
                 content,
-                channelId: info.channel.id
+                channelId: info.channel.id,
+                authorId: props.user.id
             }
         }
 
