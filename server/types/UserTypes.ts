@@ -1,9 +1,12 @@
 import { Types } from 'mongoose'
 import { IUserModel } from '../db/models/user'
-import { IUserDoc } from '../db/models/user.js'
 import { Document } from 'mongoose'
 
-export const isUserDoc = (doc: Document): doc is IUserDoc => {
+export type UserDoc = Omit<Document, '_id'> & IUserModel & {
+    _id: Types.ObjectId
+}
+
+export const isUserDoc = (doc: Document): doc is UserDoc => {
     return doc?._id
 }
 

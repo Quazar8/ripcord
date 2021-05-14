@@ -1,13 +1,13 @@
 import { Request, Response } from 'express'
-import { User, IUserDoc } from '../../db/models/user.js'
+import { User } from '../../db/models/user.js'
 import { errorResponse, ServerResponse, successResponse } from '../../responses.js'
-import { UserClientInfo, LoginEntry } from '../../types/UserTypes'
+import { UserClientInfo, LoginEntry, UserDoc } from '../../types/UserTypes'
 import jwt from 'jsonwebtoken'
 import { jwtKey, jwtCookieName } from '../../configVars.js'
 
 export type LoginResponse = ServerResponse<UserClientInfo>
 
-export const loginUser = (req: Request, res: Response, user: IUserDoc) => {
+export const loginUser = (req: Request, res: Response, user: UserDoc) => {
     const userToLog = {
         id: user._id,
         username: user.username,
@@ -53,7 +53,7 @@ const loginHandler = (req: Request, res: Response): void => {
         return
     }
 
-    User.findOne({ username }).then((user: IUserDoc) => {
+    User.findOne({ username }).then((user: UserDoc) => {
         if (!user || user.password !== password) {
             res.status(400).send(errorResponse('Incorrect username or password'))
             return

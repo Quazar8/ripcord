@@ -1,9 +1,9 @@
 import { Response } from "express";
 import { Types } from "mongoose";
-import { IUserDoc, User } from "../../../db/models/user.js";
+import { User } from "../../../db/models/user.js";
 import { errorResponse, ServerResponse, successResponse } from "../../../responses.js";
 import { ReqWUser } from "../../../types/RequestTypes";
-import { isUserDoc } from '../../../types/UserTypes.js'
+import { isUserDoc, UserDoc } from '../../../types/UserTypes.js'
 
 export type DeclineFriendRequestRes = ServerResponse<{
     removed: boolean
@@ -38,7 +38,7 @@ export const declineRequest = async (req: ReqWUser, res: Response) => {
         return
     }
 
-    const updateUsers = async (requester: IUserDoc, decliner: IUserDoc): Promise<DeclineFriendRequestRes> => {
+    const updateUsers = async (requester: UserDoc, decliner: UserDoc): Promise<DeclineFriendRequestRes> => {
         let index = decliner.incFriendRequests.indexOf(requester._id)
         if (index > -1) {
             decliner.incFriendRequests.splice(index, 1)
@@ -100,7 +100,7 @@ export const acceptFriendRequest = async (req: ReqWUser, res: Response) => {
         return
     }
 
-    const updateUsers = async (user: IUserDoc, acceptedUser: IUserDoc): Promise<AcceptFriendRequestRes> => {
+    const updateUsers = async (user: UserDoc, acceptedUser: UserDoc): Promise<AcceptFriendRequestRes> => {
         let index = user.incFriendRequests.indexOf(acceptedUser._id)
         if (index > -1) {
             user.incFriendRequests.splice(index, 1)

@@ -23,8 +23,4 @@ export interface IUserModel {
     }
 }
 
-export type IUserDoc = Omit<Document, '_id'> & IUserModel & {
-    _id: Types.ObjectId
-}
-
 export const User = model('User', UserSchema)

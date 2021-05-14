@@ -1,10 +1,10 @@
 import { Error } from 'mongoose'
 import passport from 'passport'
 import passportJWT, { StrategyOptions } from 'passport-jwt'
-import { IUserDoc, User } from './db/models/user.js'
-import { UserInfo } from './types/UserTypes'
+import { User } from './db/models/user.js'
 import { jwtKey, jwtCookieName } from './configVars.js'
 import { Request } from 'express'
+import { UserDoc } from './types/UserTypes.js'
 
 const { Strategy, ExtractJwt } = passportJWT
 
@@ -23,7 +23,7 @@ const opts: StrategyOptions = {
 
 const configurePassport = (): void => {
     passport.use(new Strategy(opts, (payload, done) => {
-        User.findOne({ _id: payload.id }, (err: Error, user: IUserDoc) => {
+        User.findOne({ _id: payload.id }, (err: Error, user: UserDoc) => {
             if (err) return done(err, false)
 
             if (user) {

@@ -1,6 +1,6 @@
 import { Request } from "express";
-import { IUserDoc } from "../db/models/user";
+import { UserDoc } from "./UserTypes";
 
 export type ReqWUser = Request & {
-    user: IUserDoc
+    user: UserDoc
 }

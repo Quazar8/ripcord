@@ -1,10 +1,10 @@
 import { Response } from "express";
 import { successResponse, errorResponse, ServerResponse } from '../../../responses.js'
-import { IUserDoc, User } from '../../../db/models/user.js'
+import { User } from '../../../db/models/user.js'
 import { onlineUsers, sendSocketMsg } from '../../../websocket/onlineUsers.js'
 import { ReqWUser } from '../../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../../types/WebsocketTypes.js'
-import { FriendClientInfo, PendingFriendInfo, isUserDoc, UserStatus } from "../../../types/UserTypes.js";
+import { FriendClientInfo, PendingFriendInfo, isUserDoc, UserStatus, UserDoc } from "../../../types/UserTypes.js";
 
 export type AddFriendRes = ServerResponse<{
     found: boolean,
@@ -36,7 +36,7 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
         const found = await User.findOne({ username })
         const issuer = await User.findById(req.user.id)
 
-        let updateUser = async (requester: IUserDoc, foundFriend: IUserDoc): Promise<AddFriendRes> => {
+        let updateUser = async (requester: UserDoc, foundFriend: UserDoc): Promise<AddFriendRes> => {
             let resp: AddFriendRes = null
             foundFriend.incFriendRequests.push(requester._id)
             requester.outFriendRequests.push(foundFriend._id)

@@ -3,8 +3,8 @@ import { ReqWUser } from '../../types/RequestTypes'
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { isOnline } from '../../websocket/onlineUsers.js'
 import { RecipientInfo, ChannelClientInfo, ChannelDoc, isChannelDoc } from '../../types/ChatTypes.js'
-import { IUserDoc, User } from "../../db/models/user.js";
-import { isUserDoc, UserStatus } from "../../types/UserTypes.js";
+import { User } from "../../db/models/user.js";
+import { isUserDoc, UserDoc, UserStatus } from "../../types/UserTypes.js";
 import { Types } from "mongoose";
 import { IChannel, Channel } from '../../db/models/channel.js'
 
@@ -47,7 +47,7 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
         }
     }
 
-    const responseData = (channel: ChannelDoc, recipient: IUserDoc): ChatChannelInfoData => {
+    const responseData = (channel: ChannelDoc, recipient: UserDoc): ChatChannelInfoData => {
         const channelInfo: ChannelClientInfo = {
             id: channel._id,
             messages: channel.messages,
@@ -67,7 +67,7 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
         }
     }
 
-    const handleRequest = async (requester: IUserDoc, recipient: IUserDoc) => {
+    const handleRequest = async (requester: UserDoc, recipient: UserDoc) => {
         if (!requester.channels) {
             requester.channels = {}
         }

@@ -5,8 +5,8 @@ import * as net from 'net'
 import { onlineUsers } from './onlineUsers.js'
 import messageHandler from './messageHandler.js'
 import { getCookies, Cookies } from '../utils.js'
-import { IUserDoc } from '../db/models/user.js'
 import { WSMessage } from '../types/WebsocketTypes.js'
+import { UserDoc } from '../types/UserTypes.js'
 
 type IncMessWCookies = IncomingMessage & {
     cookies: Cookies
@@ -17,7 +17,7 @@ export const websocketServer = (server: Server) => {
         noServer: true
     })
 
-    socketServer.on('connection', (socket: ws, req: IncMessWCookies, user: IUserDoc) => {
+    socketServer.on('connection', (socket: ws, req: IncMessWCookies, user: UserDoc) => {
         console.log('user connected', user)
         onlineUsers[user._id.toHexString()] = socket
 
@@ -34,7 +34,7 @@ export const websocketServer = (server: Server) => {
 
     server.on('upgrade', (req: IncMessWCookies, socket: net.Socket, head) => {
         req.cookies = getCookies(req.headers.cookie)
-        passport.authenticate('jwt', (err, user: IUserDoc) => {
+        passport.authenticate('jwt', (err, user: UserDoc) => {
             if (!user) {
                 socket.write('HTTP/1.1 491 Unauthorized\r\n\r\n')
                 socket.destroy()

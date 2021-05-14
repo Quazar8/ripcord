@@ -1,9 +1,9 @@
 import { Channel } from "../db/models/channel.js";
-import { IUserDoc } from "../db/models/user.js";
 import { ChatMessagePayload, isChannelDoc } from "../types/ChatTypes.js";
+import { UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 
-const handleChatMessage = async (payload: ChatMessagePayload, byUser: IUserDoc) => {
+const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) => {
     if (!payload.channelId || !payload.content || !byUser) {
         return
     }
@@ -34,7 +34,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: IUserDoc) 
     }
 }
 
-const messageHandler = (wsMsg: WSMessage<any>, user: IUserDoc) => {
+const messageHandler = (wsMsg: WSMessage<any>, user: UserDoc) => {
     switch (wsMsg.type) {
         case WSDataType.CHAT_MESSAGE:
             handleChatMessage(wsMsg.payload, user);break;

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
-import { User, IUserModel, IUserDoc } from '../../db/models/user.js'
+import { User, IUserModel } from '../../db/models/user.js'
 import { errorResponse } from '../../responses.js'
+import { UserDoc } from '../../types/UserTypes.js'
 import { LoginResponse, loginUser } from './login.js'
 
 export type RegisterResponse = LoginResponse
@@ -24,7 +25,7 @@ const registerHandler = (req: Request, res: Response): void => {
         }
 
         const user = new User(userCandidate)
-        user.save().then((user: IUserDoc) => {
+        user.save().then((user: UserDoc) => {
             loginUser(req, res, user)
         }).catch(err => {
             console.error(err)
@@ -32,7 +33,7 @@ const registerHandler = (req: Request, res: Response): void => {
         })
     }
 
-    User.findOne({ username }, (err: Error, user: IUserDoc) => {
+    User.findOne({ username }, (err: Error, user: UserDoc) => {
         if (err) {
             res.status(500).send(errorResponse('Something went wrong'))
             return
