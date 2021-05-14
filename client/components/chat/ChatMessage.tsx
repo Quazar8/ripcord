@@ -1,8 +1,8 @@
 import React from 'react'
-import { Message } from '../../../server/types/ChatTypes'
+import { MessageClient } from '../../../server/types/ChatTypes'
 
 type Props = {
-    message: Message
+    message: MessageClient
     authorName: string
 }
 

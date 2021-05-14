@@ -4,7 +4,7 @@ import { IUserModel } from "../db/models/user";
 import { UserStatus } from "./UserTypes";
 
 export type RecipientInfo = Pick<IUserModel, 'username'> & {
-    id: Types.ObjectId
+    id: string
     status: UserStatus,
     username: string
 }
@@ -16,6 +16,10 @@ export type Message = {
     content: string
 }
 
+export type MessageClient = Omit<Message, 'authorId'> & {
+    authorId: string
+}
+
 export type ChannelDoc = Document & IChannel
 
 export const isChannelDoc = (channel: Document): channel is ChannelDoc => {
@@ -24,13 +28,14 @@ export const isChannelDoc = (channel: Document): channel is ChannelDoc => {
 
 export type ChannelClientInfo = {
     id: string
-    participantOne: Types.ObjectId
-    participantTwo: Types.ObjectId
-    messages: Message[]
+    participantOne: string
+    participantTwo: string
+    messages: MessageClient[]
 }
 
 export type ChatMessagePayload = {
     channelId: string
     content: string,
-    authorId: string
+    authorId: string,
+    toId: string
 }

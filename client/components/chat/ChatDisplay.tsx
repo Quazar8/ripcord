@@ -62,7 +62,8 @@ const ChatDisplay = (props: Props) => {
             payload: {
                 content,
                 channelId: info.channel.id,
-                authorId: props.user.id
+                authorId: props.user.id,
+                toId: info.recipient.id
             }
         }
 

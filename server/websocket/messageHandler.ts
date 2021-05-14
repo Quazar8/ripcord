@@ -37,11 +37,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
 
         const receiverMsg: WSMessage<ChatMessagePayload> = {
             type: WSDataType.CLIENT_RECEIVED_MSG,
-            payload: {
-                channelId: channel._id,
-                content: payload.content,
-                authorId: channel._id
-            }
+            payload
         }
 
         sendSocketMsg(receiverId, receiverMsg)

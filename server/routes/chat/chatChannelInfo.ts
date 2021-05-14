@@ -2,11 +2,10 @@ import { Response } from "express";
 import { ReqWUser } from '../../types/RequestTypes'
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { isOnline } from '../../websocket/onlineUsers.js'
-import { RecipientInfo, ChannelClientInfo, ChannelDoc, isChannelDoc } from '../../types/ChatTypes.js'
+import { RecipientInfo, ChannelClientInfo, ChannelDoc, isChannelDoc, MessageClient } from '../../types/ChatTypes.js'
 import { User } from "../../db/models/user.js";
 import { isUserDoc, UserDoc, UserStatus } from "../../types/UserTypes.js";
-import { Types } from "mongoose";
-import { IChannel, Channel } from '../../db/models/channel.js'
+import { Channel } from '../../db/models/channel.js'
 
 type ChatChannelInfoData = {
     recipient: RecipientInfo,
@@ -39,15 +38,24 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
     }
 
     const responseData = (channel: ChannelDoc, recipient: UserDoc): ChatChannelInfoData => {
+        const messages: MessageClient[] = channel.messages.map(m => {
+            return {
+                date: m.date,
+                edited: m.edited,
+                authorId: m.authorId.toHexString(),
+                content: m.content
+            }
+        }) 
+
         const channelInfo: ChannelClientInfo = {
             id: channel._id,
-            messages: channel.messages,
-            participantOne: channel.participantOne,
-            participantTwo: channel.participantTwo
+            messages,
+            participantOne: channel.participantOne.toHexString(),
+            participantTwo: channel.participantTwo.toHexString()
         }
 
         const recipientInfo: RecipientInfo = {
-            id: recipient._id,
+            id: recipient._id.toHexString(),
             username: recipient.username,
             status: isOnline(recipient._id) ? UserStatus.Online : UserStatus.Offline
         }
@@ -73,11 +81,11 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
                 channel: {
                     id: null,
                     messages: [],
-                    participantOne: requester._id,
-                    participantTwo: recipient._id,
+                    participantOne: requester._id.toHexString(),
+                    participantTwo: recipient._id.toHexString(),
                 },
                 recipient: {
-                    id: recipient._id,
+                    id: recipient._id.toHexString(),
                     username: recipient.username,
                     status: isOnline(requester._id) 
                             ? UserStatus.Online 
