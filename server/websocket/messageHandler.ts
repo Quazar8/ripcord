@@ -2,6 +2,7 @@ import { Channel } from "../db/models/channel.js";
 import { ChatMessagePayload, isChannelDoc } from "../types/ChatTypes.js";
 import { UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
+import { sendSocketMsg } from './onlineUsers.js'
 
 const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) => {
     if (!payload.channelId || !payload.content || !byUser) {
@@ -28,6 +29,22 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         })
 
         await channel.save()
+
+        let receiverId = channel.participantOne
+        if (channel.participantOne.equals(byUser._id)) {
+            receiverId = channel.participantTwo
+        }
+
+        const receiverMsg: WSMessage<ChatMessagePayload> = {
+            type: WSDataType.CLIENT_RECEIVED_MSG,
+            payload: {
+                channelId: channel._id,
+                content: payload.content,
+                authorId: channel._id
+            }
+        }
+
+        sendSocketMsg(receiverId, receiverMsg)
     } 
     catch (err) {
         console.error(err)
