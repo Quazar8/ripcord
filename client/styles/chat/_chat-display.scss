@@ -24,6 +24,12 @@
         height: 75%;
         background: hsl(0, 1%, 21%);
         border-radius: 1%;
+        overflow: scroll;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     .user-field {
@@ -54,6 +60,10 @@
         word-break: break-word;
         overflow: scroll;
         scrollbar-width: none;
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
         &:focus {
             outline: none;
