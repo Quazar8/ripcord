@@ -1,32 +1,55 @@
-import { Channel } from "../db/models/channel.js";
-import { ChatMessagePayload, isChannelDoc } from "../types/ChatTypes.js";
+import { Document } from "mongoose";
+import { Channel, IChannel } from "../db/models/channel.js";
+import { ChannelDoc, ChatMessagePayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
 import { UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { sendSocketMsg } from './onlineUsers.js'
 
+const createNewChannel = async (byUser: UserDoc, receiver: UserDoc, message: Message): Promise<Document> => {
+    if (byUser.equals(receiver)) {
+        return null
+    }
+
+    const newChannelData: IChannel = {
+        createdAt: new Date(),
+        messages: [],
+        participantOne: byUser._id,
+        participantTwo: receiver._id
+    }
+
+    const channel = new Channel(newChannelData)
+    return await channel.save()
+}
+
+const createMessage = (payload: ChatMessagePayload, byUser: UserDoc): Message => {
+    return {
+        authorId: byUser._id,
+        content: payload.content,
+        date: new Date(),
+        edited: false
+    }
+}
+
 const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) => {
-    if (!payload.channelId || !payload.content || !byUser) {
+    if (!payload.content || !byUser || !payload.toId) {
         return
     }
 
     try {
-        const channel = await Channel.findById(payload.channelId)
+        let channel: Document = null
+
+        if (payload.channelId) {
+            channel = await Channel.findById(payload.channelId)
+        } else {
+            return
+        }
+
 
         if (!isChannelDoc(channel)) {
             return
         }
 
-        if (!byUser._id.equals(channel.participantTwo)
-            && byUser._id.equals(channel.participantTwo)) {
-            return
-        }
-
-        channel.messages.push({
-            content: payload.content,
-            authorId: byUser._id,
-            edited: false,
-            date: new Date()
-        })
+        channel.messages.push(createMessage(payload, byUser))
 
         await channel.save()
 
