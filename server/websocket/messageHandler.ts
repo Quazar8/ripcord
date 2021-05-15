@@ -1,11 +1,12 @@
 import { Document } from "mongoose";
 import { Channel, IChannel } from "../db/models/channel.js";
+import { User } from "../db/models/user.js";
 import { ChannelDoc, ChatMessagePayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
-import { UserDoc } from "../types/UserTypes.js";
+import { isUserDoc, UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { sendSocketMsg } from './onlineUsers.js'
 
-const createNewChannel = async (byUser: UserDoc, receiver: UserDoc, message: Message): Promise<Document> => {
+const createNewChannel = async (byUser: UserDoc, receiver: UserDoc): Promise<Document> => {
     if (byUser.equals(receiver)) {
         return null
     }
@@ -18,7 +19,20 @@ const createNewChannel = async (byUser: UserDoc, receiver: UserDoc, message: Mes
     }
 
     const channel = new Channel(newChannelData)
-    return await channel.save()
+    await channel.save()
+
+    if (!byUser.channels) {
+        byUser.channels = {}
+    }
+
+    if (!receiver.channels) {
+        receiver.channels = {}
+    }
+
+    byUser.channels[receiver._id.toHexString()] = channel._id
+    receiver.channels[byUser._id.toHexString()] = channel._id
+
+    return channel
 }
 
 const createMessage = (payload: ChatMessagePayload, byUser: UserDoc): Message => {
@@ -36,14 +50,18 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
     }
 
     try {
+        const receiver = await User.findById(payload.toId)
+        if (!isUserDoc(receiver)) {
+            return
+        }
+
         let channel: Document = null
 
         if (payload.channelId) {
             channel = await Channel.findById(payload.channelId)
         } else {
-            return
+            channel = await createNewChannel(byUser, receiver)   
         }
-
 
         if (!isChannelDoc(channel)) {
             return
