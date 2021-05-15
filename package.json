@@ -59,5 +59,8 @@
     "react-dom": "17.0.1",
     "react-router-dom": "5.2.0",
     "ws": "7.4.4"
+  },
+  "browser": {
+    "crypto": false
   }
 }

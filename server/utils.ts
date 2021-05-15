@@ -1,4 +1,4 @@
-// import crypto from 'crypto'
+import crypto from 'crypto'
 
 export const isDev = (): boolean => {
     return process.env.NODE_ENV?.trim() === 'development'
@@ -38,8 +38,6 @@ export const tryCatchWrapper = (fn: CallableFunction): boolean => {
     }
 }
 
-// export const genId = (bytes: number): string => {
-//     let id = crypto.randomBytes(bytes).toString('hex')
-
-//     return id + '_' + Date.now()
-// }
+export const genId = (bytes: number): string => {
+    return crypto.randomBytes(bytes).toString('hex')
+}
