@@ -96,7 +96,7 @@ const ChatDisplay = (props: Props) => {
         <section className = "chat-display">
             <div className = "user-info">
                 <h2>{ info.recipient.username }</h2>
-                <h4></h4>
+                <h4>{ info.recipient.status }</h4>
             </div>
             <div className = "chat-monitor">
                 { 
