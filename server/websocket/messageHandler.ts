@@ -57,8 +57,10 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
 
         let channel: Document = null
 
-        if (payload.channelId) {
-            channel = await Channel.findById(payload.channelId)
+        let channelId = payload.channelId || receiver.channels[byUser._id.toHexString()]
+
+        if (channelId) {
+            channel = await Channel.findById(channelId)
         } else {
             channel = await createNewChannel(byUser, receiver)   
         }
