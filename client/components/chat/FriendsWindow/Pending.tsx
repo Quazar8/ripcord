@@ -30,6 +30,13 @@ export const Pending = () => {
         fetchRequests()
     }, [])
 
+    if (pending.incoming.length === 0 && pending.outgoing.length === 0) {
+        return (
+            <div className = "pending-subwindow">
+                <h2>No pending friend requests</h2>
+            </div>
+        )
+    }
 
     return (
         <div className = "pending-subwindow">
