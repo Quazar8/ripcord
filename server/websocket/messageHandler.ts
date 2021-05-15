@@ -44,6 +44,18 @@ const createMessage = (payload: ChatMessagePayload, byUser: UserDoc): Message =>
     }
 }
 
+const addToActiveChannels = async (byUser: UserDoc, receiver: UserDoc, channel: ChannelDoc) => {
+    if (byUser.activeChannels.indexOf(channel._id) < 0) {
+        byUser.activeChannels.push(channel._id)
+        await byUser.save()
+    }
+
+    if (receiver.activeChannels.indexOf(channel._id) < 0) {
+        receiver.activeChannels.push(channel._id)
+        await receiver.save()
+    }
+}
+
 const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) => {
     if (!payload.content || !byUser || !payload.toId) {
         return
@@ -72,18 +84,14 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         channel.messages.push(createMessage(payload, byUser))
 
         await channel.save()
-
-        let receiverId = channel.participantOne
-        if (channel.participantOne.equals(byUser._id)) {
-            receiverId = channel.participantTwo
-        }
-
+        await addToActiveChannels(byUser, receiver, channel)
+        
         const receiverMsg: WSMessage<ChatMessagePayload> = {
             type: WSDataType.CLIENT_RECEIVED_MSG,
             payload
         }
 
-        sendSocketMsg(receiverId, receiverMsg)
+        sendSocketMsg(receiver._id, receiverMsg)
     } 
     catch (err) {
         console.error(err)
