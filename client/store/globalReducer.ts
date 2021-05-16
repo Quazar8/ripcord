@@ -1,7 +1,6 @@
 import { Action } from './storeComponents/StoreTypes'
 import { GlobalActionTypes, Notification } from './globalActions'
 import { UserClientInfo } from '../../server/types/UserTypes'
-import { Types } from 'mongoose'
 
 export type UserState = UserClientInfo
 
