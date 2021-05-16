@@ -33,6 +33,12 @@ export type ChannelClientInfo = {
     messages: MessageClient[]
 }
 
+export type ActiveChannelInfo = {
+    id: string
+    recipientUsername: string
+    recipientId: string
+}
+
 export type ChatMessagePayload = {
     channelId: string
     content: string,
