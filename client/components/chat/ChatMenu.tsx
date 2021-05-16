@@ -3,6 +3,7 @@ import { UserState } from '../../store/globalReducer'
 
 import Nameplate from './Nameplate'
 import ChatMenuButtons from './ChatMenuButtons'
+import ActiveChannels from './ChatMenu/ActiveChannels'
 
 type Props = {
     user: UserState
@@ -18,6 +19,7 @@ const ChatMenu = (props: Props) => {
                 toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
                 friendNotifications = { props.friendNotifications }
             />
+            <ActiveChannels />
             <Nameplate 
                 username = { props.user.username } 
                 showUserMenuFn = { props.showUserMenuFn }
