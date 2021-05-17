@@ -18,10 +18,19 @@ const changeRecipient = (state: ChatState, recipientId: string): ChatState => {
     }
 }
 
+const updateActiveChannels = (state: ChatState, channels: ActiveChannelInfo[]): ChatState => {
+    return {
+        ...state,
+        activeChannels: channels
+    }
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
             return changeRecipient(state, action.payload)
+        case ChatActionTypes.UPDATE_ACTIVE_CHANNELS:
+            return updateActiveChannels(state, action.payload)
         default: return state
     }
 }
