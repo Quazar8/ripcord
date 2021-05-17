@@ -3,6 +3,8 @@ import { getActiveChannels } from '../../../api/chatApi'
 import { resHasError } from '../../../api/utils'
 import { ChatAppProps } from '../ChatApp'
 
+import ActiveChannelPlate from './ActiveChannelPlate'
+
 type Props = Pick<ChatAppProps, "updateActiveChannelsFn"
 | "activeChannels">
 
@@ -23,7 +25,14 @@ const ActiveChannels = (props: Props) => {
 
     return (
         <div className = "active-channels">
-            Active Channels component
+            {
+                props.activeChannels.map((c, i) => (
+                    <ActiveChannelPlate
+                        key = { i }
+                        channel = { c }
+                    />
+                ))
+            }
         </div>
     )
 }
