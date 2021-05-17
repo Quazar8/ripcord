@@ -13,7 +13,6 @@ import { toggleUserMenuAction,
 import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
-import { Types } from 'mongoose'
 import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
 import { updateActiveChannelsAction } from '../../store/chat/chatActions'
 
@@ -22,7 +21,8 @@ type ChatStateProps = {
     showUserMenu: boolean
     showFriendsWindow: boolean,
     friendNotifications: number,
-    recipientId: string
+    recipientId: string,
+    activeChannels: ActiveChannelInfo[]
 }
 
 type ChatDispProps = {
@@ -55,6 +55,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
                 friendNotifications = { props.friendNotifications }
                 updateActiveChannelsFn = { props.updateActiveChannelsFn }
+                activeChannels = { props.activeChannels }
             />
             <RightWindow 
                 showFriendsWindow = { props.showFriendsWindow }
@@ -77,7 +78,8 @@ const mapState: MapStateFn<ChatStateProps> = (state) => ({
     showUserMenu: state.global.showUserOptions,
     showFriendsWindow: state.global.showFriendsWindow,
     friendNotifications: state.global.friendNotifications,
-    recipientId: state.global.chat.recipientId
+    recipientId: state.global.chat.recipientId,
+    activeChannels: state.chat.activeChannels
 })
 
 const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({

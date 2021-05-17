@@ -7,7 +7,7 @@ import { ChatAppProps } from './ChatApp'
 
 type Props = Pick<ChatAppProps, "user" | "showUserMenuFn"
     | "toggleFriendsWindowFn" | "friendNotifications"
-    | "updateActiveChannelsFn">
+    | "updateActiveChannelsFn" | "activeChannels">
 
 const ChatMenu = (props: Props) => {
     return (
@@ -18,6 +18,7 @@ const ChatMenu = (props: Props) => {
             />
             <ActiveChannels 
                 updateActiveChannelsFn = { props.updateActiveChannelsFn }
+                activeChannels = { props.activeChannels }
             />
             <Nameplate 
                 username = { props.user.username } 

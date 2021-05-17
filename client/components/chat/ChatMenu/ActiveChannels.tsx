@@ -3,7 +3,8 @@ import { getActiveChannels } from '../../../api/chatApi'
 import { resHasError } from '../../../api/utils'
 import { ChatAppProps } from '../ChatApp'
 
-type Props = Pick<ChatAppProps, "updateActiveChannelsFn">
+type Props = Pick<ChatAppProps, "updateActiveChannelsFn"
+| "activeChannels">
 
 const ActiveChannels = (props: Props) => {
     const retrieveChannels = async () => {
