@@ -6,7 +6,8 @@ import ActiveChannels from './ChatMenu/ActiveChannels'
 import { ChatAppProps } from './ChatApp'
 
 type Props = Pick<ChatAppProps, "user" | "showUserMenuFn"
-    | "toggleFriendsWindowFn" | "friendNotifications">
+    | "toggleFriendsWindowFn" | "friendNotifications"
+    | "updateActiveChannelsFn">
 
 const ChatMenu = (props: Props) => {
     return (
@@ -15,7 +16,9 @@ const ChatMenu = (props: Props) => {
                 toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
                 friendNotifications = { props.friendNotifications }
             />
-            <ActiveChannels />
+            <ActiveChannels 
+                updateActiveChannelsFn = { props.updateActiveChannelsFn }
+            />
             <Nameplate 
                 username = { props.user.username } 
                 showUserMenuFn = { props.showUserMenuFn }

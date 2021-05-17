@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
 import { getActiveChannels } from '../../../api/chatApi'
 import { resHasError } from '../../../api/utils'
+import { ChatAppProps } from '../ChatApp'
 
-const ActiveChannels = () => {
+type Props = Pick<ChatAppProps, "updateActiveChannelsFn">
+
+const ActiveChannels = (props: Props) => {
     const retrieveChannels = async () => {
         const res = await getActiveChannels()
 
@@ -10,7 +13,7 @@ const ActiveChannels = () => {
             return
         }
 
-        console.log(res.data)
+        props.updateActiveChannelsFn(res.data.activeChannels)
     }
 
     useEffect(() => {
