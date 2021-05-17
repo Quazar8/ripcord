@@ -1,16 +1,12 @@
 import React from 'react'
-import { UserState } from '../../store/globalReducer'
 
 import Nameplate from './Nameplate'
 import ChatMenuButtons from './ChatMenuButtons'
 import ActiveChannels from './ChatMenu/ActiveChannels'
+import { ChatAppProps } from './ChatApp'
 
-type Props = {
-    user: UserState
-    showUserMenuFn: () => void
-    toggleFriendsWindowFn: () => void
-    friendNotifications: number
-}
+type Props = Pick<ChatAppProps, "user" | "showUserMenuFn"
+    | "toggleFriendsWindowFn" | "friendNotifications">
 
 const ChatMenu = (props: Props) => {
     return (
