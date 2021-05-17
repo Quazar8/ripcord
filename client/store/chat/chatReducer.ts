@@ -1,12 +1,12 @@
 import { ActiveChannelInfo } from "../../../server/types/ChatTypes";
 import { ChatAction } from "./chatActions";
 
-type ChatState = {
+export type ChatState = {
     currentRecipientId: string,
     activeChannels: ActiveChannelInfo[]
 }
 
-const chatStateInit: ChatState = {
+export const chatStateInit: ChatState = {
     currentRecipientId: null,
     activeChannels: []
 }

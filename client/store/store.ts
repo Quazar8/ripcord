@@ -1,16 +1,20 @@
 import { useReducer, useMemo, Dispatch } from 'react'
 import { GlobalState, globalInit, globalReducer} from './globalReducer'
 import { GlobalAction } from './globalActions'
+import { chatReducer, ChatState, chatStateInit } from './chat/chatReducer'
+import { ChatAction, ChatActionTypes } from './chat/chatActions'
+
 export * from './storeComponents/StoreProvider'
 export * from './storeComponents/connect'
 export * from './storeComponents/StoreTypes'
 
-export type AppAction = GlobalAction
+export type AppAction = GlobalAction | ChatAction
 
-type AppState = GlobalState
+type AppState = GlobalState | ChatState
 
 export type CombinedState = {
     global: GlobalState
+    chat: ChatState
     [key: string]: AppState
 }
 
@@ -18,11 +22,13 @@ export type StoreType = [CombinedState, Dispatch<AppAction>]
 
 type ReducerSlices = {
     global: (state: GlobalState, action: GlobalAction) => GlobalState
-    [key: string]: (state: AppState, action: AppAction) => AppState
+    chat: (state: ChatState, action: ChatAction) => ChatState
+    [key: string]: any
 }
 
 export const initialState: CombinedState = {
-    global: globalInit
+    global: globalInit,
+    chat: chatStateInit
 }
 
 const combineReducers = 
@@ -35,7 +41,10 @@ const combineReducers =
     )
 )
 
-const rootReducer = combineReducers({ global: globalReducer })
+const rootReducer = combineReducers({ 
+    global: globalReducer,
+    chat: chatReducer
+})
 
 export const useStore = () => {
     const [state, dispatch] = useReducer(rootReducer, initialState)
