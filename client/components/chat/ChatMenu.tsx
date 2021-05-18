@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createContext } from 'react'
 
 import Nameplate from './Nameplate'
 import ChatMenuButtons from './ChatMenuButtons'
@@ -7,7 +7,8 @@ import { ChatAppProps } from './ChatApp'
 
 type Props = Pick<ChatAppProps, "user" | "showUserMenuFn"
     | "toggleFriendsWindowFn" | "friendNotifications"
-    | "updateActiveChannelsFn" | "activeChannels">
+    | "updateActiveChannelsFn" | "activeChannels" 
+    | "changeChannelIdFn">
 
 const ChatMenu = (props: Props) => {
     return (

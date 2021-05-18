@@ -14,7 +14,7 @@ import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
 import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
-import { updateActiveChannelsAction } from '../../store/chat/chatActions'
+import { changeChannelIdAction, updateActiveChannelsAction } from '../../store/chat/chatActions'
 
 type ChatStateProps = {
     user: UserState
@@ -34,6 +34,7 @@ type ChatDispProps = {
     dispatch: Dispatch<AppAction>,
     showChatDisplayFn: (recipientId: string) => void
     updateActiveChannelsFn: (channels: ActiveChannelInfo[]) => void
+    changeChannelIdFn: (channelId: string) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -56,6 +57,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 friendNotifications = { props.friendNotifications }
                 updateActiveChannelsFn = { props.updateActiveChannelsFn }
                 activeChannels = { props.activeChannels }
+                changeChannelIdFn = { props.changeChannelIdFn }
             />
             <RightWindow 
                 showFriendsWindow = { props.showFriendsWindow }
@@ -106,7 +108,10 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     }, 
     updateActiveChannelsFn: (channels: ActiveChannelInfo[]) => {
         dispatch(updateActiveChannelsAction(channels))
-    } 
+    },
+    changeChannelIdFn: (channelId: string) => {
+        dispatch(changeChannelIdAction(channelId))
+    }
 })
 
 const ChatApp = connect(mapState, mapDisp)(ChatAppView)
