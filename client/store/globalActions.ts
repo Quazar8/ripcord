@@ -4,14 +4,14 @@ import { UserClientInfo } from '../../server/types/UserTypes'
 import { Action } from './storeComponents/StoreTypes'
 
 export enum GlobalActionTypes {
-    PushNotification,
-    RemoveNotification,
-    RecordUserInfo,
-    RemoveUserInfo,
-    ToggleUserMenu,
-    ToggleFriendsWindow,
-    FriendNotification,
-    ShowChatDisplay
+    PushNotification = "PUSH_NOTIFICATION",
+    RemoveNotification = "REMOVE_NOTIFICATION",
+    RecordUserInfo = "RECORD_USER_INFO",
+    RemoveUserInfo = "REMOVE_USER_INFO",
+    ToggleUserMenu = "TOGGLE_USER_MENY",
+    ToggleFriendsWindow = "TOGGLE_FRIENDS_WINDOW",
+    FriendNotification = "FRIEND_NOTIFICATION",
+    ShowChatDisplay = "SHOW_CHAT_DISPLAY"
 }
 
 export type Notification = {

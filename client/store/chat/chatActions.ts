@@ -2,8 +2,8 @@ import { ActiveChannelInfo } from "../../../server/types/ChatTypes";
 import { Action } from "../storeComponents/StoreTypes";
 
 export enum ChatActionTypes {
-    CHANGE_CHAT_RECIPIENT,
-    UPDATE_ACTIVE_CHANNELS
+    CHANGE_CHAT_RECIPIENT = 'CHANGE_RECIPIENT_ID',
+    UPDATE_ACTIVE_CHANNELS = "UPDATE_ACTIVE_CHANNELS"
 }
 
 export type ChatAction = Action<ChatActionTypes, any>
