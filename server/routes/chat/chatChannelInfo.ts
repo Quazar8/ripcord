@@ -119,3 +119,7 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
 
     res.status(status).send(response)
 }
+
+export const getActiveChannelInfo = (req: ReqWUser, res: Response) => {
+    res.send(successResponse({}))
+}
