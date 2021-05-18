@@ -32,6 +32,9 @@ const createNewChannel = async (byUser: UserDoc, receiver: UserDoc): Promise<Doc
     byUser.channels[receiver._id.toHexString()] = channel._id
     receiver.channels[byUser._id.toHexString()] = channel._id
 
+    await byUser.save()
+    await receiver.save()
+
     return channel
 }
 
@@ -69,6 +72,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
 
         let channel: Document = null
 
+        if (!receiver.channels) receiver.channels = {}
         let channelId = payload.channelId || receiver.channels[byUser._id.toHexString()]
 
         if (channelId) {
