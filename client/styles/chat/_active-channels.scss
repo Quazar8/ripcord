@@ -1,5 +1,8 @@
+@use 'chat-vars' as v;
+
 .active-channels {
     background-color: hsl(220, 14%, 22%);
+    height: v.$chat-menu-active-channels-height; 
 
     h3 {
         text-align: center;
