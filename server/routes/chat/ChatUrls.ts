@@ -1,6 +1,9 @@
 export default {
     chatChannelInfoFn: (recipientId: string) => (
-        `/chat/channel/${recipientId}`
+        `/chat/channel/recipient/${recipientId}`
     ),
-    activeChannels: '/chat/activeChannels'
+    activeChannels: '/chat/activeChannels',
+    chatChanelWithIdFn: (channelId: string) => (
+        `/chat/channel/id/${channelId}`
+    )
 }
