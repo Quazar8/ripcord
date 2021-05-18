@@ -25,6 +25,7 @@ const ActiveChannels = (props: Props) => {
 
     return (
         <div className = "active-channels">
+            <h3>Active Channels:</h3>
             {
                 props.activeChannels.map((c, i) => (
                     <ActiveChannelPlate

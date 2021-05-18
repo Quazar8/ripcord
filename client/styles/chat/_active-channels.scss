@@ -1,0 +1,25 @@
+.active-channels {
+    background-color: hsl(220, 14%, 22%);
+
+    h3 {
+        text-align: center;
+        margin-bottom: 4%;
+    }
+}
+
+.active-channel-plate {
+    padding: 6%;
+    text-align: center;
+    width: 100%;
+    font-size: 1.5vw;
+    transition: background-color 0.1s ease-out;
+
+    h4 {
+        font-weight: normal;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background: hsl(240, 14%, 44%);
+    }
+}

@@ -2,6 +2,7 @@
 @use 'user-menu';
 @use 'right-window';
 @use 'chat-display';
+@use 'active-channels';
 
 .chat-app {
     display: flex;
