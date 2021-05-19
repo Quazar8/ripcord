@@ -14,6 +14,7 @@ type ChatChannelInfoData = {
 
 export type ChatChannelInfoRes = ServerResponse<ChatChannelInfoData>
 
+export type ChatCHannelWIdRes = ChatChannelInfoRes
 
 const genChatChannelInfoData = (channel: ChannelDoc, recipient: UserDoc): ChatChannelInfoData => {
     const messages: MessageClient[] = channel.messages.map(m => {
@@ -122,8 +123,8 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
     res.status(status).send(response)
 }
 
-export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
-    let response: ChatChannelInfoRes = null
+export const getChannelInfoWId = async (req: ReqWUser, res: Response) => {
+    let response: ChatCHannelWIdRes = null
     let status: number = 200
 
     if (!req.user) {
