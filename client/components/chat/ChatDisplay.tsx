@@ -37,7 +37,6 @@ const ChatDisplay = (props: Props) => {
     })
     
     const fetchInfo = async () => {
-        
         let res: ChatChannelInfoRes | ChatCHannelWIdRes;
 
         if (props.recipientId)

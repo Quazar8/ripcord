@@ -1,4 +1,4 @@
-import React, { Dispatch, useEffect } from 'react'
+import React, { Dispatch, useEffect, useState } from 'react'
 import { establishWS, socket } from '../../socket/socket'
 import { UserState } from '../../store/globalReducer'
 import { AppAction, connect, MapDispatchFn, MapStateFn } from '../../store/store'
@@ -14,7 +14,7 @@ import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
 import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
-import { changeChannelIdAction, updateActiveChannelsAction } from '../../store/chat/chatActions'
+import { changeChannelIdAction, changeCHatRecipientAction, updateActiveChannelsAction } from '../../store/chat/chatActions'
 
 type ChatStateProps = {
     user: UserState
@@ -36,11 +36,49 @@ type ChatDispProps = {
     showChatDisplayFn: (recipientId: string) => void
     updateActiveChannelsFn: (channels: ActiveChannelInfo[]) => void
     changeChannelIdFn: (channelId: string) => void
+    changeRecipientIdFn: (recipientId: string) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
 
+export enum RightWindows {
+    ChatDisplay,
+    FriendsWindow
+}
+
 const ChatAppView = (props: ChatAppProps) => {
+    const [showWindows, setShowWindows] = useState<{
+        [key:string]: boolean
+    }>({
+        showChatDisplay: true,
+        showFriendsWindow: false
+    })
+
+    const showWindow = (window: RightWindows) => {
+        const newState = { ...showWindows }
+        for (let key of Object.keys(newState)) {
+            newState[key] = false
+        }
+
+        switch (window) {
+            case RightWindows.FriendsWindow:
+                newState.showFriendsWindow = true; break;
+            default: newState.showChatDisplay = true;
+        }
+
+        setShowWindows(newState)
+    }
+
+    const toggleChatWRecipientId = (recipientId: string) => {
+        props.changeRecipientIdFn(recipientId)
+        showWindow(RightWindows.ChatDisplay)
+    }
+
+    const toggleChatWChannelId = (channelId: string) => {
+        props.changeChannelIdFn(channelId)
+        showWindow(RightWindows.ChatDisplay)
+    }
+
     useEffect(() => {
         establishWS(props.dispatch)
 
@@ -59,6 +97,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 updateActiveChannelsFn = { props.updateActiveChannelsFn }
                 activeChannels = { props.activeChannels }
                 changeChannelIdFn = { props.changeChannelIdFn }
+                toggleChatWChannelId = { toggleChatWChannelId }
             />
             <RightWindow 
                 showFriendsWindow = { props.showFriendsWindow }
@@ -67,6 +106,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 recipientId = { props.recipientId }
                 user = { props.user }
                 channelId = { props.channelId }
+                toggleChatWRecipientId = { toggleChatWRecipientId }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -114,6 +154,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     changeChannelIdFn: (channelId: string) => {
         dispatch(changeChannelIdAction(channelId))
+    },
+    changeRecipientIdFn: (recipiendId: string) => {
+        dispatch(changeCHatRecipientAction(recipiendId))
     }
 })
 

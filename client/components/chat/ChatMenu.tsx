@@ -8,7 +8,9 @@ import { ChatAppProps } from './ChatApp'
 type Props = Pick<ChatAppProps, "user" | "showUserMenuFn"
     | "toggleFriendsWindowFn" | "friendNotifications"
     | "updateActiveChannelsFn" | "activeChannels" 
-    | "changeChannelIdFn">
+    | "changeChannelIdFn"> & {
+        toggleChatWChannelId: (channelId: string) => void
+    } 
 
 type ChatMenuContext = Pick<ChatAppProps, "changeChannelIdFn">
 
