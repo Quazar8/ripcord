@@ -1,21 +1,23 @@
 import React, { useRef, useEffect, useState, KeyboardEvent } from 'react'
 import { socket } from '../../socket/socket'
 import { resHasError } from '../../api/utils'
-import { getChannelInfo } from '../../api/chatApi'
+import { getChannelInfo, getChannelInfoWId } from '../../api/chatApi'
 import { ChatAppProps } from './ChatApp'
 
 import { ChannelClientInfo, RecipientInfo, ChatMessagePayload } from '../../../server/types/ChatTypes'
 import ChatMessage from './ChatMessage'
 import { UserStatus } from '../../../server/types/UserTypes'
 import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
+import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../server/types/ChatResponses'
 
 type Props = Pick<ChatAppProps, 'dispNotification' |
-                  'recipientId' | 'user'>
+                  'recipientId' | 'user' | 'channelId'>
 
 const ChatDisplay = (props: Props) => {
-    if (!props.recipientId) return (
-        <h2>No open conversations</h2>
-    )
+    if (!props.recipientId && !props.channelId) 
+        return (
+            <h2>No open conversations</h2>
+        )
 
     const [info, setInfo] = useState<{
         recipient: RecipientInfo,
@@ -35,7 +37,14 @@ const ChatDisplay = (props: Props) => {
     })
     
     const fetchInfo = async () => {
-        const res = await getChannelInfo(props.recipientId)
+        
+        let res: ChatChannelInfoRes | ChatCHannelWIdRes;
+
+        if (props.recipientId)
+            res = await getChannelInfo(props.recipientId)
+        else if (props.channelId)
+            res = await getChannelInfoWId(props.channelId)
+
         if (resHasError(res)) {
             console.error(res.errorMsg)
             return
@@ -46,7 +55,7 @@ const ChatDisplay = (props: Props) => {
 
     useEffect(() => {
         fetchInfo()
-    }, [props.recipientId])
+    }, [props.recipientId, props.channelId])
     
 
     const messageInputRef = useRef<HTMLDivElement>(null)

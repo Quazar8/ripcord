@@ -6,7 +6,7 @@ import FriendsWindow from './FriendsWindow/FriendsWindow'
 
 type Props = Pick<ChatAppProps, 'dispNotification'
                  | 'showChatDisplayFn' | 'showFriendsWindow'
-                 | 'recipientId' | 'user'>
+                 | 'recipientId' | 'user' | 'channelId'>
 
 type RightContextType = Pick<Props, 'dispNotification' 
     | 'showChatDisplayFn'>
@@ -38,6 +38,7 @@ const RightWindow = (props: Props) => {
                     dispNotification = { props.dispNotification }
                     recipientId = { props.recipientId }
                     user = { props.user }
+                    channelId = { props.channelId }
                 />
                 { AuxComponent }
             </RightWindowContext.Provider>

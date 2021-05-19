@@ -66,6 +66,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 showChatDisplayFn = { props.showChatDisplayFn }
                 recipientId = { props.recipientId }
                 user = { props.user }
+                channelId = { props.channelId }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
