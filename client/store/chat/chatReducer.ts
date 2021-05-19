@@ -16,7 +16,8 @@ export const chatStateInit: ChatState = {
 const changeRecipient = (state: ChatState, recipientId: string): ChatState => {
     return {
         ...state,
-        currentRecipientId: recipientId
+        currentRecipientId: recipientId,
+        currentChannelId: chatStateInit.currentChannelId
     }
 }
 
@@ -30,7 +31,8 @@ const updateActiveChannels = (state: ChatState, channels: ActiveChannelInfo[]): 
 const changeChannelId = (state: ChatState, channelId: string): ChatState => {
     return {
         ...state,
-        currentChannelId: channelId
+        currentChannelId: channelId,
+        currentRecipientId: chatStateInit.currentRecipientId
     }
 }
 
