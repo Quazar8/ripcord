@@ -12,7 +12,7 @@ type Props = Pick<ChatAppProps, "user" | "showUserMenuFn"
 
 type ChatMenuContext = Pick<ChatAppProps, "changeChannelIdFn">
 
-export const ChatMenuConext = createContext<ChatMenuContext>({
+export const ChatMenuContext = createContext<ChatMenuContext>({
     changeChannelIdFn: () => {}
 })
 
@@ -23,7 +23,7 @@ const ChatMenu = (props: Props) => {
 
     return (
         <section className = "chat-menu">
-            <ChatMenuConext.Provider value = { contextValue }>
+            <ChatMenuContext.Provider value = { contextValue }>
             <ChatMenuButtons 
                 toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
                 friendNotifications = { props.friendNotifications }
@@ -36,7 +36,7 @@ const ChatMenu = (props: Props) => {
                 username = { props.user.username } 
                 showUserMenuFn = { props.showUserMenuFn }
             />
-            </ChatMenuConext.Provider>
+            </ChatMenuContext.Provider>
         </section>
     )
 }
