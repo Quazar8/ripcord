@@ -19,9 +19,10 @@ import { changeChannelIdAction, updateActiveChannelsAction } from '../../store/c
 type ChatStateProps = {
     user: UserState
     showUserMenu: boolean
-    showFriendsWindow: boolean,
-    friendNotifications: number,
-    recipientId: string,
+    showFriendsWindow: boolean
+    friendNotifications: number
+    recipientId: string
+    channelId: string
     activeChannels: ActiveChannelInfo[]
 }
 
@@ -80,8 +81,9 @@ const mapState: MapStateFn<ChatStateProps> = (state) => ({
     showUserMenu: state.global.showUserOptions,
     showFriendsWindow: state.global.showFriendsWindow,
     friendNotifications: state.global.friendNotifications,
-    recipientId: state.global.chat.recipientId,
-    activeChannels: state.chat.activeChannels
+    recipientId: state.chat.currentRecipientId,
+    activeChannels: state.chat.activeChannels,
+    channelId: state.chat.currentChannelId
 })
 
 const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
