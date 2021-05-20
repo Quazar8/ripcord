@@ -6,7 +6,6 @@ import { logoutUser } from '../../api/userApi'
 import { resHasError } from '../../api/utils'
 import { toggleUserMenuAction, 
          removeUserInfoAction, 
-         toggleFriendsWindow,
          pushNotification } from '../../store/globalActions'
 
 import RightWindow from './RightWindow'
@@ -18,7 +17,6 @@ import { changeChannelIdAction, changeCHatRecipientAction, updateActiveChannelsA
 type ChatStateProps = {
     user: UserState
     showUserMenu: boolean
-    showFriendsWindow: boolean
     friendNotifications: number
     recipientId: string
     channelId: string
@@ -28,7 +26,6 @@ type ChatStateProps = {
 type ChatDispProps = {
     showUserMenuFn: () => void
     hideUserMenuFn: () => void
-    toggleFriendsWindowFn: () => void
     logoutFn: () => void
     dispNotification: ReturnType<typeof pushNotification>,
     dispatch: Dispatch<AppAction>,
@@ -123,7 +120,6 @@ const ChatAppView = (props: ChatAppProps) => {
 const mapState: MapStateFn<ChatStateProps> = (state) => ({
     user: state.global.user,
     showUserMenu: state.global.showUserOptions,
-    showFriendsWindow: state.global.showFriendsWindow,
     friendNotifications: state.global.friendNotifications,
     recipientId: state.chat.currentRecipientId,
     activeChannels: state.chat.activeChannels,
@@ -143,9 +139,6 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
         if (resHasError(res)) return
 
         dispatch(removeUserInfoAction())
-    },
-    toggleFriendsWindowFn: () => {
-        dispatch(toggleFriendsWindow(!state.global.showFriendsWindow))
     },
     dispNotification: pushNotification(dispatch),
     dispatch,

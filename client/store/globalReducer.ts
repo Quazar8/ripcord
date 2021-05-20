@@ -8,11 +8,7 @@ export type GlobalState = {
     notifications: Notification[]
     user: UserState
     showUserOptions: boolean
-    showFriendsWindow: boolean
-    friendNotifications: number,
-    chat: {
-        recipientId: string
-    }
+    friendNotifications: number
 }
 
 export const globalInit: GlobalState = {
@@ -28,11 +24,7 @@ export const globalInit: GlobalState = {
         activeChannels: []
     },
     showUserOptions: false,
-    showFriendsWindow: false,
-    friendNotifications: 0,
-    chat: {
-        recipientId: null
-    }
+    friendNotifications: 0
 }
 
 const pushNotification = (currentState: GlobalState, notification: Notification): GlobalState => {
@@ -70,25 +62,10 @@ const toggleUserMenu = (state: GlobalState, show: boolean): GlobalState => ({
     showUserOptions: show
 })
 
-const toggleFriendsWindow = (state: GlobalState, show: boolean): GlobalState => ({
-    ...state,
-    showFriendsWindow: show
-})
-
 const addFriendNotification = (state: GlobalState): GlobalState => {
     return {
         ...state,
         friendNotifications: state.friendNotifications + 1
-    }
-}
-
-const showChatDisplay = (state: GlobalState, recipientId: string): GlobalState => {
-    return {
-        ...state,
-        showFriendsWindow: false,
-        chat: {
-            recipientId
-        }
     }
 }
 
@@ -105,12 +82,8 @@ export const globalReducer =
             return removeUserInfo(state)
         case GlobalActionTypes.ToggleUserMenu:
             return toggleUserMenu(state, action.payload)
-        case GlobalActionTypes.ToggleFriendsWindow:
-            return toggleFriendsWindow(state, action.payload)
         case GlobalActionTypes.FriendNotification:
             return addFriendNotification(state)
-        case GlobalActionTypes.ShowChatDisplay:
-            return showChatDisplay(state, action.payload)
         default: return state
     }
 }

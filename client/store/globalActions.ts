@@ -1,4 +1,3 @@
-import { Types } from 'mongoose'
 import { Dispatch } from 'react'
 import { UserClientInfo } from '../../server/types/UserTypes'
 import { Action } from './storeComponents/StoreTypes'
@@ -9,9 +8,7 @@ export enum GlobalActionTypes {
     RecordUserInfo = "RECORD_USER_INFO",
     RemoveUserInfo = "REMOVE_USER_INFO",
     ToggleUserMenu = "TOGGLE_USER_MENY",
-    ToggleFriendsWindow = "TOGGLE_FRIENDS_WINDOW",
-    FriendNotification = "FRIEND_NOTIFICATION",
-    ShowChatDisplay = "SHOW_CHAT_DISPLAY"
+    FriendNotification = "FRIEND_NOTIFICATION"
 }
 
 export type Notification = {
@@ -68,17 +65,7 @@ export const toggleUserMenuAction = (show: boolean): GlobalAction => ({
     payload: show
 })
 
-export const toggleFriendsWindow = (show: boolean): GlobalAction => ({
-    type: GlobalActionTypes.ToggleFriendsWindow,
-    payload: show
-})
-
 export const friendNotificationAction = (): GlobalAction => ({
     type: GlobalActionTypes.FriendNotification,
     payload: null
-})
-
-export const showChatDisplayAction = (recipientId: string): GlobalAction => ({
-    type: GlobalActionTypes.ShowChatDisplay,
-    payload: recipientId
 })
