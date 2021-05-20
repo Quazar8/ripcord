@@ -10,7 +10,7 @@ const ActiveChannelPlate = ({ channel }: Props) => {
     const context = useContext(ChatMenuContext)
 
     const handlePlateClick = () => {
-        context.changeChannelIdFn(channel.id)
+        context.toggleChatWChannelId(channel.id)
     }
     return (
         <div onClick = { handlePlateClick } className = "active-channel-plate">
