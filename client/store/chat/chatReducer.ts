@@ -71,7 +71,7 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return updateActiveChannels(state, action.payload)
         case ChatActionTypes.CHANGE_CHANNEL_ID:
             return changeChannelId(state, action.payload)
-        case ChatActionTypes.UPDATE_ACTIVE_CHANNELS:
+        case ChatActionTypes.UPDATE_CHAT_CHANNEL:
         return updateChannelInfo(state, action.payload)
         default: return state
     }

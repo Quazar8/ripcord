@@ -10,8 +10,9 @@ import { UserStatus } from '../../../server/types/UserTypes'
 import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../server/types/ChatResponses'
 
-type Props = Pick<ChatAppProps, 'dispNotification' |
-                  'recipientId' | 'user' | 'channelId'>
+type Props = Pick<ChatAppProps, 'dispNotification'
+                  | 'recipientId' | 'user' | 'channelId'
+                  | 'updateChannelInfoFn'>
 
 const ChatDisplay = (props: Props) => {
     if (!props.recipientId && !props.channelId) 
@@ -49,6 +50,7 @@ const ChatDisplay = (props: Props) => {
             return
         }
 
+        props.updateChannelInfoFn(res.data)
         setInfo(res.data)
     }
 
