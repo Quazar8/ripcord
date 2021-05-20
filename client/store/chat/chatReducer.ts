@@ -2,7 +2,7 @@ import { ActiveChannelInfo, ChannelClientInfo, RecipientInfo } from "../../../se
 import { UserStatus } from "../../../server/types/UserTypes";
 import { ChatAction, ChatActionTypes } from "./chatActions";
 
-export type ChatCHannelState = {
+export type ChatChannelState = {
     channel: ChannelClientInfo
     recipient: RecipientInfo
 }
@@ -11,7 +11,7 @@ export type ChatState = {
     currentRecipientId: string,
     activeChannels: ActiveChannelInfo[],
     currentChannelId: string,
-    chatChannel: ChatCHannelState
+    chatChannel: ChatChannelState
 }
 
 export const chatStateInit: ChatState = {
@@ -56,7 +56,7 @@ const changeChannelId = (state: ChatState, channelId: string): ChatState => {
     }
 }
 
-const updateChannelInfo = (state: ChatState, channelInfo: ChatCHannelState): ChatState => {
+const updateChannelInfo = (state: ChatState, channelInfo: ChatChannelState): ChatState => {
     return {
         ...state,
         chatChannel: channelInfo

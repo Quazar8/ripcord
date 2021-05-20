@@ -1,6 +1,6 @@
 import { ActiveChannelInfo } from "../../../server/types/ChatTypes";
 import { Action } from "../storeComponents/StoreTypes";
-import { ChatCHannelState } from "./chatReducer";
+import { ChatChannelState } from "./chatReducer";
 
 export enum ChatActionTypes {
     CHANGE_CHAT_RECIPIENT = 'CHANGE_RECIPIENT_ID',
@@ -26,7 +26,7 @@ export const changeChannelIdAction = (channelId: string): ChatAction => ({
     payload: channelId
 })
 
-export const updateChatChannelAction = (channelInfo: ChatCHannelState): ChatAction => ({
+export const updateChatChannelAction = (channelInfo: ChatChannelState): ChatAction => ({
     type: ChatActionTypes.UPDATE_CHAT_CHANNEL,
     payload: channelInfo
 })

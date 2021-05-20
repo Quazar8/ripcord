@@ -13,7 +13,7 @@ import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
 import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
 import { changeChannelIdAction, changeCHatRecipientAction, updateActiveChannelsAction, updateChatChannelAction } from '../../store/chat/chatActions'
-import { ChatCHannelState } from '../../store/chat/chatReducer'
+import { ChatChannelState } from '../../store/chat/chatReducer'
 
 type ChatStateProps = {
     user: UserState
@@ -21,7 +21,8 @@ type ChatStateProps = {
     friendNotifications: number
     recipientId: string
     channelId: string
-    activeChannels: ActiveChannelInfo[]
+    activeChannels: ActiveChannelInfo[],
+    channelInfo: ChatChannelState
 }
 
 type ChatDispProps = {
@@ -33,7 +34,7 @@ type ChatDispProps = {
     updateActiveChannelsFn: (channels: ActiveChannelInfo[]) => void
     changeChannelIdFn: (channelId: string) => void
     changeRecipientIdFn: (recipientId: string) => void
-    updateChannelInfoFn: (channelInfo: ChatCHannelState) => void
+    updateChannelInfoFn: (channelInfo: ChatChannelState) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -109,6 +110,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 channelId = { props.channelId }
                 toggleChatWRecipientId = { toggleChatWRecipientId }
                 updateChannelInfoFn = { props.updateChannelInfoFn }
+                channelInfo = { props.channelInfo }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -125,7 +127,8 @@ const mapState: MapStateFn<ChatStateProps> = (state) => ({
     friendNotifications: state.global.friendNotifications,
     recipientId: state.chat.currentRecipientId,
     activeChannels: state.chat.activeChannels,
-    channelId: state.chat.currentChannelId
+    channelId: state.chat.currentChannelId,
+    channelInfo: state.chat.chatChannel
 })
 
 const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
@@ -153,7 +156,7 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     changeRecipientIdFn: (recipiendId: string) => {
         dispatch(changeCHatRecipientAction(recipiendId))
     },
-    updateChannelInfoFn: (channelInfo: ChatCHannelState) => {
+    updateChannelInfoFn: (channelInfo: ChatChannelState) => {
         dispatch(updateChatChannelAction(channelInfo))
     }
 })

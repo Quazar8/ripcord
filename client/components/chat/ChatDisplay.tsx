@@ -1,41 +1,26 @@
-import React, { useRef, useEffect, useState, KeyboardEvent } from 'react'
+import React, { useRef, useEffect, KeyboardEvent } from 'react'
 import { socket } from '../../socket/socket'
 import { resHasError } from '../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../api/chatApi'
 import { ChatAppProps } from './ChatApp'
 
-import { ChannelClientInfo, RecipientInfo, ChatMessagePayload } from '../../../server/types/ChatTypes'
+import { ChatMessagePayload } from '../../../server/types/ChatTypes'
 import ChatMessage from './ChatMessage'
-import { UserStatus } from '../../../server/types/UserTypes'
 import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../server/types/ChatResponses'
 
 type Props = Pick<ChatAppProps, 'dispNotification'
                   | 'recipientId' | 'user' | 'channelId'
-                  | 'updateChannelInfoFn'>
+                  | 'updateChannelInfoFn' | 'channelInfo'>
 
 const ChatDisplay = (props: Props) => {
     if (!props.recipientId && !props.channelId) 
         return (
             <h2>No open conversations</h2>
         )
+    
 
-    const [info, setInfo] = useState<{
-        recipient: RecipientInfo,
-        channel: ChannelClientInfo
-    }>({
-        recipient: {
-            id: null,
-            username: '',
-            status: UserStatus.Offline
-        },
-        channel: {
-            id: null,
-            messages: [],
-            participantOne: null,
-            participantTwo: null
-        }
-    })
+    const info = props.channelInfo
     
     const fetchInfo = async () => {
         let res: ChatChannelInfoRes | ChatCHannelWIdRes;
@@ -51,7 +36,6 @@ const ChatDisplay = (props: Props) => {
         }
 
         props.updateChannelInfoFn(res.data)
-        setInfo(res.data)
     }
 
     useEffect(() => {
