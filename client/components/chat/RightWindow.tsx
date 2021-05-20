@@ -5,17 +5,16 @@ import { ChatAppProps } from './ChatApp'
 import FriendsWindow from './FriendsWindow/FriendsWindow'
 
 type Props = Pick<ChatAppProps, 'dispNotification'
-                 | 'showChatDisplayFn' | 'showFriendsWindow'
+                 | 'showFriendsWindow'
                  | 'recipientId' | 'user' | 'channelId'> & {
                      toggleChatWRecipientId: (recipientId: string) => void
                  }
 
 type RightContextType = Pick<Props, 'dispNotification' 
-    | 'showChatDisplayFn' | 'toggleChatWRecipientId'>
+     | 'toggleChatWRecipientId'>
 
 export const RightWindowContext = createContext<RightContextType>({
     dispNotification: () => {},
-    showChatDisplayFn: () => {},
     toggleChatWRecipientId: () => {}
 })
 
@@ -29,7 +28,6 @@ const RightWindow = (props: Props) => {
 
     const contextValue: RightContextType = {
         dispNotification: props.dispNotification,
-        showChatDisplayFn: props.showChatDisplayFn,
         toggleChatWRecipientId: props.toggleChatWRecipientId
     }
 

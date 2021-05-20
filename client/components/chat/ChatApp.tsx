@@ -7,8 +7,7 @@ import { resHasError } from '../../api/utils'
 import { toggleUserMenuAction, 
          removeUserInfoAction, 
          toggleFriendsWindow,
-         pushNotification,
-         showChatDisplayAction} from '../../store/globalActions'
+         pushNotification } from '../../store/globalActions'
 
 import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
@@ -33,7 +32,6 @@ type ChatDispProps = {
     logoutFn: () => void
     dispNotification: ReturnType<typeof pushNotification>,
     dispatch: Dispatch<AppAction>,
-    showChatDisplayFn: (recipientId: string) => void
     updateActiveChannelsFn: (channels: ActiveChannelInfo[]) => void
     changeChannelIdFn: (channelId: string) => void
     changeRecipientIdFn: (recipientId: string) => void
@@ -108,7 +106,6 @@ const ChatAppView = (props: ChatAppProps) => {
             <RightWindow 
                 showFriendsWindow = { showWindows.FriendsWindow }
                 dispNotification = { props.dispNotification }
-                showChatDisplayFn = { props.showChatDisplayFn }
                 recipientId = { props.recipientId }
                 user = { props.user }
                 channelId = { props.channelId }
@@ -152,9 +149,6 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     dispNotification: pushNotification(dispatch),
     dispatch,
-    showChatDisplayFn: (recipientId: string) => {
-        dispatch(showChatDisplayAction(recipientId))
-    }, 
     updateActiveChannelsFn: (channels: ActiveChannelInfo[]) => {
         dispatch(updateActiveChannelsAction(channels))
     },
