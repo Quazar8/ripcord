@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { FriendClientInfo } from '../../../../server/types/userTypes'
+import { FriendClientInfo, UserStatus } from '../../../../server/types/userTypes'
 import { RightWindowContext } from '../RightWindow'
 
 type Props = {
@@ -7,13 +7,13 @@ type Props = {
 }
 
 const FriendPlate = ({ friend }: Props) => {
-    let appendClass = friend.status === 'Online'
-                        ? 'online' : 'offline'
+    let appendClass = friend.status === UserStatus.Online
+                    ? 'Online' : 'Offline'
 
-    const { showChatDisplayFn } = useContext(RightWindowContext)
+    const { toggleChatWRecipientId } = useContext(RightWindowContext)
 
     const openChatWUser = () => {
-        showChatDisplayFn(friend.id)
+        toggleChatWRecipientId(friend.id)
     }
 
     return (

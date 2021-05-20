@@ -49,12 +49,14 @@ export enum RightWindows {
 const ChatAppView = (props: ChatAppProps) => {
     const [showWindows, setShowWindows] = useState<{
         [key:string]: boolean
+        FriendsWindow: boolean
+        ChatDisplay: boolean
     }>({
-        showChatDisplay: true,
-        showFriendsWindow: false
+        ChatDisplay: true,
+        FriendsWindow: false
     })
 
-    const showWindow = (window: RightWindows) => {
+    const showWindow = (window: RightWindows, value: boolean) => {
         const newState = { ...showWindows }
         for (let key of Object.keys(newState)) {
             newState[key] = false
@@ -62,8 +64,8 @@ const ChatAppView = (props: ChatAppProps) => {
 
         switch (window) {
             case RightWindows.FriendsWindow:
-                newState.showFriendsWindow = true; break;
-            default: newState.showChatDisplay = true;
+                newState.FriendsWindow = value; break;
+            default: newState.ChatDisplay = value;
         }
 
         setShowWindows(newState)
@@ -71,12 +73,16 @@ const ChatAppView = (props: ChatAppProps) => {
 
     const toggleChatWRecipientId = (recipientId: string) => {
         props.changeRecipientIdFn(recipientId)
-        showWindow(RightWindows.ChatDisplay)
+        showWindow(RightWindows.ChatDisplay, true)
     }
 
     const toggleChatWChannelId = (channelId: string) => {
         props.changeChannelIdFn(channelId)
-        showWindow(RightWindows.ChatDisplay)
+        showWindow(RightWindows.ChatDisplay, true)
+    }
+
+    const toggleFriendsWindow = () => {
+        showWindow(RightWindows.FriendsWindow, !showWindows.FriendsWindow)
     }
 
     useEffect(() => {
@@ -92,7 +98,7 @@ const ChatAppView = (props: ChatAppProps) => {
             <ChatMenu 
                 user = { props.user }
                 showUserMenuFn = { props.showUserMenuFn }
-                toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
+                toggleFriendsWindowFn = { toggleFriendsWindow }
                 friendNotifications = { props.friendNotifications }
                 updateActiveChannelsFn = { props.updateActiveChannelsFn }
                 activeChannels = { props.activeChannels }
@@ -100,7 +106,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 toggleChatWChannelId = { toggleChatWChannelId }
             />
             <RightWindow 
-                showFriendsWindow = { props.showFriendsWindow }
+                showFriendsWindow = { showWindows.FriendsWindow }
                 dispNotification = { props.dispNotification }
                 showChatDisplayFn = { props.showChatDisplayFn }
                 recipientId = { props.recipientId }

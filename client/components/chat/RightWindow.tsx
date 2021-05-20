@@ -11,11 +11,12 @@ type Props = Pick<ChatAppProps, 'dispNotification'
                  }
 
 type RightContextType = Pick<Props, 'dispNotification' 
-    | 'showChatDisplayFn'>
+    | 'showChatDisplayFn' | 'toggleChatWRecipientId'>
 
 export const RightWindowContext = createContext<RightContextType>({
     dispNotification: () => {},
-    showChatDisplayFn: () => {}
+    showChatDisplayFn: () => {},
+    toggleChatWRecipientId: () => {}
 })
 
 const RightWindow = (props: Props) => {
@@ -28,7 +29,8 @@ const RightWindow = (props: Props) => {
 
     const contextValue: RightContextType = {
         dispNotification: props.dispNotification,
-        showChatDisplayFn: props.showChatDisplayFn
+        showChatDisplayFn: props.showChatDisplayFn,
+        toggleChatWRecipientId: props.toggleChatWRecipientId
     }
 
     return (
