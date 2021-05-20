@@ -5,10 +5,10 @@ import { ChatAppProps } from './ChatApp'
 import FriendsWindow from './FriendsWindow/FriendsWindow'
 
 type Props = Pick<ChatAppProps, 'dispNotification'
-                 | 'showFriendsWindow'
-                 | 'recipientId' | 'user' | 'channelId'> & {
-                     toggleChatWRecipientId: (recipientId: string) => void
-                 }
+        | 'recipientId' | 'user' | 'channelId'> & {
+            toggleChatWRecipientId: (recipientId: string) => void
+            showFriendsWindow: boolean
+        }
 
 type RightContextType = Pick<Props, 'dispNotification' 
      | 'toggleChatWRecipientId'>
