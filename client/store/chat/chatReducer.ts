@@ -1,16 +1,36 @@
-import { ActiveChannelInfo } from "../../../server/types/ChatTypes";
+import { ActiveChannelInfo, ChannelClientInfo, RecipientInfo } from "../../../server/types/ChatTypes";
+import { UserStatus } from "../../../server/types/UserTypes";
 import { ChatAction, ChatActionTypes } from "./chatActions";
+
+export type ChatCHannelState = {
+    channel: ChannelClientInfo
+    recipient: RecipientInfo
+}
 
 export type ChatState = {
     currentRecipientId: string,
     activeChannels: ActiveChannelInfo[],
-    currentChannelId: string
+    currentChannelId: string,
+    chatChannel: ChatCHannelState
 }
 
 export const chatStateInit: ChatState = {
     currentRecipientId: '',
     activeChannels: [],
-    currentChannelId: ''
+    currentChannelId: '',
+    chatChannel: {
+        recipient: {
+            id: null,
+            username: '',
+            status: UserStatus.Offline
+        },
+        channel: {
+            id: null,
+            messages: [],
+            participantOne: null,
+            participantTwo: null
+        }
+    }
 }
 
 const changeRecipient = (state: ChatState, recipientId: string): ChatState => {
@@ -36,6 +56,13 @@ const changeChannelId = (state: ChatState, channelId: string): ChatState => {
     }
 }
 
+const updateChannelInfo = (state: ChatState, channelInfo: ChatCHannelState): ChatState => {
+    return {
+        ...state,
+        chatChannel: channelInfo
+    }
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -44,6 +71,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return updateActiveChannels(state, action.payload)
         case ChatActionTypes.CHANGE_CHANNEL_ID:
             return changeChannelId(state, action.payload)
+        case ChatActionTypes.UPDATE_ACTIVE_CHANNELS:
+        return updateChannelInfo(state, action.payload)
         default: return state
     }
 }
