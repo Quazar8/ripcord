@@ -19,6 +19,7 @@ export type ChatCHannelWIdRes = ChatChannelInfoRes
 const genChatChannelInfoData = (channel: ChannelDoc, recipient: UserDoc): ChatChannelInfoData => {
     const messages: MessageClient[] = channel.messages.map(m => {
         return {
+            id: m.id,
             date: m.date,
             edited: m.edited,
             authorId: m.authorId.toHexString(),

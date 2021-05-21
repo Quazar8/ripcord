@@ -5,6 +5,7 @@ import { ChannelDoc, ChatMessagePayload, isChannelDoc, Message, MessageClient } 
 import { isUserDoc, UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { sendSocketMsg } from './onlineUsers.js'
+import { genId } from '../utils.js'
 
 const createNewChannel = async (byUser: UserDoc, receiver: UserDoc): Promise<Document> => {
     if (byUser.equals(receiver)) {
@@ -40,6 +41,7 @@ const createNewChannel = async (byUser: UserDoc, receiver: UserDoc): Promise<Doc
 
 const createMessage = (payload: ChatMessagePayload, byUser: UserDoc): Message => {
     return {
+        id: genId(8) + "_" + Date.now(),
         authorId: byUser._id,
         content: payload.content,
         date: new Date(),
