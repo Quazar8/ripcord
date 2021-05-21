@@ -1,5 +1,5 @@
 import { ActiveChannelInfo } from "../../../server/types/ChatTypes";
-import { PendingMsg } from "../../types/ChatTypes";
+import { PendingMsg } from "../../types/ChatClientTypes";
 import { Action } from "../storeComponents/StoreTypes";
 import { ChatChannelState } from "./chatReducer";
 
