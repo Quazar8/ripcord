@@ -46,3 +46,10 @@ export type ChatMessagePayload = {
     authorId: string,
     toId: string
 }
+
+export type ChatMessageStatusPayload = {
+    channelId: string,
+    temporaryId: string,
+    realId: string,
+    status: string
+}
