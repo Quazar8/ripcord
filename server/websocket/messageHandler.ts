@@ -97,6 +97,11 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             payload
         }
 
+        const senderMsg: WSMessage<any> = {
+            type: WSDataType.CHAT_MESSAGE_STATUS,
+            payload: null
+        }
+
         sendSocketMsg(receiver._id, receiverMsg)
     } 
     catch (err) {
