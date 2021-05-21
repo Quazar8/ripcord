@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 import { Channel, IChannel } from "../db/models/channel.js";
 import { User } from "../db/models/user.js";
-import { ChannelDoc, ChatMessagePayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
+import { ChannelDoc, ChatMessagePayload, ChatMessageStatus, ChatMessageStatusPayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
 import { isUserDoc, UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { sendSocketMsg } from './onlineUsers.js'
@@ -97,9 +97,16 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             payload
         }
 
-        const senderMsg: WSMessage<any> = {
+        const senderPayload: ChatMessageStatusPayload = {
+            channelId: channel._id.toHexString(),
+            temporaryId: '',
+            realId: '',
+            status: ChatMessageStatus.DELIVERED
+        }
+
+        const senderMsg: WSMessage<ChatMessageStatusPayload> = {
             type: WSDataType.CHAT_MESSAGE_STATUS,
-            payload: null
+            payload: senderPayload
         }
 
         sendSocketMsg(receiver._id, receiverMsg)
