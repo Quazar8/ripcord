@@ -47,9 +47,14 @@ export type ChatMessagePayload = {
     toId: string
 }
 
+export enum ChatMessageStatus {
+    DELIVERED = "DELIVERED",
+    FAILED = "FAILED"
+}
+
 export type ChatMessageStatusPayload = {
     channelId: string,
     temporaryId: string,
     realId: string,
-    status: string
+    status: ChatMessageStatus
 }
