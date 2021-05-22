@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 import { Channel, IChannel } from "../db/models/channel.js";
 import { User } from "../db/models/user.js";
-import { ChannelDoc, ChatMessagePayload, ChatMessageStatus, ChatMessageStatusPayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
+import { ChannelDoc, ChatMessagePayload, ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
 import { isUserDoc, UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { isOnline, sendSocketMsg } from './onlineUsers.js'
@@ -94,11 +94,18 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         await addToActiveChannels(byUser, receiver, channel)
         
         if (isOnline(receiver._id)) {
-            const receiverMsg: WSMessage<ChatMessagePayload> = {
-                type: WSDataType.CLIENT_RECEIVED_MSG,
-                payload
+            const receiverPayload: ChatReceiverPayload = {
+                id: message.id,
+                content: message.content,
+                channelId: channel._id.toHexString(),
+                authorId: byUser._id.toHexString()
             }
-            
+
+            const receiverMsg: WSMessage<ChatReceiverPayload> = {
+                type: WSDataType.CLIENT_RECEIVED_MSG,
+                payload: receiverPayload
+            }
+
             sendSocketMsg(receiver._id, receiverMsg)
         }
 
@@ -109,12 +116,12 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             status: ChatMessageStatus.DELIVERED
         }
 
-        const senderMsg: WSMessage<ChatMessageStatusPayload> = {
+        const senderResponse: WSMessage<ChatMessageStatusPayload> = {
             type: WSDataType.CHAT_MESSAGE_STATUS,
             payload: senderPayload
         }
 
-        sendSocketMsg(byUser._id, senderMsg)
+        sendSocketMsg(byUser._id, senderResponse)
     } 
     catch (err) {
         console.error(err)

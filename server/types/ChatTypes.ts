@@ -59,3 +59,10 @@ export type ChatMessageStatusPayload = {
     realId: string,
     status: ChatMessageStatus
 }
+
+export type ChatReceiverPayload = {
+    id: string
+    content: string
+    authorId: string
+    channelId: string
+}
