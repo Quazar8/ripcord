@@ -12,8 +12,13 @@ import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
 import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
-import { changeChannelIdAction, changeCHatRecipientAction, updateActiveChannelsAction, updateChatChannelAction } from '../../store/chat/chatActions'
+import { changeChannelIdAction,
+         changeCHatRecipientAction,
+         sendChatMsgAction,
+         updateActiveChannelsAction,
+         updateChatChannelAction } from '../../store/chat/chatActions'
 import { ChatChannelState } from '../../store/chat/chatReducer'
+import { PendingMsg } from '../../types/ChatClientTypes'
 
 type ChatStateProps = {
     user: UserState
@@ -35,6 +40,7 @@ type ChatDispProps = {
     changeChannelIdFn: (channelId: string) => void
     changeRecipientIdFn: (recipientId: string) => void
     updateChannelInfoFn: (channelInfo: ChatChannelState) => void
+    pushSentMsgToStoreFn: (msg: PendingMsg) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -111,6 +117,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 toggleChatWRecipientId = { toggleChatWRecipientId }
                 updateChannelInfoFn = { props.updateChannelInfoFn }
                 channelInfo = { props.channelInfo }
+                pushSentMsgToStoreFn = { props.pushSentMsgToStoreFn }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -158,6 +165,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     updateChannelInfoFn: (channelInfo: ChatChannelState) => {
         dispatch(updateChatChannelAction(channelInfo))
+    },
+    pushSentMsgToStoreFn: (msg: PendingMsg) => {
+        dispatch(sendChatMsgAction(msg))
     }
 })
 

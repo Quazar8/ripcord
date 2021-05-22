@@ -8,10 +8,12 @@ import { ChatMessagePayload } from '../../../server/types/ChatTypes'
 import ChatMessage from './ChatMessage'
 import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../server/types/ChatResponses'
+import { PendingMsg, PendingMsgStatus } from '../../types/ChatClientTypes'
 
 type Props = Pick<ChatAppProps, 'dispNotification'
-                  | 'recipientId' | 'user' | 'channelId'
-                  | 'updateChannelInfoFn' | 'channelInfo'>
+        | 'recipientId' | 'user' | 'channelId'
+        | 'updateChannelInfoFn' | 'channelInfo'
+        | 'pushSentMsgToStoreFn'>
 
 const ChatDisplay = (props: Props) => {
     if (!props.recipientId && !props.channelId) 
@@ -49,18 +51,32 @@ const ChatDisplay = (props: Props) => {
             return
         }
 
+        const payloadMsg: ChatMessagePayload = {
+            content,
+            channelId: info.channel.id,
+            authorId: props.user.id,
+            toId: info.recipient.id,
+            temporaryId: info.channel.id + "_" + Date.now()
+        }
+
         const msg: WSMessage<ChatMessagePayload> = {
             type: WSDataType.CHAT_MESSAGE,
-            payload: {
-                content,
-                channelId: info.channel.id,
-                authorId: props.user.id,
-                toId: info.recipient.id,
-                temporaryId: info.channel.id + "_" + Date.now()
-            }
+            payload: payloadMsg
+        }
+
+        const pendingMsg: PendingMsg = {
+            channelId: props.channelId,
+            id: '',
+            temporaryId: payloadMsg.temporaryId,
+            status: PendingMsgStatus.Pending,
+            date: new Date(),
+            authorId: payloadMsg.authorId,
+            edited: false,
+            content: payloadMsg.content
         }
 
         socket.send(JSON.stringify(msg))
+        props.pushSentMsgToStoreFn(pendingMsg)
         messageInputRef.current.innerText = ''
     }
 

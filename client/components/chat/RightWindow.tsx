@@ -6,7 +6,8 @@ import FriendsWindow from './FriendsWindow/FriendsWindow'
 
 type Props = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
-        | 'updateChannelInfoFn' | 'channelInfo'> & {
+        | 'updateChannelInfoFn' | 'channelInfo'
+        | 'pushSentMsgToStoreFn'> & {
             toggleChatWRecipientId: (recipientId: string) => void
             showFriendsWindow: boolean
         }
@@ -44,6 +45,7 @@ const RightWindow = (props: Props) => {
                     channelId = { props.channelId }
                     updateChannelInfoFn = { props.updateChannelInfoFn }
                     channelInfo = { props.channelInfo }
+                    pushSentMsgToStoreFn = { props.pushSentMsgToStoreFn }
                 />
                 { AuxComponent }
             </RightWindowContext.Provider>

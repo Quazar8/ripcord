@@ -84,7 +84,7 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return changeChannelId(state, action.payload)
         case ChatActionTypes.UPDATE_CHAT_CHANNEL:
             return updateChannelInfo(state, action.payload)
-        case ChatActionTypes.SEND_ChAT_MSG:
+        case ChatActionTypes.SEND_CHAT_MSG:
             return addPendingChatMessage(state, action.payload)
         default: return state
     }
