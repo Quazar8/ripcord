@@ -20,6 +20,7 @@ const ChatDisplay = (props: Props) => {
         )
     
 
+    const messageInputRef = useRef<HTMLDivElement>(null)
     const info = props.channelInfo
     
     const fetchInfo = async () => {
@@ -42,9 +43,6 @@ const ChatDisplay = (props: Props) => {
         fetchInfo()
     }, [props.recipientId, props.channelId])
     
-
-    const messageInputRef = useRef<HTMLDivElement>(null)
-    
     const sendMsg = () => {
         const content = messageInputRef.current.innerText
         if (!info.channel || !content || !socket) {
@@ -63,6 +61,7 @@ const ChatDisplay = (props: Props) => {
         }
 
         socket.send(JSON.stringify(msg))
+        messageInputRef.current.innerText = ''
     }
 
     const handleInputKeyDown = (e: KeyboardEvent) => {
