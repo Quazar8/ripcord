@@ -4,7 +4,7 @@ import { User } from "../db/models/user.js";
 import { ChannelDoc, ChatMessagePayload, ChatMessageStatus, ChatMessageStatusPayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
 import { isUserDoc, UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
-import { sendSocketMsg } from './onlineUsers.js'
+import { isOnline, sendSocketMsg } from './onlineUsers.js'
 import { genId } from '../utils.js'
 
 const createNewChannel = async (byUser: UserDoc, receiver: UserDoc): Promise<Document> => {
@@ -93,9 +93,13 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         await channel.save()
         await addToActiveChannels(byUser, receiver, channel)
         
-        const receiverMsg: WSMessage<ChatMessagePayload> = {
-            type: WSDataType.CLIENT_RECEIVED_MSG,
-            payload
+        if (isOnline(receiver._id)) {
+            const receiverMsg: WSMessage<ChatMessagePayload> = {
+                type: WSDataType.CLIENT_RECEIVED_MSG,
+                payload
+            }
+            
+            sendSocketMsg(receiver._id, receiverMsg)
         }
 
         const senderPayload: ChatMessageStatusPayload = {
@@ -110,7 +114,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             payload: senderPayload
         }
 
-        sendSocketMsg(receiver._id, receiverMsg)
+        sendSocketMsg(byUser._id, senderMsg)
     } 
     catch (err) {
         console.error(err)
