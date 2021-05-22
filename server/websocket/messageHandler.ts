@@ -87,7 +87,8 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             return
         }
 
-        channel.messages.push(createMessage(payload, byUser))
+        const message = createMessage(payload, byUser)
+        channel.messages.push(message)
 
         await channel.save()
         await addToActiveChannels(byUser, receiver, channel)
@@ -100,7 +101,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         const senderPayload: ChatMessageStatusPayload = {
             channelId: channel._id.toHexString(),
             temporaryId: '',
-            realId: '',
+            realId: message.id,
             status: ChatMessageStatus.DELIVERED
         }
 
