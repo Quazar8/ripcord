@@ -42,9 +42,10 @@ export type ActiveChannelInfo = {
 
 export type ChatMessagePayload = {
     channelId: string
-    content: string,
-    authorId: string,
+    content: string
+    authorId: string
     toId: string
+    temporaryId: string
 }
 
 export enum ChatMessageStatus {

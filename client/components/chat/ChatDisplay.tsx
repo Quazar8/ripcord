@@ -57,7 +57,8 @@ const ChatDisplay = (props: Props) => {
                 content,
                 channelId: info.channel.id,
                 authorId: props.user.id,
-                toId: info.recipient.id
+                toId: info.recipient.id,
+                temporaryId: info.channel.id + "_" + Date.now()
             }
         }
 

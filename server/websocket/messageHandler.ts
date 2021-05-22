@@ -100,7 +100,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
 
         const senderPayload: ChatMessageStatusPayload = {
             channelId: channel._id.toHexString(),
-            temporaryId: '',
+            temporaryId: payload.temporaryId,
             realId: message.id,
             status: ChatMessageStatus.DELIVERED
         }
