@@ -7,6 +7,7 @@ export enum PendingMsgStatus {
 }
 
 export type PendingMsg = MessageClient & {
+    channelId?: string
     temporaryId?: string,
     status?: PendingMsgStatus
 }
