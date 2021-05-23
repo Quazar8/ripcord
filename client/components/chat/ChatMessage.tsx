@@ -1,5 +1,6 @@
 import React from 'react'
-import { PendingMsg, PendingMsgStatus } from '../../types/ChatClientTypes'
+import { ChatMessageStatus } from '../../../server/types/ChatTypes'
+import { PendingMsg } from '../../types/ChatClientTypes'
 
 type Props = {
     message: PendingMsg
@@ -7,11 +8,11 @@ type Props = {
 }
 
 export const ChatMessage = ({ message, authorName }: Props) => {
-    let auxClass = ''
+    let auxClass = 'pending'
     if (message.status) {
-        if (message.status === PendingMsgStatus.Pending) {
-            auxClass = 'pending'
-        } else if (message.status === PendingMsgStatus.Failed) {
+        if (message.status === ChatMessageStatus.DELIVERED) {
+            auxClass = ''
+        } else if (message.status === ChatMessageStatus.FAILED) {
             auxClass = 'failed'
         }
     }

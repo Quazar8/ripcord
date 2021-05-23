@@ -1,13 +1,12 @@
-import { MessageClient } from "../../server/types/ChatTypes";
-
-export enum PendingMsgStatus {
-    Delivered,
-    Failed,
-    Pending
-}
+import { ChannelClientInfo, ChatMessageStatus, MessageClient } from "../../server/types/ChatTypes";
 
 export type PendingMsg = MessageClient & {
     channelId?: string
     temporaryId?: string,
-    status?: PendingMsgStatus
+    status?: ChatMessageStatus
 }
+
+export type ClientChannelInfoWPending = 
+    Omit<ChannelClientInfo, 'messages'> & {
+        messages: PendingMsg[]
+    }
