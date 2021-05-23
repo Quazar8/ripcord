@@ -23,7 +23,13 @@ const ChatDisplay = (props: Props) => {
     
 
     const messageInputRef = useRef<HTMLDivElement>(null)
+    const chatMonitorRef = useRef<HTMLDivElement>()
     const info = props.channelInfo
+
+    const scrollMonitorToBottom = () => {
+        const div = chatMonitorRef.current
+        div.scrollTo(0, div.scrollHeight)
+    }
     
     const fetchInfo = async () => {
         let res: ChatChannelInfoRes | ChatCHannelWIdRes;
@@ -42,8 +48,14 @@ const ChatDisplay = (props: Props) => {
     }
 
     useEffect(() => {
-        fetchInfo()
+        fetchInfo().then(() => {
+            scrollMonitorToBottom()
+        })
     }, [props.recipientId, props.channelId])
+
+    useEffect(() => {
+        scrollMonitorToBottom()
+    }, [props.channelInfo.channel.messages.length])
     
     const sendMsg = () => {
         const content = messageInputRef.current.innerText
@@ -108,7 +120,7 @@ const ChatDisplay = (props: Props) => {
                 <h2>{ info.recipient.username }</h2>
                 <h4>{ info.recipient.status }</h4>
             </div>
-            <div className = "chat-monitor">
+            <div ref = { chatMonitorRef } className = "chat-monitor">
                 { 
                     messages.length > 0
                     ? messages
