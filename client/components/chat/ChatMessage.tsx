@@ -7,7 +7,7 @@ type Props = {
 }
 
 export const ChatMessage = ({ message, authorName }: Props) => {
-    let auxClass = 'delivered'
+    let auxClass = ''
     if (message.status) {
         if (message.status === PendingMsgStatus.Pending) {
             auxClass = 'pending'

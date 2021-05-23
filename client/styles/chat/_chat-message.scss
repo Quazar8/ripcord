@@ -1,0 +1,21 @@
+.message {
+    padding: 0.1% 1%;
+    display: flex;
+    font-size: 1.5vw;
+
+    &.pending {
+        color: hsla(0, 0%, 100%, 0.603);
+    }
+
+    &.failed {
+        color: hsl(0, 84%, 41%);
+    }
+
+    h4 {
+        color: rgb(3, 228, 3);
+    }
+    
+    p {
+        margin-left: 1vw;
+    }
+}
