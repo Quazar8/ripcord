@@ -1,10 +1,10 @@
-import { ActiveChannelInfo, ChannelClientInfo, RecipientInfo } from "../../../server/types/ChatTypes";
+import { ActiveChannelInfo, ChatMessageStatusPayload, RecipientInfo } from "../../../server/types/ChatTypes";
 import { UserStatus } from "../../../server/types/UserTypes";
-import { PendingMsg } from "../../types/ChatClientTypes";
+import { ClientChannelInfoWPending, PendingMsg } from "../../types/ChatClientTypes";
 import { ChatAction, ChatActionTypes } from "./chatActions";
 
 export type ChatChannelState = {
-    channel: ChannelClientInfo
+    channel: ClientChannelInfoWPending
     recipient: RecipientInfo
 }
 
@@ -74,6 +74,30 @@ const addPendingChatMessage = (state: ChatState, msg: PendingMsg): ChatState => 
     return newState
 }
 
+const sentMessageResponse = (state: ChatState, res: ChatMessageStatusPayload): ChatState => {
+    if (res.channelId !== state.chatChannel.channel.id) {
+        return state
+    }
+
+    const newState = { ...state }
+    const messages = newState.chatChannel.channel.messages
+    for (let msg of messages) {
+        if (!msg.temporaryId) {
+            continue
+        }
+
+        if (msg.temporaryId === res.temporaryId) {
+            msg.id = res.realId
+            msg.status = res.status
+            delete msg.temporaryId
+            delete msg.channelId
+            break
+        }
+    }
+
+    return newState
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -86,6 +110,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return updateChannelInfo(state, action.payload)
         case ChatActionTypes.SEND_CHAT_MSG:
             return addPendingChatMessage(state, action.payload)
+        case ChatActionTypes.SENT_MSG_RESPONSE:
+            return sentMessageResponse(state, action.payload)
         default: return state
     }
 }

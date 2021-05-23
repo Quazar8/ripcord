@@ -50,7 +50,8 @@ export type ChatMessagePayload = {
 
 export enum ChatMessageStatus {
     DELIVERED = "DELIVERED",
-    FAILED = "FAILED"
+    FAILED = "FAILED",
+    PENDING = "PENDING"
 }
 
 export type ChatMessageStatusPayload = {

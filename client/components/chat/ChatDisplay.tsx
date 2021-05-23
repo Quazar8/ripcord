@@ -4,11 +4,11 @@ import { resHasError } from '../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../api/chatApi'
 import { ChatAppProps } from './ChatApp'
 
-import { ChatMessagePayload } from '../../../server/types/ChatTypes'
+import { ChatMessagePayload, ChatMessageStatus } from '../../../server/types/ChatTypes'
 import ChatMessage from './ChatMessage'
 import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../server/types/ChatResponses'
-import { PendingMsg, PendingMsgStatus } from '../../types/ChatClientTypes'
+import { PendingMsg } from '../../types/ChatClientTypes'
 
 type Props = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
@@ -80,7 +80,7 @@ const ChatDisplay = (props: Props) => {
             channelId: props.channelId,
             id: '',
             temporaryId: payloadMsg.temporaryId,
-            status: PendingMsgStatus.Pending,
+            status: ChatMessageStatus.PENDING,
             date: new Date(),
             authorId: payloadMsg.authorId,
             edited: false,
