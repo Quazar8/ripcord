@@ -8,10 +8,10 @@ type Props = {
 }
 
 export const ChatMessage = ({ message, authorName }: Props) => {
-    let auxClass = 'pending'
+    let auxClass = ''
     if (message.status) {
-        if (message.status === ChatMessageStatus.DELIVERED) {
-            auxClass = ''
+        if (message.status === ChatMessageStatus.PENDING) {
+            auxClass = 'pending'
         } else if (message.status === ChatMessageStatus.FAILED) {
             auxClass = 'failed'
         }
