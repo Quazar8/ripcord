@@ -1,4 +1,4 @@
-import { ActiveChannelInfo, ChatMessageStatusPayload, RecipientInfo } from "../../../server/types/ChatTypes";
+import { ActiveChannelInfo, ChatMessageStatus, ChatMessageStatusPayload, RecipientInfo } from "../../../server/types/ChatTypes";
 import { UserStatus } from "../../../server/types/UserTypes";
 import { ClientChannelInfoWPending, PendingMsg } from "../../types/ChatClientTypes";
 import { ChatAction, ChatActionTypes } from "./chatActions";
@@ -98,6 +98,24 @@ const sentMessageResponse = (state: ChatState, res: ChatMessageStatusPayload): C
     return newState
 }
 
+export const changeMsgToFail = (state: ChatState, temporaryId: string): ChatState => {
+    if (!temporaryId) {
+        return state
+    }
+
+    const newState = { ...state }
+    for (let msg of newState.chatChannel.channel.messages) {
+        if (!msg.temporaryId) continue
+
+        if (msg.temporaryId === temporaryId) {
+            msg.status = ChatMessageStatus.FAILED
+            break
+        }
+    }
+
+    return newState
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -112,6 +130,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return addPendingChatMessage(state, action.payload)
         case ChatActionTypes.SENT_MSG_RESPONSE:
             return sentMessageResponse(state, action.payload)
+        case ChatActionTypes.CHANGE_MSG_STATUS_FAIL:
+            return changeMsgToFail(state, action.payload)
         default: return state
     }
 }

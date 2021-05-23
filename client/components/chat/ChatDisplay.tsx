@@ -87,9 +87,9 @@ const ChatDisplay = (props: Props) => {
             content: payloadMsg.content
         }
 
-        socket.send(JSON.stringify(msg))
         props.pushSentMsgToStoreFn(pendingMsg)
         messageInputRef.current.innerText = ''
+        socket.send(JSON.stringify(msg))
     }
 
     const handleInputKeyDown = (e: KeyboardEvent) => {
