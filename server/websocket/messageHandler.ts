@@ -95,12 +95,14 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         
         if (isOnline(receiver._id)) {
             const receiverPayload: ChatReceiverPayload = {
-                id: message.id,
-                content: message.content,
-                edited: message.edited,
-                date: message.date,
+                msg: {
+                    id: message.id,
+                    content: message.content,
+                    edited: message.edited,
+                    date: message.date,
+                    authorId: byUser._id.toHexString()
+                },
                 channelId: channel._id.toHexString(),
-                authorId: byUser._id.toHexString()
             }
 
             const receiverMsg: WSMessage<ChatReceiverPayload> = {
