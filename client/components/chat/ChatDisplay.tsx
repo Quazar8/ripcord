@@ -13,7 +13,8 @@ import { PendingMsg } from '../../types/ChatClientTypes'
 type Props = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
         | 'updateChannelInfoFn' | 'channelInfo'
-        | 'pushSentMsgToStoreFn'>
+        | 'pushSentMsgToStoreFn'
+        | 'markMsgAsFailedFn'>
 
 const ChatDisplay = (props: Props) => {
     if (!props.recipientId && !props.channelId) 
@@ -89,7 +90,20 @@ const ChatDisplay = (props: Props) => {
 
         props.pushSentMsgToStoreFn(pendingMsg)
         messageInputRef.current.innerText = ''
+        setTimeout(() => {
+            console.log('marked as failed')
+            for (let msg of props.channelInfo.channel.messages) {
+                if (!msg.temporaryId) continue
+                if (msg.temporaryId === pendingMsg.temporaryId
+                        && msg.status === ChatMessageStatus.PENDING) {
+                    props.markMsgAsFailedFn(msg.temporaryId)
+                    break
+                }
+            }
+        }, 6000)
+
         socket.send(JSON.stringify(msg))
+
     }
 
     const handleInputKeyDown = (e: KeyboardEvent) => {

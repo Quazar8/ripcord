@@ -98,7 +98,7 @@ const sentMessageResponse = (state: ChatState, res: ChatMessageStatusPayload): C
     return newState
 }
 
-export const changeMsgToFail = (state: ChatState, temporaryId: string): ChatState => {
+const changeMsgToFail = (state: ChatState, temporaryId: string): ChatState => {
     if (!temporaryId) {
         return state
     }
