@@ -2,7 +2,7 @@ import { Dispatch } from 'react'
 import { pushNotification, friendNotificationAction } from '../store/globalActions'
 import { AppAction } from '../store/store'
 import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
-import { sentMsgResponseAction } from '../store/chat/chatActions'
+import { pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
 
 export let socket: WebSocket = null
 
@@ -14,6 +14,8 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
             dispatch(friendNotificationAction()); break;
         case WSDataType.CHAT_MESSAGE_STATUS:
             dispatch(sentMsgResponseAction(data.payload)); break;
+        case WSDataType.CLIENT_RECEIVED_MSG:
+            dispatch(pushReceivedMsgAction(data.payload))
         default: break;
     }
 }
