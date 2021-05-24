@@ -1,4 +1,4 @@
-import { ActiveChannelInfo, ChatMessageStatusPayload } from "../../../server/types/ChatTypes";
+import { ActiveChannelInfo, ChatMessageStatusPayload, ChatReceiverPayload } from "../../../server/types/ChatTypes";
 import { PendingMsg } from "../../types/ChatClientTypes";
 import { Action } from "../storeComponents/StoreTypes";
 import { ChatChannelState } from "./chatReducer";
@@ -10,7 +10,8 @@ export enum ChatActionTypes {
     UPDATE_CHAT_CHANNEL = "UPDATE_CHAT_CHANNEL",
     SEND_CHAT_MSG = "SEND_CHAT_MSG",
     SENT_MSG_RESPONSE = "SENT_MSG_RESPONSE",
-    CHANGE_MSG_STATUS_FAIL = "CHANGE_MSG_STATUS_FAIL"
+    CHANGE_MSG_STATUS_FAIL = "CHANGE_MSG_STATUS_FAIL",
+    PUSH_MSG_TO_CHANNEL = "PUSH_MSG_TO_CHANNEL"
 }
 
 export type ChatAction = Action<ChatActionTypes, any>
@@ -48,4 +49,9 @@ export const sentMsgResponseAction = (response: ChatMessageStatusPayload): ChatA
 export const changeMsgToFailAction = (temporaryId: string): ChatAction => ({
     type: ChatActionTypes.CHANGE_MSG_STATUS_FAIL,
     payload: temporaryId
+})
+
+export const pushReceivedMsgAction = (msg: ChatReceiverPayload): ChatAction => ({
+    type: ChatActionTypes.PUSH_MSG_TO_CHANNEL,
+    payload: msg
 })

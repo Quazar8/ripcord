@@ -1,4 +1,4 @@
-import { ActiveChannelInfo, ChatMessageStatus, ChatMessageStatusPayload, RecipientInfo } from "../../../server/types/ChatTypes";
+import { ActiveChannelInfo, ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, RecipientInfo } from "../../../server/types/ChatTypes";
 import { UserStatus } from "../../../server/types/UserTypes";
 import { ClientChannelInfoWPending, PendingMsg } from "../../types/ChatClientTypes";
 import { ChatAction, ChatActionTypes } from "./chatActions";
@@ -117,6 +117,17 @@ const changeMsgToFail = (state: ChatState, temporaryId: string): ChatState => {
     return newState
 }
 
+const pushReceivedMsg = (state: ChatState, payload: ChatReceiverPayload): ChatState => {
+    if (payload.channelId !== state.chatChannel.channel.id) {
+        return state
+    }
+
+    const newState = { ...state }
+    newState.chatChannel.channel.messages.push(payload.msg)
+
+    return newState
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -133,6 +144,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return sentMessageResponse(state, action.payload)
         case ChatActionTypes.CHANGE_MSG_STATUS_FAIL:
             return changeMsgToFail(state, action.payload)
+        case ChatActionTypes.PUSH_MSG_TO_CHANNEL:
+            return pushReceivedMsg(state, action.payload)
         default: return state
     }
 }
