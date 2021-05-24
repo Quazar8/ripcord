@@ -90,16 +90,8 @@ const ChatDisplay = (props: Props) => {
 
         props.pushSentMsgToStoreFn(pendingMsg)
         messageInputRef.current.innerText = ''
-        setTimeout(() => {
-            console.log('marked as failed')
-            for (let msg of props.channelInfo.channel.messages) {
-                if (!msg.temporaryId) continue
-                if (msg.temporaryId === pendingMsg.temporaryId
-                        && msg.status === ChatMessageStatus.PENDING) {
-                    props.markMsgAsFailedFn(msg.temporaryId)
-                    break
-                }
-            }
+        setInterval(() => {
+            props.markMsgAsFailedFn(pendingMsg.temporaryId)
         }, 6000)
 
         socket.send(JSON.stringify(msg))

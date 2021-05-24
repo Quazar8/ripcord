@@ -107,7 +107,8 @@ const changeMsgToFail = (state: ChatState, temporaryId: string): ChatState => {
     for (let msg of newState.chatChannel.channel.messages) {
         if (!msg.temporaryId) continue
 
-        if (msg.temporaryId === temporaryId) {
+        if (msg.temporaryId === temporaryId
+            && msg.status === ChatMessageStatus.PENDING) {
             msg.status = ChatMessageStatus.FAILED
             break
         }
