@@ -17,7 +17,8 @@ export type Message = {
     content: string
 }
 
-export type MessageClient = Omit<Message, 'authorId'> & {
+export type MessageClient = Pick<Message, 'content'
+| 'date' | 'edited' | 'id' > & {
     authorId: string
 }
 
