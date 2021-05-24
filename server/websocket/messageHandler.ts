@@ -97,6 +97,8 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             const receiverPayload: ChatReceiverPayload = {
                 id: message.id,
                 content: message.content,
+                edited: message.edited,
+                date: message.date,
                 channelId: channel._id.toHexString(),
                 authorId: byUser._id.toHexString()
             }
