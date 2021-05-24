@@ -21,6 +21,11 @@ export const ChatMessage = ({ message, authorName }: Props) => {
         <div className = { "message" + " " + auxClass }>
             <h4>{ authorName }:</h4>
             <p>{ message.content }</p>
+            {
+                message.status === ChatMessageStatus.FAILED
+                ? <div className = "error"> Failed to deliver the message</div>
+                : null
+            }
         </div>
     )
 }
