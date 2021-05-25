@@ -93,14 +93,13 @@ const ChatDisplay = (props: Props) => {
             props.pushSentMsgToStoreFn(pendingMsg)
         } else {
             props.pushSentMsgToStoreFn(pendingMsg)
+            socket.send(JSON.stringify(msg))
             setTimeout(() => {
                 props.markMsgAsFailedFn(pendingMsg.temporaryId)
             }, 10000)
         }
 
         messageInputRef.current.innerText = ''
-
-        socket.send(JSON.stringify(msg))
     }
 
     const handleInputKeyDown = (e: KeyboardEvent) => {
