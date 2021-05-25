@@ -46,3 +46,9 @@ export const establishWS = (dispatch: Dispatch<AppAction>) => {
         handleMessage(msg.data, dispatch)
     }
 }
+
+export const socketIsClosed = (): boolean => {
+    if (!socket) return true
+    
+    return socket.readyState === socket.CLOSED
+}

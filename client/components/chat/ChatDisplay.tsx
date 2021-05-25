@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, KeyboardEvent } from 'react'
-import { socket } from '../../socket/socket'
+import { socket, socketIsClosed } from '../../socket/socket'
 import { resHasError } from '../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../api/chatApi'
 import { ChatAppProps } from './ChatApp'
@@ -58,7 +58,7 @@ const ChatDisplay = (props: Props) => {
         scrollMonitorToBottom()
     }, [props.channelInfo.channel.messages.length])
     
-    const sendMsg = () => {
+    const sendMsg = async () => {
         const content = messageInputRef.current.innerText
         if (!info.channel || !content || !socket) {
             return
@@ -88,14 +88,14 @@ const ChatDisplay = (props: Props) => {
             content: payloadMsg.content
         }
 
+        if (socketIsClosed()) {
+           pendingMsg.status = ChatMessageStatus.FAILED
+        }
+
         props.pushSentMsgToStoreFn(pendingMsg)
         messageInputRef.current.innerText = ''
-        setInterval(() => {
-            props.markMsgAsFailedFn(pendingMsg.temporaryId)
-        }, 6000)
 
         socket.send(JSON.stringify(msg))
-
     }
 
     const handleInputKeyDown = (e: KeyboardEvent) => {
