@@ -53,3 +53,7 @@ export const getActiveChannels = async (req: ReqWUser, res: Response) => {
 
     res.send(response)
 }
+
+export const removeActiveChannel = (req: ReqWUser, res: Response) => {
+    res.send(successResponse({}))
+}

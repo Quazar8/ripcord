@@ -5,5 +5,8 @@ export default {
     activeChannels: '/chat/activeChannels',
     chatChanelWithIdFn: (channelId: string) => (
         `/chat/channel/id/${channelId}`
+    ),
+    removeActiveChanneFn: (channelId: string) => (
+        `/chat/activeChannels/${channelId}/remove`
     )
 }
