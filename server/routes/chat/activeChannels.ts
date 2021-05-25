@@ -10,6 +10,10 @@ export type GetActiveChannelsRes = ServerResponse<{
     activeChannels: ActiveChannelInfo[]
 }>
 
+export type RemoveActiveChannelRes = ServerResponse<{
+    removed: boolean
+}>
+
 export const getActiveChannels = async (req: ReqWUser, res: Response) => {
     let response: GetActiveChannelsRes = null
     if (!req.user) {
@@ -54,6 +58,41 @@ export const getActiveChannels = async (req: ReqWUser, res: Response) => {
     res.send(response)
 }
 
-export const removeActiveChannel = (req: ReqWUser, res: Response) => {
-    res.send(successResponse({}))
+export const removeActiveChannel = async (req: ReqWUser, res: Response) => {
+    let response: RemoveActiveChannelRes = null
+
+    if (!req.user) {
+        response = errorResponse('No user provided')
+        res.status(400).send(response)
+        return
+    }
+
+    const { channelId } = req.params
+    if (!channelId) {
+        response = errorResponse('No channel id provided')
+        res.status(400).send(response)
+        return
+    }
+
+    try {
+        const activeChannels = req.user.activeChannels
+        console.log(channelId)
+        for (let i = 0; i < activeChannels.length; i++) {
+            if (!activeChannels[i].equals(channelId)) continue;
+
+            activeChannels.splice(i, 1)
+            await req.user.save()
+            response = successResponse({ removed: true })
+            res.status(200).send(response)
+            break
+        }
+
+        response = errorResponse('Incorrect channel id')
+        res.status(400).send(response)
+    }
+    catch (err) {
+        console.error(err)
+        response = errorResponse('Something went wrong')
+        res.status(500).send(response)
+    }
 }
