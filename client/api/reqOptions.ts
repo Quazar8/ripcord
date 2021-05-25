@@ -20,3 +20,10 @@ export const getQueryOptions = (includeCredentials: boolean = false): RequestIni
 
     return options
 }
+
+export const deleteOptionsInit = (): RequestInit => {
+    return {
+        method: 'DELETE',
+        credentials: 'include'
+    }
+}

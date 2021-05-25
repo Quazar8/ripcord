@@ -76,7 +76,6 @@ export const removeActiveChannel = async (req: ReqWUser, res: Response) => {
 
     try {
         const activeChannels = req.user.activeChannels
-        console.log(channelId)
         for (let i = 0; i < activeChannels.length; i++) {
             if (!activeChannels[i].equals(channelId)) continue;
 

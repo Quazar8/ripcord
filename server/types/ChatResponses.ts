@@ -1,2 +1,2 @@
 export { ChatChannelInfoRes, ChatCHannelWIdRes } from '../routes/chat/chatChannelInfo'
-export { GetActiveChannelsRes } from '../routes/chat/activeChannels'
+export { GetActiveChannelsRes, RemoveActiveChannelRes } from '../routes/chat/activeChannels'
