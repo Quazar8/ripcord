@@ -11,18 +11,36 @@
 }
 
 .active-channel-plate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 6%;
-    text-align: center;
     width: 100%;
     font-size: 1.5vw;
     transition: background-color 0.1s ease-out;
+
+    &:hover {
+        cursor: pointer;
+        background: hsl(240, 14%, 44%);
+    }
 
     h4 {
         font-weight: normal;
     }
 
-    &:hover {
-        cursor: pointer;
-        background: hsl(240, 14%, 44%);
+    button {
+        background: inherit;
+        border: none;
+        font-size: 1.5vw;
+        color: white;
+        opacity: 0.7;
+        padding: 2% 4%;
+        border: 0.2vw solid transparent;
+
+        &:hover {
+            cursor: pointer;
+            background: hsl(240, 27%, 46%);
+            border-color: red;
+        }
     }
 }

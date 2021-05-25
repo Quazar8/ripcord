@@ -15,6 +15,7 @@ const ActiveChannelPlate = ({ channel }: Props) => {
     return (
         <div onClick = { handlePlateClick } className = "active-channel-plate">
             <h4>{ channel.recipientUsername}</h4>
+            <button>&#x2716;</button>
         </div>
     )
 }
