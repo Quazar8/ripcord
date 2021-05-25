@@ -89,10 +89,15 @@ const ChatDisplay = (props: Props) => {
         }
 
         if (socketIsClosed()) {
-           pendingMsg.status = ChatMessageStatus.FAILED
+            pendingMsg.status = ChatMessageStatus.FAILED
+            props.pushSentMsgToStoreFn(pendingMsg)
+        } else {
+            props.pushSentMsgToStoreFn(pendingMsg)
+            setTimeout(() => {
+                props.markMsgAsFailedFn(pendingMsg.temporaryId)
+            }, 10000)
         }
 
-        props.pushSentMsgToStoreFn(pendingMsg)
         messageInputRef.current.innerText = ''
 
         socket.send(JSON.stringify(msg))
