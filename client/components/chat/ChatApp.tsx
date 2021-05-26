@@ -111,6 +111,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 updateActiveChannelsFn = { props.updateActiveChannelsFn }
                 activeChannels = { props.activeChannels }
                 toggleChatWChannelId = { toggleChatWChannelId }
+                removeChannelFromListFn = { props.removeChannelFromListFn}
             />
             <RightWindow 
                 showFriendsWindow = { showWindows.FriendsWindow }

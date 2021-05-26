@@ -5,22 +5,28 @@ import ChatMenuButtons from './ChatMenuButtons'
 import ActiveChannels from './ChatMenu/ActiveChannels'
 import { ChatAppProps } from './ChatApp'
 
-type Props = Pick<ChatAppProps, "user" | "showUserMenuFn"
-    | "friendNotifications"
-    | "updateActiveChannelsFn" | "activeChannels" > & {
+type Props = Pick<ChatAppProps, 'user'
+    | 'showUserMenuFn'
+    | 'friendNotifications'
+    | 'updateActiveChannelsFn'
+    | 'activeChannels'
+    | 'removeChannelFromListFn'> & {
         toggleChatWChannelId: (channelId: string) => void
         toggleFriendsWindowFn: () => void
     } 
 
-type ChatMenuContext = Pick<Props, "toggleChatWChannelId">
+type ChatMenuContext = Pick<Props, 'toggleChatWChannelId'
+    | 'removeChannelFromListFn'>
 
 export const ChatMenuContext = createContext<ChatMenuContext>({
-    toggleChatWChannelId: () => {}
+    toggleChatWChannelId: () => {},
+    removeChannelFromListFn: () => {}
 })
 
 const ChatMenu = (props: Props) => {
     const contextValue: ChatMenuContext = {
-        toggleChatWChannelId: props.toggleChatWChannelId
+        toggleChatWChannelId: props.toggleChatWChannelId,
+        removeChannelFromListFn: props.removeChannelFromListFn
     }
 
     return (
