@@ -11,7 +11,8 @@ export enum ChatActionTypes {
     SEND_CHAT_MSG = "SEND_CHAT_MSG",
     SENT_MSG_RESPONSE = "SENT_MSG_RESPONSE",
     CHANGE_MSG_STATUS_FAIL = "CHANGE_MSG_STATUS_FAIL",
-    PUSH_MSG_TO_CHANNEL = "PUSH_MSG_TO_CHANNEL"
+    PUSH_MSG_TO_CHANNEL = "PUSH_MSG_TO_CHANNEL",
+    REMOVE_ACTIVE_CHANNEL = "REMOVE_ACTIVE_CHANNEL"
 }
 
 export type ChatAction = Action<ChatActionTypes, any>
@@ -54,4 +55,9 @@ export const changeMsgToFailAction = (temporaryId: string): ChatAction => ({
 export const pushReceivedMsgAction = (msg: ChatReceiverPayload): ChatAction => ({
     type: ChatActionTypes.PUSH_MSG_TO_CHANNEL,
     payload: msg
+})
+
+export const removeActiveChannelAction = (channelId: string): ChatAction => ({
+    type: ChatActionTypes.REMOVE_ACTIVE_CHANNEL,
+    payload: channelId
 })

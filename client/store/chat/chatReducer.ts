@@ -128,6 +128,19 @@ const pushReceivedMsg = (state: ChatState, payload: ChatReceiverPayload): ChatSt
     return newState
 }
 
+const removeActiveChannelFromState = (state: ChatState, channelId: string): ChatState => {
+    const newState = { ...state }
+    let activeChannels = newState.activeChannels
+    for (let i = 0; i < activeChannels.length; i++) {
+        if (activeChannels[i].id === channelId) {
+            activeChannels.splice(i, 1)
+            break
+        }
+    }
+
+    return newState
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
