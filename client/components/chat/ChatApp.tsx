@@ -15,6 +15,7 @@ import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
 import { changeChannelIdAction,
          changeCHatRecipientAction,
          changeMsgToFailAction,
+         removeActiveChannelAction,
          sendChatMsgAction,
          updateActiveChannelsAction,
          updateChatChannelAction } from '../../store/chat/chatActions'
@@ -43,6 +44,7 @@ type ChatDispProps = {
     updateChannelInfoFn: (channelInfo: ChatChannelState) => void
     pushSentMsgToStoreFn: (msg: PendingMsg) => void
     markMsgAsFailedFn: (temporaryId: string) => void
+    removeChannelFromListFn: (channelId: string) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -121,6 +123,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 channelInfo = { props.channelInfo }
                 pushSentMsgToStoreFn = { props.pushSentMsgToStoreFn }
                 markMsgAsFailedFn = { props.markMsgAsFailedFn }
+                removeChannelFromListFn = { props.removeChannelFromListFn }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -174,6 +177,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     markMsgAsFailedFn: (temporaryId: string) => {
         dispatch(changeMsgToFailAction(temporaryId))
+    },
+    removeChannelFromListFn: (channelId: string) => {
+        dispatch(removeActiveChannelAction(channelId))
     }
 })
 

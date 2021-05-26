@@ -8,17 +8,19 @@ type Props = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
         | 'updateChannelInfoFn' | 'channelInfo'
         | 'pushSentMsgToStoreFn'
-        | 'markMsgAsFailedFn'> & {
+        | 'markMsgAsFailedFn'
+        | 'removeChannelFromListFn'> & {
             toggleChatWRecipientId: (recipientId: string) => void
             showFriendsWindow: boolean
         }
 
 type RightContextType = Pick<Props, 'dispNotification' 
-     | 'toggleChatWRecipientId'>
+     | 'toggleChatWRecipientId' | 'removeChannelFromListFn'>
 
 export const RightWindowContext = createContext<RightContextType>({
     dispNotification: () => {},
-    toggleChatWRecipientId: () => {}
+    toggleChatWRecipientId: () => {},
+    removeChannelFromListFn: () => {}
 })
 
 const RightWindow = (props: Props) => {
@@ -31,7 +33,8 @@ const RightWindow = (props: Props) => {
 
     const contextValue: RightContextType = {
         dispNotification: props.dispNotification,
-        toggleChatWRecipientId: props.toggleChatWRecipientId
+        toggleChatWRecipientId: props.toggleChatWRecipientId,
+        removeChannelFromListFn: props.removeChannelFromListFn
     }
 
     return (
