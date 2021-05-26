@@ -8,7 +8,8 @@ type Props = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
         | 'updateChannelInfoFn' | 'channelInfo'
         | 'pushSentMsgToStoreFn'
-        | 'markMsgAsFailedFn' > & {
+        | 'markMsgAsFailedFn' 
+        | 'appendActiveChannelFn'> & {
             toggleChatWRecipientId: (recipientId: string) => void
             showFriendsWindow: boolean
         }
@@ -48,6 +49,7 @@ const RightWindow = (props: Props) => {
                     channelInfo = { props.channelInfo }
                     pushSentMsgToStoreFn = { props.pushSentMsgToStoreFn }
                     markMsgAsFailedFn = { props.markMsgAsFailedFn }
+                    appendActiveChannelFn = { props.appendActiveChannelFn }
                 />
                 { AuxComponent }
             </RightWindowContext.Provider>

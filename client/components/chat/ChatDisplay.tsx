@@ -14,7 +14,8 @@ type Props = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
         | 'updateChannelInfoFn' | 'channelInfo'
         | 'pushSentMsgToStoreFn'
-        | 'markMsgAsFailedFn'>
+        | 'markMsgAsFailedFn'
+        | 'appendActiveChannelFn'>
 
 const ChatDisplay = (props: Props) => {
     if (!props.recipientId && !props.channelId) 
