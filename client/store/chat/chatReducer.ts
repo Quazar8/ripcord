@@ -141,6 +141,13 @@ const removeActiveChannelFromState = (state: ChatState, channelId: string): Chat
     return newState
 }
 
+const addActiveChannel = (state: ChatState, channelInfo: ActiveChannelInfo): ChatState => {
+    const newState = { ...state }
+    newState.activeChannels.push(channelInfo)
+
+    return newState
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -161,6 +168,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return pushReceivedMsg(state, action.payload)
         case ChatActionTypes.REMOVE_ACTIVE_CHANNEL:
             return removeActiveChannelFromState(state, action.payload)
+        case ChatActionTypes.ADD_ACTIVE_CHANNEL:
+            return addActiveChannel(state, action.payload)
         default: return state
     }
 }
