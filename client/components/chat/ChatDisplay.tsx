@@ -2,20 +2,21 @@ import React, { useRef, useEffect, KeyboardEvent } from 'react'
 import { socket, socketIsClosed } from '../../socket/socket'
 import { resHasError } from '../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../api/chatApi'
-import { ChatAppProps } from './ChatApp'
 
 import { ChatMessagePayload, ChatMessageStatus } from '../../../server/types/ChatTypes'
 import ChatMessage from './ChatMessage'
 import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../server/types/ChatResponses'
 import { PendingMsg } from '../../types/ChatClientTypes'
+import { RightWindowProps } from './RightWindow'
 
-type Props = Pick<ChatAppProps, 'dispNotification'
+type Props = Pick<RightWindowProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
         | 'updateChannelInfoFn' | 'channelInfo'
         | 'pushSentMsgToStoreFn'
         | 'markMsgAsFailedFn'
-        | 'appendActiveChannelFn'>
+        | 'appendActiveChannelFn'
+        | 'activeChannels'>
 
 const ChatDisplay = (props: Props) => {
     if (!props.recipientId && !props.channelId) 

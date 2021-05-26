@@ -3,18 +3,20 @@ import ChatDisplay from './ChatDisplay'
 import { ChatAppProps } from './ChatApp'
 
 import FriendsWindow from './FriendsWindow/FriendsWindow'
+import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
 
-type Props = Pick<ChatAppProps, 'dispNotification'
+export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
         | 'updateChannelInfoFn' | 'channelInfo'
         | 'pushSentMsgToStoreFn'
         | 'markMsgAsFailedFn' 
         | 'appendActiveChannelFn'> & {
             toggleChatWRecipientId: (recipientId: string) => void
-            showFriendsWindow: boolean
+            showFriendsWindow: boolean,
+            activeChannels: ActiveChannelInfo[]
         }
 
-type RightContextType = Pick<Props, 'dispNotification' 
+type RightContextType = Pick<RightWindowProps, 'dispNotification' 
      | 'toggleChatWRecipientId'>
 
 export const RightWindowContext = createContext<RightContextType>({
@@ -22,7 +24,7 @@ export const RightWindowContext = createContext<RightContextType>({
     toggleChatWRecipientId: () => {}
 })
 
-const RightWindow = (props: Props) => {
+const RightWindow = (props: RightWindowProps) => {
     let AuxComponent: JSX.Element = null
     if (props.showFriendsWindow) {
        AuxComponent = <FriendsWindow 
@@ -50,6 +52,7 @@ const RightWindow = (props: Props) => {
                     pushSentMsgToStoreFn = { props.pushSentMsgToStoreFn }
                     markMsgAsFailedFn = { props.markMsgAsFailedFn }
                     appendActiveChannelFn = { props.appendActiveChannelFn }
+                    activeChannels = { props.activeChannels }
                 />
                 { AuxComponent }
             </RightWindowContext.Provider>
