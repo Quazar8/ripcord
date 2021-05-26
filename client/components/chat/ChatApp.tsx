@@ -123,7 +123,6 @@ const ChatAppView = (props: ChatAppProps) => {
                 channelInfo = { props.channelInfo }
                 pushSentMsgToStoreFn = { props.pushSentMsgToStoreFn }
                 markMsgAsFailedFn = { props.markMsgAsFailedFn }
-                removeChannelFromListFn = { props.removeChannelFromListFn }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
