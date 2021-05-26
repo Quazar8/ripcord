@@ -83,7 +83,7 @@ export const removeActiveChannel = async (req: ReqWUser, res: Response) => {
             await req.user.save()
             response = successResponse({ removed: true })
             res.status(200).send(response)
-            break
+            return
         }
 
         response = errorResponse('Incorrect channel id')

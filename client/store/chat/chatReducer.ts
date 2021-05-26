@@ -159,6 +159,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return changeMsgToFail(state, action.payload)
         case ChatActionTypes.PUSH_MSG_TO_CHANNEL:
             return pushReceivedMsg(state, action.payload)
+        case ChatActionTypes.REMOVE_ACTIVE_CHANNEL:
+            return removeActiveChannelFromState(state, action.payload)
         default: return state
     }
 }

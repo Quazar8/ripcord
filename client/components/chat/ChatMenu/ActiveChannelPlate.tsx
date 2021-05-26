@@ -23,7 +23,7 @@ const ActiveChannelPlate = ({ channel }: Props) => {
             return
         }
 
-        console.log('channel removed')
+        context.removeChannelFromListFn(channel.id)
     }
 
     return (
