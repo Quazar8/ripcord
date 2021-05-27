@@ -102,7 +102,7 @@ export const removeActiveChannel = async (req: ReqWUser, res: Response) => {
     }
 }
 
-export const getActiveChannelInfo = (req: ReqWUser, res: Response) => {
+export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
     let response: ActiveChannelInfoRes = null
 
     if (!req.user) {
@@ -119,8 +119,13 @@ export const getActiveChannelInfo = (req: ReqWUser, res: Response) => {
     }
 
 
-    try {
 
+    try {
+        const channel = await Channel.findById(channelId)
+
+        if (isChannelDoc(channel)) {
+
+        }
     }
     catch (err) {
         console.log(err)
