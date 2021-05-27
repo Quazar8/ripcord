@@ -8,5 +8,8 @@ export default {
     ),
     removeActiveChanneFn: (channelId: string) => (
         `/chat/activeChannels/${channelId}/remove`
+    ),
+    getActiveChannelInfoFn: (channelId: string) => (
+        `/chat/activeChannels/${channelId}/get}`
     )
 }
