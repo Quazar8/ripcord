@@ -42,12 +42,14 @@ export const getActiveChannels = async (req: ReqWUser, res: Response) => {
         }
     }
 
-    const data: ActiveChannelInfo[] = []
-    for (let id of req.user.activeChannels) {
+    const activeChannels = req.user.activeChannels
+    const data: ActiveChannelInfo[] = new Array(activeChannels.length)
+    for (let i = 0; i < activeChannels.length; i++) {
+        const id = activeChannels[i]
         const channel = await Channel.findById(id)
         if (isChannelDoc(channel)) {
             const channelInfo = await getActiveChannelInfo(channel, req.user)
-            if (channelInfo) data.push(channelInfo)
+            if (channelInfo) data[activeChannels.length - 1 - i] = channelInfo
         }
     }
 
