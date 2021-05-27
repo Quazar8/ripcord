@@ -143,7 +143,7 @@ const removeActiveChannelFromState = (state: ChatState, channelId: string): Chat
 
 const addActiveChannel = (state: ChatState, channelInfo: ActiveChannelInfo): ChatState => {
     const newState = { ...state }
-    newState.activeChannels.push(channelInfo)
+    newState.activeChannels.unshift(channelInfo)
 
     return newState
 }
