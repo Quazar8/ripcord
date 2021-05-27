@@ -14,6 +14,10 @@ export type RemoveActiveChannelRes = ServerResponse<{
     removed: boolean
 }>
 
+export type ActiveChannelInfoRes = ServerResponse<{
+    channelInfo: ActiveChannelInfo
+}>
+
 export const getActiveChannels = async (req: ReqWUser, res: Response) => {
     let response: GetActiveChannelsRes = null
     if (!req.user) {
@@ -99,5 +103,29 @@ export const removeActiveChannel = async (req: ReqWUser, res: Response) => {
 }
 
 export const getActiveChannelInfo = (req: ReqWUser, res: Response) => {
+    let response: ActiveChannelInfoRes = null
+
+    if (!req.user) {
+        response = errorResponse('No user provided')
+        res.status(400).send(response)
+        return
+    }
+
+    const { channelId } = req.params
+    if (!channelId) {
+        response = errorResponse('No channel id provided')
+        res.status(400).send(response)
+        return
+    }
+
+
+    try {
+
+    }
+    catch (err) {
+        console.log(err)
+        response = errorResponse('Something went wrong')
+    }
+
     res.send(successResponse({}))
 }
