@@ -13,7 +13,8 @@ export enum ChatActionTypes {
     CHANGE_MSG_STATUS_FAIL = "CHANGE_MSG_STATUS_FAIL",
     PUSH_MSG_TO_CHANNEL = "PUSH_MSG_TO_CHANNEL",
     REMOVE_ACTIVE_CHANNEL = "REMOVE_ACTIVE_CHANNEL",
-    ADD_ACTIVE_CHANNEL = "ADD_ACTIVE_CHANNEL"
+    ADD_ACTIVE_CHANNEL = "ADD_ACTIVE_CHANNEL",
+    MOVE_ACTIVE_CHANNEL_FRONT = "MOVE_ACTIVE_CHANNEL_FRONT"
 }
 
 export type ChatAction = Action<ChatActionTypes, any>
@@ -66,4 +67,9 @@ export const removeActiveChannelAction = (channelId: string): ChatAction => ({
 export const addActiveChannelAction = (activeChannel: ActiveChannelInfo): ChatAction => ({
     type: ChatActionTypes.ADD_ACTIVE_CHANNEL,
     payload: activeChannel
+})
+
+export const moveChannelToFrontAction = (channelId: string): ChatAction => ({
+    type: ChatActionTypes.MOVE_ACTIVE_CHANNEL_FRONT,
+    payload: channelId
 })
