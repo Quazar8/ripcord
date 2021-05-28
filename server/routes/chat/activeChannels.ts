@@ -130,7 +130,13 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
         const channel = await Channel.findById(channelId)
 
         if (isChannelDoc(channel)) {
-
+            const channelInfo = await createActiveChannelInfo(channel, req.user)
+            response = successResponse({
+                channelInfo
+            })
+        } else {
+            response = errorResponse('Couldn\'t find the channel')
+            status = 400
         }
     }
     catch (err) {
@@ -139,5 +145,5 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
         status = 500
     }
 
-    res.status(status).send(successResponse({}))
+    res.status(status).send(response)
 }
