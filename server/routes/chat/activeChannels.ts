@@ -104,6 +104,7 @@ export const removeActiveChannel = async (req: ReqWUser, res: Response) => {
 
 export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
     let response: ActiveChannelInfoRes = null
+    let status: number = 200
 
     if (!req.user) {
         response = errorResponse('No user provided')
@@ -118,19 +119,24 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
         return
     }
 
-
+    if (!req.user.activeChannels.some((id) => id.equals(channelId))) {
+        response = errorResponse('User doesn\'t have the active channel')
+        res.status(400).send(response)
+        return
+    }
 
     try {
         const channel = await Channel.findById(channelId)
 
-        if (isChannelDoc(channel)) {
+        // if (isChannelDoc(channel)) {
 
-        }
+        // }
     }
     catch (err) {
         console.log(err)
         response = errorResponse('Something went wrong')
+        status = 500
     }
 
-    res.send(successResponse({}))
+    res.status(status).send(successResponse({}))
 }
