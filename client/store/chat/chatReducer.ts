@@ -33,7 +33,7 @@ export const chatStateInit: ChatState = {
             participantTwo: null
         }
     },
-    newMessages: 0
+    newMessages: 1
 }
 
 const changeRecipient = (state: ChatState, recipientId: string): ChatState => {
