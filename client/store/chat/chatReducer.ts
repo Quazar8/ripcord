@@ -13,6 +13,7 @@ export type ChatState = {
     activeChannels: ActiveChannelInfo[],
     currentChannelId: string,
     chatChannel: ChatChannelState
+    newMessages: number
 }
 
 export const chatStateInit: ChatState = {
