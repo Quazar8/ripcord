@@ -18,6 +18,27 @@ export type ActiveChannelInfoRes = ServerResponse<{
     channelInfo: ActiveChannelInfo
 }>
 
+
+const createActiveChannelInfo = async (channel: ChannelDoc, byUser: UserDoc): Promise<ActiveChannelInfo> => {
+    let recipient = null
+    if (channel.participantOne.equals(byUser._id)) {
+        recipient = await User.findById(channel.participantTwo)
+    } else {
+        recipient = await User.findById(channel.participantOne)
+    }
+
+    if (!isUserDoc(recipient)) {
+        console.error('Getting Active Channels Error: Cannot get recipient')
+        return null
+    }
+
+    return {
+        id: channel._id.toHexString(),
+        recipientId: recipient._id.toHexString(),
+        recipientUsername: recipient.username
+    }
+}
+
 export const getActiveChannels = async (req: ReqWUser, res: Response) => {
     let response: GetActiveChannelsRes = null
     if (!req.user) {
@@ -26,33 +47,13 @@ export const getActiveChannels = async (req: ReqWUser, res: Response) => {
         return
     }
 
-    const getActiveChannelInfo = async (channel: ChannelDoc, byUser: UserDoc): Promise<ActiveChannelInfo> => {
-        let recipient = null
-        if (channel.participantOne.equals(byUser._id)) {
-            recipient = await User.findById(channel.participantTwo)
-        } else {
-            recipient = await User.findById(channel.participantOne)
-        }
-
-        if (!isUserDoc(recipient)) {
-            console.error('Getting Active Channels Error: Cannot get recipient')
-            return null
-        }
-
-        return {
-            id: channel._id.toHexString(),
-            recipientId: recipient._id.toHexString(),
-            recipientUsername: recipient.username
-        }
-    }
-
     const activeChannels = req.user.activeChannels
     const data: ActiveChannelInfo[] = new Array(activeChannels.length)
     for (let i = 0; i < activeChannels.length; i++) {
         const id = activeChannels[i]
         const channel = await Channel.findById(id)
         if (isChannelDoc(channel)) {
-            const channelInfo = await getActiveChannelInfo(channel, req.user)
+            const channelInfo = await createActiveChannelInfo(channel, req.user)
             if (channelInfo) data[activeChannels.length - 1 - i] = channelInfo
         }
     }
@@ -128,9 +129,9 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
     try {
         const channel = await Channel.findById(channelId)
 
-        // if (isChannelDoc(channel)) {
+        if (isChannelDoc(channel)) {
 
-        // }
+        }
     }
     catch (err) {
         console.log(err)
