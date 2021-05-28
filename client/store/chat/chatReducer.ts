@@ -32,7 +32,8 @@ export const chatStateInit: ChatState = {
             participantOne: null,
             participantTwo: null
         }
-    }
+    },
+    newMessages: 0
 }
 
 const changeRecipient = (state: ChatState, recipientId: string): ChatState => {
