@@ -10,6 +10,6 @@ export default {
         `/chat/activeChannels/${channelId}/remove`
     ),
     getActiveChannelInfoFn: (channelId: string) => (
-        `/chat/activeChannels/${channelId}/get}`
+        `/chat/activeChannels/${channelId}/get`
     )
 }
