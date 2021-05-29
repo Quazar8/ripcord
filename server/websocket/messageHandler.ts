@@ -50,6 +50,14 @@ const createMessage = (payload: ChatMessagePayload, byUser: UserDoc): Message =>
 }
 
 const addToActiveChannels = async (byUser: UserDoc, receiver: UserDoc, channel: ChannelDoc) => {
+    if (!byUser.activeChannels) {
+        byUser.activeChannels = []
+    }
+
+    if (!receiver.activeChannels) {
+        receiver.activeChannels = []
+    }
+
     if (byUser.activeChannels.indexOf(channel._id) < 0) {
         byUser.activeChannels.push(channel._id)
         await byUser.save()
@@ -137,7 +145,6 @@ const messageHandler = (wsMsg: WSMessage<any>, user: UserDoc) => {
         case WSDataType.CHAT_MESSAGE:
             handleChatMessage(wsMsg.payload, user);break;
         default: break;
-
     }
 }
 
