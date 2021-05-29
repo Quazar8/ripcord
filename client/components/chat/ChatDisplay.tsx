@@ -93,15 +93,22 @@ const ChatDisplay = (props: Props) => {
 
         const addChannelToActive = async (channelId: string) => {
             let hasChannel = props.activeChannels.some((ch) => ch.id === channelId)
+            console.log('hasChannel', hasChannel)
             if (hasChannel) {
-
+                props.moveActiveChToTopFn(channelId)
             } else {
+                try {
                 const res = await getActiveChannelInfo(channelId)
+                console.log('res', res)
                 if (resHasError(res)) {
                     return
                 }
 
                 props.appendActiveChannelFn(res.data.channelInfo)
+                }
+                catch (err) {
+                    console.log(err)
+                }
             }
         }
 
@@ -111,6 +118,7 @@ const ChatDisplay = (props: Props) => {
         } else {
             props.pushSentMsgToStoreFn(pendingMsg)
             socket.send(JSON.stringify(msg))
+            addChannelToActive(props.channelInfo.channel.id)
             setTimeout(() => {
                 props.markMsgAsFailedFn(pendingMsg.temporaryId)
             }, 10000)
