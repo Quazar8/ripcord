@@ -67,12 +67,14 @@ const ChatDisplay = (props: Props) => {
             return
         }
 
+        const channelId = info.channel.id
+
         const payloadMsg: ChatMessagePayload = {
             content,
-            channelId: info.channel.id,
+            channelId,
             authorId: props.user.id,
             toId: info.recipient.id,
-            temporaryId: info.channel.id + "_" + Date.now()
+            temporaryId: channelId + "_" + Date.now()
         }
 
         const msg: WSMessage<ChatMessagePayload> = {
@@ -81,7 +83,7 @@ const ChatDisplay = (props: Props) => {
         }
 
         const pendingMsg: PendingMsg = {
-            channelId: props.channelId,
+            channelId: channelId,
             id: '',
             temporaryId: payloadMsg.temporaryId,
             status: ChatMessageStatus.PENDING,
@@ -118,7 +120,7 @@ const ChatDisplay = (props: Props) => {
         } else {
             props.pushSentMsgToStoreFn(pendingMsg)
             socket.send(JSON.stringify(msg))
-            addChannelToActive(props.channelInfo.channel.id)
+            addChannelToActive(channelId)
             setTimeout(() => {
                 props.markMsgAsFailedFn(pendingMsg.temporaryId)
             }, 10000)
