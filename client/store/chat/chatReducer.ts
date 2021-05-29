@@ -151,6 +151,10 @@ const addActiveChannel = (state: ChatState, channelInfo: ActiveChannelInfo): Cha
 }
 
 const moveChannelToTop = (state: ChatState, channelId: string): ChatState => {
+    if (state.activeChannels[0].id === channelId) {
+        return state
+    }
+
     const newState = { ...state }
     const activeChannels = newState.activeChannels
     const resultArr = new Array(activeChannels.length)
