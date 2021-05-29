@@ -120,16 +120,17 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
         return
     }
 
-    if (!req.user.activeChannels.some((id) => id.equals(channelId))) {
-        response = errorResponse('User doesn\'t have the active channel')
-        res.status(400).send(response)
-        return
-    }
-
     try {
         const channel = await Channel.findById(channelId)
 
         if (isChannelDoc(channel)) {
+            if (!channel.participantOne.equals(req.user._id)
+                    && channel.participantTwo.equals(req.user._id)) {
+                response = errorResponse('User doesn\'t particiapte in such a channel')
+                res.status(400).send(response)
+                return
+            }
+
             const channelInfo = await createActiveChannelInfo(channel, req.user)
             response = successResponse({
                 channelInfo
