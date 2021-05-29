@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, KeyboardEvent } from 'react'
 import { socket, socketIsClosed } from '../../socket/socket'
 import { resHasError } from '../../api/utils'
-import { getChannelInfo, getChannelInfoWId } from '../../api/chatApi'
+import { getActiveChannelInfo, getChannelInfo, getChannelInfoWId } from '../../api/chatApi'
 
 import { ChatMessagePayload, ChatMessageStatus } from '../../../server/types/ChatTypes'
 import ChatMessage from './ChatMessage'
@@ -16,7 +16,8 @@ type Props = Pick<RightWindowProps, 'dispNotification'
         | 'pushSentMsgToStoreFn'
         | 'markMsgAsFailedFn'
         | 'appendActiveChannelFn'
-        | 'activeChannels'>
+        | 'activeChannels'
+        | 'moveActiveChToTopFn'>
 
 const ChatDisplay = (props: Props) => {
     if (!props.recipientId && !props.channelId) 
@@ -88,6 +89,20 @@ const ChatDisplay = (props: Props) => {
             authorId: payloadMsg.authorId,
             edited: false,
             content: payloadMsg.content
+        }
+
+        const addChannelToActive = async (channelId: string) => {
+            let hasChannel = props.activeChannels.some((ch) => ch.id === channelId)
+            if (hasChannel) {
+
+            } else {
+                const res = await getActiveChannelInfo(channelId)
+                if (resHasError(res)) {
+                    return
+                }
+
+                props.appendActiveChannelFn(res.data.channelInfo)
+            }
         }
 
         if (socketIsClosed()) {

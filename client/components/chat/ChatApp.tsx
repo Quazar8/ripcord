@@ -15,6 +15,7 @@ import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
 import { addActiveChannelAction, changeChannelIdAction,
          changeCHatRecipientAction,
          changeMsgToFailAction,
+         moveChannelToTopAction,
          removeActiveChannelAction,
          sendChatMsgAction,
          updateActiveChannelsAction,
@@ -46,6 +47,7 @@ type ChatDispProps = {
     markMsgAsFailedFn: (temporaryId: string) => void
     removeChannelFromListFn: (channelId: string) => void
     appendActiveChannelFn: (channelInfo: ActiveChannelInfo) => void
+    moveActiveChToTopFn: (channelId: string) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -127,6 +129,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 markMsgAsFailedFn = { props.markMsgAsFailedFn }
                 appendActiveChannelFn = { props.appendActiveChannelFn }
                 activeChannels = { props.activeChannels}
+                moveActiveChToTopFn = { props.moveActiveChToTopFn }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -186,6 +189,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     appendActiveChannelFn: (channelInfo: ActiveChannelInfo) => {
         dispatch(addActiveChannelAction(channelInfo))
+    },
+    moveActiveChToTopFn: (channelId: string) => {
+        dispatch(moveChannelToTopAction(channelId))
     }
 })
 

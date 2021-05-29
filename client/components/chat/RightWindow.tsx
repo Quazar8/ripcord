@@ -10,7 +10,8 @@ export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
         | 'updateChannelInfoFn' | 'channelInfo'
         | 'pushSentMsgToStoreFn'
         | 'markMsgAsFailedFn' 
-        | 'appendActiveChannelFn'> & {
+        | 'appendActiveChannelFn'
+        | 'moveActiveChToTopFn'> & {
             toggleChatWRecipientId: (recipientId: string) => void
             showFriendsWindow: boolean,
             activeChannels: ActiveChannelInfo[]
@@ -53,6 +54,7 @@ const RightWindow = (props: RightWindowProps) => {
                     markMsgAsFailedFn = { props.markMsgAsFailedFn }
                     appendActiveChannelFn = { props.appendActiveChannelFn }
                     activeChannels = { props.activeChannels }
+                    moveActiveChToTopFn = { props.moveActiveChToTopFn }
                 />
                 { AuxComponent }
             </RightWindowContext.Provider>
