@@ -2,7 +2,8 @@ import { baseUrl, deleteOptionsInit, getQueryOptions } from './reqOptions'
 import ChatUrls from '../../server/routes/chat/ChatUrls'
 import { ChatChannelInfoRes, GetActiveChannelsRes,
          ChatCHannelWIdRes, 
-         RemoveActiveChannelRes} from '../../server/types/ChatResponses'
+         RemoveActiveChannelRes,
+         ActiveChannelInfoRes} from '../../server/types/ChatResponses'
 
 export const getChannelInfo = async (recipientId: string): Promise<ChatChannelInfoRes> => {
     return (await fetch(baseUrl + ChatUrls.chatChannelInfoFn(recipientId),
@@ -21,4 +22,9 @@ export const getChannelInfoWId = async (channelId: string): Promise<ChatCHannelW
 export const removeActiveChannel = async (channelId: string): Promise<RemoveActiveChannelRes> => {
     return (await fetch(baseUrl + ChatUrls.removeActiveChanneFn(channelId),
         deleteOptionsInit())).json()
+}
+
+export const getActiveChannelInfo = async (channelId: string): Promise<ActiveChannelInfoRes> => {
+    return (await fetch(baseUrl + ChatUrls.getActiveChannelInfoFn(channelId),
+        getQueryOptions(true))).json()
 }
