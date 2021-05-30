@@ -30,9 +30,12 @@ const createNewChannel = async (byUser: UserDoc, receiver: UserDoc): Promise<Doc
         receiver.channels = {}
     }
 
-    byUser.channels[receiver._id.toHexString()] = channel._id
-    receiver.channels[byUser._id.toHexString()] = channel._id
+    byUser.channels[receiver._id.toHexString()] = channel._id.toHexString()
+    receiver.channels[byUser._id.toHexString()] = channel._id.toHexString()
 
+    receiver.markModified('channels')
+    byUser.markModified('channels')
+    
     await byUser.save()
     await receiver.save()
 
