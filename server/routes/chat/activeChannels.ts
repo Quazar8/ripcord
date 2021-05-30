@@ -81,7 +81,7 @@ export const removeActiveChannel = async (req: ReqWUser, res: Response) => {
         res.status(400).send(response)
         return
     }
-    console.log('after')
+
     try {
         const activeChannels = req.user.activeChannels
         for (let i = 0; i < activeChannels.length; i++) {
@@ -126,7 +126,7 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
 
         if (isChannelDoc(channel)) {
             if (!channel.participantOne.equals(req.user._id)
-                    && channel.participantTwo.equals(req.user._id)) {
+                    && !channel.participantTwo.equals(req.user._id)) {
                 response = errorResponse('User doesn\'t particiapte in such a channel')
                 res.status(400).send(response)
                 return
