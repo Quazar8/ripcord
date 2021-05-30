@@ -5,6 +5,7 @@ import { ActiveChannelInfo, ChannelDoc, isChannelDoc } from "../../types/ChatTyp
 import { Channel } from "../../db/models/channel.js";
 import { isUserDoc, UserDoc } from "../../types/UserTypes.js";
 import { User } from "../../db/models/user.js";
+import { isValidObjectId } from '../../utils.js'
 
 export type GetActiveChannelsRes = ServerResponse<{
     activeChannels: ActiveChannelInfo[]
@@ -75,12 +76,12 @@ export const removeActiveChannel = async (req: ReqWUser, res: Response) => {
     }
 
     const { channelId } = req.params
-    if (!channelId) {
+    if (!isValidObjectId(channelId)) {
         response = errorResponse('No channel id provided')
         res.status(400).send(response)
         return
     }
-
+    console.log('after')
     try {
         const activeChannels = req.user.activeChannels
         for (let i = 0; i < activeChannels.length; i++) {
@@ -114,12 +115,12 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
     }
 
     const { channelId } = req.params
-    if (!channelId) {
-        response = errorResponse('No channel id provided')
+    if (!isValidObjectId(channelId)) {
+        response = errorResponse('No valid channel id provided')
         res.status(400).send(response)
         return
     }
-
+    
     try {
         const channel = await Channel.findById(channelId)
 
@@ -141,6 +142,7 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
         }
     }
     catch (err) {
+        console.log('Getting single active channel error:')
         console.log(err)
         response = errorResponse('Something went wrong')
         status = 500
