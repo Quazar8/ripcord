@@ -80,9 +80,6 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
         }
 
         const channelId = requester.channels[recipient._id.toHexString()]
-        console.log(requester.channels)
-        console.log(recipient.channels)
-        console.log(channelId)
         if (!channelId) {
             return successResponse({
                 channel: {
