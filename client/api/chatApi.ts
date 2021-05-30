@@ -24,7 +24,12 @@ export const removeActiveChannel = async (channelId: string): Promise<RemoveActi
         deleteOptionsInit())).json()
 }
 
-export const getActiveChannelInfo = async (channelId: string): Promise<ActiveChannelInfoRes> => {
-    return (await fetch(baseUrl + ChatUrls.getActiveChannelInfoFn(channelId),
-        getQueryOptions(true))).json()
+export const getActiveChannelInfo = async (channelId: string,
+        recipientId?: string): Promise<ActiveChannelInfoRes> => {
+    let url = new URL(baseUrl + ChatUrls.getActiveChannelInfoFn(channelId))
+    if (!channelId && recipientId) {
+        url.searchParams.append('recipientId', recipientId)
+    }
+
+    return (await fetch(url.toString(), getQueryOptions(true))).json()
 }
