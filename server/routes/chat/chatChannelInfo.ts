@@ -80,6 +80,9 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
         }
 
         const channelId = requester.channels[recipient._id.toHexString()]
+        console.log(requester.channels)
+        console.log(recipient.channels)
+        console.log(channelId)
         if (!channelId) {
             return successResponse({
                 channel: {
@@ -91,7 +94,7 @@ export const chatChannelInfoHandler = async (req: ReqWUser, res: Response) => {
                 recipient: {
                     id: recipient._id.toHexString(),
                     username: recipient.username,
-                    status: isOnline(requester._id) 
+                    status: isOnline(recipient._id) 
                             ? UserStatus.Online 
                             : UserStatus.Offline
                 }
