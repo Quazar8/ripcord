@@ -79,17 +79,17 @@ const clearFriendNotifications = (state: GlobalState): GlobalState => {
 export const globalReducer = 
         (state: GlobalState = globalInit, action: Action<GlobalActionTypes, any>): GlobalState => {
     switch (action.type) {
-        case GlobalActionTypes.PushNotification:
+        case GlobalActionTypes.PUSH_NOTIFICATION:
             return pushNotification(state, action.payload)
-        case GlobalActionTypes.RemoveNotification:
+        case GlobalActionTypes.REMOVE_NOTIFICATION:
             return removeNotification(state, action.payload)
-        case GlobalActionTypes.RecordUserInfo:
+        case GlobalActionTypes.RECORD_USER_INFO:
             return recordUserInfo(state, action.payload)
-        case GlobalActionTypes.RemoveUserInfo:
+        case GlobalActionTypes.REMOVE_USER_INFO:
             return removeUserInfo(state)
-        case GlobalActionTypes.ToggleUserMenu:
+        case GlobalActionTypes.TOGGLE_USER_MENU:
             return toggleUserMenu(state, action.payload)
-        case GlobalActionTypes.FriendNotification:
+        case GlobalActionTypes.FRIEND_NOTIFICATION:
             return addFriendNotification(state)
         case GlobalActionTypes.CLEAR_FRIEND_NOTIFICATiONS:
             return clearFriendNotifications(state)

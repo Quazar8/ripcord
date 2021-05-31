@@ -3,12 +3,12 @@ import { UserClientInfo } from '../../server/types/UserTypes'
 import { Action } from './storeComponents/StoreTypes'
 
 export enum GlobalActionTypes {
-    PushNotification = "PUSH_NOTIFICATION",
-    RemoveNotification = "REMOVE_NOTIFICATION",
-    RecordUserInfo = "RECORD_USER_INFO",
-    RemoveUserInfo = "REMOVE_USER_INFO",
-    ToggleUserMenu = "TOGGLE_USER_MENY",
-    FriendNotification = "FRIEND_NOTIFICATION",
+    PUSH_NOTIFICATION = "PUSH_NOTIFICATION",
+    REMOVE_NOTIFICATION = "REMOVE_NOTIFICATION",
+    RECORD_USER_INFO = "RECORD_USER_INFO",
+    REMOVE_USER_INFO = "REMOVE_USER_INFO",
+    TOGGLE_USER_MENU = "TOGGLE_USER_MENU",
+    FRIEND_NOTIFICATION = "FRIEND_NOTIFICATION",
     CLEAR_FRIEND_NOTIFICATiONS = "CLEAR_FRIEND_NOTIFICATiOnS"
 }
 
@@ -25,24 +25,24 @@ export type GlobalAction = Action<GlobalActionTypes, any>
 export const addNotification =
         (notification: Notification) => {
     return {
-        type: GlobalActionTypes.PushNotification,
+        type: GlobalActionTypes.PUSH_NOTIFICATION,
         payload: notification
     }
 }
 
 export const recordUserAction = (user: UserClientInfo): GlobalAction => ({
-    type: GlobalActionTypes.RecordUserInfo,
+    type: GlobalActionTypes.RECORD_USER_INFO,
     payload: user
 })
 
 export const removeUserInfoAction = (): GlobalAction => ({
-    type: GlobalActionTypes.RemoveUserInfo,
+    type: GlobalActionTypes.REMOVE_USER_INFO,
     payload: null
 })
 
 const removeNotificationAction = (id: Notification['id']) => {
     return {
-        type: GlobalActionTypes.RemoveNotification,
+        type: GlobalActionTypes.REMOVE_NOTIFICATION,
         payload: id
     }
 }
@@ -62,12 +62,12 @@ export const pushNotification = (dispatch: Dispatch<GlobalAction>) =>
 }
 
 export const toggleUserMenuAction = (show: boolean): GlobalAction => ({
-    type: GlobalActionTypes.ToggleUserMenu,
+    type: GlobalActionTypes.TOGGLE_USER_MENU,
     payload: show
 })
 
 export const friendNotificationAction = (): GlobalAction => ({
-    type: GlobalActionTypes.FriendNotification,
+    type: GlobalActionTypes.FRIEND_NOTIFICATION,
     payload: null
 })
 
