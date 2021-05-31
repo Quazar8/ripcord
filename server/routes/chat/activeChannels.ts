@@ -116,7 +116,7 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
 
     let { channelId } = req.params
     const recipientId = req.query.recipientId
-
+    
     if (!isValidObjectId(channelId)) {
         if (!isValidObjectId(recipientId)) {
             response = errorResponse('No valid channel id provided')
@@ -124,7 +124,10 @@ export const getActiveChannelInfo = async (req: ReqWUser, res: Response) => {
             return
         }
 
-        channelId = req.user.channels[recipientId.toString()]
+        if (!req.user.channels) {
+            req.user.channels = {}
+        }
+        channelId = req.user.channels[recipientId as string] as unknown as string
 
         if (!channelId) {
             response = errorResponse('No valid channel id provided')
