@@ -8,7 +8,7 @@ type Props = {
 
 const FriendPlate = ({ friend }: Props) => {
     let appendClass = friend.status === UserStatus.Online
-                    ? 'Online' : 'Offline'
+                    ? 'online' : 'offline'
 
     const { toggleChatWRecipientId } = useContext(RightWindowContext)
 
