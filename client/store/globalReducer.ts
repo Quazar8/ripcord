@@ -69,6 +69,13 @@ const addFriendNotification = (state: GlobalState): GlobalState => {
     }
 }
 
+const clearFriendNotifications = (state: GlobalState): GlobalState => {
+    return {
+        ...state,
+        friendNotifications: 0
+    }
+}
+
 export const globalReducer = 
         (state: GlobalState = globalInit, action: Action<GlobalActionTypes, any>): GlobalState => {
     switch (action.type) {
@@ -84,6 +91,8 @@ export const globalReducer =
             return toggleUserMenu(state, action.payload)
         case GlobalActionTypes.FriendNotification:
             return addFriendNotification(state)
+        case GlobalActionTypes.CLEAR_FRIEND_NOTIFICATiONS:
+            return clearFriendNotifications(state)
         default: return state
     }
 }
