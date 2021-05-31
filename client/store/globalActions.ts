@@ -8,7 +8,8 @@ export enum GlobalActionTypes {
     RecordUserInfo = "RECORD_USER_INFO",
     RemoveUserInfo = "REMOVE_USER_INFO",
     ToggleUserMenu = "TOGGLE_USER_MENY",
-    FriendNotification = "FRIEND_NOTIFICATION"
+    FriendNotification = "FRIEND_NOTIFICATION",
+    CLEAR_FRIEND_NOTIFICATiONS = "CLEAR_FRIEND_NOTIFICATiOnS"
 }
 
 export type Notification = {
@@ -67,5 +68,10 @@ export const toggleUserMenuAction = (show: boolean): GlobalAction => ({
 
 export const friendNotificationAction = (): GlobalAction => ({
     type: GlobalActionTypes.FriendNotification,
+    payload: null
+})
+
+export const clearFriendNotificationAction = (): GlobalAction => ({
+    type: GlobalActionTypes.CLEAR_FRIEND_NOTIFICATiONS,
     payload: null
 })
