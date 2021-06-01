@@ -136,11 +136,17 @@ const ChatDisplay = (props: Props) => {
             authorname = 'You' 
         }
 
+        let isNewBlock = true
+        if (i > 0 && info.channel.messages[i - 1].authorId === m.authorId) {
+            isNewBlock = false
+        }
+
         return (
             <ChatMessage 
                 message = { m } 
                 key = { i }
                 authorName = { authorname }
+                isNewBlock = { isNewBlock }
             />
         )
     })

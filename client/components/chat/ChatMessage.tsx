@@ -5,9 +5,10 @@ import { PendingMsg } from '../../types/ChatClientTypes'
 type Props = {
     message: PendingMsg
     authorName: string
+    isNewBlock: boolean
 }
 
-export const ChatMessage = ({ message, authorName }: Props) => {
+export const ChatMessage = ({ message, authorName, isNewBlock }: Props) => {
     let auxClass = ''
     if (message.status) {
         if (message.status === ChatMessageStatus.PENDING) {
