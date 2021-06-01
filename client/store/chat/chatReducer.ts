@@ -77,8 +77,14 @@ const addPendingChatMessage = (state: ChatState, msg: PendingMsg): ChatState => 
 }
 
 const sentMessageResponse = (state: ChatState, res: ChatMessageStatusPayload): ChatState => {
-    if (res.channelId !== state.chatChannel.channel.id) {
-        return state
+    if (!state.chatChannel.channel.id) {
+        if (state.chatChannel.recipient.id !== res.recipientId) {
+            return state
+        }
+    } else {
+        if (res.channelId !== state.chatChannel.channel.id) {
+            return state
+        }
     }
 
     const newState = { ...state }
