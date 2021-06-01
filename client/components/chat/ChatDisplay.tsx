@@ -90,7 +90,7 @@ const ChatDisplay = (props: Props) => {
             date: new Date(),
             authorId: payloadMsg.authorId,
             edited: false,
-            content: payloadMsg.content
+            content: payloadMsg.content.trim()
         }
 
         const addChannelToActive = async (channelId: string, recipientId: string) => {
