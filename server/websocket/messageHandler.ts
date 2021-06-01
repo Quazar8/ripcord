@@ -128,7 +128,8 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             channelId: channel._id.toHexString(),
             temporaryId: payload.temporaryId,
             realId: message.id,
-            status: ChatMessageStatus.DELIVERED
+            status: ChatMessageStatus.DELIVERED,
+            recipientId: payload.recipientId
         }
 
         const senderResponse: WSMessage<ChatMessageStatusPayload> = {

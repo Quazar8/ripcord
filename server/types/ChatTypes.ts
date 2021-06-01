@@ -56,13 +56,14 @@ export enum ChatMessageStatus {
 }
 
 export type ChatMessageStatusPayload = {
-    channelId: string,
-    temporaryId: string,
-    realId: string,
+    channelId: string
+    temporaryId: string
+    realId: string
     status: ChatMessageStatus
+    recipientId: string
 }
 
 export type ChatReceiverPayload = {
-    msg: MessageClient,
+    msg: MessageClient
     channelId: string
 }
