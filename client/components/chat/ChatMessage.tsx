@@ -20,7 +20,11 @@ export const ChatMessage = ({ message, authorName, isNewBlock }: Props) => {
 
     return (
         <div className = { "message" + " " + auxClass }>
-            <h4>{ authorName }:</h4>
+            {
+                isNewBlock
+                ? <h4>{ authorName }:</h4>
+                : null
+            }
             <p>{ message.content }</p>
             {
                 message.status === ChatMessageStatus.FAILED
