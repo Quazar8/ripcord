@@ -77,17 +77,21 @@ const addPendingChatMessage = (state: ChatState, msg: PendingMsg): ChatState => 
 }
 
 const sentMessageResponse = (state: ChatState, res: ChatMessageStatusPayload): ChatState => {
-    if (!state.chatChannel.channel.id) {
-        if (state.chatChannel.recipient.id !== res.recipientId) {
+    const newState = { ...state }
+    if (!newState.chatChannel.channel.id) {
+        if (newState.chatChannel.recipient.id !== res.recipientId) {
             return state
         }
+
+        if (res.channelId) {
+            newState.chatChannel.channel.id = res.channelId
+        }
     } else {
-        if (res.channelId !== state.chatChannel.channel.id) {
+        if (res.channelId !== newState.chatChannel.channel.id) {
             return state
         }
     }
 
-    const newState = { ...state }
     const messages = newState.chatChannel.channel.messages
     for (let msg of messages) {
         if (!msg.temporaryId) {
