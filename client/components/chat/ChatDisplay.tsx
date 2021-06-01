@@ -73,7 +73,7 @@ const ChatDisplay = (props: Props) => {
             content,
             channelId,
             authorId: props.user.id,
-            toId: info.recipient.id,
+            recipientId: info.recipient.id,
             temporaryId: channelId + "_" + Date.now()
         }
 
@@ -114,7 +114,7 @@ const ChatDisplay = (props: Props) => {
         } else {
             props.pushSentMsgToStoreFn(pendingMsg)
             socket.send(JSON.stringify(msg))
-            addChannelToActive(channelId, info.recipient.id)
+            // addChannelToActive(channelId, info.recipient.id)
             setTimeout(() => {
                 props.markMsgAsFailedFn(pendingMsg.temporaryId)
             }, 10000)

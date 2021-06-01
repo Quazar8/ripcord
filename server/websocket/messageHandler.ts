@@ -73,12 +73,12 @@ const addToActiveChannels = async (byUser: UserDoc, receiver: UserDoc, channel: 
 }
 
 const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) => {
-    if (!payload.content || !byUser || !payload.toId) {
+    if (!payload.content || !byUser || !payload.recipientId) {
         return
     }
 
     try {
-        const receiver = await User.findById(payload.toId)
+        const receiver = await User.findById(payload.recipientId)
         if (!isUserDoc(receiver)) {
             return
         }

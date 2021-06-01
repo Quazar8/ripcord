@@ -45,7 +45,7 @@ export type ChatMessagePayload = {
     channelId: string
     content: string
     authorId: string
-    toId: string
+    recipientId: string
     temporaryId: string
 }
 
