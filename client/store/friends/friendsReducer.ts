@@ -18,7 +18,10 @@ export const friendsStateInit: FriendsState = {
 }
 
 const fillFriendRequests = (state: FriendsState, requests: FriendRequestsState): FriendsState => {
-    return state
+    const newState = { ...state }
+    newState.friendRequests = requests
+
+    return newState
 } 
 
 export const friendsReducer = (state: FriendsState = friendsStateInit,
