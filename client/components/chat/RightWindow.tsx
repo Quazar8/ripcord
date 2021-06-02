@@ -6,7 +6,10 @@ import FriendsWindow from './FriendsWindow/FriendsWindow'
 import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
 
 export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
-        | 'recipientId' | 'user' | 'channelId'
+        | 'recipientId' 
+        | 'user' 
+        | 'channelId'
+        | 'friendRequests'
         | 'updateChannelInfoFn' | 'channelInfo'
         | 'pushSentMsgToStoreFn'
         | 'markMsgAsFailedFn' 
@@ -19,9 +22,11 @@ export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
         }
 
 type RightContextType = Pick<RightWindowProps, 'dispNotification' 
-     | 'toggleChatWRecipientId' | 'fillFriendRequestsFn'>
+     | 'toggleChatWRecipientId' | 'fillFriendRequestsFn'
+     | 'friendRequests'>
 
 export const RightWindowContext = createContext<RightContextType>({
+    friendRequests: { incoming: [], outgoing: []},
     dispNotification: () => {},
     toggleChatWRecipientId: () => {},
     fillFriendRequestsFn: () => {}
@@ -36,6 +41,7 @@ const RightWindow = (props: RightWindowProps) => {
     }
 
     const contextValue: RightContextType = {
+        friendRequests: props.friendRequests,
         dispNotification: props.dispNotification,
         toggleChatWRecipientId: props.toggleChatWRecipientId,
         fillFriendRequestsFn: props.fillFriendRequestsFn,
