@@ -2,19 +2,22 @@ import { useReducer, useMemo, Dispatch } from 'react'
 import { GlobalState, globalInit, globalReducer} from './globalReducer'
 import { GlobalAction } from './globalActions'
 import { chatReducer, ChatState, chatStateInit } from './chat/chatReducer'
-import { ChatAction, ChatActionTypes } from './chat/chatActions'
+import { ChatAction } from './chat/chatActions'
+import { FriendsState, friendsReducer, friendsStateInit } from './friends/friendsReducer'
+import { FriendsAction } from './friends/friendsActions'
 
 export * from './storeComponents/StoreProvider'
 export * from './storeComponents/connect'
 export * from './storeComponents/StoreTypes'
 
-export type AppAction = GlobalAction | ChatAction
+export type AppAction = GlobalAction | ChatAction | FriendsAction
 
-type AppState = GlobalState | ChatState
+type AppState = GlobalState | ChatState | FriendsState
 
 export type CombinedState = {
     global: GlobalState
     chat: ChatState
+    friends: FriendsState
     [key: string]: AppState
 }
 
@@ -23,12 +26,14 @@ export type StoreType = [CombinedState, Dispatch<AppAction>]
 type ReducerSlices = {
     global: (state: GlobalState, action: GlobalAction) => GlobalState
     chat: (state: ChatState, action: ChatAction) => ChatState
+    friends: (state: FriendsState, action: FriendsAction) => FriendsState
     [key: string]: any
 }
 
 export const initialState: CombinedState = {
     global: globalInit,
-    chat: chatStateInit
+    chat: chatStateInit,
+    friends: friendsStateInit
 }
 
 const combineReducers = 
@@ -43,7 +48,8 @@ const combineReducers =
 
 const rootReducer = combineReducers({ 
     global: globalReducer,
-    chat: chatReducer
+    chat: chatReducer,
+    friends: friendsReducer
 })
 
 export const useStore = () => {

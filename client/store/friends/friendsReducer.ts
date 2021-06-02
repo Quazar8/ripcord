@@ -6,23 +6,23 @@ export type FriendRequestsState = {
     outgoing: PendingFriendInfo[]
 } 
 
-type FriendsStateType = {
+export type FriendsState = {
     friendRequests: FriendRequestsState
 }
 
-const friendsStateInit: FriendsStateType = {
+export const friendsStateInit: FriendsState = {
     friendRequests: {
         incoming: [],
         outgoing: []
     }
 }
 
-const fillFriendRequests = (state: FriendsStateType, requests: FriendRequestsState): FriendsStateType => {
+const fillFriendRequests = (state: FriendsState, requests: FriendRequestsState): FriendsState => {
     return state
 } 
 
-export const friendsReducer = (state: FriendsStateType = friendsStateInit,
-    action: FriendsAction): FriendsStateType => {
+export const friendsReducer = (state: FriendsState = friendsStateInit,
+    action: FriendsAction): FriendsState => {
     switch (action.type) {
         case FriendsActionTypes.FILL_PENDING_REQUESTS:
             return fillFriendRequests(state, action.payload)
