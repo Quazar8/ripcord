@@ -11,19 +11,21 @@ export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
         | 'pushSentMsgToStoreFn'
         | 'markMsgAsFailedFn' 
         | 'appendActiveChannelFn'
-        | 'moveActiveChToTopFn'> & {
+        | 'moveActiveChToTopFn'
+        | 'fillFriendRequestsFn'> & {
             toggleChatWRecipientId: (recipientId: string) => void
             showFriendsWindow: boolean,
             activeChannels: ActiveChannelInfo[]
         }
 
 type RightContextType = Pick<RightWindowProps, 'dispNotification' 
-     | 'toggleChatWRecipientId'>
+     | 'toggleChatWRecipientId' | 'fillFriendRequestsFn'>
 
 export const RightWindowContext = createContext<RightContextType>({
     dispNotification: () => {},
-    toggleChatWRecipientId: () => {}
-})
+    toggleChatWRecipientId: () => {},
+    fillFriendRequestsFn: () => {}
+}) 
 
 const RightWindow = (props: RightWindowProps) => {
     let AuxComponent: JSX.Element = null
@@ -36,6 +38,7 @@ const RightWindow = (props: RightWindowProps) => {
     const contextValue: RightContextType = {
         dispNotification: props.dispNotification,
         toggleChatWRecipientId: props.toggleChatWRecipientId,
+        fillFriendRequestsFn: props.fillFriendRequestsFn,
     }
 
     return (

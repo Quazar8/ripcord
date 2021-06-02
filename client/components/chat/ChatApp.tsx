@@ -22,6 +22,8 @@ import { addActiveChannelAction, changeChannelIdAction,
          updateChatChannelAction } from '../../store/chat/chatActions'
 import { ChatChannelState } from '../../store/chat/chatReducer'
 import { PendingMsg } from '../../types/ChatClientTypes'
+import { FriendRequestsState } from '../../store/friends/friendsReducer'
+import { fillPendingRequestsAction } from '../../store/friends/friendsActions'
 
 type ChatStateProps = {
     user: UserState
@@ -48,6 +50,7 @@ type ChatDispProps = {
     removeChannelFromListFn: (channelId: string) => void
     appendActiveChannelFn: (channelInfo: ActiveChannelInfo) => void
     moveActiveChToTopFn: (channelId: string) => void
+    fillFriendRequestsFn: (friendRequests: FriendRequestsState) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -130,6 +133,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 appendActiveChannelFn = { props.appendActiveChannelFn }
                 activeChannels = { props.activeChannels}
                 moveActiveChToTopFn = { props.moveActiveChToTopFn }
+                fillFriendRequestsFn = { props.fillFriendRequestsFn }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -192,6 +196,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     moveActiveChToTopFn: (channelId: string) => {
         dispatch(moveChannelToTopAction(channelId))
+    },
+    fillFriendRequestsFn: (friendsRequests: FriendRequestsState) => {
+        dispatch(fillPendingRequestsAction(friendsRequests))
     }
 })
 
