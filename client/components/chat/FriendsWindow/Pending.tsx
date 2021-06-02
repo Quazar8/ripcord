@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { PendingFriendInfo } from '../../../../server/types/UserTypes'
 
 import { getFriendRequests } from '../../../api/userApi'
 import { resHasError } from '../../../api/utils'
+import { RightWindowContext } from '../RightWindow'
 
 import FriendRequest from './FriendRequest'
 
@@ -17,6 +18,8 @@ export const Pending = () => {
         outgoing: []
     })
 
+    const context = useContext(RightWindowContext)
+
     const fetchRequests = async () => {
         const res = await getFriendRequests()
         if (resHasError(res)) {
@@ -24,6 +27,7 @@ export const Pending = () => {
         }
 
         setPending(res.data)
+        context.fillFriendRequestsFn(res.data)
     }
 
     useEffect(() => {
