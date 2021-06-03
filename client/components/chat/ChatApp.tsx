@@ -52,7 +52,7 @@ type ChatDispProps = {
     appendActiveChannelFn: (channelInfo: ActiveChannelInfo) => void
     moveActiveChToTopFn: (channelId: string) => void
     fillFriendRequestsFn: (friendRequests: FriendRequestsState) => void
-    removeFriendRquestFn: (index: number) => void
+    removeFriendRequestFn: (index: number) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -137,7 +137,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 activeChannels = { props.activeChannels}
                 moveActiveChToTopFn = { props.moveActiveChToTopFn }
                 fillFriendRequestsFn = { props.fillFriendRequestsFn }
-                removeFriendRquestFn = { props.removeFriendRquestFn }
+                removeFriendRequestFn = { props.removeFriendRequestFn }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -205,7 +205,7 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     fillFriendRequestsFn: (friendsRequests: FriendRequestsState) => {
         dispatch(fillPendingRequestsAction(friendsRequests))
     },
-    removeFriendRquestFn: (index: number) => {
+    removeFriendRequestFn: (index: number) => {
         dispatch(removeFriendRequestAction(index))
     }
 })
