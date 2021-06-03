@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { DeclineFriendRequestData, AcceptFriendRequestData } from '../../../../server/types/UserRequestData'
 import { PendingFriendInfo } from '../../../../server/types/UserTypes'
 
 import { cancelOrDeclineFrReq, acceptFriendRequest } from '../../../api/userApi'
 import { resHasError } from '../../../api/utils'
+import { RightWindowContext } from '../RightWindow'
 
 type Props = {
     candidate: PendingFriendInfo
@@ -11,11 +12,11 @@ type Props = {
     index: number
 }
 
-const FriendRequest = ({ candidate, type }: Props) => {
+const FriendRequest = ({ candidate, type, index }: Props) => {
     let classAppend = type === 'INC' ? 'incoming' : 'outgoing'
 
-    let [show, setShow] = useState(true)
-
+    const context = useContext(RightWindowContext)
+    
     const declineOrCancel = async () => {
         let data: DeclineFriendRequestData = {
             declineInc: type === 'INC',
@@ -29,7 +30,7 @@ const FriendRequest = ({ candidate, type }: Props) => {
         if (resHasError(res)) {
             console.error(res.errorMsg)
         } else {
-            setShow(false)
+            context.removeFriendRequestFn(index)
         }
     }
 
@@ -45,11 +46,9 @@ const FriendRequest = ({ candidate, type }: Props) => {
         if (resHasError(res)) {
             console.error(res.errorMsg)
         } else {
-            setShow(false)
+            context.removeFriendRequestFn(index)
         }
     }
-
-    if (!show) return null
 
     return (
         <div className = {"friend-request" + ' ' + classAppend}>
