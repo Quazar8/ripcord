@@ -22,13 +22,26 @@ const fillFriendRequests = (state: FriendsState, requests: FriendRequestsState):
     newState.friendRequests = requests
 
     return newState
-} 
+}
+
+const removeFriendRequest = (state: FriendsState, index: number) => {
+    const newState = { ...state }
+    if (index > newState.friendRequests.incoming.length - 1) {
+        newState.friendRequests.outgoing.splice(index, 1)
+    } else {
+        newState.friendRequests.incoming.splice(index, 1)
+    }
+
+    return newState
+}
 
 export const friendsReducer = (state: FriendsState = friendsStateInit,
     action: FriendsAction): FriendsState => {
     switch (action.type) {
         case FriendsActionTypes.FILL_PENDING_REQUESTS:
             return fillFriendRequests(state, action.payload)
+        case FriendsActionTypes.REMOVE_PENDING_REQUEST:
+            return removeFriendRequest(state, action.payload)
         default: return state
     }
 }
