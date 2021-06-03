@@ -33,32 +33,40 @@ export const Pending = () => {
 
     return (
         <div className = "pending-subwindow">
-            <div className = "subsection">
-                <span>Incoming:</span>
-                {
-                    pending.incoming.map((r, i) => (
-                        <FriendRequest 
-                            key = { i }
-                            candidate = { r }
-                            type = 'INC'
-                            index = { i }
-                        />
-                    ))
-                }
-            </div>
-            <div className = "subsection">
-                <span>Outgoing:</span>
-                {
-                    pending.outgoing.map((r, i) => (
-                        <FriendRequest 
-                            key = { i }
-                            candidate = { r }
-                            type = 'OUT'
-                            index = { pending.incoming.length + i - 1 }
-                        />
-                    ))
-                }
-            </div>
+            {
+                pending.incoming.length > 0
+                ? <div className = "subsection">
+                    <span>Incoming:</span>
+                    {
+                        pending.incoming.map((r, i) => (
+                            <FriendRequest 
+                                key = { i }
+                                candidate = { r }
+                                type = 'INC'
+                                index = { i }
+                            />
+                        ))
+                    }
+                </div>
+                : null
+            }
+            {
+                pending.outgoing.length > 0
+                ? <div className = "subsection">
+                    <span>Outgoing:</span>
+                    {
+                        pending.outgoing.map((r, i) => (
+                            <FriendRequest 
+                                key = { i }
+                                candidate = { r }
+                                type = 'OUT'
+                                index = { pending.incoming.length + i - 1 }
+                            />
+                        ))
+                    }
+                </div>
+                : null
+            }
         </div>
     )
 }
