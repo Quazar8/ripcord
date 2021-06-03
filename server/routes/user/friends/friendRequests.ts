@@ -10,7 +10,7 @@ export type DeclineFriendRequestRes = ServerResponse<{
 }>
 
 export type DeclineFriendRequestData = {
-    declinedId: Types.ObjectId,
+    declinedId: string,
     declineInc: boolean
 }
 
@@ -19,7 +19,7 @@ export type AcceptFriendRequestRes = ServerResponse<{
 }>
 
 export type AcceptFriendRequestData = {
-    acceptedId: Types.ObjectId
+    acceptedId: string
 }
 
 export const declineRequest = async (req: ReqWUser, res: Response) => {
