@@ -109,7 +109,6 @@ export const acceptFriendRequest = async (req: ReqWUser, res: Response) => {
         }
 
         index = acceptedUser.outFriendRequests.indexOf(user._id)
-        console.log('index', index)
         if (index > -1) {
             acceptedUser.outFriendRequests.splice(index, 1)
         } else {

@@ -30,6 +30,6 @@ export type FriendClientInfo = {
 }
 
 export type PendingFriendInfo = {
-    id: Types.ObjectId
+    id: string
     username: string
 }

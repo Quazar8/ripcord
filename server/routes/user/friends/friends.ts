@@ -95,7 +95,7 @@ export const pendingFriendRequests = async (req: ReqWUser, res: Response) => {
         let user = await User.findById(id)
         if (isUserDoc(user)) {
             const info: PendingFriendInfo = {
-                id: user._id,
+                id: user._id.toHexString(),
                 username: user.username,
             }
 
@@ -108,7 +108,7 @@ export const pendingFriendRequests = async (req: ReqWUser, res: Response) => {
         let user = await User.findById(id)
         if (isUserDoc(user)) {
             const info: PendingFriendInfo = {
-                id: user._id,
+                id: user._id.toHexString(),
                 username: user.username,
             }
 
