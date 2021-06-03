@@ -13,7 +13,7 @@ export const fillPendingRequestsAction = (pendingRequests: FriendRequestsState):
     payload: pendingRequests
 })
 
-export const removeFriendRequest = (index: number): FriendsAction => ({
+export const removeFriendRequestAction = (index: number): FriendsAction => ({
     type: FriendsActionTypes.REMOVE_PENDING_REQUEST,
     payload: index
 })
