@@ -6,8 +6,9 @@ import { cancelOrDeclineFrReq, acceptFriendRequest } from '../../../api/userApi'
 import { resHasError } from '../../../api/utils'
 
 type Props = {
-    candidate: PendingFriendInfo,
+    candidate: PendingFriendInfo
     type: 'INC' | 'OUT'
+    index: number
 }
 
 const FriendRequest = ({ candidate, type }: Props) => {
