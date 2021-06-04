@@ -1,6 +1,7 @@
 .message {
     padding: 0.1% 1%;
     font-size: 1.5vw;
+    position: relative;
 
     &.pending {
         color: hsla(0, 0%, 100%, 0.603);
@@ -18,5 +19,12 @@
         padding: 0% 1% 1% 3%;
         width: 95%;
         word-break: break-word;
+    }
+
+    .date {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: translateY(-50%);
     }
 }
