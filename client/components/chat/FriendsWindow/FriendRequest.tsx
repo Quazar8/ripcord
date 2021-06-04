@@ -23,8 +23,6 @@ const FriendRequest = ({ candidate, type, index }: Props) => {
             declinedId: candidate.id
         }
 
-        console.log(data)
-
         const res = await cancelOrDeclineFrReq(data)
 
         if (resHasError(res)) {

@@ -27,7 +27,8 @@ const fillFriendRequests = (state: FriendsState, requests: FriendRequestsState):
 const removeFriendRequest = (state: FriendsState, index: number) => {
     const newState = { ...state }
     if (index > newState.friendRequests.incoming.length - 1) {
-        newState.friendRequests.outgoing.splice(index, 1)
+        newState.friendRequests.outgoing.splice(
+            index - newState.friendRequests.incoming.length, 1)
     } else {
         newState.friendRequests.incoming.splice(index, 1)
     }

@@ -60,7 +60,7 @@ export const Pending = () => {
                                 key = { i }
                                 candidate = { r }
                                 type = 'OUT'
-                                index = { pending.incoming.length + i - 1 }
+                                index = { pending.incoming.length + i }
                             />
                         ))
                     }
