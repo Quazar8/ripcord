@@ -26,6 +26,7 @@ export const ChatMessage = ({ message, authorName, isNewBlock }: Props) => {
                 : null
             }
             <p>{ message.content }</p>
+            <div className = "date">{ message.date }</div>
             {
                 message.status === ChatMessageStatus.FAILED
                 ? <div className = "error"> Failed to deliver the message</div>
