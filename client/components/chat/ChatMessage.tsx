@@ -1,6 +1,7 @@
 import React from 'react'
 import { ChatMessageStatus } from '../../../server/types/ChatTypes'
 import { PendingMsg } from '../../types/ChatClientTypes'
+import { getChatDateStr } from '../../utils/utils'
 
 type Props = {
     message: PendingMsg
@@ -26,7 +27,7 @@ export const ChatMessage = ({ message, authorName, isNewBlock }: Props) => {
                 : null
             }
             <p>{ message.content }</p>
-            <div className = "date">{ message.date }</div>
+            <div className = "date">{ getChatDateStr(new Date(message.date)) }</div>
             {
                 message.status === ChatMessageStatus.FAILED
                 ? <div className = "error"> Failed to deliver the message</div>
