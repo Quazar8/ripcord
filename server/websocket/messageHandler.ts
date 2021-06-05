@@ -116,7 +116,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         channel.messages.push(message)
 
         await channel.save()
-        const added = await addToActiveChannels(byUser, receiver, channel)
+        const addedActiveChannel = await addToActiveChannels(byUser, receiver, channel)
 
         const sendActiveChannelInfo = (targetUser: UserDoc,
             recipient: UserDoc, channel: ChannelDoc) => {
@@ -152,6 +152,10 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             }
 
             sendSocketMsg(receiver._id, receiverMsg)
+
+            if (addedActiveChannel.addedToReceiver) {
+                sendActiveChannelInfo(receiver, byUser, channel)
+            }
         }
 
         const senderPayload: ChatMessageStatusPayload = {
@@ -168,6 +172,10 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         }
 
         sendSocketMsg(byUser._id, senderResponse)
+
+        if (addedActiveChannel.addedToByUser) {
+            sendActiveChannelInfo(byUser, receiver, channel)
+        }
     } 
     catch (err) {
         console.error(err)
