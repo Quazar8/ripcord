@@ -52,7 +52,14 @@ const createMessage = (payload: ChatMessagePayload, byUser: UserDoc): Message =>
     }
 }
 
-const addToActiveChannels = async (byUser: UserDoc, receiver: UserDoc, channel: ChannelDoc) => {
+const addToActiveChannels = async (byUser: UserDoc,
+    receiver: UserDoc, channel: ChannelDoc): Promise<{
+        addedToByUser: boolean,
+        addedToReceiver: boolean
+    }> => {
+    let addedToByUser = false
+    let addedToReceiver = false
+
     if (!byUser.activeChannels) {
         byUser.activeChannels = []
     }
@@ -64,11 +71,18 @@ const addToActiveChannels = async (byUser: UserDoc, receiver: UserDoc, channel: 
     if (byUser.activeChannels.indexOf(channel._id) < 0) {
         byUser.activeChannels.push(channel._id)
         await byUser.save()
+        addedToByUser = true
     }
 
     if (receiver.activeChannels.indexOf(channel._id) < 0) {
         receiver.activeChannels.push(channel._id)
         await receiver.save()
+        addedToReceiver = true
+    }
+
+    return {
+        addedToByUser,
+        addedToReceiver
     }
 }
 
