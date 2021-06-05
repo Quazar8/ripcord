@@ -1,4 +1,15 @@
 export const getChatDateStr = (date: Date): string => {
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
-        + ` ${date.getHours()}:${date.getMinutes()}`
+    let calendarDate: string;
+
+    const day = date.getDate()
+    const today = new Date().getDate()
+    if (day === today) {
+        calendarDate = 'Today at'
+    } else if (day === today - 1) {
+        calendarDate = 'Yesterday at'
+    } else {
+        calendarDate = `${day}/${date.getMonth()}/${date.getFullYear()}`
+    }
+
+    return `${calendarDate} ${date.getHours()}:${date.getMinutes()}`
 }
