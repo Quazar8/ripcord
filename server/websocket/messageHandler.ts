@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 import { Channel, IChannel } from "../db/models/channel.js";
 import { User } from "../db/models/user.js";
-import { ChannelDoc, ChatMessagePayload, ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
+import { ActiveChannelInfo, ChannelDoc, ChatMessagePayload, ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
 import { isUserDoc, UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { isOnline, sendSocketMsg } from './onlineUsers.js'
@@ -116,7 +116,23 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         channel.messages.push(message)
 
         await channel.save()
-        await addToActiveChannels(byUser, receiver, channel)
+        const added = await addToActiveChannels(byUser, receiver, channel)
+
+        const sendActiveChannelInfo = (targetUser: UserDoc,
+            recipient: UserDoc, channel: ChannelDoc) => {
+            const payload: ActiveChannelInfo = {
+                id: channel._id.toHexString(),
+                recipientId: recipient._id.toHexString(),
+                recipientUsername: recipient.username
+            }
+
+            const WSMsg: WSMessage<ActiveChannelInfo> = {
+                type: WSDataType.NEW_ACTIVE_CHANNEL,
+                payload
+            }
+
+            sendSocketMsg(targetUser._id, WSMsg)
+        }
         
         if (isOnline(receiver._id)) {
             const receiverPayload: ChatReceiverPayload = {
