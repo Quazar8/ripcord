@@ -22,7 +22,7 @@ type Props = Pick<RightWindowProps, 'dispNotification'
 const ChatDisplay = (props: Props) => {
     if (!props.recipientId && !props.channelId) 
         return (
-            <h2>No open conversations</h2>
+            <h2 className = "no-conversations">No open conversations</h2>
         )
     
 
