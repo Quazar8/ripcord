@@ -30,7 +30,7 @@ const AddFriend = (props: Props) => {
     return (
         <div className = "add-friend">
             <form className = "add-friend-form" onSubmit = { handleFindFriendSubmit }>
-                <input ref = { findUserRef } type = "search" />
+                <input ref = { findUserRef } type = "search" placeholder = "Enter user's name"/>
                 <input type = "submit" value = "Add User" />
             </form>
             {
