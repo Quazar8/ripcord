@@ -9,10 +9,6 @@ type Props = Pick<ChatAppProps, "updateActiveChannelsFn"
 | "activeChannels">
 
 const ActiveChannels = (props: Props) => {
-    if (props.activeChannels.length < 1) {
-        return null
-    }
-
     const retrieveChannels = async () => {
         const res = await getActiveChannels()
 
@@ -26,6 +22,10 @@ const ActiveChannels = (props: Props) => {
     useEffect(() => {
         retrieveChannels()
     }, [])
+
+    if (props.activeChannels.length < 1) {
+        return null
+    }
 
     return (
         <div className = "active-channels">
