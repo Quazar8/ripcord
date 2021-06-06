@@ -68,6 +68,9 @@ const addToActiveChannels = async (byUser: UserDoc,
         receiver.activeChannels = []
     }
 
+    console.log('byUser active channles', byUser.activeChannels)
+    console.log('receiver active channel', receiver.activeChannels)
+
     if (byUser.activeChannels.indexOf(channel._id) < 0) {
         byUser.activeChannels.push(channel._id)
         await byUser.save()
@@ -182,11 +185,23 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
     }
 }
 
-const messageHandler = (wsMsg: WSMessage<any>, user: UserDoc) => {
-    switch (wsMsg.type) {
-        case WSDataType.CHAT_MESSAGE:
-            handleChatMessage(wsMsg.payload, user);break;
-        default: break;
+const messageHandler = async (wsMsg: WSMessage<any>, user: UserDoc) => {
+    try {
+        const dbUser = await User.findById(user._id)
+
+        if (!isUserDoc(dbUser)) {
+            return
+        }
+
+        switch (wsMsg.type) {
+            case WSDataType.CHAT_MESSAGE:
+                handleChatMessage(wsMsg.payload, dbUser);break;
+            default: break;
+        }
+    }
+    catch (err) {
+        console.log('socket message handler')
+        console.error(err)
     }
 }
 
