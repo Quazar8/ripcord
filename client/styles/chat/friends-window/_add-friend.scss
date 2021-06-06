@@ -1,0 +1,13 @@
+.add-friend-form {
+    width: 100%;
+    display: flex;
+
+    input[type=search] {
+        padding: 1%;
+        font-size: 1.5vw;
+        width: 90%;
+        background: hsl(0, 0%, 42%);
+        color: white;
+        border: none;
+    }
+}

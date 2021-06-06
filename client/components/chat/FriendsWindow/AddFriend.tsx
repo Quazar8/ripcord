@@ -28,7 +28,7 @@ const AddFriend = (props: Props) => {
     }
 
     return (
-        <div>
+        <div className = "add-friend">
             <form className = "add-friend-form" onSubmit = { handleFindFriendSubmit }>
                 <input ref = { findUserRef } type = "search" />
                 <input type = "submit" value = "Add User" />
