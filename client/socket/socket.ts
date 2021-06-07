@@ -15,9 +15,9 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
         case WSDataType.CHAT_MESSAGE_STATUS:
             dispatch(sentMsgResponseAction(data.payload)); break;
         case WSDataType.CLIENT_RECEIVED_MSG:
-            dispatch(pushReceivedMsgAction(data.payload))
+            dispatch(pushReceivedMsgAction(data.payload)); break;
         case WSDataType.NEW_ACTIVE_CHANNEL:
-            dispatch(addActiveChannelAction(data.payload))
+            dispatch(addActiveChannelAction(data.payload)); break;
         default: break;
     }
 }
