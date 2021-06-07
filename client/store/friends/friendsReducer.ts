@@ -7,14 +7,18 @@ export type FriendRequestsState = {
 } 
 
 export type FriendsState = {
-    friendRequests: FriendRequestsState
+    friendRequests: FriendRequestsState,
+    friendWWindowNotif: number,
+    pendingNotif: number
 }
 
 export const friendsStateInit: FriendsState = {
     friendRequests: {
         incoming: [],
         outgoing: []
-    }
+    },
+    friendWWindowNotif: 0,
+    pendingNotif: 0
 }
 
 const fillFriendRequests = (state: FriendsState, requests: FriendRequestsState): FriendsState => {
