@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import { Channel, IChannel } from "../db/models/channel.js";
 import { User } from "../db/models/user.js";
 import { ActiveChannelInfo, ChannelDoc, ChatMessagePayload, ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
@@ -185,9 +185,9 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
     }
 }
 
-const messageHandler = async (wsMsg: WSMessage<any>, user: UserDoc) => {
+const messageHandler = async (wsMsg: WSMessage<any>, userId: Types.ObjectId) => {
     try {
-        const dbUser = await User.findById(user._id)
+        const dbUser = await User.findById(userId)
 
         if (!isUserDoc(dbUser)) {
             return

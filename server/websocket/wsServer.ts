@@ -23,7 +23,7 @@ export const websocketServer = (server: Server) => {
 
         socket.on('message', (msg: string) => {
             let json: WSMessage<any> = JSON.parse(msg)
-            messageHandler(json, user)
+            messageHandler(json, user._id)
         })
 
         socket.onclose = (ev) => {
