@@ -19,7 +19,7 @@ export const removeFriendRequestAction = (index: number): FriendsAction => ({
     payload: index
 })
 
-export const incPendingNotif = (): FriendsAction => ({
+export const incrementPendingNotif = (): FriendsAction => ({
     type: FriendsActionTypes.INC_PENDING_NOTIF,
     payload: null
 })
