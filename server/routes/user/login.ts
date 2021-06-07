@@ -12,7 +12,6 @@ export const loginUser = (req: Request, res: Response, user: UserDoc) => {
         id: user._id,
         username: user.username,
         registeredAt: user.registeredAt,
-        // loggingAt: Date.now()
     }
 
     req.logIn(userToLog, { session: false }, (err) => {
@@ -22,8 +21,11 @@ export const loginUser = (req: Request, res: Response, user: UserDoc) => {
         }
 
         const token = jwt.sign(userToLog, jwtKey)
+        const tokenExpiration = new Date()
+        tokenExpiration.setDate(tokenExpiration.getDate() + 30)
+
         res.cookie( jwtCookieName, token, {
-            expires: new Date(Date.now() + 30*24*3600),
+            expires: tokenExpiration,
             sameSite: 'strict'
         })
 
