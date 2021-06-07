@@ -41,7 +41,11 @@ const removeFriendRequest = (state: FriendsState, index: number) => {
 }
 
 const incrementPendingNotif = (state: FriendsState) => {
-    return state
+    const newState = { ...state }
+    newState.friendWWindowNotif++
+    newState.pendingNotif++
+
+    return newState
 }
 
 export const friendsReducer = (state: FriendsState = friendsStateInit,
