@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Subwindows } from './FriendsWindow'
 
 import NotifAttach from '../../others/notifications/NotifAttach'
+import { RightWindowContext } from '../RightWindow'
 
 type Props = {
     showCertainSubwindow: (name: Subwindows) => void
 }
 
 const FriendsMenuBar = ({ showCertainSubwindow }: Props) => {
+    const context = useContext(RightWindowContext)
+
     const showFriendsList = () => {
         showCertainSubwindow(Subwindows.FriendsList)
     }
@@ -26,7 +29,7 @@ const FriendsMenuBar = ({ showCertainSubwindow }: Props) => {
             <button onClick = { showAddFriend }>Add</button>
             <div className = "button-container">
                 <NotifAttach 
-                    amount = { 2 }
+                    amount = { context.pendingRequests }
                 />
                 <button onClick = { showPending }>Pending</button>
             </div>
