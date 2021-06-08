@@ -40,10 +40,10 @@ const removeFriendRequest = (state: FriendsState, index: number) => {
     return newState
 }
 
-const incrementPendingNotif = (state: FriendsState) => {
+const incrementPendingNotif = (state: FriendsState, amount: number) => {
     const newState = { ...state }
-    newState.friendWindowNotifs++
-    newState.pendingNotifs++
+    newState.friendWindowNotifs += amount
+    newState.pendingNotifs += amount
 
     return newState
 }
@@ -56,7 +56,7 @@ export const friendsReducer = (state: FriendsState = friendsStateInit,
         case FriendsActionTypes.REMOVE_PENDING_REQUEST:
             return removeFriendRequest(state, action.payload)
         case FriendsActionTypes.INC_PENDING_NOTIF:
-            return incrementPendingNotif(state)
+            return incrementPendingNotif(state, action.payload)
         default: return state
     }
 }
