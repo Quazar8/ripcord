@@ -5,6 +5,7 @@ import { getCookies } from '../../server/utils'
 import { jwtCookieName } from '../../server/configVars'
 import { resHasError } from '../api/utils'
 import { getUserInfoWToken } from '../api/userApi'
+import { incrementPendingNotif } from '../store/friends/friendsActions'
 
 import Main from './Main'
 import NotificationsContainer from './others/notifications/NotificationsContainer'
@@ -16,12 +17,13 @@ type StateProps = {
 }
 
 type DispProps = {
-    recordUser: (user: UserState) => void
+    recordUser: (user: UserState) => void,
+    setPendingNotifsAmount: (amount: number) => void
 }
 
 type Props = StateProps & DispProps
 
-const AppView = ({ user, recordUser }: Props) => {
+const AppView = (props: Props) => {
     const retrieveUserFromToken = async () => {
         const res = await getUserInfoWToken()
 
@@ -29,20 +31,21 @@ const AppView = ({ user, recordUser }: Props) => {
             return
         }
 
-        recordUser(res.data)
+        props.recordUser(res.data)
+        props.setPendingNotifsAmount(res.data.incFriendRequests.length)
     }    
 
     useEffect(() => { 
         const token = getCookies(document.cookie)[jwtCookieName]
-        if (!user.username && token) {
+        if (!props.user.username && token) {
             retrieveUserFromToken()
         }
-    }, [user.username])
+    }, [props.user.username])
 
     return (
         <BrowserRouter>
             <div className = "app-container">
-                <Main user = { user }/>
+                <Main user = { props.user }/>
                 <NotificationsContainer />
             </div>
         </BrowserRouter>
@@ -56,6 +59,9 @@ const mapState: MapStateFn<StateProps> = (state) => ({
 const mapDispatch: MapDispatchFn<DispProps> = (dispatch) => ({
     recordUser: (user: UserState) => {
         dispatch(recordUserAction(user))
+    },
+    setPendingNotifsAmount: (amount: number) => {
+        dispatch(incrementPendingNotif(amount))
     }
 })
 

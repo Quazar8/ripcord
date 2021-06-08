@@ -32,18 +32,18 @@ const ChatMenu = (props: Props) => {
     return (
         <section className = "chat-menu">
             <ChatMenuContext.Provider value = { contextValue }>
-            <ChatMenuButtons 
-                toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
-                friendNotifications = { props.friendNotifications }
-            />
-            <ActiveChannels 
-                updateActiveChannelsFn = { props.updateActiveChannelsFn }
-                activeChannels = { props.activeChannels }
-            />
-            <Nameplate 
-                username = { props.user.username } 
-                showUserMenuFn = { props.showUserMenuFn }
-            />
+                <ChatMenuButtons 
+                    toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
+                    friendNotifications = { props.friendNotifications }
+                />
+                <ActiveChannels 
+                    updateActiveChannelsFn = { props.updateActiveChannelsFn }
+                    activeChannels = { props.activeChannels }
+                />
+                <Nameplate 
+                    username = { props.user.username } 
+                    showUserMenuFn = { props.showUserMenuFn }
+                />
             </ChatMenuContext.Provider>
         </section>
     )
