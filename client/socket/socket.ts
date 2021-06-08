@@ -3,6 +3,7 @@ import { pushNotification, friendNotificationAction } from '../store/globalActio
 import { AppAction } from '../store/store'
 import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
 import { addActiveChannelAction, pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
+import { incrementPendingNotif } from '../store/friends/friendsActions'
 
 export let socket: WebSocket = null
 
@@ -11,7 +12,7 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
 
     switch (data.type) {
         case WSDataType.FRIEND_REQUEST:
-            dispatch(friendNotificationAction()); break;
+            dispatch(incrementPendingNotif(1)); break;
         case WSDataType.CHAT_MESSAGE_STATUS:
             dispatch(sentMsgResponseAction(data.payload)); break;
         case WSDataType.CLIENT_RECEIVED_MSG:
