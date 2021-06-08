@@ -1,6 +1,8 @@
 import React from 'react'
 import { Subwindows } from './FriendsWindow'
 
+import NotifAttach from '../../others/notifications/NotifAttach'
+
 type Props = {
     showCertainSubwindow: (name: Subwindows) => void
 }
@@ -22,7 +24,12 @@ const FriendsMenuBar = ({ showCertainSubwindow }: Props) => {
         <nav className = "friends-menu-bar">
             <button onClick = { showFriendsList }>Friends</button>
             <button onClick = { showAddFriend }>Add</button>
-            <button onClick = { showPending }>Pending</button>
+            <div className = "button-container">
+                <NotifAttach 
+                    amount = { 2 }
+                />
+                <button onClick = { showPending }>Pending</button>
+            </div>
         </nav>
     )
 }
