@@ -139,6 +139,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 moveActiveChToTopFn = { props.moveActiveChToTopFn }
                 fillFriendRequestsFn = { props.fillFriendRequestsFn }
                 removeFriendRequestFn = { props.removeFriendRequestFn }
+                pendingRequests = { props.pendingRequests }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
