@@ -8,8 +8,8 @@ export type FriendRequestsState = {
 
 export type FriendsState = {
     friendRequests: FriendRequestsState,
-    friendWWindowNotif: number,
-    pendingNotif: number
+    friendWindowNotifs: number,
+    pendingNotifs: number
 }
 
 export const friendsStateInit: FriendsState = {
@@ -17,8 +17,8 @@ export const friendsStateInit: FriendsState = {
         incoming: [],
         outgoing: []
     },
-    friendWWindowNotif: 0,
-    pendingNotif: 0
+    friendWindowNotifs: 0,
+    pendingNotifs: 0
 }
 
 const fillFriendRequests = (state: FriendsState, requests: FriendRequestsState): FriendsState => {
@@ -42,8 +42,8 @@ const removeFriendRequest = (state: FriendsState, index: number) => {
 
 const incrementPendingNotif = (state: FriendsState) => {
     const newState = { ...state }
-    newState.friendWWindowNotif++
-    newState.pendingNotif++
+    newState.friendWindowNotifs++
+    newState.pendingNotifs++
 
     return newState
 }

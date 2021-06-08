@@ -29,6 +29,7 @@ type ChatStateProps = {
     user: UserState
     showUserMenu: boolean
     friendNotifications: number
+    pendingRequests: number
     recipientId: string
     channelId: string
     activeChannels: ActiveChannelInfo[]
@@ -151,12 +152,13 @@ const ChatAppView = (props: ChatAppProps) => {
 const mapState: MapStateFn<ChatStateProps> = (state) => ({
     user: state.global.user,
     showUserMenu: state.global.showUserOptions,
-    friendNotifications: state.global.friendNotifications,
+    friendNotifications: state.friends.friendWindowNotifs,
     recipientId: state.chat.currentRecipientId,
     activeChannels: state.chat.activeChannels,
     channelId: state.chat.currentChannelId,
     channelInfo: state.chat.chatChannel,
-    friendRequests: state.friends.friendRequests
+    friendRequests: state.friends.friendRequests,
+    pendingRequests: state.friends.pendingNotifs
 })
 
 const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
