@@ -48,6 +48,13 @@ const incrementPendingNotif = (state: FriendsState, amount: number) => {
     return newState
 }
 
+const clearPendingNotifAmount = (state: FriendsState) => {
+    const newState = { ...state }
+    newState.pendingNotifs = friendsStateInit.pendingNotifs
+
+    return newState
+}
+
 export const friendsReducer = (state: FriendsState = friendsStateInit,
     action: FriendsAction): FriendsState => {
     switch (action.type) {
@@ -57,6 +64,8 @@ export const friendsReducer = (state: FriendsState = friendsStateInit,
             return removeFriendRequest(state, action.payload)
         case FriendsActionTypes.INC_PENDING_NOTIF:
             return incrementPendingNotif(state, action.payload)
+        case FriendsActionTypes.CLEAR_PENDING_NOTIF_AMOUNT:
+            return clearPendingNotifAmount(state)
         default: return state
     }
 }

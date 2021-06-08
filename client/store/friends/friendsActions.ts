@@ -4,7 +4,8 @@ import { FriendRequestsState } from "./friendsReducer"
 export enum FriendsActionTypes {
     FILL_PENDING_REQUESTS = "FILL_PENDING_REQUESTS",
     REMOVE_PENDING_REQUEST = "REMOVE_PENDING_REQUEST",
-    INC_PENDING_NOTIF = "INC_PENDING_NOTIF"
+    INC_PENDING_NOTIF = "INC_PENDING_NOTIF",
+    CLEAR_PENDING_NOTIF_AMOUNT = "CLEAR_PENDING_NOTIF_AMOUNT"
 }
 
 export type FriendsAction = Action<FriendsActionTypes, any>
@@ -22,4 +23,9 @@ export const removeFriendRequestAction = (index: number): FriendsAction => ({
 export const incrementPendingNotif = (amount: number): FriendsAction => ({
     type: FriendsActionTypes.INC_PENDING_NOTIF,
     payload: amount
+})
+
+export const clearPendingNotifAmountAction = (): FriendsAction => ({
+    type: FriendsActionTypes.CLEAR_PENDING_NOTIF_AMOUNT,
+    payload: null
 })
