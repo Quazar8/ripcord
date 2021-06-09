@@ -9,7 +9,11 @@ const NotifAttach = (props: Props) => {
 
     return (
         <div className = "notification-attachment">
-            { props.amount }
+            { 
+                props.amount < 10
+                ? props.amount
+                : "9+"
+            }
         </div>
     )
 }
