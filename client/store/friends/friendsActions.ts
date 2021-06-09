@@ -5,7 +5,8 @@ export enum FriendsActionTypes {
     FILL_PENDING_REQUESTS = "FILL_PENDING_REQUESTS",
     REMOVE_PENDING_REQUEST = "REMOVE_PENDING_REQUEST",
     INC_PENDING_NOTIF = "INC_PENDING_NOTIF",
-    CLEAR_PENDING_NOTIF_AMOUNT = "CLEAR_PENDING_NOTIF_AMOUNT"
+    CLEAR_PENDING_NOTIF_AMOUNT = "CLEAR_PENDING_NOTIF_AMOUNT",
+    CLEAR_FRIENDS_BUTTON_NOTIF = "CLEAR_FRIENDS_BUTTON_NOTIF"
 }
 
 export type FriendsAction = Action<FriendsActionTypes, any>
@@ -27,5 +28,10 @@ export const incrementPendingNotif = (amount: number): FriendsAction => ({
 
 export const clearPendingNotifAmountAction = (): FriendsAction => ({
     type: FriendsActionTypes.CLEAR_PENDING_NOTIF_AMOUNT,
+    payload: null
+})
+
+export const clearFriendsButtonNotifAction = (): FriendsAction => ({
+    type: FriendsActionTypes.CLEAR_FRIENDS_BUTTON_NOTIF,
     payload: null
 })
