@@ -6,7 +6,8 @@ import { logoutUser } from '../../api/userApi'
 import { resHasError } from '../../api/utils'
 import { toggleUserMenuAction, 
          removeUserInfoAction, 
-         pushNotification } from '../../store/globalActions'
+         pushNotification, 
+         clearFriendNotificationAction} from '../../store/globalActions'
 
 import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
@@ -54,6 +55,7 @@ type ChatDispProps = {
     moveActiveChToTopFn: (channelId: string) => void
     fillFriendRequestsFn: (friendRequests: FriendRequestsState) => void
     removeFriendRequestFn: (index: number) => void
+    clearFriendButtonNotifFn: () => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -121,6 +123,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 activeChannels = { props.activeChannels }
                 toggleChatWChannelId = { toggleChatWChannelId }
                 removeChannelFromListFn = { props.removeChannelFromListFn}
+                clearFriendButtonNotifFn = { props.clearFriendButtonNotifFn }
             />
             <RightWindow 
                 showFriendsWindow = { showWindows.FriendsWindow }
@@ -210,6 +213,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     removeFriendRequestFn: (index: number) => {
         dispatch(removeFriendRequestAction(index))
+    },
+    clearFriendButtonNotifFn: () => {
+        dispatch(clearFriendNotificationAction())
     }
 })
 
