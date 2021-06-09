@@ -49,6 +49,10 @@ const incrementPendingNotif = (state: FriendsState, amount: number) => {
 }
 
 const clearPendingNotifAmount = (state: FriendsState) => {
+    if (state.pendingNotifs < 1) {
+        return state
+    }
+
     const newState = { ...state }
     newState.pendingNotifs = friendsStateInit.pendingNotifs
 
@@ -56,6 +60,10 @@ const clearPendingNotifAmount = (state: FriendsState) => {
 }
 
 const clearFriendsButtonNotif = (state: FriendsState) => {
+    if (state.friendWindowNotifs < 1) {
+        return state
+    }
+    
     const newState = { ...state }
     newState.friendWindowNotifs = friendsStateInit.friendWindowNotifs
 

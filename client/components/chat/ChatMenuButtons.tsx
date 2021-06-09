@@ -10,11 +10,7 @@ type Props = Pick<ChatMenuProps, 'toggleFriendsWindowFn'
 const ChatMenuButtons = (props: Props) => {
     const handleFriendButtonClick = () => {
         props.toggleFriendsWindowFn()
-
-        if (props.friendNotifications > 0) {
-            console.log('here')
-            props.clearFriendButtonNotifFn()
-        }
+        props.clearFriendButtonNotifFn()
     }
 
 
