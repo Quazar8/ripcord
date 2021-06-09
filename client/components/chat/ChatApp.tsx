@@ -6,8 +6,7 @@ import { logoutUser } from '../../api/userApi'
 import { resHasError } from '../../api/utils'
 import { toggleUserMenuAction, 
          removeUserInfoAction, 
-         pushNotification, 
-         clearFriendNotificationAction} from '../../store/globalActions'
+         pushNotification } from '../../store/globalActions'
 
 import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
@@ -24,7 +23,7 @@ import { addActiveChannelAction, changeChannelIdAction,
 import { ChatChannelState } from '../../store/chat/chatReducer'
 import { PendingMsg } from '../../types/ChatClientTypes'
 import { FriendRequestsState } from '../../store/friends/friendsReducer'
-import { fillPendingRequestsAction, removeFriendRequestAction } from '../../store/friends/friendsActions'
+import { clearFriendsButtonNotifAction, fillPendingRequestsAction, removeFriendRequestAction } from '../../store/friends/friendsActions'
 
 type ChatStateProps = {
     user: UserState
@@ -215,7 +214,7 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
         dispatch(removeFriendRequestAction(index))
     },
     clearFriendButtonNotifFn: () => {
-        dispatch(clearFriendNotificationAction())
+        dispatch(clearFriendsButtonNotifAction())
     }
 })
 

@@ -36,6 +36,7 @@ const ChatMenu = (props: ChatMenuProps) => {
                 <ChatMenuButtons 
                     toggleFriendsWindowFn = { props.toggleFriendsWindowFn }
                     friendNotifications = { props.friendNotifications }
+                    clearFriendButtonNotifFn = { props.clearFriendButtonNotifFn }
                 />
                 <ActiveChannels 
                     updateActiveChannelsFn = { props.updateActiveChannelsFn }
