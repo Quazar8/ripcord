@@ -21,6 +21,7 @@ const FriendsMenuBar = ({ showCertainSubwindow }: Props) => {
 
     const showPending = () => {
         showCertainSubwindow(Subwindows.Pending)
+        context.clearPendingButtonNotifFn()
     }
 
     return (
