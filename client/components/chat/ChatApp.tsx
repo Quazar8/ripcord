@@ -21,7 +21,7 @@ import { addActiveChannelAction, changeChannelIdAction,
          updateActiveChannelsAction,
          updateChatChannelAction } from '../../store/chat/chatActions'
 import { ChatChannelState } from '../../store/chat/chatReducer'
-import { PendingMsg } from '../../types/ChatClientTypes'
+import { ClientActiveChannel, PendingMsg } from '../../types/ChatClientTypes'
 import { FriendRequestsState } from '../../store/friends/friendsReducer'
 import { clearFriendsButtonNotifAction,
          clearPendingNotifAmountAction,
@@ -35,7 +35,7 @@ type ChatStateProps = {
     pendingRequests: number
     recipientId: string
     channelId: string
-    activeChannels: ActiveChannelInfo[]
+    activeChannels: ClientActiveChannel[]
     channelInfo: ChatChannelState
     friendRequests: FriendRequestsState
 }
@@ -46,14 +46,14 @@ type ChatDispProps = {
     logoutFn: () => void
     dispNotification: ReturnType<typeof pushNotification>,
     dispatch: Dispatch<AppAction>,
-    updateActiveChannelsFn: (channels: ActiveChannelInfo[]) => void
+    updateActiveChannelsFn: (channels: ClientActiveChannel[]) => void
     changeChannelIdFn: (channelId: string) => void
     changeRecipientIdFn: (recipientId: string) => void
     updateChannelInfoFn: (channelInfo: ChatChannelState) => void
     pushSentMsgToStoreFn: (msg: PendingMsg) => void
     markMsgAsFailedFn: (temporaryId: string) => void
     removeChannelFromListFn: (channelId: string) => void
-    appendActiveChannelFn: (channelInfo: ActiveChannelInfo) => void
+    appendActiveChannelFn: (channelInfo: ClientActiveChannel) => void
     moveActiveChToTopFn: (channelId: string) => void
     fillFriendRequestsFn: (friendRequests: FriendRequestsState) => void
     removeFriendRequestFn: (index: number) => void
@@ -185,7 +185,7 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     dispNotification: pushNotification(dispatch),
     dispatch,
-    updateActiveChannelsFn: (channels: ActiveChannelInfo[]) => {
+    updateActiveChannelsFn: (channels: ClientActiveChannel[]) => {
         dispatch(updateActiveChannelsAction(channels))
     },
     changeChannelIdFn: (channelId: string) => {
@@ -206,7 +206,7 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     removeChannelFromListFn: (channelId: string) => {
         dispatch(removeActiveChannelAction(channelId))
     },
-    appendActiveChannelFn: (channelInfo: ActiveChannelInfo) => {
+    appendActiveChannelFn: (channelInfo: ClientActiveChannel) => {
         dispatch(addActiveChannelAction(channelInfo))
     },
     moveActiveChToTopFn: (channelId: string) => {

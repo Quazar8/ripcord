@@ -1,5 +1,5 @@
 import { ActiveChannelInfo, ChatMessageStatusPayload, ChatReceiverPayload } from "../../../server/types/ChatTypes";
-import { PendingMsg } from "../../types/ChatClientTypes";
+import { ClientActiveChannel, PendingMsg } from "../../types/ChatClientTypes";
 import { Action } from "../storeComponents/StoreTypes";
 import { ChatChannelState } from "./chatReducer";
 
@@ -24,7 +24,7 @@ export const changeCHatRecipientAction = (recipientId: string): ChatAction => ({
     payload: recipientId
 })
 
-export const updateActiveChannelsAction = (channels: ActiveChannelInfo[]): ChatAction => ({
+export const updateActiveChannelsAction = (channels: ClientActiveChannel[]): ChatAction => ({
     type: ChatActionTypes.UPDATE_ACTIVE_CHANNELS,
     payload: channels
 })
@@ -64,7 +64,7 @@ export const removeActiveChannelAction = (channelId: string): ChatAction => ({
     payload: channelId
 })
 
-export const addActiveChannelAction = (activeChannel: ActiveChannelInfo): ChatAction => ({
+export const addActiveChannelAction = (activeChannel: ClientActiveChannel): ChatAction => ({
     type: ChatActionTypes.ADD_ACTIVE_CHANNEL,
     payload: activeChannel
 })

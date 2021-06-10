@@ -4,8 +4,19 @@ import { AppAction } from '../store/store'
 import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
 import { addActiveChannelAction, pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
 import { incrementPendingNotif } from '../store/friends/friendsActions'
+import { ActiveChannelInfo } from '../../server/types/ChatTypes'
+import { ClientActiveChannel } from '../types/ChatClientTypes'
 
 export let socket: WebSocket = null
+
+const handleNewActiveChannel = (dispatch: Dispatch<AppAction>, activeCh: ActiveChannelInfo) => {
+    const clientActiveCh: ClientActiveChannel = {
+        ...activeCh,
+        newMsgs: 1
+    }
+    
+    dispatch(addActiveChannelAction(clientActiveCh))
+}
 
 const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
     const data: WSMessage<any> = JSON.parse(dataStr)
@@ -18,7 +29,7 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
         case WSDataType.CLIENT_RECEIVED_MSG:
             dispatch(pushReceivedMsgAction(data.payload)); break;
         case WSDataType.NEW_ACTIVE_CHANNEL:
-            dispatch(addActiveChannelAction(data.payload)); break;
+            handleNewActiveChannel(dispatch, data.payload); break;
         default: break;
     }
 }

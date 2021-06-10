@@ -1,6 +1,6 @@
 import { ActiveChannelInfo, ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, RecipientInfo } from "../../../server/types/ChatTypes";
 import { UserStatus } from "../../../server/types/UserTypes";
-import { ClientChannelInfoWPending, PendingMsg } from "../../types/ChatClientTypes";
+import { ClientActiveChannel, ClientChannelInfoWPending, PendingMsg } from "../../types/ChatClientTypes";
 import { ChatAction, ChatActionTypes } from "./chatActions";
 
 export type ChatChannelState = {
@@ -10,7 +10,7 @@ export type ChatChannelState = {
 
 export type ChatState = {
     currentRecipientId: string,
-    activeChannels: ActiveChannelInfo[],
+    activeChannels: ClientActiveChannel[],
     currentChannelId: string,
     chatChannel: ChatChannelState
     newMessages: number
@@ -44,7 +44,7 @@ const changeRecipient = (state: ChatState, recipientId: string): ChatState => {
     }
 }
 
-const updateActiveChannels = (state: ChatState, channels: ActiveChannelInfo[]): ChatState => {
+const updateActiveChannels = (state: ChatState, channels: ClientActiveChannel[]): ChatState => {
     return {
         ...state,
         activeChannels: channels
@@ -153,7 +153,7 @@ const removeActiveChannelFromState = (state: ChatState, channelId: string): Chat
     return newState
 }
 
-const addActiveChannel = (state: ChatState, channelInfo: ActiveChannelInfo): ChatState => {
+const addActiveChannel = (state: ChatState, channelInfo: ClientActiveChannel): ChatState => {
     const newState = { ...state }
     newState.activeChannels.unshift(channelInfo)
 

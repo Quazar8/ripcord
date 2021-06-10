@@ -1,4 +1,4 @@
-import { ChannelClientInfo, ChatMessageStatus, MessageClient } from "../../server/types/ChatTypes";
+import { ActiveChannelInfo, ChannelClientInfo, ChatMessageStatus, MessageClient } from "../../server/types/ChatTypes";
 
 export type PendingMsg = MessageClient & {
     channelId?: string
@@ -8,5 +8,9 @@ export type PendingMsg = MessageClient & {
 
 export type ClientChannelInfoWPending = 
     Omit<ChannelClientInfo, 'messages'> & {
-        messages: PendingMsg[]
-    }
+    messages: PendingMsg[]
+}
+
+export type ClientActiveChannel = ActiveChannelInfo & {
+    newMsgs: number
+}

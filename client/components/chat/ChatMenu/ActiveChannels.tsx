@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { getActiveChannels } from '../../../api/chatApi'
 import { resHasError } from '../../../api/utils'
+import { socket } from '../../../socket/socket'
+import { ClientActiveChannel } from '../../../types/ChatClientTypes'
 import { ChatAppProps } from '../ChatApp'
 
 import ActiveChannelPlate from './ActiveChannelPlate'
@@ -16,7 +18,10 @@ const ActiveChannels = (props: Props) => {
             return
         }
 
-        props.updateActiveChannelsFn(res.data.activeChannels)
+        const activeChannels: ClientActiveChannel[] =
+            res.data.activeChannels.map(ch => ({ ...ch, newMsgs: 0}))
+
+        props.updateActiveChannelsFn(activeChannels)
     }
 
     useEffect(() => {

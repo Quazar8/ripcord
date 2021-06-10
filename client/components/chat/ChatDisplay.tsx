@@ -7,7 +7,7 @@ import { ChatMessagePayload, ChatMessageStatus } from '../../../server/types/Cha
 import ChatMessage from './ChatMessage'
 import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../server/types/ChatResponses'
-import { PendingMsg } from '../../types/ChatClientTypes'
+import { ClientActiveChannel, PendingMsg } from '../../types/ChatClientTypes'
 import { RightWindowProps } from './RightWindow'
 
 type Props = Pick<RightWindowProps, 'dispNotification'
@@ -104,7 +104,11 @@ const ChatDisplay = (props: Props) => {
                     return
                 }
 
-                props.appendActiveChannelFn(res.data.channelInfo)
+                const channelInfo: ClientActiveChannel = {
+                    ...res.data.channelInfo,
+                    newMsgs: 0
+                }
+                props.appendActiveChannelFn(channelInfo)
             }
         }
 
