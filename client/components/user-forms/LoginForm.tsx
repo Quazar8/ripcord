@@ -5,14 +5,16 @@ import {  pushNotification, recordUserAction } from '../../store/globalActions'
 import { resHasError } from '../../api/utils'
 import { connect, MapDispatchFn } from '../../store/store'
 import { UserState } from '../../store/globalReducer'
+import { incrementPendingNotif } from '../../store/friends/friendsActions'
 
 
 type DispProps = {
     pushNotification: ReturnType<typeof pushNotification>
     recordUser: (user: UserState) => void
+    setPendingNotifsAmount: (amount: number) => void
 }
 
-const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
+const LoginFormView = ({ pushNotification, recordUser, setPendingNotifsAmount }: DispProps) => {
     const usernameRef = useRef<HTMLInputElement>()
     const passwordRef = useRef<HTMLInputElement>()
 
@@ -35,6 +37,7 @@ const LoginFormView = ({ pushNotification, recordUser }: DispProps) => {
                 pushNotification('error', resp.errorMsg)
             } else {
                 recordUser(resp.data)
+                setPendingNotifsAmount(resp.data.incFriendRequests.length)
                 history.push('/')
                 pushNotification('success', 'Logged in successfully')
             }
@@ -74,6 +77,9 @@ const mapDispatch: MapDispatchFn<DispProps> = (dispatch) => ({
     pushNotification: pushNotification(dispatch),
     recordUser: (user: UserState) => {
         dispatch(recordUserAction(user))
+    },
+    setPendingNotifsAmount: (amount: number) => {
+        dispatch(incrementPendingNotif(amount))
     }
 })
 
