@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { getActiveChannels } from '../../../api/chatApi'
 import { resHasError } from '../../../api/utils'
-import { socket } from '../../../socket/socket'
 import { ClientActiveChannel } from '../../../types/ChatClientTypes'
 import { ChatAppProps } from '../ChatApp'
 

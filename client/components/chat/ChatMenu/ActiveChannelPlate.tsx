@@ -1,12 +1,12 @@
 import React, { MouseEvent, useContext } from 'react'
-import { ActiveChannelInfo } from '../../../../server/types/ChatTypes'
 import { removeActiveChannel } from '../../../api/chatApi'
 import { resHasError } from '../../../api/utils'
 import { ChatMenuContext } from '../ChatMenu'
 import NotificationBubble from '../../others/notifications/NotifAttach'
+import { ClientActiveChannel } from '../../../types/ChatClientTypes'
 
 type Props = {
-    channel: ActiveChannelInfo
+    channel: ClientActiveChannel
 }
 
 const ActiveChannelPlate = ({ channel }: Props) => {
@@ -32,7 +32,7 @@ const ActiveChannelPlate = ({ channel }: Props) => {
             <h4>{ channel.recipientUsername}</h4>
             <button onClick = { removeChannelFromActive }>&#x2716;</button>
             <NotificationBubble
-                amount = { 0 }
+                amount = { channel.newMsgs }
             />
         </div>
     )
