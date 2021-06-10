@@ -14,7 +14,8 @@ export enum ChatActionTypes {
     PUSH_MSG_TO_CHANNEL = "PUSH_MSG_TO_CHANNEL",
     REMOVE_ACTIVE_CHANNEL = "REMOVE_ACTIVE_CHANNEL",
     ADD_ACTIVE_CHANNEL = "ADD_ACTIVE_CHANNEL",
-    MOVE_ACTIVE_CHANNEL_TOP = "MOVE_ACTIVE_CHANNEL_TOP"
+    MOVE_ACTIVE_CHANNEL_TOP = "MOVE_ACTIVE_CHANNEL_TOP",
+    INC_ACTIVE_CHANNEL_NEW_MSG = "INC_ACTIVE_CHANNEL_NEW_MSG"
 }
 
 export type ChatAction = Action<ChatActionTypes, any>
@@ -71,5 +72,10 @@ export const addActiveChannelAction = (activeChannel: ClientActiveChannel): Chat
 
 export const moveChannelToTopAction = (channelId: string): ChatAction => ({
     type: ChatActionTypes.MOVE_ACTIVE_CHANNEL_TOP,
+    payload: channelId
+})
+
+export const incrementActiveChannelNewMsgAction = (channelId: string): ChatAction => ({
+    type: ChatActionTypes.INC_ACTIVE_CHANNEL_NEW_MSG,
     payload: channelId
 })
