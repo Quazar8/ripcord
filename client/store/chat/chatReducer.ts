@@ -181,6 +181,20 @@ const moveChannelToTop = (state: ChatState, channelId: string): ChatState => {
     return newState
 }
 
+const incrementActiveChannelNewMsg = (state: ChatState, channelId: string) => {
+    if (state.chatChannel.channel.id === channelId) 
+        return state
+
+    for (let i = 0; i < state.activeChannels.length; i++) {
+        if (state.activeChannels[i].id !== channelId) continue;
+
+        const newState = { ...state }
+        newState.activeChannels[i].newMsgs++
+
+        return newState
+    }
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -205,6 +219,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return addActiveChannel(state, action.payload)
         case ChatActionTypes.MOVE_ACTIVE_CHANNEL_TOP:
             return moveChannelToTop(state, action.payload)
+        case ChatActionTypes.INC_ACTIVE_CHANNEL_NEW_MSG:
+            return incrementActiveChannelNewMsg(state, action.payload)
         default: return state
     }
 }
