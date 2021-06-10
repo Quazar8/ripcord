@@ -3,6 +3,8 @@
 .active-channels {
     background-color: hsl(220, 14%, 22%);
     height: v.$chat-menu-active-channels-height; 
+    overflow: scroll;
+    scrollbar-width: thin;
 
     h3 {
         text-align: center;
