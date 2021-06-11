@@ -35,7 +35,7 @@ const FriendsList = (props: Props) => {
     if (friendsList.online.length === 0 && friendsList.offline.length === 0) {
         return (
             <div className = "friends-list">
-                <h3>You don't have friends yet</h3>
+                <h3 className = "no-friends-disclosure">You don't have friends yet</h3>
             </div>
         )
     }
