@@ -41,21 +41,23 @@ const RegisterFormView = (props: DispProps) => {
     }
 
     return (
-        <form className = "user-form" onSubmit = { handleSubmit }>
-            <label>
-                Username:
-                <input ref = { usernameRef } type = "text" />
-            </label>
-            <label>
-                Password:
-                <input ref = { passwordRef } type = "password" />
-            </label>
-            <label>
-                Confirm Password:
-                <input type = "password" />
-            </label>
-            <input type = "submit" value = "Register"/>
-        </form>
+        <section className = "user-form-container">
+            <form className = "user-form" onSubmit = { handleSubmit }>
+                <label>
+                    Username:
+                    <input ref = { usernameRef } type = "text" />
+                </label>
+                <label>
+                    Password:
+                    <input ref = { passwordRef } type = "password" />
+                </label>
+                <label>
+                    Confirm Password:
+                    <input type = "password" />
+                </label>
+                <input type = "submit" value = "Register"/>
+            </form>
+        </section>
     )
 }
 

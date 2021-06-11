@@ -55,21 +55,23 @@ const LoginFormView = ({ pushNotification, recordUser, setPendingNotifsAmount }:
     }
 
     return (
-        <form 
-            className = "user-form" 
-            onSubmit = { submitForm }
-            autoComplete = "off"
-        >
-            <label>
-                Username:
-                <input ref = { usernameRef } type = "text" />
-            </label> 
-            <label>
-                Password:
-                <input ref = { passwordRef } type = "password" />
-            </label>
-            <input type = "submit" value = "Login"/>
-        </form>
+        <section className = "user-form-container">
+            <form 
+                className = "user-form" 
+                onSubmit = { submitForm }
+                autoComplete = "off"
+            >
+                <label>
+                    Username:
+                    <input ref = { usernameRef } type = "text" />
+                </label> 
+                <label>
+                    Password:
+                    <input ref = { passwordRef } type = "password" />
+                </label>
+                <input type = "submit" value = "Login"/>
+            </form>
+        </section>
     )
 }
 
