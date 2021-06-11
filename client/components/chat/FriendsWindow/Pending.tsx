@@ -26,7 +26,7 @@ export const Pending = () => {
     if (pending.incoming.length === 0 && pending.outgoing.length === 0) {
         return (
             <div className = "pending-subwindow">
-                <h2>No pending friend requests</h2>
+                <h2 className = "no-pending-requests">No pending friend requests</h2>
             </div>
         )
     }
