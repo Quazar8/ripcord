@@ -1,5 +1,7 @@
+@use 'friends-vars' as fv;
+
 .friends-list {
-    height: 95%;
+    height: 100% - fv.$menu-bar-height;
 
     & > div {
         width: 100%;
