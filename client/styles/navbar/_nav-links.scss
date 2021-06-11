@@ -21,9 +21,21 @@
         background: $button-bg;
         border-radius: 10rem;
         padding: 2% 6%;
+        animation: showButton 1s ease-in-out;
         
         &:last-child {
             margin-left: 3%;
+        }
+
+        @keyframes showButton {
+            0% {
+                transform: scale(1.1);
+                filter: blur(0.15rem);
+            }
+            100% {
+                transform: scale(1);
+                filter: blur(0);
+            }
         }
     }
 
