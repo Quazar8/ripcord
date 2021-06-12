@@ -21,7 +21,7 @@
         background: $button-bg;
         border-radius: 10rem;
         padding: 2% 6%;
-        animation: showButton 1s ease-in-out;
+        animation: showButton 0.6s ease-out;
         
         &:last-child {
             margin-left: 3%;
