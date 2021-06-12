@@ -8,5 +8,53 @@
 
 .ripcord-svg {
     width: 60%;
-    fill: white;
+    stroke: white;
+    stroke-width: 1;
+
+    path:nth-child(1) {
+        stroke-dasharray: 191;
+        stroke-dashoffset: 191;
+    }
+
+    path:nth-child(2) {
+        stroke-dasharray: 76;
+        stroke-dashoffset: 76;
+    }
+
+    path:nth-child(3) {
+        stroke-dasharray: 163;
+        stroke-dashoffset: 163;
+    }
+
+
+    path:nth-child(4) {
+        stroke-dasharray: 156;
+        stroke-dashoffset: 156;
+    }
+
+
+    path:nth-child(5) {
+        stroke-dasharray: 171;
+        stroke-dashoffset: 171;
+    }
+
+    path:nth-child(6) {
+        stroke-dasharray: 191;
+        stroke-dashoffset: 191;
+    }
+
+    path:nth-child(7) {
+        stroke-dasharray: 188;
+        stroke-dashoffset: 188;
+    }
+
+    path {
+        animation: handwrite 2s ease-out forwards;
+    }
+
+    @keyframes handwrite {
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
 }
