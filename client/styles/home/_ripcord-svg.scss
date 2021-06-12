@@ -7,6 +7,8 @@
 }
 
 .ripcord-svg {
+    $duration: 1.4s;
+    $delay-percent: 0.5;
     width: 60%;
     stroke: white;
     stroke-width: 1;
@@ -19,37 +21,44 @@
     path:nth-child(2) {
         stroke-dasharray: 76;
         stroke-dashoffset: 76;
+        animation-delay: $duration - $duration * $delay-percent;
+        animation-duration: $duration - $duration * 0.2;
     }
 
     path:nth-child(3) {
         stroke-dasharray: 163;
         stroke-dashoffset: 163;
+        animation-delay: 2*($duration - $duration * $delay-percent);
     }
 
 
     path:nth-child(4) {
         stroke-dasharray: 156;
         stroke-dashoffset: 156;
+        animation-delay: 3*($duration - $duration * $delay-percent);
     }
 
 
     path:nth-child(5) {
         stroke-dasharray: 171;
         stroke-dashoffset: 171;
+        animation-delay: 4*($duration - $duration * $delay-percent);
     }
 
     path:nth-child(6) {
         stroke-dasharray: 191;
         stroke-dashoffset: 191;
+        animation-delay: 5*($duration - $duration * $delay-percent);
     }
 
     path:nth-child(7) {
         stroke-dasharray: 188;
         stroke-dashoffset: 188;
+        animation-delay: 6*($duration - $duration * $delay-percent);
     }
 
     path {
-        animation: handwrite 2s ease-out forwards;
+        animation: handwrite $duration ease-out forwards;
     }
 
     @keyframes handwrite {
