@@ -16,7 +16,9 @@ const HomeScreen = ({ user }: Props) => {
         <section className = "home-screen">
             <Navbar />
             <div className = "home-screen-main">
-                <RipcordSVG />
+                <div className = "ripcord-svg-container">
+                    <RipcordSVG />
+                </div>
             </div>
         </section>
     )
