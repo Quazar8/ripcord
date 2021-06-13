@@ -3,6 +3,19 @@
 .main-navbar {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 1%;
+}
+
+.logo-container {
+    width: 20%;
+
+    a {
+        color: white;
+        text-decoration: none;
+        font-size: 2vw;
+        display: block;
+        width: 50%;
+        text-align: center;
+    }
 }
