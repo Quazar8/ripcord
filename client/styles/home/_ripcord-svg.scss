@@ -12,6 +12,7 @@
     width: 60%;
     stroke: white;
     stroke-width: 1;
+    fill: transparent;
 
     path:nth-child(1) {
         stroke-dasharray: 191;
@@ -64,6 +65,7 @@
     @keyframes handwrite {
         100% {
             stroke-dashoffset: 0;
+            fill: white;
         }
     }
 }
