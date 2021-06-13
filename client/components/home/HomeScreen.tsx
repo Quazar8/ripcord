@@ -13,14 +13,6 @@ type Props = {
     user: UserState
 }
 
-window.onload = () => {
-    const svg = document.getElementsByClassName('ripcord-svg')[0]
-    const paths: HTMLCollection = svg.children
-    for (let i = 0; i < paths.length; i++) {
-        console.log(`${i} is ${paths[i].getTotalLength()}`)
-    }
-}
-
 const HomeScreen = ({ user }: Props) => {
     if (user.username) return <ChatApp />
 
@@ -33,6 +25,8 @@ const HomeScreen = ({ user }: Props) => {
                         <div className = "ripcord-svg-container">
                             <RipcordSVG />
                         </div>
+                        <h2>Chat with your peers</h2>
+                        <h3>Under construction</h3>
                     </div>
                 </Route>
                 <Route path = "/login">
