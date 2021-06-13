@@ -14,20 +14,7 @@ type Props = {
 const Main = ({ user }: Props) => {
     return (
         <main>
-            <Switch>
-                <Route path = "/login">
-                    <LoginForm />
-                </Route>
-                <Route path = "/register">
-                    <RegisterForm />
-                </Route>
-                <Route exact path = "/">
-                    <HomeScreen user = { user }/>
-                </Route>
-                <Route>
-                    <NotFound />
-                </Route>
-            </Switch>
+            <HomeScreen user = { user } />
         </main>
     )
 }
