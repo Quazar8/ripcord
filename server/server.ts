@@ -1,4 +1,5 @@
 import http from 'http'
+import path from 'path'
 import express, { Application } from 'express'
 import passport from 'passport'
 import cookieParser from 'cookie-parser'
@@ -24,6 +25,7 @@ app.use(cookieParser())
 app.use(passport.initialize())
 configurePassport()
 app.use(errorHandler)
+app.use('/static', express.static(path.resolve('./server/static')))
 
 initializeWebpack(app)
 
