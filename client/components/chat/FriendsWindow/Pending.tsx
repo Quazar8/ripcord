@@ -9,6 +9,7 @@ import FriendRequest from './FriendRequest'
 export const Pending = () => {
     const context = useContext(RightWindowContext)
     const pending = context.friendRequests
+    console.log('pending', pending)
     
     const fetchRequests = async () => {
         const res = await getFriendRequests()

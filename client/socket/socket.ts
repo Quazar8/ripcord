@@ -3,7 +3,7 @@ import { pushNotification } from '../store/globalActions'
 import { AppAction } from '../store/store'
 import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
 import { addActiveChannelAction, incrementActiveChannelNewMsgAction, pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
-import { incrementPendingNotif } from '../store/friends/friendsActions'
+import { addIncFriendRequestAction, incrementPendingNotif } from '../store/friends/friendsActions'
 import { ActiveChannelInfo, ChatMessagePayload, ChatReceiverPayload } from '../../server/types/ChatTypes'
 import { ClientActiveChannel } from '../types/ChatClientTypes'
 
@@ -28,7 +28,7 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
 
     switch (data.type) {
         case WSDataType.FRIEND_REQUEST:
-            dispatch(incrementPendingNotif(1)); break;
+            dispatch(addIncFriendRequestAction(data.payload)); break;
         case WSDataType.CHAT_MESSAGE_STATUS:
             dispatch(sentMsgResponseAction(data.payload)); break;
         case WSDataType.CLIENT_RECEIVED_MSG:

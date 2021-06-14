@@ -88,7 +88,7 @@ const clearFriendsButtonNotif = (state: FriendsState) => {
 const addIncFriendRequest = (state: FriendsState, info: PendingFriendInfo) => {
     const newState = { ...state }
 
-    newState.friendRequests.incoming.unshift(info)
+    newState.friendRequests.incoming.push(info)
     newState.pendingNotifs++
     newState.friendWindowNotifs++
 
