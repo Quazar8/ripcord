@@ -21,6 +21,8 @@ export type GetFriendsRes = ServerResponse<{
     offline: FriendClientInfo[]
 }>
 
+export type NewIncFriendPayload = PendingFriendInfo
+
 export const addFriend = async (req: ReqWUser, res: Response) => {
     let response: AddFriendRes = null
     let status: number = 200
@@ -44,9 +46,12 @@ export const addFriend = async (req: ReqWUser, res: Response) => {
             await foundFriend.save()
             await requester.save()
 
-            const msg: WSMessage<null> = {
+            const msg: WSMessage<NewIncFriendPayload> = {
                 type: WSDataType.FRIEND_REQUEST,
-                payload: null
+                payload: {
+                    id: requester._id.toHexString(),
+                    username: requester.username
+                }
             }
 
             sendSocketMsg(foundFriend._id, msg)

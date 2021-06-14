@@ -1,5 +1,4 @@
 import { Response } from "express";
-import { Types } from "mongoose";
 import { User } from "../../../db/models/user.js";
 import { errorResponse, ServerResponse, successResponse } from "../../../responses.js";
 import { ReqWUser } from "../../../types/RequestTypes";
