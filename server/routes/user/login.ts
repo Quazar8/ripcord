@@ -37,10 +37,6 @@ export const loginUser = (req: Request, res: Response, user: UserDoc) => {
             username: user.username,
             id: user._id.toHexString(),
             incFriendRequests: user.incFriendRequests,
-            outFriendRequests: user.outFriendRequests,
-            registeredAt: user.registeredAt,
-            friendsIds: user.friendsIds,
-            channels: user.channels,
             activeChannels: user.activeChannels
         }, 'Logged in')
 

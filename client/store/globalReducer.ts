@@ -15,12 +15,8 @@ export const globalInit: GlobalState = {
     notifications: [],
     user: {
         username: '',
-        registeredAt: new Date(),
         incFriendRequests: [],
-        outFriendRequests: [],
         id: null,
-        friendsIds: [],
-        channels: {},
         activeChannels: []
     },
     showUserOptions: false,
