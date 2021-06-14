@@ -3,6 +3,8 @@ import { User } from "../../../db/models/user.js";
 import { errorResponse, ServerResponse, successResponse } from "../../../responses.js";
 import { ReqWUser } from "../../../types/RequestTypes";
 import { isUserDoc, UserDoc } from '../../../types/UserTypes.js'
+import { WSDataType, WSMessage } from "../../../types/WebsocketTypes.js";
+import { isOnline, sendSocketMsg } from "../../../websocket/onlineUsers.js";
 
 export type DeclineFriendRequestRes = ServerResponse<{
     removed: boolean
@@ -19,6 +21,10 @@ export type AcceptFriendRequestRes = ServerResponse<{
 
 export type AcceptFriendRequestData = {
     acceptedId: string
+}
+
+export type RemoveIncPayload = {
+    id: string
 }
 
 export const declineRequest = async (req: ReqWUser, res: Response) => {
@@ -39,8 +45,11 @@ export const declineRequest = async (req: ReqWUser, res: Response) => {
 
     const updateUsers = async (requester: UserDoc, decliner: UserDoc): Promise<DeclineFriendRequestRes> => {
         let index = decliner.incFriendRequests.indexOf(requester._id)
+        let shouldRemoveFromInc = false
+
         if (index > -1) {
             decliner.incFriendRequests.splice(index, 1)
+            shouldRemoveFromInc = true
         } else {
             status = 400
             return errorResponse('User id is not present in the friend requests')
@@ -56,6 +65,18 @@ export const declineRequest = async (req: ReqWUser, res: Response) => {
 
         await decliner.save()
         await requester.save()
+
+        if (shouldRemoveFromInc && isOnline(decliner._id)) {
+            const msg: WSMessage<RemoveIncPayload> = {
+                type: WSDataType.REMOVE_INC_FRIEND,
+                payload: {
+                    id: requester._id.toHexString()
+                }
+            }
+            console.log('decliner')
+
+            sendSocketMsg(decliner._id, msg)
+        }
 
         return successResponse({ removed: true })
     }
