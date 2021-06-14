@@ -108,11 +108,21 @@ export const acceptFriendRequest = async (req: ReqWUser, res: Response) => {
             return errorResponse('User doesn\'t have a friend request')
         }
 
+        index = user.outFriendRequests.indexOf(acceptedUser._id)
+        if (index > -1) {
+            user.outFriendRequests.splice(index, 1)
+        }
+
         index = acceptedUser.outFriendRequests.indexOf(user._id)
         if (index > -1) {
             acceptedUser.outFriendRequests.splice(index, 1)
         } else {
             return errorResponse('Other user haven\'t send a friend request')
+        }
+
+        index = acceptedUser.incFriendRequests.indexOf(user._id)
+        if (index > -1) {
+            acceptedUser.incFriendRequests.splice(index, 1)
         }
 
         user.friendsIds.push(acceptedUser._id)
