@@ -1,9 +1,9 @@
 import { Request, Response } from "express"
 import passport from 'passport'
 import { errorResponse, ServerResponse, successResponse } from "../../responses.js"
-import { UserInfo } from "../../types/UserTypes.js"
+import { UserClientInfo, UserInfo } from "../../types/UserTypes.js"
 
-export type UserFromTokenResponse = ServerResponse<UserInfo>
+export type UserFromTokenResponse = ServerResponse<UserClientInfo>
 
 export const userInfoFromToken = (req: Request, res: Response) => {
     passport.authenticate('jwt', (err, user: UserInfo) => {
@@ -17,7 +17,14 @@ export const userInfoFromToken = (req: Request, res: Response) => {
         } 
 
         if (user) {
-            response = successResponse(user, '')
+            const userInfo: UserClientInfo = {
+                id: user.id,
+                activeChannels: user.activeChannels,
+                username: user.username,
+                incFriendRequests: user.incFriendRequests
+            }
+
+            response = successResponse(userInfo, '')
         } else {
             response = successResponse(null, '')
         }
