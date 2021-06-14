@@ -30,10 +30,25 @@ const fillFriendRequests = (state: FriendsState, requests: FriendRequestsState):
 
 const removeFriendRequest = (state: FriendsState, index: number) => {
     const newState = { ...state }
+    
+    const removeFromOutgoing = (outgoing: PendingFriendInfo[], id: string) => {
+        for (let i = 0; i < outgoing.length; i++) {
+            if (outgoing[i].id !== id) continue;
+
+            outgoing.splice(i, 1)
+        }
+
+        return outgoing
+    }
+
     if (index > newState.friendRequests.incoming.length - 1) {
         newState.friendRequests.outgoing.splice(
             index - newState.friendRequests.incoming.length, 1)
     } else {
+        const friendId = newState.friendRequests.incoming[index].id
+        newState.friendRequests.outgoing =
+            removeFromOutgoing(newState.friendRequests.outgoing, friendId)
+
         newState.friendRequests.incoming.splice(index, 1)
     }
 
