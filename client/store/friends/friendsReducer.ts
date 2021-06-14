@@ -85,6 +85,16 @@ const clearFriendsButtonNotif = (state: FriendsState) => {
     return newState
 }
 
+const addIncFriendRequest = (state: FriendsState, info: PendingFriendInfo) => {
+    const newState = { ...state }
+
+    newState.friendRequests.incoming.unshift(info)
+    newState.pendingNotifs++
+    newState.friendWindowNotifs++
+
+    return newState
+}
+
 export const friendsReducer = (state: FriendsState = friendsStateInit,
     action: FriendsAction): FriendsState => {
     switch (action.type) {
@@ -98,6 +108,8 @@ export const friendsReducer = (state: FriendsState = friendsStateInit,
             return clearPendingNotifAmount(state)
         case FriendsActionTypes.CLEAR_FRIENDS_BUTTON_NOTIF:
             return clearFriendsButtonNotif(state)
+        case FriendsActionTypes.ADD_INC_FRIEND_REQUEST:
+            return addIncFriendRequest(state, action.payload)
         default: return state
     }
 }
