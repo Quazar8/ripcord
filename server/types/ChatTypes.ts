@@ -41,6 +41,10 @@ export type ActiveChannelInfo = {
     recipientId: string
 }
 
+export type NewActiveCHannelPayload = ActiveChannelInfo & {
+    newMessages: number
+}
+
 export type ChatMessagePayload = {
     channelId: string
     content: string

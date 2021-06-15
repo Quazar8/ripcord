@@ -1,7 +1,7 @@
 import { Document, Types } from "mongoose";
 import { Channel, IChannel } from "../db/models/channel.js";
 import { User } from "../db/models/user.js";
-import { ActiveChannelInfo, ChannelDoc, ChatMessagePayload, ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, isChannelDoc, Message, MessageClient } from "../types/ChatTypes.js";
+import { ActiveChannelInfo, ChannelDoc, ChatMessagePayload, ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, isChannelDoc, Message, MessageClient, NewActiveCHannelPayload } from "../types/ChatTypes.js";
 import { isUserDoc, UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { isOnline, sendSocketMsg } from './onlineUsers.js'
@@ -122,11 +122,12 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         const addedActiveChannel = await addToActiveChannels(byUser, receiver, channel)
 
         const sendActiveChannelInfo = (targetUser: UserDoc,
-            recipient: UserDoc, channel: ChannelDoc) => {
-            const payload: ActiveChannelInfo = {
+            recipient: UserDoc, channel: ChannelDoc, newMessages: number) => {
+            const payload: NewActiveCHannelPayload = {
                 id: channel._id.toHexString(),
                 recipientId: recipient._id.toHexString(),
-                recipientUsername: recipient.username
+                recipientUsername: recipient.username,
+                newMessages
             }
 
             const WSMsg: WSMessage<ActiveChannelInfo> = {
@@ -157,7 +158,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             sendSocketMsg(receiver._id, receiverMsg)
 
             if (addedActiveChannel.addedToReceiver) {
-                sendActiveChannelInfo(receiver, byUser, channel)
+                sendActiveChannelInfo(receiver, byUser, channel, 1)
             }
         }
 
@@ -177,7 +178,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         sendSocketMsg(byUser._id, senderResponse)
 
         if (addedActiveChannel.addedToByUser) {
-            sendActiveChannelInfo(byUser, receiver, channel)
+            sendActiveChannelInfo(byUser, receiver, channel, 0)
         }
     } 
     catch (err) {
