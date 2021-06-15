@@ -3,16 +3,18 @@ import { pushNotification } from '../store/globalActions'
 import { AppAction } from '../store/store'
 import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
 import { addActiveChannelAction, incrementActiveChannelNewMsgAction, pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
-import { addIncFriendRequestAction, incrementPendingNotif } from '../store/friends/friendsActions'
-import { ActiveChannelInfo, ChatMessagePayload, ChatReceiverPayload } from '../../server/types/ChatTypes'
+import { addIncFriendRequestAction } from '../store/friends/friendsActions'
+import { ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
 import { ClientActiveChannel } from '../types/ChatClientTypes'
 
 export let socket: WebSocket = null
 
-const handleNewActiveChannel = (dispatch: Dispatch<AppAction>, activeCh: ActiveChannelInfo) => {
+const handleNewActiveChannel = (dispatch: Dispatch<AppAction>, activeCh: NewActiveChannelPayload) => {
     const clientActiveCh: ClientActiveChannel = {
-        ...activeCh,
-        newMsgs: 1
+        id: activeCh.id,
+        recipientId: activeCh.recipientId,
+        recipientUsername: activeCh.recipientUsername,
+        newMsgs: activeCh.newMessages
     }
 
     dispatch(addActiveChannelAction(clientActiveCh))

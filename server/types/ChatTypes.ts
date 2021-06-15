@@ -41,7 +41,7 @@ export type ActiveChannelInfo = {
     recipientId: string
 }
 
-export type NewActiveCHannelPayload = ActiveChannelInfo & {
+export type NewActiveChannelPayload = ActiveChannelInfo & {
     newMessages: number
 }
 
