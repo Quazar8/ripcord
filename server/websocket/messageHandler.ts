@@ -121,8 +121,8 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
         await channel.save()
         const addedActiveChannel = await addToActiveChannels(byUser, receiver, channel)
 
-        const sendActiveChannelInfo = (targetUser: UserDoc,
-            recipient: UserDoc, channel: ChannelDoc, newMessages: number) => {
+        const createActiveChannelInfo = (recipient: UserDoc, channel: ChannelDoc,
+                newMessages: number): NewActiveChannelPayload => {
             const payload: NewActiveChannelPayload = {
                 id: channel._id.toHexString(),
                 recipientId: recipient._id.toHexString(),
@@ -130,12 +130,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
                 newMessages
             }
 
-            const WSMsg: WSMessage<ActiveChannelInfo> = {
-                type: WSDataType.NEW_ACTIVE_CHANNEL,
-                payload
-            }
-
-            sendSocketMsg(targetUser._id, WSMsg)
+            return payload
         }
         
         if (isOnline(receiver._id)) {
@@ -150,16 +145,16 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
                 channelId: channel._id.toHexString(),
             }
 
+            if (addedActiveChannel.addedToReceiver) {
+               receiverPayload.newActiveChannel = createActiveChannelInfo(byUser, channel, 1)
+            }
+
             const receiverMsg: WSMessage<ChatReceiverPayload> = {
                 type: WSDataType.CLIENT_RECEIVED_MSG,
                 payload: receiverPayload
             }
 
             sendSocketMsg(receiver._id, receiverMsg)
-
-            if (addedActiveChannel.addedToReceiver) {
-                sendActiveChannelInfo(receiver, byUser, channel, 1)
-            }
         }
 
         const senderPayload: ChatMessageStatusPayload = {
@@ -177,9 +172,9 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
 
         sendSocketMsg(byUser._id, senderResponse)
 
-        if (addedActiveChannel.addedToByUser) {
-            sendActiveChannelInfo(byUser, receiver, channel, 0)
-        }
+        // if (addedActiveChannel.addedToByUser) {
+        //     sendActiveChannelInfo(byUser, receiver, channel, 0)
+        // }
     } 
     catch (err) {
         console.error(err)

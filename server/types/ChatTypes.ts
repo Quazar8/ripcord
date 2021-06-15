@@ -70,4 +70,5 @@ export type ChatMessageStatusPayload = {
 export type ChatReceiverPayload = {
     msg: MessageClient
     channelId: string
+    newActiveChannel?: NewActiveChannelPayload
 }
