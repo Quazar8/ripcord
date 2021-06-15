@@ -186,15 +186,15 @@ const incrementActiveChannelNewMsg = (state: ChatState, channelId: string) => {
     if (state.chatChannel.channel.id === channelId) 
         return state
 
-    const newState = { ...state }
     for (let i = 0; i < state.activeChannels.length; i++) {
         if (state.activeChannels[i].id !== channelId) continue;
 
+        const newState = { ...state }
         newState.activeChannels[i].newMsgs++
-        break;
+        return newState
     }
 
-    return newState
+    return state
 }
 
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
