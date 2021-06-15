@@ -12,5 +12,5 @@ export type ClientChannelInfoWPending =
 }
 
 export type ClientActiveChannel = ActiveChannelInfo & {
-    newMsgs: number
+    newMessages: number
 }

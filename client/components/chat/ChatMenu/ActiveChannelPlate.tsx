@@ -32,7 +32,7 @@ const ActiveChannelPlate = ({ channel }: Props) => {
             <h4>{ channel.recipientUsername}</h4>
             <button onClick = { removeChannelFromActive }>&#x2716;</button>
             <NotificationBubble
-                amount = { channel.newMsgs }
+                amount = { channel.newMessages }
             />
         </div>
     )

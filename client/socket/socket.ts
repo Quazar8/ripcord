@@ -10,19 +10,17 @@ import { ClientActiveChannel } from '../types/ChatClientTypes'
 export let socket: WebSocket = null
 
 const handleNewActiveChannel = (dispatch: Dispatch<AppAction>, activeCh: NewActiveChannelPayload) => {
-    const clientActiveCh: ClientActiveChannel = {
-        id: activeCh.id,
-        recipientId: activeCh.recipientId,
-        recipientUsername: activeCh.recipientUsername,
-        newMsgs: activeCh.newMessages
-    }
-
-    dispatch(addActiveChannelAction(clientActiveCh))
+    dispatch(addActiveChannelAction(activeCh))
 }
 
 const handleChatMsgReceived = (dispatch: Dispatch<AppAction>, msg: ChatReceiverPayload) => {
     dispatch(pushReceivedMsgAction(msg))
-    dispatch(incrementActiveChannelNewMsgAction(msg.channelId))
+
+    if (msg.newActiveChannel) {
+        dispatch(addActiveChannelAction(msg.newActiveChannel))
+    } else {
+        dispatch(incrementActiveChannelNewMsgAction(msg.channelId))
+    }
 }
 
 const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
