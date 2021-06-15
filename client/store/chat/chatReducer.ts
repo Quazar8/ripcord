@@ -131,6 +131,7 @@ const changeMsgToFail = (state: ChatState, temporaryId: string): ChatState => {
 
 const pushReceivedMsg = (state: ChatState, payload: ChatReceiverPayload): ChatState => {
     if (payload.channelId !== state.chatChannel.channel.id) {
+        console.log('here')
         return state
     }
 
@@ -185,14 +186,15 @@ const incrementActiveChannelNewMsg = (state: ChatState, channelId: string) => {
     if (state.chatChannel.channel.id === channelId) 
         return state
 
+    const newState = { ...state }
     for (let i = 0; i < state.activeChannels.length; i++) {
         if (state.activeChannels[i].id !== channelId) continue;
 
-        const newState = { ...state }
         newState.activeChannels[i].newMsgs++
-
-        return newState
+        break;
     }
+
+    return newState
 }
 
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
