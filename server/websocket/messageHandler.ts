@@ -157,24 +157,26 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
             sendSocketMsg(receiver._id, receiverMsg)
         }
 
-        const senderPayload: ChatMessageStatusPayload = {
-            channelId: channel._id.toHexString(),
-            temporaryId: payload.temporaryId,
-            realId: message.id,
-            status: ChatMessageStatus.DELIVERED,
-            recipientId: payload.recipientId
+        if (isOnline(byUser._id)) {
+            const senderPayload: ChatMessageStatusPayload = {
+                channelId: channel._id.toHexString(),
+                temporaryId: payload.temporaryId,
+                realId: message.id,
+                status: ChatMessageStatus.DELIVERED,
+                recipientId: payload.recipientId
+            }
+
+            if (addedActiveChannel.addedToByUser) {
+                senderPayload.newActiveChannel = createActiveChannelInfo(receiver, channel, 0)
+            }
+
+            const senderResponse: WSMessage<ChatMessageStatusPayload> = {
+                type: WSDataType.CHAT_MESSAGE_STATUS,
+                payload: senderPayload
+            }
+
+            sendSocketMsg(byUser._id, senderResponse)
         }
-
-        const senderResponse: WSMessage<ChatMessageStatusPayload> = {
-            type: WSDataType.CHAT_MESSAGE_STATUS,
-            payload: senderPayload
-        }
-
-        sendSocketMsg(byUser._id, senderResponse)
-
-        // if (addedActiveChannel.addedToByUser) {
-        //     sendActiveChannelInfo(byUser, receiver, channel, 0)
-        // }
     } 
     catch (err) {
         console.error(err)
