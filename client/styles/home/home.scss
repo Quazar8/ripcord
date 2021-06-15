@@ -9,7 +9,8 @@
 
 .home-screen-main {
     @mixin showUpAnimation {
-        animation: showUp 2s 3.4 * hv.$ripcord-anim-dur linear forwards;
+        animation: showUp 2s 3.4 * hv.$ripcord-anim-dur linear forwards,
+            expand 2s 3.4 * hv.$ripcord-anim-dur + 2 linear infinite alternate;
     }
 
     height: 90%;
@@ -32,10 +33,19 @@
         @include showUpAnimation;
     }
 
+    @keyframes expand {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(0.98);
+        }
+    }
+
     @keyframes showUp {
         0% {
             opacity: 0;
-            transform: scale(0.7);
+            transform: scale(0.9);
         }
         60% {
             opacity: 1;
