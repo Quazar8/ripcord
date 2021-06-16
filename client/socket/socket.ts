@@ -2,7 +2,7 @@ import { Dispatch } from 'react'
 import { pushNotification } from '../store/globalActions'
 import { AppAction } from '../store/store'
 import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
-import { addActiveChannelAction, incrementActiveChannelNewMsgAction, pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
+import { addActiveChannelAction, incrementActiveChannelNewMsgAction, moveChannelToTopAction, pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
 import { addIncFriendRequestAction } from '../store/friends/friendsActions'
 import { ChatMessageStatusPayload, ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
 
@@ -19,6 +19,7 @@ const handleChatMsgReceived = (dispatch: Dispatch<AppAction>, msg: ChatReceiverP
         dispatch(addActiveChannelAction(msg.newActiveChannel))
     } else {
         dispatch(incrementActiveChannelNewMsgAction(msg.channelId))
+        dispatch(moveChannelToTopAction(msg.channelId))
     }
 }
 
@@ -27,6 +28,8 @@ const handleChatMessageStatus = (dispatch: Dispatch<AppAction>, payload: ChatMes
 
     if (payload.newActiveChannel) {
         dispatch(addActiveChannelAction(payload.newActiveChannel))
+    } else {
+        dispatch(moveChannelToTopAction(payload.channelId))
     }
 }
 
