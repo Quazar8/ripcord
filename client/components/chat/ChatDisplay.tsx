@@ -1,13 +1,13 @@
 import React, { useRef, useEffect, KeyboardEvent } from 'react'
 import { socket, socketIsClosed } from '../../socket/socket'
 import { resHasError } from '../../api/utils'
-import { getActiveChannelInfo, getChannelInfo, getChannelInfoWId } from '../../api/chatApi'
+import { getChannelInfo, getChannelInfoWId } from '../../api/chatApi'
 
 import { ChatMessagePayload, ChatMessageStatus } from '../../../server/types/ChatTypes'
 import ChatMessage from './ChatMessage'
 import { WSDataType, WSMessage } from '../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../server/types/ChatResponses'
-import { ClientActiveChannel, PendingMsg } from '../../types/ChatClientTypes'
+import { PendingMsg } from '../../types/ChatClientTypes'
 import { RightWindowProps } from './RightWindow'
 
 type Props = Pick<RightWindowProps, 'dispNotification'
@@ -93,32 +93,13 @@ const ChatDisplay = (props: Props) => {
             content: payloadMsg.content.trim()
         }
 
-        const addChannelToActive = async (channelId: string, recipientId: string) => {
-            let hasChannel = props.activeChannels.some((ch) => ch.id === channelId)
-            if (hasChannel) {
-                props.moveActiveChToTopFn(channelId)
-            } else {
-                const res = await getActiveChannelInfo(channelId, recipientId)
-                console.log('active channel fetch', res)
-                if (resHasError(res)) {
-                    return
-                }
-
-                const channelInfo: ClientActiveChannel = {
-                    ...res.data.channelInfo,
-                    newMsgs: 0
-                }
-                props.appendActiveChannelFn(channelInfo)
-            }
-        }
-
         if (socketIsClosed()) {
             pendingMsg.status = ChatMessageStatus.FAILED
             props.pushSentMsgToStoreFn(pendingMsg)
         } else {
             props.pushSentMsgToStoreFn(pendingMsg)
             socket.send(JSON.stringify(msg))
-            // addChannelToActive(channelId, info.recipient.id)
+
             setTimeout(() => {
                 props.markMsgAsFailedFn(pendingMsg.temporaryId)
             }, 10000)
