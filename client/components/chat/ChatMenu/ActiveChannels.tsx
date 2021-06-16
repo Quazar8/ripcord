@@ -18,7 +18,7 @@ const ActiveChannels = (props: Props) => {
         }
 
         const activeChannels: ClientActiveChannel[] =
-            res.data.activeChannels.map(ch => ({ ...ch, newMsgs: 0}))
+            res.data.activeChannels.map(ch => ({ ...ch, newMessages: 0}))
 
         props.updateActiveChannelsFn(activeChannels)
     }
