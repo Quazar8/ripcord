@@ -4,8 +4,7 @@ import { AppAction } from '../store/store'
 import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
 import { addActiveChannelAction, incrementActiveChannelNewMsgAction, pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
 import { addIncFriendRequestAction } from '../store/friends/friendsActions'
-import { ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
-import { ClientActiveChannel } from '../types/ChatClientTypes'
+import { ChatMessageStatusPayload, ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
 
 export let socket: WebSocket = null
 
@@ -23,6 +22,14 @@ const handleChatMsgReceived = (dispatch: Dispatch<AppAction>, msg: ChatReceiverP
     }
 }
 
+const handleChatMessageStatus = (dispatch: Dispatch<AppAction>, payload: ChatMessageStatusPayload) => {
+    dispatch(sentMsgResponseAction(payload))
+
+    if (payload.newActiveChannel) {
+        dispatch(addActiveChannelAction(payload.newActiveChannel))
+    }
+}
+
 const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
     const data: WSMessage<any> = JSON.parse(dataStr)
 
@@ -30,7 +37,7 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
         case WSDataType.FRIEND_REQUEST:
             dispatch(addIncFriendRequestAction(data.payload)); break;
         case WSDataType.CHAT_MESSAGE_STATUS:
-            dispatch(sentMsgResponseAction(data.payload)); break;
+            handleChatMessageStatus(dispatch, data.payload); break;
         case WSDataType.CLIENT_RECEIVED_MSG:
             handleChatMsgReceived(dispatch, data.payload); break;
         case WSDataType.NEW_ACTIVE_CHANNEL:
