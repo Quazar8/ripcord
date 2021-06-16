@@ -14,6 +14,7 @@ const ActiveChannelPlate = ({ channel }: Props) => {
 
     const handlePlateClick = () => {
         context.toggleChatWChannelId(channel.id)
+        context.clearActiveChannelNotifFn(channel.id)
     }
 
     const removeChannelFromActive = async (e: MouseEvent) => {

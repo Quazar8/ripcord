@@ -11,10 +11,10 @@ import { toggleUserMenuAction,
 import RightWindow from './RightWindow'
 import ChatMenu from './ChatMenu'
 import UserMenu from './UserMenu'
-import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
 import { addActiveChannelAction, changeChannelIdAction,
          changeCHatRecipientAction,
          changeMsgToFailAction,
+         clearActiveChannelNotifAction,
          moveChannelToTopAction,
          removeActiveChannelAction,
          sendChatMsgAction,
@@ -59,6 +59,7 @@ type ChatDispProps = {
     removeFriendRequestFn: (index: number) => void
     clearFriendButtonNotifFn: () => void
     clearPendingButtonNotifFn: () => void
+    clearActiveChannelNotifFn: (channelId: string) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -127,6 +128,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 toggleChatWChannelId = { toggleChatWChannelId }
                 removeChannelFromListFn = { props.removeChannelFromListFn}
                 clearFriendButtonNotifFn = { props.clearFriendButtonNotifFn }
+                clearActiveChannelNotifFn = { props.clearActiveChannelNotifFn }
             />
             <RightWindow 
                 showFriendsWindow = { showWindows.FriendsWindow }
@@ -223,6 +225,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     clearPendingButtonNotifFn: () => {
         dispatch(clearPendingNotifAmountAction())
+    },
+    clearActiveChannelNotifFn: (channelId: string) => {
+        dispatch(clearActiveChannelNotifAction(channelId))
     }
 })
 
