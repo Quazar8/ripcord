@@ -196,6 +196,19 @@ const incrementActiveChannelNewMsg = (state: ChatState, channelId: string) => {
     return state
 }
 
+const clearActiveChannelNotif = (state: ChatState, channelId: string) => {
+    const newState = { ...state }
+
+    for (const ch of newState.activeChannels) {
+        if (ch.id === channelId) {
+            ch.newMessages = 0
+            break;
+        }
+    }
+
+    return newState
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -222,6 +235,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return moveChannelToTop(state, action.payload)
         case ChatActionTypes.INC_ACTIVE_CHANNEL_NEW_MSG:
             return incrementActiveChannelNewMsg(state, action.payload)
+        case ChatActionTypes.CLEAR_ACTIVE_CHANNEL_NOTIF:
+            return clearActiveChannelNotif(state, action.payload)
         default: return state
     }
 }
