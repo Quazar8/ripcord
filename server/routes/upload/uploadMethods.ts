@@ -58,13 +58,14 @@ const handleProfilePic = (req: ReqWUser, done: Function , reject: Function) => {
             return
         }
 
-        const newFilemame = createNewFileName(req.user._id.toHexString(), filename)
-        const location = path.join(dirLocation, newFilemame)
+        const newFilename = createNewFileName(req.user._id.toHexString(), filename)
+        const location = path.join(dirLocation, newFilename)
         file.pipe(fs.createWriteStream(location)).on('finish', () => {
             console.log('writing file finished')
             done([{
                 filename,
-                newFilename: newFileName
+                newFilename,
+                location
             }, null] as UploadResult)
         })
 
@@ -73,7 +74,7 @@ const handleProfilePic = (req: ReqWUser, done: Function , reject: Function) => {
             filename,
             encoding,
             mimetype,
-            newFilemame
+            newFilename
         })
     })
 
