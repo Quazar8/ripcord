@@ -16,6 +16,19 @@ const createDir = (dirLocation: fs.PathLike) => {
     })
 }
 
+const checkIfImage = (mimetype: string, fileName: string) => {
+    const ext = path.extname(fileName)
+    if (!ext) return false
+
+    const extRegex = /\.(jpg|jpeg|jfif|png)/
+    if (!extRegex.test(ext)) return false
+
+    const mimeRegex = /^image\/(jpeg|png)$/
+    if (!mimeRegex.test(mimetype)) return false
+
+    return true
+}
+
 export const uploadProfilePic = (req: Request, res: Response) => {
     const bus = new Busboy({ headers: req.headers })
     bus.on('file', async (fieldname, file, filename, encoding, mimetype) => {
@@ -33,6 +46,11 @@ export const uploadProfilePic = (req: Request, res: Response) => {
                 res.status(500).send(errorResponse('Something went wrong with '
                     + 'uploading your profile picture'))
             })
+        }
+
+        if (!checkIfImage(mimetype, filename)) {
+            res.status(500).send(errorResponse('Not allowed image type'))
+            return
         }
 
         const location = path.join(dirLocation, filename)
