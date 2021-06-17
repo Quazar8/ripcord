@@ -1,8 +1,9 @@
 import { Response, Request } from "express"
 import { successResponse } from '../../responses.js'
+import { uploadProfilePic } from './uploadMethods.js'
 
 const profilePicHandler = (req: Request, res: Response) => {
-    res.send(successResponse({}))
+    uploadProfilePic(req, res)
 }
 
 export default profilePicHandler
