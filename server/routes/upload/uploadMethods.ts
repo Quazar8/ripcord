@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 import Busboy from 'busboy'
-import { Request, Response } from "express";
+import { Response } from "express";
 import { ReqWUser } from '../../types/RequestTypes'
 import { errorResponse, successResponse } from "../../responses.js";
 import { genId } from '../../utils.js'
@@ -34,7 +34,7 @@ const checkIfImage = (mimetype: string, fileName: string) => {
     return true
 }
 
-export const uploadProfilePic = (req: ReqWUser, res: Response) => {
+const handleProfilePic = (req: ReqWUser, res: Response, done: Function , reject: Function) => {
     const bus = new Busboy({ headers: req.headers })
     bus.on('file', async (fieldname, file, filename, encoding, mimetype) => {
         const dirLocation = path.resolve('./server/static/profilePics')
@@ -68,8 +68,14 @@ export const uploadProfilePic = (req: ReqWUser, res: Response) => {
 
     bus.on('finish', () => {
         console.log('bus finished')
-        res.send(successResponse({}))
+        // res.send(successResponse({}))
     })
 
     req.pipe(bus)
+}
+
+export const uploadProfilePic = (req: ReqWUser, res: Response) => {
+    return new Promise((done, reject) => {
+        handleProfilePic(req, res, done, reject)
+    })
 }
