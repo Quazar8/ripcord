@@ -5,7 +5,7 @@ import { ReqWUser } from '../../types/RequestTypes'
 import Busboy from 'busboy'
 import { errorResponse, successResponse } from "../../responses.js";
 
-const createDir = (dirLocation: fs.PathLike) => {
+const createDir = (dirLocation: fs.PathLike): Promise<Error> => {
     return new Promise((done, reject) => {
         fs.mkdir(dirLocation, (err) => {
             if (err) return reject(err)
@@ -41,11 +41,13 @@ export const uploadProfilePic = (req: Request, res: Response) => {
 
         const dirLocation = path.resolve('./server/static/profilePics')
         if (!fs.existsSync(dirLocation)) {
-            await createDir(dirLocation).catch(err => {
-                console.log(err)
+            const err = await createDir(dirLocation)
+            if (err) {
+                console.error(err)
                 res.status(500).send(errorResponse('Something went wrong with '
                     + 'uploading your profile picture'))
-            })
+                return
+            }
         }
 
         if (!checkIfImage(mimetype, filename)) {
