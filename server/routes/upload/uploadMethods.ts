@@ -88,10 +88,6 @@ const handleProfilePic = (req: ReqWUser, done: ResolveFn) => {
         })
     })
 
-    bus.on('finish', () => {
-        console.log('bus finished')
-    })
-
     req.pipe(bus)
 }
 

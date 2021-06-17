@@ -22,7 +22,8 @@ const registerHandler = (req: Request, res: Response): void => {
             outFriendRequests: [],
             incFriendRequests: [],
             channels: {},
-            activeChannels: []
+            activeChannels: [],
+            profilePic: ''
         }
 
         const user = new User(userCandidate)

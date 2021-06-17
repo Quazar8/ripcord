@@ -1,4 +1,4 @@
-import mongoose, { Document, Types } from 'mongoose'
+import mongoose, { Types } from 'mongoose'
 const { Schema, model } = mongoose
 
 const UserSchema = new Schema<IUserModel> ({
@@ -9,7 +9,8 @@ const UserSchema = new Schema<IUserModel> ({
     incFriendRequests: { type: [Schema.Types.ObjectId], default: [] },
     outFriendRequests: { type: [Schema.Types.ObjectId], default: [] },
     channels: {},
-    activeChannels: { type: [Schema.Types.ObjectId], default: [] }
+    activeChannels: { type: [Schema.Types.ObjectId], default: [] },
+    profilePic: String
 })
 
 export interface IUserModel {
@@ -22,7 +23,8 @@ export interface IUserModel {
     channels: {
         [UserId: string]: [ChannelId: string]
     },
-    activeChannels: Types.ObjectId[]
+    activeChannels: Types.ObjectId[],
+    profilePic: string
 }
 
 export const User = model('User', UserSchema)
