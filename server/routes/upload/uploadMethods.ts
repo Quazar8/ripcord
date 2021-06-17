@@ -42,20 +42,23 @@ const handleProfilePic = (req: ReqWUser, res: Response, done: Function , reject:
             const err = await createDir(dirLocation)
             if (err) {
                 console.error(err)
-                res.status(500).send(errorResponse('Something went wrong with '
-                    + 'uploading your profile picture'))
+                reject('Something went wrong with '
+                    + 'uploading your profile picture')
                 return
             }
         }
 
         if (!checkIfImage(mimetype, filename)) {
-            res.status(500).send(errorResponse('Not allowed image type'))
+            reject('Not allowed image type')
             return
         }
 
         const newFileName = createNewFileName(req.user._id.toHexString(), filename)
         const location = path.join(dirLocation, newFileName)
-        file.pipe(fs.createWriteStream(location))
+        file.pipe(fs.createWriteStream(location)).on('finish', () => {
+            console.log('writing file finished')
+            done(null)
+        })
 
         console.log('file metadata', {
             fieldname,
@@ -68,7 +71,6 @@ const handleProfilePic = (req: ReqWUser, res: Response, done: Function , reject:
 
     bus.on('finish', () => {
         console.log('bus finished')
-        // res.send(successResponse({}))
     })
 
     req.pipe(bus)
