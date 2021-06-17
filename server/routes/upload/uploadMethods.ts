@@ -1,9 +1,10 @@
 import path from 'path'
 import fs from 'fs'
+import Busboy from 'busboy'
 import { Request, Response } from "express";
 import { ReqWUser } from '../../types/RequestTypes'
-import Busboy from 'busboy'
 import { errorResponse, successResponse } from "../../responses.js";
+import { genId } from '../../utils.js'
 
 const createDir = (dirLocation: fs.PathLike): Promise<Error> => {
     return new Promise((done, reject) => {
@@ -14,6 +15,10 @@ const createDir = (dirLocation: fs.PathLike): Promise<Error> => {
             done(null)
         })
     })
+}
+
+const createNewFileName = (userId: string, filename: string) => {
+    return userId + '_' + genId(8) + path.extname(filename)
 }
 
 const checkIfImage = (mimetype: string, fileName: string) => {
@@ -29,16 +34,9 @@ const checkIfImage = (mimetype: string, fileName: string) => {
     return true
 }
 
-export const uploadProfilePic = (req: Request, res: Response) => {
+export const uploadProfilePic = (req: ReqWUser, res: Response) => {
     const bus = new Busboy({ headers: req.headers })
     bus.on('file', async (fieldname, file, filename, encoding, mimetype) => {
-        console.log('file metadata', {
-            fieldname,
-            filename,
-            encoding,
-            mimetype
-        })
-
         const dirLocation = path.resolve('./server/static/profilePics')
         if (!fs.existsSync(dirLocation)) {
             const err = await createDir(dirLocation)
@@ -55,12 +53,21 @@ export const uploadProfilePic = (req: Request, res: Response) => {
             return
         }
 
-        const location = path.join(dirLocation, filename)
+        const newFileName = createNewFileName(req.user._id.toHexString(), filename)
+        const location = path.join(dirLocation, newFileName)
         file.pipe(fs.createWriteStream(location))
+
+        console.log('file metadata', {
+            fieldname,
+            filename,
+            encoding,
+            mimetype,
+            newFileName
+        })
     })
 
     bus.on('finish', () => {
-        console.log('finished')
+        console.log('bus finished')
         res.send(successResponse({}))
     })
 
