@@ -13,6 +13,8 @@ type UploadResult = [{
     status: number
 }]
 
+type ResolveFn = (result: UploadResult) => void
+
 const createDir = (dirLocation: fs.PathLike): Promise<Error> => {
     return new Promise((done, reject) => {
         fs.mkdir(dirLocation, (err) => {
@@ -41,7 +43,7 @@ const checkIfImage = (mimetype: string, fileName: string) => {
     return true
 }
 
-const handleProfilePic = (req: ReqWUser, done: Function) => {
+const handleProfilePic = (req: ReqWUser, done: ResolveFn) => {
     const bus = new Busboy({ headers: req.headers })
 
     bus.on('file', async (fieldname, file, filename, encoding, mimetype) => {
@@ -53,7 +55,7 @@ const handleProfilePic = (req: ReqWUser, done: Function) => {
                 done([null, {
                     errorMsg: 'Something went wrong with uploading your profile picture',
                     status: 500
-                }] as UploadResult)
+                }])
                 return
             }
         }
@@ -62,7 +64,7 @@ const handleProfilePic = (req: ReqWUser, done: Function) => {
             done([null, {
                 errorMsg: 'Not allowed file type',
                 status: 400
-            }] as UploadResult)
+            }])
             return
         }
 
@@ -74,7 +76,7 @@ const handleProfilePic = (req: ReqWUser, done: Function) => {
                 filename,
                 newFilename,
                 location
-            }, null] as UploadResult)
+            }, null])
         })
 
         console.log('file metadata', {
