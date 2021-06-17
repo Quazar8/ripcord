@@ -1,10 +1,14 @@
 import path from 'path'
 import fs from 'fs'
 import Busboy from 'busboy'
-import { Response } from "express";
 import { ReqWUser } from '../../types/RequestTypes'
-import { errorResponse, successResponse } from "../../responses.js";
 import { genId } from '../../utils.js'
+
+type UploadResult = [{
+    filename: string,
+    newFilename: string,
+    location: string
+}, string]
 
 const createDir = (dirLocation: fs.PathLike): Promise<Error> => {
     return new Promise((done, reject) => {
@@ -34,30 +38,34 @@ const checkIfImage = (mimetype: string, fileName: string) => {
     return true
 }
 
-const handleProfilePic = (req: ReqWUser, res: Response, done: Function , reject: Function) => {
+const handleProfilePic = (req: ReqWUser, done: Function , reject: Function) => {
     const bus = new Busboy({ headers: req.headers })
+
     bus.on('file', async (fieldname, file, filename, encoding, mimetype) => {
         const dirLocation = path.resolve('./server/static/profilePics')
         if (!fs.existsSync(dirLocation)) {
             const err = await createDir(dirLocation)
             if (err) {
                 console.error(err)
-                reject('Something went wrong with '
-                    + 'uploading your profile picture')
+                reject([null, 'Something went wrong with '
+                    + 'uploading your profile picture'] as UploadResult)
                 return
             }
         }
 
         if (!checkIfImage(mimetype, filename)) {
-            reject('Not allowed image type')
+            reject([null, 'Not allowed image type'] as UploadResult)
             return
         }
 
-        const newFileName = createNewFileName(req.user._id.toHexString(), filename)
-        const location = path.join(dirLocation, newFileName)
+        const newFilemame = createNewFileName(req.user._id.toHexString(), filename)
+        const location = path.join(dirLocation, newFilemame)
         file.pipe(fs.createWriteStream(location)).on('finish', () => {
             console.log('writing file finished')
-            done(null)
+            done([{
+                filename,
+                newFilename: newFileName
+            }, null] as UploadResult)
         })
 
         console.log('file metadata', {
@@ -65,7 +73,7 @@ const handleProfilePic = (req: ReqWUser, res: Response, done: Function , reject:
             filename,
             encoding,
             mimetype,
-            newFileName
+            newFilemame
         })
     })
 
@@ -76,8 +84,8 @@ const handleProfilePic = (req: ReqWUser, res: Response, done: Function , reject:
     req.pipe(bus)
 }
 
-export const uploadProfilePic = (req: ReqWUser, res: Response) => {
+export const uploadProfilePic = (req: ReqWUser): Promise<UploadResult> => {
     return new Promise((done, reject) => {
-        handleProfilePic(req, res, done, reject)
+        handleProfilePic(req, done, reject)
     })
 }
