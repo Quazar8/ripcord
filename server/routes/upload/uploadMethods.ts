@@ -8,7 +8,10 @@ type UploadResult = [{
     filename: string,
     newFilename: string,
     location: string
-}, string]
+}, {
+    errorMsg: string,
+    status: number
+}]
 
 const createDir = (dirLocation: fs.PathLike): Promise<Error> => {
     return new Promise((done, reject) => {
@@ -38,7 +41,7 @@ const checkIfImage = (mimetype: string, fileName: string) => {
     return true
 }
 
-const handleProfilePic = (req: ReqWUser, done: Function , reject: Function) => {
+const handleProfilePic = (req: ReqWUser, done: Function) => {
     const bus = new Busboy({ headers: req.headers })
 
     bus.on('file', async (fieldname, file, filename, encoding, mimetype) => {
@@ -47,14 +50,19 @@ const handleProfilePic = (req: ReqWUser, done: Function , reject: Function) => {
             const err = await createDir(dirLocation)
             if (err) {
                 console.error(err)
-                reject([null, 'Something went wrong with '
-                    + 'uploading your profile picture'] as UploadResult)
+                done([null, {
+                    errorMsg: 'Something went wrong with uploading your profile picture',
+                    status: 500
+                }] as UploadResult)
                 return
             }
         }
 
         if (!checkIfImage(mimetype, filename)) {
-            reject([null, 'Not allowed image type'] as UploadResult)
+            done([null, {
+                errorMsg: 'Not allowed file type',
+                status: 400
+            }] as UploadResult)
             return
         }
 
@@ -86,7 +94,7 @@ const handleProfilePic = (req: ReqWUser, done: Function , reject: Function) => {
 }
 
 export const uploadProfilePic = (req: ReqWUser): Promise<UploadResult> => {
-    return new Promise((done, reject) => {
-        handleProfilePic(req, done, reject)
+    return new Promise((done) => {
+        handleProfilePic(req, done)
     })
 }

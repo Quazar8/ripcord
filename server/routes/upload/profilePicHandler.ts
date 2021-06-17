@@ -4,10 +4,10 @@ import { ReqWUser } from "../../types/RequestTypes.js"
 import { uploadProfilePic } from './uploadMethods.js'
 
 const profilePicHandler = async (req: ReqWUser, res: Response) => {
-    const [file, errorMsg] = await uploadProfilePic(req)
+    const [file, error] = await uploadProfilePic(req)
 
-    if (errorMsg) {
-        res.send(errorResponse(errorMsg))
+    if (error) {
+        res.status(error.status).send(errorResponse(error.errorMsg))
         return
     }
 
