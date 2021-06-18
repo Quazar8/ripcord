@@ -54,3 +54,5 @@ export const acceptFriendRequest = async (data: AcceptFriendRequestData): Promis
 export const retrieveFriends = async (): Promise<GetFriendsRes> => {
     return (await fetch(baseUrl + UserUrls.getFriends, getQueryOptions(true))).json()
 }
+
+export const genProfilePicUrl = (filename: string) => UserUrls.getProfilePicFn(filename)

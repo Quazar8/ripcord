@@ -7,5 +7,8 @@ export default {
     pendingFriendRequests: '/user/friends/pending',
     declineFriendRequest: '/user/friends/decline',
     acceptFriendRequest: '/user/friends/accept',
-    getFriends: '/user/friends/list'
+    getFriends: '/user/friends/list',
+    getProfilePicFn: (filename: string) => (
+        `/static/profilePics/${filename}`
+    )
 }

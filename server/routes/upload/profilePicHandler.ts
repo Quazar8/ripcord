@@ -22,10 +22,7 @@ const profilePicHandler = async (req: ReqWUser, res: Response) => {
         if (req.user.profilePic) {
             const oldLocation = path.join(dirLocation, req.user.profilePic)
             fs.unlink(oldLocation, (err) => {
-                if (err) {
-                    console.error(error)
-                    return
-                } 
+                if (err) console.error(error)
             })
         }
 
