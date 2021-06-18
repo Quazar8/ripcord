@@ -15,6 +15,8 @@ type UploadResult = [{
 
 type ResolveFn = (result: UploadResult) => void
 
+export const dirLocation = path.resolve('./server/static/profilePics')
+
 const createDir = (dirLocation: fs.PathLike): Promise<Error> => {
     return new Promise((done, reject) => {
         fs.mkdir(dirLocation, (err) => {
@@ -47,7 +49,6 @@ const handleProfilePic = (req: ReqWUser, done: ResolveFn) => {
     const bus = new Busboy({ headers: req.headers })
 
     bus.on('file', async (fieldname, file, filename, encoding, mimetype) => {
-        const dirLocation = path.resolve('./server/static/profilePics')
         if (!fs.existsSync(dirLocation)) {
             const err = await createDir(dirLocation)
             if (err) {
