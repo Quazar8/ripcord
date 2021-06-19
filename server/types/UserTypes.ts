@@ -2,6 +2,8 @@ import { Types } from 'mongoose'
 import { IUserModel } from '../db/models/user'
 import { Document } from 'mongoose'
 
+export { ProfilePicJson } from '../routes/user/register'
+
 export type UserDoc = Omit<Document, '_id'> & IUserModel & {
     _id: Types.ObjectId
 }
