@@ -46,5 +46,5 @@ export const genId = (bytes: number): string => {
 }
 
 export const genRandomNum = (lower: number, upper: number): number => {
-    return lower + Math.random() * (upper - lower)
+    return Math.round(lower + Math.random() * (upper - lower))
 }
