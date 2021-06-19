@@ -3,28 +3,31 @@ import { ProfilePicJson } from '../../../server/types/UserTypes'
 import { genProfilePicUrl } from '../../api/userApi'
 
 type Props = {
-    picNameOrJson: string | ProfilePicJson
-}
-
-const isStrPicName = (arg: string | ProfilePicJson): arg is string => {
-    return typeof arg === 'string' && !arg.includes(':')
+    picNameOrJson: string
 }
 
 const ProfilePic = ({ picNameOrJson }: Props) => {
     let PicComponent: JSX.Element = null
+
+    const isStrPicName = (candidate: string) => {
+        return candidate.includes(':')
+    }
+
     if (isStrPicName(picNameOrJson)) {
         PicComponent = <img className ="image" 
             src = { genProfilePicUrl(picNameOrJson) }/>
     } else {
+        const jsonPic: ProfilePicJson = JSON.parse(picNameOrJson)
+        
         const style = {
-            background: picNameOrJson.background,
-            color: picNameOrJson.textColor
+            background: jsonPic.background,
+            color: jsonPic.textColor
         }
 
-        PicComponent = <div
-            className = "image"
-            style = { style }
-        >{ picNameOrJson.letters }</div>
+        PicComponent = 
+            <div className = "image" style = { style }>
+                { jsonPic.letters }
+            </div>
     }
 
     return (
