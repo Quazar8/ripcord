@@ -54,7 +54,7 @@ const registerHandler = (req: Request, res: Response): void => {
             incFriendRequests: [],
             channels: {},
             activeChannels: [],
-            profilePic: ''
+            profilePic: JSON.stringify(genProfilePicColorJson(username))
         }
 
         const user = new User(userCandidate)
