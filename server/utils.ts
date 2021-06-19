@@ -44,3 +44,7 @@ export const tryCatchWrapper = (fn: CallableFunction): boolean => {
 export const genId = (bytes: number): string => {
     return crypto.randomBytes(bytes).toString('hex')
 }
+
+export const genRandomNum = (lower: number, upper: number): number => {
+    return lower + Math.random() * (upper - lower)
+}
