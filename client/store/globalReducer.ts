@@ -14,10 +14,11 @@ export type GlobalState = {
 export const globalInit: GlobalState = {
     notifications: [],
     user: {
-        username: '',
+        username: null,
         incFriendRequests: [],
         id: null,
-        activeChannels: []
+        activeChannels: [],
+        profilePic: null
     },
     showUserOptions: false,
     friendNotifications: 0

@@ -21,7 +21,8 @@ export const userInfoFromToken = (req: Request, res: Response) => {
                 id: user.id,
                 activeChannels: user.activeChannels,
                 username: user.username,
-                incFriendRequests: user.incFriendRequests
+                incFriendRequests: user.incFriendRequests,
+                profilePic: user.profilePic
             }
 
             response = successResponse(userInfo, '')

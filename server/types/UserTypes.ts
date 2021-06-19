@@ -15,7 +15,8 @@ export type UserInfo = Omit<IUserModel, 'password'> & {
 }
 
 export type UserClientInfo = Pick<UserInfo, 'id'
-| 'activeChannels' | 'incFriendRequests' | 'username'>
+| 'activeChannels' | 'incFriendRequests' | 'username'
+| 'profilePic'>
 
 export type LoginEntry = Pick<IUserModel, 'password' | 'username'>
 
