@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { Subwindows } from './FriendsWindow'
 
-import NotifAttach from '../../others/notifications/NotifAttach'
-import { RightWindowContext } from '../RightWindow'
+import NotifAttach from '../../../others/notifications/NotifAttach'
+import { RightWindowContext } from '../../RightWindow/RightWindow'
 
 type Props = {
     showCertainSubwindow: (name: Subwindows) => void

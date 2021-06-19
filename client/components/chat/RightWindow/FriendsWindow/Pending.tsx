@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from 'react'
 
-import { getFriendRequests } from '../../../api/userApi'
-import { resHasError } from '../../../api/utils'
-import { RightWindowContext } from '../RightWindow'
+import { getFriendRequests } from '../../../../api/userApi'
+import { resHasError } from '../../../../api/utils'
+import { RightWindowContext } from '../../RightWindow/RightWindow'
 
 import FriendRequest from './FriendRequest'
 

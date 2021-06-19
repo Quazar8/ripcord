@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { FriendClientInfo } from '../../../../server/types/userTypes'
+import { FriendClientInfo } from '../../../../../server/types/userTypes'
  
-import { retrieveFriends } from '../../../api/userApi'
-import { resHasError } from '../../../api/utils'
+import { retrieveFriends } from '../../../../api/userApi'
+import { resHasError } from '../../../../api/utils'
 
 import FriendsPlate from './FriendPlate'
 
-type Props = {
-}
-
-const FriendsList = (props: Props) => {
+const FriendsList = () => {
     const [friendsList, setFriendsList] = useState<{
         online: FriendClientInfo[],
         offline: FriendClientInfo[]

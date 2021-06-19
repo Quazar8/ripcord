@@ -2,8 +2,8 @@ import React, { createContext } from 'react'
 
 import Nameplate from './Nameplate'
 import ChatMenuButtons from './ChatMenuButtons'
-import ActiveChannels from './ChatMenu/ActiveChannels'
-import { ChatAppProps } from './ChatApp'
+import ActiveChannels from './ActiveChannels'
+import { ChatAppProps } from '../ChatApp'
 
 export type ChatMenuProps = Pick<ChatAppProps, 'user'
     | 'showUserMenuFn'

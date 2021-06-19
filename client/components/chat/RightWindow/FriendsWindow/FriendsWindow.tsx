@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { pushNotification } from '../../../store/globalActions'
+import { pushNotification } from '../../../../store/globalActions'
 
 import AddFriend from './AddFriend'
 import FriendsMenuBar from './FriendsMenuBar'

@@ -1,7 +1,7 @@
 import React, { MouseEvent, useContext } from 'react'
 import { removeActiveChannel } from '../../../api/chatApi'
 import { resHasError } from '../../../api/utils'
-import { ChatMenuContext } from '../ChatMenu'
+import { ChatMenuContext } from './ChatMenu'
 import NotificationBubble from '../../others/notifications/NotifAttach'
 import { ClientActiveChannel } from '../../../types/ChatClientTypes'
 

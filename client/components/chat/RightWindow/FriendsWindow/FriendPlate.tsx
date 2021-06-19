@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { FriendClientInfo, UserStatus } from '../../../../server/types/UserTypes'
+import { FriendClientInfo, UserStatus } from '../../../../../server/types/UserTypes'
 import { RightWindowContext } from '../RightWindow'
 
 type Props = {

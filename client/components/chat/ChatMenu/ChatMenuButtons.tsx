@@ -1,6 +1,6 @@
 import React from 'react'
 
-import NotifAttach from '../others/notifications/NotifAttach'
+import NotifAttach from '../../others/notifications/NotifAttach'
 import { ChatMenuProps } from './ChatMenu'
 
 type Props = Pick<ChatMenuProps, 'toggleFriendsWindowFn'

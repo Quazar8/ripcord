@@ -8,8 +8,8 @@ import { toggleUserMenuAction,
          removeUserInfoAction, 
          pushNotification } from '../../store/globalActions'
 
-import RightWindow from './RightWindow'
-import ChatMenu from './ChatMenu'
+import RightWindow from './RightWindow/RightWindow'
+import ChatMenu from './ChatMenu/ChatMenu'
 import UserMenu from './UserMenu'
 import { addActiveChannelAction, changeChannelIdAction,
          changeCHatRecipientAction,

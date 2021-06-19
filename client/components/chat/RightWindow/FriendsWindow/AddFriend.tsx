@@ -1,7 +1,7 @@
 import React, { useRef, useState, FormEvent } from 'react'
-import { resHasError } from '../../../api/utils'
-import { addFriend } from '../../../api/userApi'
-import { pushNotification } from '../../../store/globalActions'
+import { resHasError } from '../../../../api/utils'
+import { addFriend } from '../../../../api/userApi'
+import { pushNotification } from '../../../../store/globalActions'
 
 type Props = {
     dispNotification: ReturnType<typeof pushNotification>

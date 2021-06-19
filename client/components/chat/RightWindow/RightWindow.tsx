@@ -1,9 +1,9 @@
 import React, { createContext } from 'react'
 import ChatDisplay from './ChatDisplay'
-import { ChatAppProps } from './ChatApp'
+import { ChatAppProps } from '../ChatApp'
 
 import FriendsWindow from './FriendsWindow/FriendsWindow'
-import { ActiveChannelInfo } from '../../../server/types/ChatTypes'
+import { ActiveChannelInfo } from '../../../../server/types/ChatTypes'
 
 export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' 

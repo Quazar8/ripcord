@@ -1,7 +1,7 @@
 import React from 'react'
-import { ChatMessageStatus } from '../../../server/types/ChatTypes'
-import { PendingMsg } from '../../types/ChatClientTypes'
-import { getChatDateStr } from '../../utils/utils'
+import { ChatMessageStatus } from '../../../../server/types/ChatTypes'
+import { PendingMsg } from '../../../types/ChatClientTypes'
+import { getChatDateStr } from '../../../utils/utils'
 
 type Props = {
     message: PendingMsg

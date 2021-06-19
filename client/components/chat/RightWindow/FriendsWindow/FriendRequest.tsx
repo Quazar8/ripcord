@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { DeclineFriendRequestData, AcceptFriendRequestData } from '../../../../server/types/UserRequestData'
-import { PendingFriendInfo } from '../../../../server/types/UserTypes'
+import { DeclineFriendRequestData, AcceptFriendRequestData } from '../../../../../server/types/UserRequestData'
+import { PendingFriendInfo } from '../../../../../server/types/UserTypes'
 
-import { cancelOrDeclineFrReq, acceptFriendRequest } from '../../../api/userApi'
-import { resHasError } from '../../../api/utils'
+import { cancelOrDeclineFrReq, acceptFriendRequest } from '../../../../api/userApi'
+import { resHasError } from '../../../../api/utils'
 import { RightWindowContext } from '../RightWindow'
 
 type Props = {
