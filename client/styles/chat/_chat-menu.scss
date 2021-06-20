@@ -1,7 +1,7 @@
 @use 'chat-vars' as v;
 
 .chat-menu {
-    width: 15%;
+    width: 18%;
     height: 100%;
     background: linear-gradient(45deg, hsl(236, 44%, 13%), hsl(244, 46%, 21%));
     display: flex;
@@ -33,18 +33,55 @@
 }
 
 .nameplate {
+    $status-circle-size: 0.7vw;
+    $border-width: 0.2vw;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 4%;
+    justify-content: space-between;
+    padding: 0% 8%;
     font-size: 1.5vw;
     height: v.$chat-menu-nameplate-height;
+    width: 100%;
+
+    * {
+        box-sizing: content-box;
+    }
 
     .name-container {
         margin-right: 10%;
+        width: 100%;
+        display: flex;
+        align-items: center;
 
         &:hover {
             cursor: pointer;
+        }
+    }
+
+    .profile-pic {
+        width: 3.7vw;
+        height: 3.7vw;
+        margin-right: 8%;
+
+        .image-container {
+            width: 100%;
+            height: 100%;
+            border: $border-width solid white;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2vw;
+
+            span {
+                transform: translateY(-$border-width);
+            }
         }
     }
 
@@ -55,7 +92,7 @@
             -2px 2px 5px yellow,
             2px -2px 5px yellow;
         border-radius: 50%;
-        width: 0.5vw;
-        height: 0.5vw;
+        width: $status-circle-size;
+        height: $status-circle-size;
     }
 }

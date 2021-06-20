@@ -26,7 +26,7 @@ const ProfilePic = ({ picNameOrJson }: Props) => {
 
         PicComponent = (
             <div className = "image" style = { style }>
-                { jsonPic.letters }
+                <span>{ jsonPic.letters }</span>
             </div>
         )
     }
