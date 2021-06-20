@@ -1,18 +1,21 @@
 import React from 'react'
+import { ChatMenuProps } from './ChatMenu'
+import ProfilePic from '../../user/ProfilePic'
 
-type Props = {
+type Props = Pick<ChatMenuProps, 'showUserMenuFn'> & {
     username: string,
-    showUserMenuFn: () => void
+    profilePic: string
 }
 
-const NamePlate = ( { username, showUserMenuFn }: Props ) => {
+const NamePlate = ( props: Props ) => {
     return (
         <div className = "nameplate">
             <div 
                 className = "name-container"
-                onClick = { showUserMenuFn }
+                onClick = { props.showUserMenuFn }
             >
-                { username }
+                <ProfilePic picNameOrJson = { props.profilePic } />
+                { props.username }
             </div>
             <div className = "status-circle"></div>
         </div>

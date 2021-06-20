@@ -47,6 +47,7 @@ const ChatMenu = (props: ChatMenuProps) => {
                 />
                 <Nameplate 
                     username = { props.user.username } 
+                    profilePic = { props.user.profilePic }
                     showUserMenuFn = { props.showUserMenuFn }
                 />
             </ChatMenuContext.Provider>

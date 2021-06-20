@@ -10,7 +10,7 @@ const ProfilePic = ({ picNameOrJson }: Props) => {
     let PicComponent: JSX.Element = null
 
     const isStrPicName = (candidate: string) => {
-        return candidate.includes(':')
+        return !candidate.includes(':')
     }
 
     if (isStrPicName(picNameOrJson)) {
@@ -24,10 +24,11 @@ const ProfilePic = ({ picNameOrJson }: Props) => {
             color: jsonPic.textColor
         }
 
-        PicComponent = 
+        PicComponent = (
             <div className = "image" style = { style }>
                 { jsonPic.letters }
             </div>
+        )
     }
 
     return (
