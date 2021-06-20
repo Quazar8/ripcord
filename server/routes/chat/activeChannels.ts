@@ -36,7 +36,8 @@ const createActiveChannelInfo = async (channel: ChannelDoc, byUser: UserDoc): Pr
     return {
         id: channel._id.toHexString(),
         recipientId: recipient._id.toHexString(),
-        recipientUsername: recipient.username
+        recipientUsername: recipient.username,
+        recipientPic: recipient.profilePic
     }
 }
 
