@@ -13,7 +13,7 @@ export type ProfilePicJson = {
     background: string
 }
 
-const genProfilePicColorJson = (username: string): ProfilePicJson => {
+export const genProfilePicColorJson = (username: string): ProfilePicJson => {
     const genHslStr = ({ hue, sat, light }: typeof background) => {
         return `hsl(${hue}, ${sat}%, ${light}%)`
     }

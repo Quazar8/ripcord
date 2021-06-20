@@ -1,4 +1,6 @@
 import mongoose, { Types } from 'mongoose'
+import { genProfilePicColorJson } from '../../routes/user/register.js'
+import { UserDoc } from '../../types/UserTypes'
 const { Schema, model } = mongoose
 
 const UserSchema = new Schema<IUserModel> ({
@@ -28,3 +30,13 @@ export interface IUserModel {
 }
 
 export const User = model('User', UserSchema)
+
+export const updateOldUsersNewFields = (user: UserDoc) => {
+    if (!user.profilePic) {
+        user.profilePic = JSON.stringify(genProfilePicColorJson(user.username))
+    }
+
+    user.save()
+
+    return user
+}

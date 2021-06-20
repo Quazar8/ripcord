@@ -1,12 +1,13 @@
 import { Request, Response } from "express"
 import passport from 'passport'
+import { updateOldUsersNewFields } from "../../db/models/user.js"
 import { errorResponse, ServerResponse, successResponse } from "../../responses.js"
-import { UserClientInfo, UserInfo } from "../../types/UserTypes.js"
+import { UserClientInfo, UserDoc } from "../../types/UserTypes.js"
 
 export type UserFromTokenResponse = ServerResponse<UserClientInfo>
 
 export const userInfoFromToken = (req: Request, res: Response) => {
-    passport.authenticate('jwt', (err, user: UserInfo) => {
+    passport.authenticate('jwt', (err, user: UserDoc) => {
         let response: UserFromTokenResponse = null
         let status: number = 200
 
@@ -17,6 +18,8 @@ export const userInfoFromToken = (req: Request, res: Response) => {
         } 
 
         if (user) {
+            user = updateOldUsersNewFields(user)
+
             const userInfo: UserClientInfo = {
                 id: user.id,
                 activeChannels: user.activeChannels,
