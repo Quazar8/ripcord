@@ -33,6 +33,7 @@ const LoginFormView = ({ pushNotification, recordUser, setPendingNotifsAmount }:
 
         try {
             const resp = await loginServer(data)
+
             if (resHasError(resp)) {
                 pushNotification('error', resp.errorMsg)
             } else {

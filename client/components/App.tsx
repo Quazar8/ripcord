@@ -31,6 +31,10 @@ const AppView = (props: Props) => {
             return
         }
 
+        if (!res.data || !res.data.id) {
+            return
+        }
+
         props.recordUser(res.data)
         props.setPendingNotifsAmount(res.data.incFriendRequests.length)
     }    

@@ -4,7 +4,7 @@ import { updateOldUsersNewFields } from "../../db/models/user.js"
 import { errorResponse, ServerResponse, successResponse } from "../../responses.js"
 import { UserClientInfo, UserDoc } from "../../types/UserTypes.js"
 
-export type UserFromTokenResponse = ServerResponse<UserClientInfo>
+export type UserFromTokenResponse = ServerResponse<UserClientInfo | null>
 
 export const userInfoFromToken = (req: Request, res: Response) => {
     passport.authenticate('jwt', (err, user: UserDoc) => {
