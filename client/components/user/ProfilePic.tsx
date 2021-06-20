@@ -8,8 +8,10 @@ type Props = {
 
 const ProfilePic = ({ picNameOrJson }: Props) => {
     let PicComponent: JSX.Element = null
+    if (!picNameOrJson) return null
 
     const isStrPicName = (candidate: string) => {
+
         return !candidate.includes(':')
     }
 
