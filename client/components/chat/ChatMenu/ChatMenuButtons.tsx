@@ -17,7 +17,7 @@ const ChatMenuButtons = (props: Props) => {
     return (
         <div className = "chat-menu-buttons-container">
             <div className = "button-container">
-                <button onClick = { handleFriendButtonClick }>Friends (Not Implemented)</button>
+                <button onClick = { handleFriendButtonClick }>Friends</button>
                 <NotifAttach amount = { props.friendNotifications } />
             </div>
         </div>
