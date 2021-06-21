@@ -15,7 +15,7 @@ const NamePlate = ( props: Props ) => {
                 onClick = { props.showUserMenuFn }
             >
                 <ProfilePic picNameOrJson = { props.profilePic } />
-                { props.username }
+                <h3>{ props.username }</h3>
             </div>
             <div className = "status-circle"></div>
         </div>
