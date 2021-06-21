@@ -1,3 +1,5 @@
+@use '../user//profile-pic.scss';
+
 .chat-display {
     $monitor-bg: hsl(0, 1%, 21%);
     background: hsl(0, 8%, 30%);
@@ -6,7 +8,14 @@
 
     .user-info {
         height: 10%;
+        display: flex;
+
+        @include profile-pic.profilePicMixin(3.7vw, 0.2vw, 2vw);
         
+        .text-block {
+            margin-left: 1%;
+        }
+
         h2, h4 {
             font-weight: normal;
         }

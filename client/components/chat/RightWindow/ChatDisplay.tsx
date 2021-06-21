@@ -9,6 +9,7 @@ import { WSDataType, WSMessage } from '../../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../../server/types/ChatResponses'
 import { PendingMsg } from '../../../types/ChatClientTypes'
 import { RightWindowProps } from './RightWindow'
+import ProfilePic from '../../user/ProfilePic'
 
 type Props = Pick<RightWindowProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
@@ -139,8 +140,11 @@ const ChatDisplay = (props: Props) => {
     return (
         <section className = "chat-display">
             <div className = "user-info">
-                <h2>{ info.recipient.username }</h2>
-                <h4>{ info.recipient.status }</h4>
+                <ProfilePic picNameOrJson = { info.recipient.profilePic }/>
+                <div className = "text-block">
+                    <h2>{ info.recipient.username }</h2>
+                    <h4>{ info.recipient.status }</h4>
+                </div>
             </div>
             <div ref = { chatMonitorRef } className = "chat-monitor">
                 { 
