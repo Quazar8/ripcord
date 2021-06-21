@@ -1,0 +1,27 @@
+@mixin profilePicMixin($size, $border-width, $font-size) {
+    .profile-pic {
+        width: $size;
+        height: $size;
+
+        .image-container {
+            width: 100%;
+            height: 100%;
+            border: $border-width solid white;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            span {
+                transform: translateY(-$border-width);
+                font-size: $font-size;
+            }
+        }
+    }
+}
