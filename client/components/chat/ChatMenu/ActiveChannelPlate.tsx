@@ -31,8 +31,10 @@ const ActiveChannelPlate = ({ channel }: Props) => {
 
     return (
         <div onClick = { handlePlateClick } className = "active-channel-plate">
-            <ProfilePic picNameOrJson = { channel.recipientPic } />
-            <h4>{ channel.recipientUsername}</h4>
+            <div className = "recipient-info">
+                <ProfilePic picNameOrJson = { channel.recipientPic } />
+                <h4>{ channel.recipientUsername}</h4>
+            </div>
             <button onClick = { removeChannelFromActive }>&#x2716;</button>
             <NotificationBubble
                 amount = { channel.newMessages }
