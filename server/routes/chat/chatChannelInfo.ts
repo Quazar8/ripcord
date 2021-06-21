@@ -37,7 +37,8 @@ const genChatChannelInfoData = (channel: ChannelDoc, recipient: UserDoc): ChatCh
     const recipientInfo: RecipientInfo = {
         id: recipient._id.toHexString(),
         username: recipient.username,
-        status: isOnline(recipient._id) ? UserStatus.Online : UserStatus.Offline
+        status: isOnline(recipient._id) ? UserStatus.Online : UserStatus.Offline,
+        profilePic: recipient.profilePic
     }
 
     return {

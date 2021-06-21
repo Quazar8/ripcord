@@ -1,12 +1,12 @@
 import { Document, Types } from "mongoose";
 import { IChannel } from "../db/models/channel";
-import { IUserModel } from "../db/models/user";
 import { UserStatus } from "./UserTypes";
 
-export type RecipientInfo = Pick<IUserModel, 'username'> & {
+export type RecipientInfo = {
     id: string
-    status: UserStatus,
+    status: UserStatus
     username: string
+    profilePic: string
 }
 
 export type Message = {
