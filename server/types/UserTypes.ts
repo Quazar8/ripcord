@@ -30,7 +30,8 @@ export enum UserStatus {
 export type FriendClientInfo = {
     id: string
     username: string,
-    status: UserStatus
+    status: UserStatus,
+    profilePic: string
 }
 
 export type PendingFriendInfo = {
