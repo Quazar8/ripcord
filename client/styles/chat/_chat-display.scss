@@ -4,11 +4,11 @@
     $monitor-bg: hsl(0, 1%, 21%);
     background: hsl(0, 8%, 30%);
     height: 100%;
-    padding: 2%;
 
     .user-info {
-        height: 10%;
+        height: 12%;
         display: flex;
+        padding: 1%;
 
         @include profile-pic.profilePicMixin(4.3vw, 0.2vw, 2vw);
         
