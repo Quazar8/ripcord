@@ -23,8 +23,9 @@ export const chatStateInit: ChatState = {
     chatChannel: {
         recipient: {
             id: null,
-            username: '',
-            status: UserStatus.Offline
+            username: null,
+            status: UserStatus.Offline,
+            profilePic: null
         },
         channel: {
             id: null,
