@@ -15,7 +15,12 @@ const UserMenu = (props: Props) => {
                 <button onClick = { props.hideUserMenuFn }>X</button>
             </div>
             <div className = "menu-content-container">
-                <button onClick = { props.logoutFn }>Log out</button>
+                <div className = "buttons-column">
+                    <button onClick = { props.logoutFn }>Log out</button>
+                </div>
+                <div className = "right-container">
+                    Right Container
+                </div>
             </div>
         </section>
     )
