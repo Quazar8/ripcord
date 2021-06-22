@@ -10,7 +10,7 @@
         height: 10%;
         display: flex;
 
-        @include profile-pic.profilePicMixin(3.7vw, 0.2vw, 2vw);
+        @include profile-pic.profilePicMixin(4.3vw, 0.2vw, 2vw);
         
         .text-block {
             margin-left: 1%;
