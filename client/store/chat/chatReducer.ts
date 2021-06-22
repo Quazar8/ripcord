@@ -1,4 +1,4 @@
-import { ActiveChannelInfo, ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, RecipientInfo } from "../../../server/types/ChatTypes";
+import { ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, RecipientInfo } from "../../../server/types/ChatTypes";
 import { UserStatus } from "../../../server/types/UserTypes";
 import { ClientActiveChannel, ClientChannelInfoWPending, PendingMsg } from "../../types/ChatClientTypes";
 import { ChatAction, ChatActionTypes } from "./chatActions";

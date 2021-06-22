@@ -25,9 +25,9 @@ export const genProfilePicColorJson = (username: string): ProfilePicJson => {
     }
 
     const color = {
-        hue: (background.hue + genRandomNum(35, 325)) % 360,
-        sat: genRandomNum(10, 90),
-        light: genRandomNum(26, 65)
+        hue: (background.hue + genRandomNum(65, 295)) % 360,
+        sat: 100 - background.sat,
+        light: 100 - background.light
     }
 
     return {
