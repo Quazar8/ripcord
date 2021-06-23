@@ -10,7 +10,7 @@ import { toggleUserMenuAction,
 
 import RightWindow from './RightWindow/RightWindow'
 import ChatMenu from './ChatMenu/ChatMenu'
-import UserMenu from './UserMenu'
+import UserMenu from '../user-menu/UserMenu'
 import { addActiveChannelAction, changeChannelIdAction,
          changeCHatRecipientAction,
          changeMsgToFailAction,
