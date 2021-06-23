@@ -154,7 +154,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 showUserMenu = { props.showUserMenu }
                 hideUserMenuFn = { props.hideUserMenuFn }
                 logoutFn = { props.logoutFn }
-                profilePic = { props.user.profilePic }
+                user = { props.user }
             />
         </section>
     )
