@@ -1,10 +1,9 @@
 import React from 'react'
 import { genProfilePicUrl } from '../../api/userApi'
 import { ProfilePicJson } from '../../../server/types/UserTypes'
+import { UserMenuProps } from './UserMenu'
 
-type Props = {
-    picNameOrJson: string
-}
+type Props = Pick<UserMenuProps, 'user'>
 
 const ProfileWindow = (props: Props) => {
     let ProfileImage: JSX.Element = null
@@ -28,12 +27,15 @@ const ProfileWindow = (props: Props) => {
         src = { genProfilePicUrl(picStr) } />
     }
 
-    ProfileImage = setProfileImage(props.picNameOrJson)
+    ProfileImage = setProfileImage(props.user.profilePic)
 
     return (
         <div className = "profile-window">
             <div className = "profile-pic">
                 { ProfileImage }
+            </div>
+            <div className = "user-info">
+                <h2>{}</h2>
             </div>
         </div>
     )

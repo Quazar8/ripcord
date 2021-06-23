@@ -3,10 +3,10 @@ import { ChatAppProps } from '../chat/ChatApp'
 
 import ProfileWindow from './ProfileWindow'
 
-type Props = Pick<ChatAppProps, 'showUserMenu'
+export type UserMenuProps = Pick<ChatAppProps, 'showUserMenu'
 | 'hideUserMenuFn' | 'logoutFn' | 'user'>
 
-const UserMenu = (props: Props) => {
+const UserMenu = (props: UserMenuProps) => {
     if (!props.showUserMenu) return null
 
     return (
@@ -20,7 +20,7 @@ const UserMenu = (props: Props) => {
                     <button onClick = { props.logoutFn }>Log out</button>
                 </div>
                 <div className = "right-container"> 
-                    <ProfileWindow picNameOrJson = { props.user.profilePic }/>
+                    <ProfileWindow user = { props.user }/>
                 </div>
             </div>
         </section>
