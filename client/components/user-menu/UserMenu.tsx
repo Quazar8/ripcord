@@ -1,5 +1,7 @@
 import React from 'react'
 
+import ProfileWindow from './ProfileWindow'
+
 type Props = {
     showUserMenu: boolean,
     hideUserMenuFn: () => void,
@@ -20,7 +22,7 @@ const UserMenu = (props: Props) => {
                     <button onClick = { props.logoutFn }>Log out</button>
                 </div>
                 <div className = "right-container">
-                    Right Container
+                    <ProfileWindow />
                 </div>
             </div>
         </section>
