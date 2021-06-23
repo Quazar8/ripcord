@@ -21,8 +21,8 @@ const UserMenu = (props: Props) => {
                     <button>Profile</button>
                     <button onClick = { props.logoutFn }>Log out</button>
                 </div>
-                <div className = "right-container">
-                    <ProfileWindow />
+                <div className = "right-container"> 
+                    <ProfileWindow picNameOrJson = { "" }/>
                 </div>
             </div>
         </section>
