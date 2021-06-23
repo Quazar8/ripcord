@@ -1,9 +1,9 @@
 @use 'chat-menu';
-@use 'user-menu';
 @use 'right-window';
 @use 'chat-display';
 @use 'active-channels';
 @use 'chat-message';
+@use './user-menu/user-menu';
 
 .chat-app {
     display: flex;
