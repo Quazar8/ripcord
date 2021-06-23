@@ -16,6 +16,7 @@ const UserMenu = (props: Props) => {
             </div>
             <div className = "menu-content-container">
                 <div className = "buttons-column">
+                    <button>Profile</button>
                     <button onClick = { props.logoutFn }>Log out</button>
                 </div>
                 <div className = "right-container">
