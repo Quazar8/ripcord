@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent, useRef, useEffect, useState } from 'react'
 import { genProfilePicUrl } from '../../api/userApi'
 import { ProfilePicJson } from '../../../server/types/UserTypes'
 import { UserMenuProps } from './UserMenu'
@@ -6,9 +6,11 @@ import { UserMenuProps } from './UserMenu'
 type Props = Pick<UserMenuProps, 'user'>
 
 const ProfileWindow = (props: Props) => {
-    let ProfileImage: JSX.Element = null
+    const profileInputRef = useRef<HTMLInputElement>()
 
-    const setProfileImage = (picStr: string) => {
+    const [ProfilePicComp, setProfilePicComp] = useState<JSX.Element>(null)
+
+    const getProfileImage = (picStr: string) => {
         if (!picStr) return <div className = "image"></div>
 
         if (picStr.includes(":")) {
@@ -27,15 +29,24 @@ const ProfileWindow = (props: Props) => {
         src = { genProfilePicUrl(picStr) } />
     }
 
-    ProfileImage = setProfileImage(props.user.profilePic)
+    const profilePicChangeHandler = (ev: ChangeEvent) => {
+
+    }
+
+    useEffect(() => {
+        setProfilePicComp(getProfileImage(props.user.profilePic))
+    }, [])
 
     return (
         <div className = "profile-window">
             <form className = "profile-pic">
                 <label htmlFor = "profile-pic-input">
-                    { ProfileImage }
+                    { ProfilePicComp }
                 </label>
-                <input id = "profile-pic-input" type = "file" />
+                <input onChange = { profilePicChangeHandler }
+                    ref = { profileInputRef }
+                    id = "profile-pic-input" type = "file" 
+                />
             </form>
             <div className = "user-info">
                 <h2>{props.user.username}</h2>
