@@ -35,7 +35,7 @@ const ProfileWindow = (props: Props) => {
                 { ProfileImage }
             </div>
             <div className = "user-info">
-                <h2>{}</h2>
+                <h2>{props.user.username}</h2>
             </div>
         </div>
     )
