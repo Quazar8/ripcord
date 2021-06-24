@@ -33,7 +33,6 @@ const ProfileWindow = (props: Props) => {
     const profilePicChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
         const imgOnload = () => {
             URL.revokeObjectURL(profileImgRef.current.src)
-            console.log('revoked')
         }
 
         const img = <img className = "image" 
