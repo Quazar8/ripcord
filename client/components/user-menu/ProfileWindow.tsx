@@ -7,6 +7,7 @@ type Props = Pick<UserMenuProps, 'user'>
 
 const ProfileWindow = (props: Props) => {
     const profileInputRef = useRef<HTMLInputElement>()
+    const profileImgRef = useRef<HTMLImageElement>()
 
     const [ProfilePicComp, setProfilePicComp] = useState<JSX.Element>(null)
 
@@ -29,8 +30,19 @@ const ProfileWindow = (props: Props) => {
         src = { genProfilePicUrl(picStr) } />
     }
 
-    const profilePicChangeHandler = (ev: ChangeEvent) => {
+    const profilePicChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
+        const imgOnload = () => {
+            URL.revokeObjectURL(profileImgRef.current.src)
+            console.log('revoked')
+        }
 
+        const img = <img className = "image" 
+            src = { URL.createObjectURL(ev.target.files[0]) }
+            ref = { profileImgRef }
+            onLoad = { imgOnload }
+        />
+
+        setProfilePicComp(img)
     }
 
     useEffect(() => {
