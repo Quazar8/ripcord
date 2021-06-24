@@ -10,9 +10,13 @@
             background-color: hsl(0, 0%, 23%);
             border-radius: 50%;
             border: 0.2vw solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             span {
-                font-size: 4vw;
+                font-size: 6vw;
+                transform: translateY(-0.4vw);
             }
         }
     }
