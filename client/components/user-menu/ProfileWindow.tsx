@@ -31,9 +31,12 @@ const ProfileWindow = (props: Props) => {
 
     return (
         <div className = "profile-window">
-            <div className = "profile-pic">
-                { ProfileImage }
-            </div>
+            <form className = "profile-pic">
+                <label htmlFor = "profile-pic-input">
+                    { ProfileImage }
+                </label>
+                <input id = "profile-pic-input" type = "file" />
+            </form>
             <div className = "user-info">
                 <h2>{props.user.username}</h2>
             </div>
