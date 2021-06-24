@@ -25,19 +25,25 @@
             height: 100%;
             background-color: hsl(0, 0%, 23%);
             border-radius: 50%;
-            border: 0.2vw solid white;
+            border: 0.4vw solid white;
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: border-color 0.2s linear;
+
+            &:hover {
+                cursor: pointer;
+                border-color: hsl(236, 100%, 39%);
+            }
 
             span {
                 font-size: 6vw;
                 transform: translateY(-0.4vw);
-                
-                &:hover {
-                    cursor: alias;
-                }
             }
+        }
+
+        #profile-pic-input {
+            display: none;
         }
     }
 }
