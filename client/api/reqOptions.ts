@@ -27,3 +27,16 @@ export const deleteOptionsInit = (): RequestInit => {
         credentials: 'include'
     }
 }
+
+export const postMultipartFormInit = (data: { [name: string]: any}): RequestInit => {
+    const formData = new FormData()
+
+    for (const name in data) {
+        formData.append(name, data[name])
+    }
+
+    return {
+        method: 'POST',
+        body: formData
+    }
+}
