@@ -16,6 +16,8 @@
     }
 
     .profile-pic {
+        position: relative;
+
         .image {
             width: 14vw;
             height: 14vw;
@@ -49,7 +51,20 @@
         }
 
         input[type=submit] {
-            color: white;
+            color: hsl(0, 0%, 100%);
+            background: linear-gradient(to right, hsl(81, 54%, 51%), hsl(120, 97%, 37%));
+            border: none;
+            font-size: 1.5vw;
+            padding: 2% 4%;
+            width:70%;
+            position: absolute;
+            right: -20%;
+            bottom: 5%;
+
+            &:hover {
+                cursor: pointer;
+                background: linear-gradient(to right, hsl(240, 49%, 69%), hsl(221, 57%, 50%));
+            }
         }
     }
 }
