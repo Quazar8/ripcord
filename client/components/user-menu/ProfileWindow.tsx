@@ -34,6 +34,7 @@ const ProfileWindow = (props: Props) => {
     const profilePicChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
         const imgOnload = () => {
             URL.revokeObjectURL(profileImgRef.current.src)
+            setShowSavePicBttn(true)
         }
 
         const img = <img className = "image" 
