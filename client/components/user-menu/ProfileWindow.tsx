@@ -10,6 +10,7 @@ const ProfileWindow = (props: Props) => {
     const profileImgRef = useRef<HTMLImageElement>()
 
     const [ProfilePicComp, setProfilePicComp] = useState<JSX.Element>(null)
+    const [showSavePicBttn, setShowSavePicBttn] = useState<boolean>(false)
 
     const getProfileImage = (picStr: string) => {
         if (!picStr) return <div className = "image"></div>
@@ -58,6 +59,11 @@ const ProfileWindow = (props: Props) => {
                     ref = { profileInputRef }
                     id = "profile-pic-input" type = "file" 
                 />
+                {
+                    showSavePicBttn
+                    ? <input type = "submit" value = "Save picture" />
+                    : null
+                }
             </form>
             <div className = "user-info">
                 <h2>{props.user.username}</h2>
