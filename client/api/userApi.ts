@@ -1,4 +1,4 @@
-import { baseUrl, postQueryOptions, getQueryOptions } from './reqOptions'
+import { baseUrl, postQueryOptions, getQueryOptions, postMultipartFormInit } from './reqOptions'
 import { LoginEntry } from '../../server/types/userTypes'
 import UserUrls from '../../server/routes/user/UserUrls'
 
@@ -14,6 +14,8 @@ import { LoginResponse,
 
 import { DeclineFriendRequestData,
          AcceptFriendRequestData } from '../../server/types/UserRequestData'
+import UploadUrls from '../../server/routes/upload/UploadUrls'
+import { ProfilePicResponse } from '../../server/types/UploadResponses'
 
 export const loginServer = async (data: LoginEntry): Promise<LoginResponse> => {
     const res = await fetch(baseUrl + UserUrls.login, postQueryOptions(data))
@@ -56,3 +58,7 @@ export const retrieveFriends = async (): Promise<GetFriendsRes> => {
 }
 
 export const genProfilePicUrl = (filename: string) => UserUrls.getProfilePicFn(filename)
+
+export const submitNewProfilePic = async (data: { profilePic: File }): Promise<ProfilePicResponse> => {
+    return (await fetch(baseUrl + UploadUrls.profilePic)).json()
+}

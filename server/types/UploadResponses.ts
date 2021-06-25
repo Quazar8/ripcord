@@ -1,0 +1,1 @@
+export { ProfilePicResponse } from '../routes/upload/profilePicHandler'
