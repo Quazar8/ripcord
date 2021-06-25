@@ -36,7 +36,6 @@
                 cursor: pointer;
                 border-color: hsl(236, 100%, 39%);
             }
-            
 
             span {
                 font-size: 6vw;
@@ -46,6 +45,13 @@
 
         #profile-pic-input {
             display: none;
+        }
+
+        label {
+            display: block;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
         }
     }
 }
