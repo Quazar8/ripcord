@@ -60,5 +60,5 @@ export const retrieveFriends = async (): Promise<GetFriendsRes> => {
 export const genProfilePicUrl = (filename: string) => UserUrls.getProfilePicFn(filename)
 
 export const submitNewProfilePic = async (data: { profilePic: File }): Promise<ProfilePicResponse> => {
-    return (await fetch(baseUrl + UploadUrls.profilePic)).json()
+    return (await fetch(baseUrl + UploadUrls.profilePic, postMultipartFormInit(data))).json()
 }
