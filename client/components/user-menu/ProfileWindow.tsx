@@ -1,13 +1,15 @@
-import React, { ChangeEvent, useRef, useEffect, useState } from 'react'
-import { genProfilePicUrl } from '../../api/userApi'
+import React, { ChangeEvent, useRef, useEffect, useState, FormEvent } from 'react'
+import { genProfilePicUrl, submitNewProfilePic } from '../../api/userApi'
 import { ProfilePicJson } from '../../../server/types/UserTypes'
 import { UserMenuProps } from './UserMenu'
+import { resHasError } from '../../api/utils'
 
 type Props = Pick<UserMenuProps, 'user'>
 
 const ProfileWindow = (props: Props) => {
     const profileInputRef = useRef<HTMLInputElement>()
     const profileImgRef = useRef<HTMLImageElement>()
+    const profileFileRef = useRef<File>()
 
     const [ProfilePicComp, setProfilePicComp] = useState<JSX.Element>(null)
     const [showSavePicBttn, setShowSavePicBttn] = useState<boolean>(false)
@@ -43,7 +45,28 @@ const ProfileWindow = (props: Props) => {
             onLoad = { imgOnload }
         />
 
+        profileFileRef.current = ev.target.files[0]
+
         setProfilePicComp(img)
+    }
+
+    const handleProfilePicSubmit = async (ev: FormEvent) => {
+        ev.preventDefault()
+
+        if (!profileFileRef.current) return
+
+        const data = {
+            profilePic: profileFileRef.current
+        }
+
+        const res = await submitNewProfilePic(data)
+
+        if (resHasError(res)) {
+            console.log('Error uploading profile pic')
+            return
+        }
+
+        setShowSavePicBttn(false)
     }
 
     useEffect(() => {
@@ -52,7 +75,7 @@ const ProfileWindow = (props: Props) => {
 
     return (
         <div className = "profile-window">
-            <form className = "profile-pic">
+            <form onSubmit = { handleProfilePicSubmit } className = "profile-pic">
                 <label htmlFor = "profile-pic-input">
                     { ProfilePicComp }
                 </label>
