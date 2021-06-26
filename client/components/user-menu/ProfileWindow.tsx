@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useEffect, useState, FormEvent } from 'react'
+import React, { ChangeEvent, useRef, useEffect, useState, FormEvent, MouseEvent, DragEvent } from 'react'
 import { genProfilePicUrl, submitNewProfilePic } from '../../api/userApi'
 import { ProfilePicJson } from '../../../server/types/UserTypes'
 import { UserMenuProps } from './UserMenu'
@@ -33,21 +33,24 @@ const ProfileWindow = (props: Props) => {
         src = { genProfilePicUrl(picStr) } />
     }
 
-    const profilePicChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
+    const setChosenProfileImage = (file: File) => {
         const imgOnload = () => {
             URL.revokeObjectURL(profileImgRef.current.src)
             setShowSavePicBttn(true)
         }
 
         const img = <img className = "image" 
-            src = { URL.createObjectURL(ev.target.files[0]) }
+            src = { URL.createObjectURL(file) }
             ref = { profileImgRef }
             onLoad = { imgOnload }
         />
 
-        profileFileRef.current = ev.target.files[0]
-
         setProfilePicComp(img)
+    }
+
+    const profilePicChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
+        profileFileRef.current = ev.target.files[0]
+        setChosenProfileImage(ev.target.files[0])
     }
 
     const handleProfilePicSubmit = async (ev: FormEvent) => {
@@ -69,6 +72,19 @@ const ProfileWindow = (props: Props) => {
         setShowSavePicBttn(false)
     }
 
+    const handleProfileMouseDrag = (ev: MouseEvent) => {
+        ev.preventDefault()
+    }
+
+    const handleProfileMouseDrop = (ev: DragEvent) => {
+        ev.preventDefault()
+
+        if (ev.dataTransfer.files[0]) {
+            profileFileRef.current = ev.dataTransfer.files[0]
+            setChosenProfileImage(ev.dataTransfer.files[0])
+        }
+    }
+
     useEffect(() => {
         setProfilePicComp(getProfileImage(props.user.profilePic))
     }, [])
@@ -76,7 +92,10 @@ const ProfileWindow = (props: Props) => {
     return (
         <div className = "profile-window">
             <form onSubmit = { handleProfilePicSubmit } className = "profile-pic">
-                <label htmlFor = "profile-pic-input">
+                <label htmlFor = "profile-pic-input" 
+                    onDragOver = { handleProfileMouseDrag }
+                    onDrop = { handleProfileMouseDrop }
+                >
                     { ProfilePicComp }
                 </label>
                 <input onChange = { profilePicChangeHandler }
