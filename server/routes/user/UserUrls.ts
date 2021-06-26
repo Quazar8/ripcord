@@ -10,5 +10,8 @@ export default {
     getFriends: '/user/friends/list',
     getProfilePicFn: (filename: string) => (
         `/static/profilePics/${filename}`
+    ),
+    unfriendUserFn: (userId: string) => (
+        `/user/unfriend/${userId}`
     )
 }
