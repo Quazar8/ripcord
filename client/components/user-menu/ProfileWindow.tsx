@@ -13,6 +13,7 @@ const ProfileWindow = (props: Props) => {
 
     const [ProfilePicComp, setProfilePicComp] = useState<JSX.Element>(null)
     const [showSavePicBttn, setShowSavePicBttn] = useState<boolean>(false)
+    const [profileLabelClass, setProfileLabelClass] = useState<string>('')
 
     const getProfileImage = (picStr: string) => {
         if (!picStr) return <div className = "image"></div>
@@ -29,8 +30,12 @@ const ProfileWindow = (props: Props) => {
             </div>
         }
 
-        return <img className = "image" 
+        return <img className = "image"
         src = { genProfilePicUrl(picStr) } />
+    }
+
+    const removeDragOverStyle = () => {
+        setProfileLabelClass('')
     }
 
     const setChosenProfileImage = (file: File) => {
@@ -39,13 +44,14 @@ const ProfileWindow = (props: Props) => {
             setShowSavePicBttn(true)
         }
 
-        const img = <img className = "image" 
+        const img = <img className = "image"
             src = { URL.createObjectURL(file) }
             ref = { profileImgRef }
             onLoad = { imgOnload }
         />
 
         setProfilePicComp(img)
+        removeDragOverStyle()
     }
 
     const profilePicChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
@@ -72,8 +78,9 @@ const ProfileWindow = (props: Props) => {
         setShowSavePicBttn(false)
     }
 
-    const handleProfileMouseDrag = (ev: MouseEvent) => {
+    const handleProfileDragOver = (ev: MouseEvent) => {
         ev.preventDefault()
+        setProfileLabelClass('dragged-over')
     }
 
     const handleProfileMouseDrop = (ev: DragEvent) => {
@@ -89,12 +96,18 @@ const ProfileWindow = (props: Props) => {
         setProfilePicComp(getProfileImage(props.user.profilePic))
     }, [])
 
+    useEffect(() => {
+        console.log(profileLabelClass)
+    })
+
     return (
         <div className = "profile-window">
             <form onSubmit = { handleProfilePicSubmit } className = "profile-pic">
                 <label htmlFor = "profile-pic-input" 
-                    onDragOver = { handleProfileMouseDrag }
+                    onDragLeave = { removeDragOverStyle }
+                    onDragOver = { handleProfileDragOver }
                     onDrop = { handleProfileMouseDrop }
+                    className = { profileLabelClass }
                 >
                     { ProfilePicComp }
                 </label>
