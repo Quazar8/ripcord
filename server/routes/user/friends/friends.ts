@@ -23,6 +23,10 @@ export type GetFriendsRes = ServerResponse<{
 
 export type NewIncFriendPayload = PendingFriendInfo
 
+export type UnfriendUserRes = ServerResponse<{
+    userUnfriend: boolean
+}>
+
 export const addFriend = async (req: ReqWUser, res: Response) => {
     let response: AddFriendRes = null
     let status: number = 200
@@ -184,6 +188,6 @@ export const unfriendUser = (req: ReqWUser, res: Response) => {
         res.send(errorResponse('Missing user id'))
         return
     }
-    
+
     res.send(successResponse({}))
 } 
