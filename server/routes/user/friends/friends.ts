@@ -179,5 +179,11 @@ export const getFriends = async (req: ReqWUser, res: Response) => {
 }
 
 export const unfriendUser = (req: ReqWUser, res: Response) => {
+    const toUnfriendId = req.params.userId
+    if (!toUnfriendId) {
+        res.send(errorResponse('Missing user id'))
+        return
+    }
+    
     res.send(successResponse({}))
 } 
