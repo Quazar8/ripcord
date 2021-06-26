@@ -5,7 +5,7 @@ import loginHandler from './login.js'
 import registerHandler from './register.js'
 import { userInfoFromToken } from './userInfo.js'
 import { logoutHandler } from './logout.js'
-import { addFriend, pendingFriendRequests, getFriends } from './friends/friends.js'
+import { addFriend, pendingFriendRequests, getFriends, unfriendUser } from './friends/friends.js'
 import { acceptFriendRequest, declineRequest } from './friends/friendRequests.js'
 import UserUrls from './UserUrls.js'
 
@@ -27,6 +27,8 @@ const enableUserRoutes = (app: Application) => {
     app.post(UserUrls.acceptFriendRequest, authenticateUser, acceptFriendRequest)
 
     app.get(UserUrls.getFriends, authenticateUser, getFriends)
+
+    app.delete(UserUrls.unfriendUserFn(':userId'), authenticateUser, unfriendUser)
 }
 
 export default enableUserRoutes

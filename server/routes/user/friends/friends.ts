@@ -177,3 +177,7 @@ export const getFriends = async (req: ReqWUser, res: Response) => {
 
     res.status(status).send(response)
 }
+
+export const unfriendUser = (req: ReqWUser, res: Response) => {
+    res.send(successResponse({}))
+} 
