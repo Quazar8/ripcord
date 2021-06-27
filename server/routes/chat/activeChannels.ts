@@ -6,6 +6,7 @@ import { Channel } from "../../db/models/channel.js";
 import { isUserDoc, UserDoc } from "../../types/UserTypes.js";
 import { User } from "../../db/models/user.js";
 import { isValidObjectId } from '../../utils.js'
+import { Types } from "mongoose";
 
 export type GetActiveChannelsRes = ServerResponse<{
     activeChannels: ActiveChannelInfo[]
@@ -22,6 +23,7 @@ export type ActiveChannelInfoRes = ServerResponse<{
 type ActiveChannelInfoWDate = {
     channelInfo: ActiveChannelInfo
     lastMsgDate: Date
+    objectId: Types.ObjectId
 }
 
 const createActiveChannelInfo = async (channel: ChannelDoc, byUser: UserDoc): Promise<ActiveChannelInfo> => {
@@ -63,9 +65,10 @@ export const getActiveChannels = async (req: ReqWUser, res: Response) => {
         if (isChannelDoc(channel)) {
             const channelInfo = await createActiveChannelInfo(channel, req.user)
             if (channelInfo) {
-                data[data.length - i - 1] = {
+                data[i] = {
                     channelInfo,
-                    lastMsgDate: channel.messages[channel.messages.length - 1].date
+                    lastMsgDate: channel.messages[channel.messages.length - 1].date,
+                    objectId: channel._id
                 }
             }
         }
@@ -75,8 +78,11 @@ export const getActiveChannels = async (req: ReqWUser, res: Response) => {
         return a.lastMsgDate > b.lastMsgDate ? -1 : 0
     }
 
-    const resultChannels: ActiveChannelInfo[] = 
-        data.sort(sortFunc).map((a) => a.channelInfo)
+    data.sort(sortFunc)
+    const resultChannels = data.map(a => a.channelInfo)
+
+    req.user.activeChannels = data.map(a => a.objectId)
+    req.user.save()
 
     response = successResponse({
         activeChannels: resultChannels
