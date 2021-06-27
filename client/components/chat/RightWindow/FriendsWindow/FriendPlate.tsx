@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { FriendClientInfo, UserStatus } from '../../../../../server/types/UserTypes'
 import ProfilePic from '../../../user/ProfilePic'
 import { RightWindowContext } from '../RightWindow'
+import FriendDotMenu from './FriendDotMenu'
 
 type Props = {
     friend: FriendClientInfo
@@ -28,6 +29,7 @@ const FriendPlate = ({ friend }: Props) => {
                 ? <div className = "status"></div>
                 : null
             }
+            <FriendDotMenu />
         </div>
     )
 }
