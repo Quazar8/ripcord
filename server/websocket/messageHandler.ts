@@ -89,12 +89,17 @@ const addToActiveChannels = async (byUser: UserDoc,
     }
 }
 
-const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) => {
-    if (!payload.content || !byUser || !payload.recipientId) {
+const handleChatMessage = async (payload: ChatMessagePayload, byUserId: Types.ObjectId) => {
+    if (!payload.content || !byUserId || !payload.recipientId) {
         return
     }
 
     try {
+        const byUser = await User.findById(byUserId)
+        if (!isUserDoc(byUser)) {
+            return
+        }
+
         const receiver = await User.findById(payload.recipientId)
         if (!isUserDoc(receiver)) {
             return
@@ -185,22 +190,10 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUser: UserDoc) =
 }
 
 const messageHandler = async (wsMsg: WSMessage<any>, userId: Types.ObjectId) => {
-    try {
-        const dbUser = await User.findById(userId)
-
-        if (!isUserDoc(dbUser)) {
-            return
-        }
-
-        switch (wsMsg.type) {
-            case WSDataType.CHAT_MESSAGE:
-                handleChatMessage(wsMsg.payload, dbUser);break;
-            default: break;
-        }
-    }
-    catch (err) {
-        console.log('socket message handler')
-        console.error(err)
+    switch (wsMsg.type) {
+        case WSDataType.CHAT_MESSAGE:
+            handleChatMessage(wsMsg.payload, userId);break;
+        default: break;
     }
 }
 
