@@ -210,6 +210,13 @@ export const unfriendUser = async (req: ReqWUser, res: Response) => {
             return
         }
 
+        req.user.friendsIds.splice(friendIndex, 1)
+        await req.user.save()
+
+        response = successResponse({
+            userUnfriend: true
+        })
+        res.status(200).send(response)
     }
     catch (err) {
         response = errorResponse('Something went wrong')
