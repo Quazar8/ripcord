@@ -105,6 +105,10 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUserId: Types.Ob
             return
         }
 
+        if (receiver.friendsIds.indexOf(byUser._id) < 0) {
+            return
+        }
+
         let channel: Document = null
 
         if (!receiver.channels) receiver.channels = {}
