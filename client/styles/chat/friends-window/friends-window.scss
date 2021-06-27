@@ -2,6 +2,7 @@
 @use 'pending-subwindow';
 @use 'friends-list';
 @use 'add-friend';
+@use 'friend-dot-menu';
 
 .friends-window {
     background: hsl(0, 7%, 29%);

@@ -1,0 +1,32 @@
+.friend-dot-menu-container {
+    position: relative;
+
+    .friend-menu-button {
+        background: inherit;
+        border: none;
+        font-size: 0.7vw;
+    }
+
+    .menu {
+        border: 0.2vw solid white;
+        position: absolute;
+        width: 220%;
+        margin-top: 20%;
+        left: -120%;
+
+        button {
+            border: none;
+            background: inherit;
+            color: white;
+            padding: 5%;
+            width: 100%;
+            font-size: 1.2vw;
+
+            &:hover {
+                cursor: pointer;
+                background: white;
+                color: hsl(0, 0%, 30%);
+            }
+        }
+    }
+}
