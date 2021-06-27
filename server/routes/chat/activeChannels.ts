@@ -19,6 +19,10 @@ export type ActiveChannelInfoRes = ServerResponse<{
     channelInfo: ActiveChannelInfo
 }>
 
+type ActiveChannelInfoWDate = {
+    channelInfo: ActiveChannelInfo
+    lastMsgDate: Date
+}
 
 const createActiveChannelInfo = async (channel: ChannelDoc, byUser: UserDoc): Promise<ActiveChannelInfo> => {
     let recipient = null
@@ -50,18 +54,32 @@ export const getActiveChannels = async (req: ReqWUser, res: Response) => {
     }
 
     const activeChannels = req.user.activeChannels
-    const data: ActiveChannelInfo[] = new Array(activeChannels.length)
+    const data: ActiveChannelInfoWDate[] = new Array(activeChannels.length)
+
     for (let i = 0; i < activeChannels.length; i++) {
         const id = activeChannels[i]
         const channel = await Channel.findById(id)
+
         if (isChannelDoc(channel)) {
             const channelInfo = await createActiveChannelInfo(channel, req.user)
-            if (channelInfo) data[activeChannels.length - 1 - i] = channelInfo
+            if (channelInfo) {
+                data[data.length - i - 1] = {
+                    channelInfo,
+                    lastMsgDate: channel.messages[channel.messages.length - 1].date
+                }
+            }
         }
     }
 
+    const sortFunc = (a: ActiveChannelInfoWDate, b: ActiveChannelInfoWDate) => {
+        return a.lastMsgDate > b.lastMsgDate ? -1 : 0
+    }
+
+    const resultChannels: ActiveChannelInfo[] = 
+        data.sort(sortFunc).map((a) => a.channelInfo)
+
     response = successResponse({
-        activeChannels: data
+        activeChannels: resultChannels
     })
 
     res.send(response)
