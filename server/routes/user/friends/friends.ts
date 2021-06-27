@@ -5,6 +5,7 @@ import { onlineUsers, sendSocketMsg } from '../../../websocket/onlineUsers.js'
 import { ReqWUser } from '../../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../../types/WebsocketTypes.js'
 import { FriendClientInfo, PendingFriendInfo, isUserDoc, UserStatus, UserDoc } from "../../../types/UserTypes.js";
+import mongoose, { Types } from "mongoose";
 
 export type AddFriendRes = ServerResponse<{
     found: boolean,
@@ -182,12 +183,36 @@ export const getFriends = async (req: ReqWUser, res: Response) => {
     res.status(status).send(response)
 }
 
-export const unfriendUser = (req: ReqWUser, res: Response) => {
+export const unfriendUser = async (req: ReqWUser, res: Response) => {
+    let response: UnfriendUserRes = null
     const toUnfriendId = req.params.userId
-    if (!toUnfriendId) {
-        res.send(errorResponse('Missing user id'))
+    if (!toUnfriendId || !mongoose.isValidObjectId(toUnfriendId)) {
+        response = errorResponse('Missing user id')
+        res.status(400).send(response)
         return
     }
 
-    res.send(successResponse({}))
+    const getIndex = (userId: string, arr: Types.ObjectId[]): number => {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].toHexString() === userId) {
+                return i
+            }
+        }
+
+        return -1
+    }
+
+    try {
+        const friendIndex = getIndex(toUnfriendId, req.user.id)
+        if (friendIndex < 0) {
+            response = errorResponse('Invalid user id')
+            res.status(400).send(response)
+            return
+        }
+
+    }
+    catch (err) {
+        response = errorResponse('Something went wrong')
+        res.status(500).send(response)
+    }
 } 
