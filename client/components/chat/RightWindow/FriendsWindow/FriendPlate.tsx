@@ -29,7 +29,7 @@ const FriendPlate = ({ friend }: Props) => {
                 ? <div className = "status"></div>
                 : null
             }
-            <FriendDotMenu />
+            <FriendDotMenu friendId = { friend.id }/>
         </div>
     )
 }

@@ -1,6 +1,10 @@
 import React from 'react'
 
-const FriendDotMenu = () => {
+type Props = {
+    friendId: string
+}
+
+const FriendDotMenu = (props: Props) => {
     return (
         <div className = "friend-dot-menu-container">
             <button className = "friend-menu-button">
