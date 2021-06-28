@@ -203,7 +203,7 @@ export const unfriendUser = async (req: ReqWUser, res: Response) => {
     }
 
     try {
-        let friendIndex = getIndex(toUnfriendId, req.user.id)
+        let friendIndex = getIndex(toUnfriendId, req.user.friendsIds)
         if (friendIndex < 0) {
             response = errorResponse('Invalid user id')
             res.status(400).send(response)
@@ -235,6 +235,7 @@ export const unfriendUser = async (req: ReqWUser, res: Response) => {
         res.status(200).send(response)
     }
     catch (err) {
+        console.error(err)
         response = errorResponse('Something went wrong')
         res.status(500).send(response)
     }
