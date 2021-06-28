@@ -42,7 +42,7 @@ const FriendDotMenu = (props: Props) => {
             </button>
             {
                 showMenu
-                ? <div ref = { divMenuRef } className = "menu">
+                ? <div tabIndex = {1} onBlur = { hideMenu } className = "menu">
                     <button onClick = { unfriendUser }>Unfriend</button>
                 </div>
                 : null
