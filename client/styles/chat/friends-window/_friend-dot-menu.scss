@@ -1,10 +1,16 @@
 .friend-dot-menu-container {
     position: relative;
 
-    .friend-menu-button {
+    .dot-button {
         background: inherit;
         border: none;
         font-size: 0.7vw;
+        padding: 20%;
+
+        &:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
     }
 
     .menu {

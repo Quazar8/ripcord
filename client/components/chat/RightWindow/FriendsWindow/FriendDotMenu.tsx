@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react'
+import React, { MouseEvent, useState } from 'react'
 import { requestUserUnfriend } from '../../../../api/userApi'
 import { resHasError } from '../../../../api/utils'
 
@@ -7,6 +7,8 @@ type Props = {
 }
 
 const FriendDotMenu = (props: Props) => {
+    const [showMenu, setShowMenu] = useState<boolean>(false)
+
     const unfriendUser = async (ev: MouseEvent) => {
         ev.stopPropagation()
 
@@ -20,16 +22,25 @@ const FriendDotMenu = (props: Props) => {
         console.log('Unfriending success')
     }
 
+    const toggleMenu = (ev: MouseEvent) => {
+        ev.stopPropagation()
+        setShowMenu(!showMenu)
+    }
+
     return (
         <div className = "friend-dot-menu-container">
-            <button className = "friend-menu-button">
+            <button onClick = { toggleMenu } className = "dot-button">
                 <span>&#9898;</span>
                 <span>&#9898;</span>
                 <span>&#9898;</span>
             </button>
-            <div className = "menu">
-                <button onClick = { unfriendUser }>Unfriend</button>
-            </div>
+            {
+                showMenu
+                ? <div className = "menu">
+                    <button onClick = { unfriendUser }>Unfriend</button>
+                </div>
+                : null
+            }
         </div>
     )
 }
