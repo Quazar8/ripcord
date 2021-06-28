@@ -203,15 +203,31 @@ export const unfriendUser = async (req: ReqWUser, res: Response) => {
     }
 
     try {
-        const friendIndex = getIndex(toUnfriendId, req.user.id)
+        let friendIndex = getIndex(toUnfriendId, req.user.id)
         if (friendIndex < 0) {
             response = errorResponse('Invalid user id')
             res.status(400).send(response)
             return
         }
-
         req.user.friendsIds.splice(friendIndex, 1)
+
+        const toBeUnfriended = await User.findById(toUnfriendId)
+        if (!isUserDoc(toBeUnfriended)) {
+            response = errorResponse('Something went wrong')
+            res.status(500).send(response)
+            return
+        }
+
+        friendIndex = getIndex(req.user._id.toHexString(), toBeUnfriended.friendsIds)
+        if (friendIndex < 0) {
+            response = errorResponse('Something went wrong')
+            res.status(500).send(response)
+            return
+        }
+        toBeUnfriended.friendsIds.splice(friendIndex, 1)
+
         await req.user.save()
+        await toBeUnfriended.save()
 
         response = successResponse({
             userUnfriend: true
