@@ -1,7 +1,8 @@
-import { baseUrl, postQueryOptions, getQueryOptions, postMultipartFormInit } from './reqOptions'
-import { LoginEntry } from '../../server/types/userTypes'
+import { baseUrl, postQueryOptions, getQueryOptions, postMultipartFormInit, deleteOptionsInit } from './reqOptions'
 import UserUrls from '../../server/routes/user/UserUrls'
+import UploadUrls from '../../server/routes/upload/UploadUrls'
 
+import { LoginEntry } from '../../server/types/userTypes'
 import { LoginResponse,
          RegisterResponse, 
          LogoutResponse, 
@@ -10,11 +11,11 @@ import { LoginResponse,
          PendingFriendsRes, 
          DeclineFriendRequestRes,
          AcceptFriendRequestRes,
-         GetFriendsRes } from '../../server/routes/user/ResponseTypes'
+         GetFriendsRes, 
+         UnfriendUserRes} from '../../server/routes/user/ResponseTypes'
 
 import { DeclineFriendRequestData,
          AcceptFriendRequestData } from '../../server/types/UserRequestData'
-import UploadUrls from '../../server/routes/upload/UploadUrls'
 import { ProfilePicResponse } from '../../server/types/UploadResponses'
 
 export const loginServer = async (data: LoginEntry): Promise<LoginResponse> => {
@@ -61,4 +62,8 @@ export const genProfilePicUrl = (filename: string) => UserUrls.getProfilePicFn(f
 
 export const submitNewProfilePic = async (data: { profilePic: File }): Promise<ProfilePicResponse> => {
     return (await fetch(baseUrl + UploadUrls.profilePic, postMultipartFormInit(data))).json()
+}
+
+export const requestUserUnfriend = async (targetId: string): Promise<UnfriendUserRes> => {
+    return (await fetch(baseUrl + UserUrls.unfriendUserFn(targetId), deleteOptionsInit())).json()
 }
