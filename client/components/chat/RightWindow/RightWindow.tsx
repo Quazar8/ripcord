@@ -13,7 +13,8 @@ export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
         | 'appendActiveChannelFn' | 'moveActiveChToTopFn'
         | 'fillFriendRequestsFn' | 'removeFriendRequestFn'
         | 'pendingRequests' | 'clearPendingButtonNotifFn'
-        | 'friendsList' | 'fillFriendsListFn'> & {
+        | 'friendsList' | 'fillFriendsListFn'
+        | 'removeFriendFromListFn'> & {
             toggleChatWRecipientId: (recipientId: string) => void
             showFriendsWindow: boolean,
             activeChannels: ActiveChannelInfo[]
@@ -23,7 +24,8 @@ type RightContextType = Pick<RightWindowProps, 'dispNotification'
      | 'toggleChatWRecipientId' | 'fillFriendRequestsFn'
      | 'friendRequests' | 'removeFriendRequestFn'
      | 'pendingRequests' | 'clearPendingButtonNotifFn'
-     | 'friendsList' | 'fillFriendsListFn'>
+     | 'friendsList' | 'fillFriendsListFn'
+     | 'removeFriendFromListFn'>
 
 export const RightWindowContext = createContext<RightContextType>({
     friendRequests: { incoming: [], outgoing: []},
@@ -34,7 +36,8 @@ export const RightWindowContext = createContext<RightContextType>({
     fillFriendRequestsFn: () => {},
     removeFriendRequestFn: () => {},
     clearPendingButtonNotifFn: () => {},
-    fillFriendsListFn: () => {}
+    fillFriendsListFn: () => {},
+    removeFriendFromListFn: () => {}
 }) 
 
 const RightWindow = (props: RightWindowProps) => {
@@ -54,7 +57,8 @@ const RightWindow = (props: RightWindowProps) => {
         removeFriendRequestFn: props.removeFriendRequestFn,
         pendingRequests: props.pendingRequests,
         clearPendingButtonNotifFn: props.clearPendingButtonNotifFn,
-        fillFriendsListFn: props.fillFriendsListFn
+        fillFriendsListFn: props.fillFriendsListFn,
+        removeFriendFromListFn: props.removeFriendFromListFn
     }
 
     return (

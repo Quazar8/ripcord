@@ -27,6 +27,7 @@ import { clearFriendsButtonNotifAction,
          clearPendingNotifAmountAction,
          fillFriendsListAction,
          fillPendingRequestsAction,
+         removeFriendFromListAction,
          removeFriendRequestAction } from '../../store/friends/friendsActions'
 
 type ChatStateProps = {
@@ -63,6 +64,7 @@ type ChatDispProps = {
     clearPendingButtonNotifFn: () => void
     clearActiveChannelNotifFn: (channelId: string) => void
     fillFriendsListFn: (listObj: FriendsState['friendsList']) => void
+    removeFriendFromListFn: (id: string) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -154,6 +156,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 clearPendingButtonNotifFn = { props.clearPendingButtonNotifFn }
                 friendsList = { props.friendsList }
                 fillFriendsListFn = { props.fillFriendsListFn }
+                removeFriendFromListFn = { props.removeFriendFromListFn }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -238,6 +241,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     fillFriendsListFn: (list: FriendsState['friendsList']) => {
         dispatch(fillFriendsListAction(list))
+    },
+    removeFriendFromListFn: (friendId: string) => {
+        dispatch(removeFriendFromListAction(friendId))
     }
 })
 
