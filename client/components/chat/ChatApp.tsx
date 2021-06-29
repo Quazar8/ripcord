@@ -152,6 +152,8 @@ const ChatAppView = (props: ChatAppProps) => {
                 removeFriendRequestFn = { props.removeFriendRequestFn }
                 pendingRequests = { props.pendingRequests }
                 clearPendingButtonNotifFn = { props.clearPendingButtonNotifFn }
+                friendsList = { props.friendsList }
+                fillFriendsListFn = { props.fillFriendsListFn }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }

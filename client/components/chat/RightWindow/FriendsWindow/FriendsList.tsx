@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { FriendClientInfo } from '../../../../../server/types/userTypes'
+import React, { useEffect, useContext } from 'react'
  
 import { retrieveFriends } from '../../../../api/userApi'
 import { resHasError } from '../../../../api/utils'
+import { RightWindowContext } from '../RightWindow'
 
 import FriendsPlate from './FriendPlate'
 
 const FriendsList = () => {
-    const [friendsList, setFriendsList] = useState<{
-        online: FriendClientInfo[],
-        offline: FriendClientInfo[]
-    }>({
-        online: [],
-        offline: []
-    })
+    const context = useContext(RightWindowContext)
+    const friendsList = context.friendsList
 
     const fetchFriends = async () => {
         const res = await retrieveFriends()
@@ -22,7 +17,7 @@ const FriendsList = () => {
             return
         }
 
-        setFriendsList(res.data)
+        context.fillFriendsListFn(res.data)
     }
 
     useEffect(() => {
