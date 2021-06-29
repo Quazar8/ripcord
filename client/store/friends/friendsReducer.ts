@@ -110,6 +110,27 @@ const fillFriendsList = (state: FriendsState, friendsList: FriendsState['friends
     }
 }
 
+const removeFromFriendsList = (state: FriendsState, friendId: string) => {
+    const newState = { ...state }
+
+    const spliceArr = (arr: FriendClientInfo[], friendId: string) => {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id === friendId) {
+                arr.splice(i, 1)
+                return true
+            }
+        }
+
+        return false
+    }
+
+    const isOnlineSpliced = spliceArr(newState.friendsList.online, friendId)
+    if (isOnlineSpliced) return newState
+    
+    spliceArr(newState.friendsList.offline, friendId)
+    return newState
+}
+
 export const friendsReducer = (state: FriendsState = friendsStateInit,
     action: FriendsAction): FriendsState => {
     switch (action.type) {
@@ -127,6 +148,8 @@ export const friendsReducer = (state: FriendsState = friendsStateInit,
             return addIncFriendRequest(state, action.payload)
         case FriendsActionTypes.FILL_FRIENDS_LIST:
             return fillFriendsList(state, action.payload)
+        case FriendsActionTypes.REMOVE_FROM_FRIEND_LIST:
+            return removeFromFriendsList(state, action.payload)
         default: return state
     }
 }

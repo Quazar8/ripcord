@@ -49,3 +49,8 @@ export const fillFriendsListAction = (friendsList: FriendsState['friendsList']):
     type: FriendsActionTypes.FILL_FRIENDS_LIST,
     payload: friendsList
 })
+
+export const removeFriendFromListAction = (friendsId: string): FriendsAction => ({
+    type: FriendsActionTypes.REMOVE_FROM_FRIEND_LIST,
+    payload: friendsId
+})
