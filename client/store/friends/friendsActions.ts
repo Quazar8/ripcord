@@ -1,6 +1,6 @@
 import { PendingFriendInfo } from "../../../server/types/userTypes"
 import { Action } from "../storeComponents/StoreTypes"
-import { FriendRequestsState } from "./friendsReducer"
+import { FriendRequestsState, FriendsState } from "./friendsReducer"
 
 export enum FriendsActionTypes {
     FILL_PENDING_REQUESTS = "FILL_PENDING_REQUESTS",
@@ -9,6 +9,8 @@ export enum FriendsActionTypes {
     CLEAR_PENDING_NOTIF_AMOUNT = "CLEAR_PENDING_NOTIF_AMOUNT",
     CLEAR_FRIENDS_BUTTON_NOTIF = "CLEAR_FRIENDS_BUTTON_NOTIF",
     ADD_INC_FRIEND_REQUEST = "ADD_INC_FRIEND_REQUEST",
+    REMOVE_FROM_FRIEND_LIST = "REMOVE_FROM_FRIEND_LIST",
+    FILL_FRIENDS_LIST = "FILL_FRIENDS_LIST",
 }
 
 export type FriendsAction = Action<FriendsActionTypes, any>
@@ -41,4 +43,9 @@ export const clearFriendsButtonNotifAction = (): FriendsAction => ({
 export const addIncFriendRequestAction = (pendingReq: PendingFriendInfo): FriendsAction => ({
     type: FriendsActionTypes.ADD_INC_FRIEND_REQUEST,
     payload: pendingReq
+})
+
+export const fillFriendsListAction = (friendsList: FriendsState['friendsList']): FriendsAction => ({
+    type: FriendsActionTypes.FILL_FRIENDS_LIST,
+    payload: friendsList
 })

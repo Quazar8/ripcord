@@ -1,15 +1,19 @@
-import { PendingFriendInfo } from "../../../server/types/UserTypes"
+import { FriendClientInfo, PendingFriendInfo } from "../../../server/types/UserTypes"
 import { FriendsAction, FriendsActionTypes } from "./friendsActions"
 
 export type FriendRequestsState = {
     incoming: PendingFriendInfo[]
     outgoing: PendingFriendInfo[]
-} 
+}
 
 export type FriendsState = {
-    friendRequests: FriendRequestsState,
-    friendWindowNotifs: number,
+    friendRequests: FriendRequestsState
+    friendWindowNotifs: number
     pendingNotifs: number
+    friendsList: {
+        online: FriendClientInfo[],
+        offline: FriendClientInfo[]
+    }
 }
 
 export const friendsStateInit: FriendsState = {
@@ -18,7 +22,11 @@ export const friendsStateInit: FriendsState = {
         outgoing: []
     },
     friendWindowNotifs: 0,
-    pendingNotifs: 0
+    pendingNotifs: 0,
+    friendsList: {
+        online: [],
+        offline: []
+    }
 }
 
 const fillFriendRequests = (state: FriendsState, requests: FriendRequestsState): FriendsState => {
@@ -95,6 +103,13 @@ const addIncFriendRequest = (state: FriendsState, info: PendingFriendInfo) => {
     return newState
 }
 
+const fillFriendsList = (state: FriendsState, friendsList: FriendsState['friendsList']) => {
+    return {
+        ...state,
+        friendsList
+    }
+}
+
 export const friendsReducer = (state: FriendsState = friendsStateInit,
     action: FriendsAction): FriendsState => {
     switch (action.type) {
@@ -110,6 +125,8 @@ export const friendsReducer = (state: FriendsState = friendsStateInit,
             return clearFriendsButtonNotif(state)
         case FriendsActionTypes.ADD_INC_FRIEND_REQUEST:
             return addIncFriendRequest(state, action.payload)
+        case FriendsActionTypes.FILL_FRIENDS_LIST:
+            return fillFriendsList(state, action.payload)
         default: return state
     }
 }
