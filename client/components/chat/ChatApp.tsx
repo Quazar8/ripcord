@@ -22,9 +22,10 @@ import { addActiveChannelAction, changeChannelIdAction,
          updateChatChannelAction } from '../../store/chat/chatActions'
 import { ChatChannelState } from '../../store/chat/chatReducer'
 import { ClientActiveChannel, PendingMsg } from '../../types/ChatClientTypes'
-import { FriendRequestsState } from '../../store/friends/friendsReducer'
+import { FriendRequestsState, FriendsState } from '../../store/friends/friendsReducer'
 import { clearFriendsButtonNotifAction,
          clearPendingNotifAmountAction,
+         fillFriendsListAction,
          fillPendingRequestsAction,
          removeFriendRequestAction } from '../../store/friends/friendsActions'
 
@@ -38,6 +39,7 @@ type ChatStateProps = {
     activeChannels: ClientActiveChannel[]
     channelInfo: ChatChannelState
     friendRequests: FriendRequestsState
+    friendsList: FriendsState['friendsList']
 }
 
 type ChatDispProps = {
@@ -60,6 +62,7 @@ type ChatDispProps = {
     clearFriendButtonNotifFn: () => void
     clearPendingButtonNotifFn: () => void
     clearActiveChannelNotifFn: (channelId: string) => void
+    fillFriendsListFn: (listObj: FriendsState['friendsList']) => void
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -169,7 +172,8 @@ const mapState: MapStateFn<ChatStateProps> = (state) => ({
     channelId: state.chat.currentChannelId,
     channelInfo: state.chat.chatChannel,
     friendRequests: state.friends.friendRequests,
-    pendingRequests: state.friends.pendingNotifs
+    pendingRequests: state.friends.pendingNotifs,
+    friendsList: state.friends.friendsList
 })
 
 const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
@@ -229,6 +233,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     clearActiveChannelNotifFn: (channelId: string) => {
         dispatch(clearActiveChannelNotifAction(channelId))
+    },
+    fillFriendsListFn: (list: FriendsState['friendsList']) => {
+        dispatch(fillFriendsListAction(list))
     }
 })
 
