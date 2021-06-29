@@ -1,12 +1,14 @@
-import React, { MouseEvent, useState, useRef, FocusEvent, useEffect } from 'react'
+import React, { MouseEvent, useState, useRef, FocusEvent, useEffect, useContext } from 'react'
 import { requestUserUnfriend } from '../../../../api/userApi'
 import { resHasError } from '../../../../api/utils'
+import { RightWindowContext } from '../RightWindow'
 
 type Props = {
     friendId: string
 }
 
 const FriendDotMenu = (props: Props) => {
+    const context = useContext(RightWindowContext)
     const [showMenu, setShowMenu] = useState<boolean>(false)
     const divMenuRef = useRef<HTMLDivElement>()
 
@@ -20,13 +22,13 @@ const FriendDotMenu = (props: Props) => {
             return
         }
 
-        console.log('Unfriending success')
+        context.removeFriendFromListFn(props.friendId)
+        setShowMenu(false)
     }
 
     const toggleMenu = (ev: MouseEvent) => {
         ev.stopPropagation()
         setShowMenu(!showMenu)
-        
     }
 
     const handleBlur = (ev: FocusEvent) => {
