@@ -168,18 +168,19 @@ const moveChannelToTop = (state: ChatState, channelId: string): ChatState => {
 
     const newState = { ...state }
     const activeChannels = newState.activeChannels
-    const resultArr = new Array(activeChannels.length)
+    const resultArr = []
 
     for (let i = 0; i < activeChannels.length; i++) {
         if (activeChannels[i].id !== channelId) {
-            resultArr[i + 1] = activeChannels[i]
+           resultArr.push(activeChannels[i])
         } else {
-            resultArr[0] = activeChannels[i]
+            resultArr.unshift(activeChannels[i])
         }
     }
 
     newState.activeChannels = resultArr
     return newState
+
 }
 
 const incrementActiveChannelNewMsg = (state: ChatState, channelId: string) => {
