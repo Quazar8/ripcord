@@ -89,6 +89,26 @@ const addToActiveChannels = async (byUser: UserDoc,
     }
 }
 
+const sendErrorStatusMessage = (byUser: UserDoc, msgPayload: ChatMessagePayload, errorMsg: string) => {
+    if (!isOnline(byUser._id)) return
+
+    const payload: ChatMessageStatusPayload = {
+        channelId: msgPayload.channelId,
+        temporaryId: msgPayload.temporaryId,
+        realId: null,
+        status: ChatMessageStatus.FAILED,
+        recipientId: msgPayload.recipientId,
+        errorMsg
+    }
+
+    const msg: WSMessage<ChatMessageStatusPayload> = {
+        type: WSDataType.CHAT_MESSAGE_STATUS,
+        payload
+    }
+
+    sendSocketMsg(byUser._id, msg)
+}
+
 const handleChatMessage = async (payload: ChatMessagePayload, byUserId: Types.ObjectId) => {
     if (!payload.content || !byUserId || !payload.recipientId) {
         return
@@ -106,6 +126,8 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUserId: Types.Ob
         }
 
         if (receiver.friendsIds.indexOf(byUser._id) < 0) {
+            sendErrorStatusMessage(byUser, payload,
+                'You can\'t chat if you are not friends')
             return
         }
 
