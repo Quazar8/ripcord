@@ -1,3 +1,9 @@
-@use 'notifications-container';
 @use 'notification';
 @use 'notification-attachment';
+
+.notifications-container {
+    position: fixed;
+    width: 20%;
+    bottom: 0;
+    right: 2%;
+}
