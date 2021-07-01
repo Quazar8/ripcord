@@ -118,11 +118,14 @@ const ChatDisplay = (props: Props) => {
 
     const messages = info.channel.messages.map((m, i) => {
         let authorname = info.recipient.username
+        let authorPic = info.recipient.profilePic
 
         if (!m.authorId) {
             authorname = 'Ripcord System'
+            authorPic = ''
         } else if (m.authorId !== info.recipient.id) {
-            authorname = 'You' 
+            authorname = 'You'
+            authorPic = props.user.profilePic
         }
 
         let isNewBlock = true
@@ -136,6 +139,7 @@ const ChatDisplay = (props: Props) => {
                 key = { i }
                 authorName = { authorname }
                 isNewBlock = { isNewBlock }
+                authorPic = { authorPic }
             />
         )
     })

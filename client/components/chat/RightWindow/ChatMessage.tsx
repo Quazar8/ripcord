@@ -2,14 +2,16 @@ import React from 'react'
 import { ChatMessageStatus } from '../../../../server/types/ChatTypes'
 import { PendingMsg } from '../../../types/ChatClientTypes'
 import { getChatDateStr } from '../../../utils/utils'
+import ProfilePic from '../../user/ProfilePic'
 
 type Props = {
     message: PendingMsg
     authorName: string
     isNewBlock: boolean
+    authorPic: string
 }
 
-export const ChatMessage = ({ message, authorName, isNewBlock }: Props) => {
+export const ChatMessage = ({ message, authorName, isNewBlock, authorPic }: Props) => {
     const getAuxClassname = (message: PendingMsg) => {
         if (!message.authorId) {
             return "system-message"
@@ -30,7 +32,10 @@ export const ChatMessage = ({ message, authorName, isNewBlock }: Props) => {
         <div className = { "message" + " " + getAuxClassname(message) }>
             {
                 isNewBlock
-                ? <h4>{ authorName }:</h4>
+                ? [
+                    <ProfilePic picNameOrJson = { authorPic }/>,
+                    <h4>{ authorName }:</h4>
+                ]
                 : null
             }
             <p>{ message.content }</p>
