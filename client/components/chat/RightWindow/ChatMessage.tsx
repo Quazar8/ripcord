@@ -10,17 +10,24 @@ type Props = {
 }
 
 export const ChatMessage = ({ message, authorName, isNewBlock }: Props) => {
-    let auxClass = ''
-    if (message.status) {
-        if (message.status === ChatMessageStatus.PENDING) {
-            auxClass = 'pending'
-        } else if (message.status === ChatMessageStatus.FAILED) {
-            auxClass = 'failed'
+    const getAuxClassname = (message: PendingMsg) => {
+        if (!message.authorId) {
+            return "system-message"
         }
+
+        if (message.status) {
+            switch(message.status) {
+                case ChatMessageStatus.PENDING: return 'pending'
+                case ChatMessageStatus.FAILED: return 'failed'
+                default: break;
+            }
+        }
+
+        return ''
     }
 
     return (
-        <div className = { "message" + " " + auxClass }>
+        <div className = { "message" + " " + getAuxClassname(message) }>
             {
                 isNewBlock
                 ? <h4>{ authorName }:</h4>
