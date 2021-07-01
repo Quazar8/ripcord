@@ -28,11 +28,6 @@ export const ChatMessage = ({ message, authorName, isNewBlock }: Props) => {
             }
             <p>{ message.content }</p>
             <div className = "date">{ getChatDateStr(new Date(message.date)) }</div>
-            {
-                message.status === ChatMessageStatus.FAILED
-                ? <div className = "error"> Failed to deliver the message</div>
-                : null
-            }
         </div>
     )
 }
