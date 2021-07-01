@@ -118,7 +118,10 @@ const ChatDisplay = (props: Props) => {
 
     const messages = info.channel.messages.map((m, i) => {
         let authorname = info.recipient.username
-        if (m.authorId !== info.recipient.id) {
+
+        if (!m.authorId) {
+            authorname = 'Ripcord System'
+        } else if (m.authorId !== info.recipient.id) {
             authorname = 'You' 
         }
 

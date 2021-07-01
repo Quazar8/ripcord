@@ -97,7 +97,7 @@ const sentMessageResponse = (state: ChatState, res: ChatMessageStatusPayload): C
         let result = arr.slice(0, index + 1)
         const errMsg: PendingMsg = {
             id: null,
-            authorId: 'RipcordSystem',
+            authorId: null,
             content: errText,
             date: new Date(),
             edited: false
