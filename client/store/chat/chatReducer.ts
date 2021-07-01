@@ -93,8 +93,27 @@ const sentMessageResponse = (state: ChatState, res: ChatMessageStatusPayload): C
         }
     }
 
+    const insertErrorMessage = (arr: PendingMsg[], index: number, errText: string) => {
+        let result = arr.slice(0, index + 1)
+        const errMsg: PendingMsg = {
+            id: null,
+            authorId: 'RipcordSystem',
+            content: errText,
+            date: new Date(),
+            edited: false
+        }
+
+        result.push(errMsg)
+        if (index + 1 < arr.length)
+            result.concat(arr.slice(index + 1))
+        
+        return result
+    }
+
     const messages = newState.chatChannel.channel.messages
-    for (let msg of messages) {
+    const len = messages.length
+    for (let i = 0; i < len; i++) {
+        const msg = messages[i]
         if (!msg.temporaryId) {
             continue
         }
@@ -104,6 +123,10 @@ const sentMessageResponse = (state: ChatState, res: ChatMessageStatusPayload): C
             msg.status = res.status
             delete msg.temporaryId
             delete msg.channelId
+            if (res.status === ChatMessageStatus.FAILED) {
+                newState.chatChannel.channel.messages = insertErrorMessage(messages, i, res.errorMsg)
+            }
+
             break
         }
     }
