@@ -1,34 +1,11 @@
+@use 'notification_attachment';
+
 .notifications-container {
     position: fixed;
     width: 20%;
     bottom: 0;
     right: 5%;
-}
 
-.notification-attachment {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: -10%;
-    right: 0%;
-    background: linear-gradient(to right, hsl(0, 34%, 67%), red);
-    border-radius: 50%;
-    width: 2vw;
-    height: 2vw;
-    font-size: 1.5vw;
-}
-
-.notification {
-    width: 100%;
-    display: flex;
-    padding: 4%;
-    justify-content: space-evenly;
-    box-sizing: border-box;
-    font-size: 1.4vw;
-}
-
-.notifications-container {
     .info {
         background: blue;
     }
@@ -39,5 +16,14 @@
 
     .error {
         background: red;
+    }
+
+    .notification {
+        width: 100%;
+        display: flex;
+        padding: 4%;
+        justify-content: space-evenly;
+        box-sizing: border-box;
+        font-size: 1.4vw;
     }
 }
