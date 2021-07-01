@@ -1,8 +1,31 @@
+@use '../user//profile-pic.scss';
+
 .message {
     $content-width: 86%;
+    $content-padding-top: 1%;
     padding: 0.1% 1%;
     font-size: 1.5vw;
     position: relative;
+    display: flex;
+
+    .left-section {
+        width: 4vw;
+        height: 4vw;
+        @include profile-pic.profilePicMixin(100%, 0.2vw, 1.4vw);
+
+        &:empty {
+            height: 1.5vw;
+            width: 4vw;
+        }
+    }
+
+    .middle-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: $content-width;
+        padding-left: 1%;
+    }
 
     &:hover {
         .date {
@@ -34,18 +57,18 @@
     h4 {
         color: rgb(3, 228, 3);
         height: 20%;
-        width: $content-width;
     }
     
     p {
-        padding: 0.5% 1% 0.5% 3%;
-        width: $content-width;
+        padding-top: $content-padding-top;
+        width: 100%;
         word-break: break-word;
     }
 
     .date {
         width: 14%;
         padding-right: 1%;
+        padding-top: $content-padding-top;
         height: 100%;
         position: absolute;
         bottom: 0;

@@ -30,15 +30,21 @@ export const ChatMessage = ({ message, authorName, isNewBlock, authorPic }: Prop
 
     return (
         <div className = { "message" + " " + getAuxClassname(message) }>
-            {
-                isNewBlock
-                ? [
-                    <ProfilePic picNameOrJson = { authorPic }/>,
-                    <h4>{ authorName }:</h4>
-                ]
-                : null
-            }
-            <p>{ message.content }</p>
+            <div className = "left-section">
+                {
+                    isNewBlock
+                    ? <ProfilePic picNameOrJson = { authorPic }/>
+                    : null
+                }
+            </div>
+            <div className = "middle-section">
+                {
+                    isNewBlock
+                    ? <h4>{ authorName }:</h4>
+                    : null
+                }
+                <p>{ message.content }</p>
+            </div>
             <div className = "date">{ getChatDateStr(new Date(message.date)) }</div>
         </div>
     )
