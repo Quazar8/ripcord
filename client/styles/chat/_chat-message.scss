@@ -1,4 +1,5 @@
 .message {
+    $content-width: 86%;
     padding: 0.1% 1%;
     font-size: 1.5vw;
     position: relative;
@@ -17,15 +18,28 @@
         color: hsl(0, 98%, 49%);
     }
 
+    &.system-message {
+        h4 {
+            color: hsl(240, 55%, 77%);
+            letter-spacing: 0.1vw;
+        }
+
+        p {
+            // color:hsl(240, 78%, 82%);
+            color: hsl(0, 96%, 52%);
+            letter-spacing: 0.1vw;
+        }
+    }
+
     h4 {
         color: rgb(3, 228, 3);
         height: 20%;
-        // border-bottom: 0.1vw solid hsla(0, 0%, 100%, 0.781);;
+        width: $content-width;
     }
     
     p {
         padding: 0.5% 1% 0.5% 3%;
-        width: 86%;
+        width: $content-width;
         word-break: break-word;
     }
 
