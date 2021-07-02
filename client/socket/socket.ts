@@ -5,6 +5,7 @@ import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
 import { addActiveChannelAction, incrementActiveChannelNewMsgAction, moveChannelToTopAction, pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
 import { addIncFriendRequestAction } from '../store/friends/friendsActions'
 import { ChatMessageStatusPayload, ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
+import { triggerMsgSound } from '../tone/tone'
 
 export let socket: WebSocket = null
 
@@ -21,6 +22,8 @@ const handleChatMsgReceived = (dispatch: Dispatch<AppAction>, msg: ChatReceiverP
         dispatch(incrementActiveChannelNewMsgAction(msg.channelId))
         dispatch(moveChannelToTopAction(msg.channelId))
     }
+
+    triggerMsgSound()
 }
 
 const handleChatMessageStatus = (dispatch: Dispatch<AppAction>, payload: ChatMessageStatusPayload) => {
