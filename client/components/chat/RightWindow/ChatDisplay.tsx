@@ -10,6 +10,7 @@ import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../../server/types/
 import { PendingMsg } from '../../../types/ChatClientTypes'
 import { RightWindowProps } from './RightWindow'
 import ProfilePic from '../../user/ProfilePic'
+import { getDateDiffInMin } from '../../../utils/utils'
 
 type Props = Pick<RightWindowProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
@@ -128,17 +129,32 @@ const ChatDisplay = (props: Props) => {
             authorPic = props.user.profilePic
         }
 
-        let isNewBlock = true
-        if (i > 0 && info.channel.messages[i - 1].authorId === m.authorId) {
-            isNewBlock = false
+        const determineIFNewBlock = (messages: PendingMsg[], index: number) => {
+            if (index < 1) return true
+            
+            const prevMsg = messages[i - 1]
+            const currentMsg = messages[i]
+            if (prevMsg.authorId !== currentMsg.authorId) return true
+
+            const diffInMin = getDateDiffInMin(new Date(currentMsg.date), new Date(prevMsg.date))
+            console.log(diffInMin)
+            if (diffInMin >= 60) return true
+            
+            return false
         }
+
+        // let isNewBlock = true
+        // if (i > 0 && info.channel.messages[i - 1].authorId === m.authorId
+        //     && info.channel.mess) {
+        //     isNewBlock = false
+        // }
 
         return (
             <ChatMessage 
                 message = { m } 
                 key = { i }
                 authorName = { authorname }
-                isNewBlock = { isNewBlock }
+                isNewBlock = { determineIFNewBlock(info.channel.messages, i) }
                 authorPic = { authorPic }
             />
         )

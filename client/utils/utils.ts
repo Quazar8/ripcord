@@ -27,5 +27,5 @@ export const getDateUTC = (date: Date) => {
 }
 
 export const getDateDiffInMin = (a: Date, b: Date) => {
-    return (getDateUTC(a) - getDateUTC(b)) / 60000
+    return Math.floor((getDateUTC(a) - getDateUTC(b)) / 60000)
 }
