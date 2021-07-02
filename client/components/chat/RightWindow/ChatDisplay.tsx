@@ -117,6 +117,19 @@ const ChatDisplay = (props: Props) => {
         }
     }
 
+    const determineIFNewBlock = (messages: PendingMsg[], index: number) => {
+        if (index < 1) return true
+        
+        const prevMsg = messages[index - 1]
+        const currentMsg = messages[index]
+        if (prevMsg.authorId !== currentMsg.authorId) return true
+
+        const diffInMin = getDateDiffInMin(new Date(currentMsg.date), new Date(prevMsg.date))
+        if (diffInMin >= 60) return true
+        
+        return false
+    }
+
     const messages = info.channel.messages.map((m, i) => {
         let authorname = info.recipient.username
         let authorPic = info.recipient.profilePic
@@ -128,26 +141,6 @@ const ChatDisplay = (props: Props) => {
             authorname = 'You'
             authorPic = props.user.profilePic
         }
-
-        const determineIFNewBlock = (messages: PendingMsg[], index: number) => {
-            if (index < 1) return true
-            
-            const prevMsg = messages[i - 1]
-            const currentMsg = messages[i]
-            if (prevMsg.authorId !== currentMsg.authorId) return true
-
-            const diffInMin = getDateDiffInMin(new Date(currentMsg.date), new Date(prevMsg.date))
-            console.log(diffInMin)
-            if (diffInMin >= 60) return true
-            
-            return false
-        }
-
-        // let isNewBlock = true
-        // if (i > 0 && info.channel.messages[i - 1].authorId === m.authorId
-        //     && info.channel.mess) {
-        //     isNewBlock = false
-        // }
 
         return (
             <ChatMessage 
