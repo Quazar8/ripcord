@@ -1,21 +1,23 @@
 @use '../user//profile-pic.scss';
 
 .message {
-    $content-width: 86%;
+    $content-width: 83%;
     $content-padding-top: 1%;
+    $profile-margin-top: 1%;
     padding: 0.1% 1%;
     font-size: 1.5vw;
     position: relative;
     display: flex;
 
     .left-section {
-        margin: 1% 0;
+        box-sizing: content-box;
+        margin-top: $profile-margin-top;
         width: 4vw;
         height: 4vw;
         @include profile-pic.profilePicMixin(100%, 0.2vw, 2vw);
 
         &:empty {
-            margin: 0%;
+            margin-top: 0;
             height: 1.5vw;
             width: 4vw;
         }
@@ -57,6 +59,7 @@
     }
 
     h4 {
+        margin-top: $profile-margin-top;
         color: rgb(3, 228, 3);
         height: 20%;
     }
