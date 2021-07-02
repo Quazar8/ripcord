@@ -20,3 +20,12 @@ export const getChatDateStr = (date: Date): string => {
 
     return `${calendarDate} ${hoursStr}:${minutesStr}`
 }
+
+export const getDateUTC = (date: Date) => {
+    return Date.UTC(date.getFullYear(), date.getMonth(),
+        date.getDate(), date.getHours(), date.getMinutes())
+}
+
+export const getDateDiffInMin = (a: Date, b: Date) => {
+    return (getDateUTC(a) - getDateUTC(b)) / 60000
+}
