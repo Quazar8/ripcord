@@ -38,7 +38,7 @@ export type ChannelClientInfo = {
 export type ActiveChannelInfo = {
     id: string
     recipientUsername: string
-    recipientId: string,
+    recipientId: string
     recipientPic: string
 }
 

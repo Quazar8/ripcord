@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { connect, MapDispatchFn, MapStateFn } from '../store/store'
-import { getCookies } from '../../server/utils'
+import { getCookies } from '../../server/methods/utils'
 import { jwtCookieName } from '../../server/configVars'
 import { resHasError } from '../api/utils'
 import { getUserInfoWToken } from '../api/userApi'

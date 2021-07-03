@@ -5,7 +5,7 @@ import enableChatRoutes from './chat/ChatRoutes.js'
 import enableUploadRoutes from './upload/UploadRoutes.js'
 import { successResponse } from '../responses.js'
 import { authenticateUser } from '../middlewares.js'
-import { isDev } from '../utils.js'
+import { isDev } from '../methods/utils.js'
 
 const establishRouteEndpoints = (app: Application): void => {
     enableUserRoutes(app)

@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { User, IUserModel } from '../../db/models/user.js'
 import { errorResponse } from '../../responses.js'
 import { UserDoc } from '../../types/UserTypes.js'
-import { genRandomNum } from '../../utils.js'
+import { genRandomNum } from '../../methods/utils.js'
 import { LoginResponse, loginUser } from './login.js'
 
 export type RegisterResponse = LoginResponse

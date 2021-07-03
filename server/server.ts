@@ -9,7 +9,7 @@ import { errorHandler } from './middlewares.js'
 import initializeWebpack from './webpack/webpackInitialize.js'
 import establishRouteEndpoints from './routes/routes.js'
 import { websocketServer } from './websocket/wsServer.js'
-import { isDev } from './utils.js'
+import { isDev } from './methods/utils.js'
 
 if (!isDev()) {
     process.env.NODE_ENV = 'production'

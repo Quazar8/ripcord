@@ -4,7 +4,7 @@ import passport from 'passport'
 import * as net from 'net'
 import { onlineUsers } from './onlineUsers.js'
 import messageHandler from './messageHandler.js'
-import { getCookies, Cookies } from '../utils.js'
+import { getCookies, Cookies } from '../methods/utils.js'
 import { WSMessage } from '../types/WebsocketTypes.js'
 import { UserDoc } from '../types/UserTypes.js'
 

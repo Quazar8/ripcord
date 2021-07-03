@@ -2,7 +2,7 @@ import path from 'path'
 import fs from 'fs'
 import Busboy from 'busboy'
 import { ReqWUser } from '../../types/RequestTypes'
-import { genId } from '../../utils.js'
+import { genId } from '../../methods/utils.js'
 
 type UploadResult = [{
     filename: string,

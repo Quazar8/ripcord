@@ -4,7 +4,7 @@ import webpack, { Configuration } from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackConfig from './webpack.config.js'
-import { isDev } from '../utils.js'
+import { isDev } from '../methods/utils.js'
 
 const initializeWebpack = (app: Application) => {
     const config: Configuration = {
