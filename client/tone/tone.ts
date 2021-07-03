@@ -1,8 +1,10 @@
-import { Synth } from 'tone'
+import * as Tone from 'tone'
 
-const synth = new Synth().toDestination()
+const synth = new Tone.FMSynth().toDestination()
+const reverb = new Tone.Reverb(0.4).toDestination()
+synth.connect(reverb)
 
 export const triggerMsgSound = () => {
     synth.volume.value = -5
-    synth.triggerAttackRelease('D6', '32n')
+    synth.triggerAttackRelease('A4', '32n')
 }
