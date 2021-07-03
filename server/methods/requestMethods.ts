@@ -1,3 +1,5 @@
+import { Request } from "express"
+
 export type Cookies = {
     [key:string]: string
 }
@@ -19,4 +21,15 @@ export const getCookies = (headerCookie: string): Cookies => {
     }
 
     return cookies
+}
+
+export const userAgentClass = (req: Request) => {
+    const isMobile = () => {
+        const regex = /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i
+        return regex.test(req.headers["user-agent"])
+    }
+
+    return {
+        isMobile
+    }
 }
