@@ -17,8 +17,30 @@ const messageSignalInit = () => {
     }
 }
 
+const friendReqSignalInit = () => {
+    const synth = new Tone.Synth().toDestination()
+    const reverb = new Tone.Reverb(0.4).toDestination()
+    synth.connect(reverb)
+    synth.volume.value = -8
+
+    const play = () => {
+        const now = Tone.now()
+        synth.triggerAttackRelease('B4', '8n', now)
+        synth.triggerAttackRelease('G4', '8n', now + 0.35)
+    }
+
+    return {
+        play
+    }
+}
+
 const messageSignal = messageSignalInit()
+const friendReqSignal = friendReqSignalInit()
 
 export const triggerMsgSound = () => {
     messageSignal.play()
+}
+
+export const triggerFrReqSound = () => {
+    friendReqSignal.play()
 }
