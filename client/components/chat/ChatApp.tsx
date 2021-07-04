@@ -1,5 +1,5 @@
 import React, { Dispatch, useEffect, useState } from 'react'
-import { establishWS, socket } from '../../socket/socket'
+import { closeSocketConnection, establishWS, socket } from '../../socket/socket'
 import { UserState } from '../../store/globalReducer'
 import { AppAction, connect, MapDispatchFn, MapStateFn } from '../../store/store'
 import { logoutUser } from '../../api/userApi'
@@ -117,7 +117,7 @@ const ChatAppView = (props: ChatAppProps) => {
         establishWS(props.dispatch)
 
         return () => {
-            socket.close()
+            closeSocketConnection()
         }
     }, [])
 

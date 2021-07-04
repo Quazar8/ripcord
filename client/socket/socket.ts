@@ -90,3 +90,7 @@ export const socketIsClosed = (): boolean => {
     
     return socket.readyState === socket.CLOSED
 }
+
+export const closeSocketConnection = () => {
+    socket.close()
+}
