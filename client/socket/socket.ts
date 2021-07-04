@@ -94,3 +94,7 @@ export const socketIsClosed = (): boolean => {
 export const closeSocketConnection = () => {
     socket.close()
 }
+
+export const sendSocketMessage = (msg: WSMessage<any>) => {
+    socket.send(JSON.stringify(msg))
+}

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, KeyboardEvent } from 'react'
-import { socket, socketIsClosed } from '../../../socket/socket'
+import { sendSocketMessage, socket, socketIsClosed } from '../../../socket/socket'
 import { resHasError } from '../../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../../api/chatApi'
 
@@ -79,7 +79,7 @@ const ChatDisplay = (props: Props) => {
             temporaryId: channelId + "_" + Date.now()
         }
 
-        const msg: WSMessage<ChatMessagePayload> = {
+        const socketMsg: WSMessage<ChatMessagePayload> = {
             type: WSDataType.CHAT_MESSAGE,
             payload: payloadMsg
         }
@@ -100,7 +100,7 @@ const ChatDisplay = (props: Props) => {
             props.pushSentMsgToStoreFn(pendingMsg)
         } else {
             props.pushSentMsgToStoreFn(pendingMsg)
-            socket.send(JSON.stringify(msg))
+            sendSocketMessage(socketMsg)
 
             setTimeout(() => {
                 props.markMsgAsFailedFn(pendingMsg.temporaryId)
