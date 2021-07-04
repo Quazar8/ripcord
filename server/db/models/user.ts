@@ -1,5 +1,5 @@
 import mongoose, { Types } from 'mongoose'
-import { genProfilePicColorJson } from '../../routes/user/register.js'
+import { genProfilePicColorJson } from '../../methods/userMethods.js'
 import { UserDoc, UserStatus } from '../../types/UserTypes.js'
 const { Schema, model } = mongoose
 
@@ -13,7 +13,7 @@ const UserSchema = new Schema<IUserModel> ({
     channels: {},
     activeChannels: { type: [Schema.Types.ObjectId], default: [] },
     profilePic: String,
-    onlineStatus: { type: String, default: UserStatus.Online}
+    onlineStatus: { type: String, default: UserStatus.Online }
 })
 
 export interface IUserModel {
@@ -32,13 +32,3 @@ export interface IUserModel {
 }
 
 export const User = model('User', UserSchema)
-
-export const updateOldUsersNewFields = (user: UserDoc) => {
-    if (!user.profilePic) {
-        user.profilePic = JSON.stringify(genProfilePicColorJson(user.username))
-    }
-
-    user.save()
-
-    return user
-}

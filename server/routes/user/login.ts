@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { updateOldUsersNewFields, User } from '../../db/models/user.js'
+import { User } from '../../db/models/user.js'
 import { errorResponse, ServerResponse, successResponse } from '../../responses.js'
 import { UserClientInfo, LoginEntry, UserDoc } from '../../types/UserTypes'
 import jwt from 'jsonwebtoken'
@@ -28,8 +28,6 @@ export const loginUser = (req: Request, res: Response, user: UserDoc) => {
             expires: tokenExpiration,
             sameSite: 'strict'
         })
-
-        user = updateOldUsersNewFields(user)
 
         const response: LoginResponse = successResponse({
             username: user.username,

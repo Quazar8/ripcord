@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 import passport from 'passport'
-import { updateOldUsersNewFields } from "../../db/models/user.js"
 import { errorResponse, ServerResponse, successResponse } from "../../responses.js"
 import { UserClientInfo, UserDoc } from "../../types/UserTypes.js"
 
@@ -18,8 +17,6 @@ export const userInfoFromToken = (req: Request, res: Response) => {
         } 
 
         if (user) {
-            user = updateOldUsersNewFields(user)
-
             const userInfo: UserClientInfo = {
                 id: user.id,
                 activeChannels: user.activeChannels,
