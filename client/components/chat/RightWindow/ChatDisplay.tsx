@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, KeyboardEvent } from 'react'
-import { sendSocketMessage, socket, socketIsClosed } from '../../../socket/socket'
+import { sendSocketMessage, socketIsClosed } from '../../../socket/socket'
 import { resHasError } from '../../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../../api/chatApi'
 
@@ -65,7 +65,7 @@ const ChatDisplay = (props: Props) => {
     
     const sendMsg = async () => {
         const content = messageInputRef.current.innerText
-        if (!info.channel || !content || !socket) {
+        if (!info.channel || !content || socketIsClosed()) {
             return
         }
 

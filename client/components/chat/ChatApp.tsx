@@ -1,5 +1,5 @@
 import React, { Dispatch, useEffect, useState } from 'react'
-import { closeSocketConnection, establishWS, socket } from '../../socket/socket'
+import { closeSocketConnection, establishWS } from '../../socket/socket'
 import { UserState } from '../../store/globalReducer'
 import { AppAction, connect, MapDispatchFn, MapStateFn } from '../../store/store'
 import { logoutUser } from '../../api/userApi'

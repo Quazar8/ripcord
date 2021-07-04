@@ -8,7 +8,7 @@ import { ChatMessageStatusPayload, ChatReceiverPayload, NewActiveChannelPayload 
 import { triggerFrReqSound, triggerMsgSound } from '../tone/tone'
 import { PendingFriendInfo } from '../../server/types/UserTypes'
 
-export let socket: WebSocket = null
+let socket: WebSocket = null
 
 const handleNewActiveChannel = (dispatch: Dispatch<AppAction>, activeCh: NewActiveChannelPayload) => {
     dispatch(addActiveChannelAction(activeCh))
