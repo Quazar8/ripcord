@@ -12,7 +12,9 @@ const UserSchema = new Schema<IUserModel> ({
     outFriendRequests: { type: [Schema.Types.ObjectId], default: [] },
     channels: {},
     activeChannels: { type: [Schema.Types.ObjectId], default: [] },
-    profilePic: String,
+    profilePic: { type: String, default: function() {
+        return JSON.stringify(genProfilePicColorJson(this.username))
+    }},
     onlineStatus: { type: String, default: UserStatus.Online }
 })
 
