@@ -1,4 +1,5 @@
-import { ProfilePicJson } from "../types/UserTypes"
+import { ProfilePicJson, UserDoc, UserStatus } from "../types/UserTypes.js"
+import { isOnline } from "../websocket/onlineUsers.js"
 import { genRandomNum } from "./utils.js"
 
 export const genProfilePicColorJson = (username: string): ProfilePicJson => {
@@ -23,4 +24,12 @@ export const genProfilePicColorJson = (username: string): ProfilePicJson => {
         textColor: genHslStr(color),
         letters: username[0]
     }
+}
+
+export const getUserStatus = (user: UserDoc) => {
+    if (isOnline(user._id)) {
+        return user.onlineStatus
+    }
+
+    return UserStatus.Offline
 }

@@ -6,6 +6,7 @@ import { RecipientInfo, ChannelClientInfo, ChannelDoc, isChannelDoc, MessageClie
 import { User } from "../../db/models/user.js";
 import { isUserDoc, UserDoc, UserStatus } from "../../types/UserTypes.js";
 import { Channel } from '../../db/models/channel.js'
+import { getUserStatus } from "../../methods/userMethods.js";
 
 type ChatChannelInfoData = {
     recipient: RecipientInfo,
@@ -37,7 +38,7 @@ const genChatChannelInfoData = (channel: ChannelDoc, recipient: UserDoc): ChatCh
     const recipientInfo: RecipientInfo = {
         id: recipient._id.toHexString(),
         username: recipient.username,
-        status: isOnline(recipient._id) ? UserStatus.Online : UserStatus.Offline,
+        status: getUserStatus(recipient),
         profilePic: recipient.profilePic
     }
 

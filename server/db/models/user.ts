@@ -1,6 +1,6 @@
 import mongoose, { Types } from 'mongoose'
 import { genProfilePicColorJson } from '../../methods/userMethods.js'
-import { UserDoc, UserStatus } from '../../types/UserTypes.js'
+import { UserStatus } from '../../types/UserTypes.js'
 const { Schema, model } = mongoose
 
 const UserSchema = new Schema<IUserModel> ({
