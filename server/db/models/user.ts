@@ -1,6 +1,6 @@
 import mongoose, { Types } from 'mongoose'
 import { genProfilePicColorJson } from '../../routes/user/register.js'
-import { UserDoc } from '../../types/UserTypes'
+import { UserDoc, UserStatus } from '../../types/UserTypes.js'
 const { Schema, model } = mongoose
 
 const UserSchema = new Schema<IUserModel> ({
@@ -12,7 +12,8 @@ const UserSchema = new Schema<IUserModel> ({
     outFriendRequests: { type: [Schema.Types.ObjectId], default: [] },
     channels: {},
     activeChannels: { type: [Schema.Types.ObjectId], default: [] },
-    profilePic: String
+    profilePic: String,
+    onlineStatus: { type: String, default: UserStatus.Online}
 })
 
 export interface IUserModel {
@@ -26,7 +27,8 @@ export interface IUserModel {
         [UserId: string]: [ChannelId: string]
     },
     activeChannels: Types.ObjectId[],
-    profilePic: string
+    profilePic: string,
+    onlineStatus: Exclude<UserStatus, UserStatus.Offline>
 }
 
 export const User = model('User', UserSchema)

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { User, IUserModel } from '../../db/models/user.js'
 import { errorResponse } from '../../responses.js'
-import { UserDoc } from '../../types/UserTypes.js'
+import { UserDoc, UserStatus } from '../../types/UserTypes.js'
 import { genRandomNum } from '../../methods/utils.js'
 import { LoginResponse, loginUser } from './login.js'
 
@@ -54,7 +54,8 @@ const registerHandler = (req: Request, res: Response): void => {
             incFriendRequests: [],
             channels: {},
             activeChannels: [],
-            profilePic: JSON.stringify(genProfilePicColorJson(username))
+            profilePic: JSON.stringify(genProfilePicColorJson(username)),
+            onlineStatus: UserStatus.Online
         }
 
         const user = new User(userCandidate)
