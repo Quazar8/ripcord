@@ -1,13 +1,14 @@
 import React from 'react'
-import { ProfilePicJson } from '../../../server/types/UserTypes'
+import { ProfilePicJson, UserStatus } from '../../../server/types/UserTypes'
 import { genProfilePicUrl } from '../../api/userApi'
 import StatusIcon from './StatusIcon'
 
 type Props = {
     picNameOrJson: string
+    onlineStatus?: UserStatus
 }
 
-const ProfilePic = ({ picNameOrJson }: Props) => {
+const ProfilePic = ({ picNameOrJson, onlineStatus }: Props) => {
     let PicComponent: JSX.Element = null
     if (!picNameOrJson) return null
 
@@ -39,7 +40,7 @@ const ProfilePic = ({ picNameOrJson }: Props) => {
             <div className = "image-container">
                 { PicComponent }
             </div>
-            <StatusIcon />
+            <StatusIcon onlineStatus = { onlineStatus }/>
         </div>
     )
 }
