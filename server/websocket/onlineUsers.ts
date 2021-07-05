@@ -21,3 +21,11 @@ export const isOnline = (userId: Types.ObjectId): boolean => {
 
     return false
 }
+
+export const sendMultipleSocket = (ids: Types.ObjectId[] ,socketMsg: WSMessage<any>) => {
+    for (let id of ids) {
+        if (isOnline(id)) {
+            sendSocketMsg(id, socketMsg)
+        }
+    }
+}
