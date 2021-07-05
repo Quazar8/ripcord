@@ -3,11 +3,11 @@ import { ReqWUser } from '../../types/RequestTypes'
 import { successResponse, errorResponse, ServerResponse } from '../../responses.js'
 import { ActiveChannelInfo, ChannelDoc, isChannelDoc } from "../../types/ChatTypes.js";
 import { Channel } from "../../db/models/channel.js";
-import { isUserDoc, UserDoc, UserStatus } from "../../types/UserTypes.js";
+import { isUserDoc, UserDoc } from "../../types/UserTypes.js";
 import { User } from "../../db/models/user.js";
 import { isValidObjectId } from '../../methods/utils.js'
+import { getUserStatus } from "../../methods/userMethods.js";
 import { Types } from "mongoose";
-import { isOnline } from "../../websocket/onlineUsers";
 
 export type GetActiveChannelsRes = ServerResponse<{
     activeChannels: ActiveChannelInfo[]
@@ -45,6 +45,7 @@ const createActiveChannelInfo = async (channel: ChannelDoc, byUser: UserDoc): Pr
         recipientId: recipient._id.toHexString(),
         recipientUsername: recipient.username,
         recipientPic: recipient.profilePic,
+        recipientStatus: getUserStatus(recipient)
     }
 }
 

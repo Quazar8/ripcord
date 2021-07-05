@@ -40,6 +40,7 @@ export type ActiveChannelInfo = {
     recipientUsername: string
     recipientId: string
     recipientPic: string
+    recipientStatus: UserStatus
 }
 
 export type NewActiveChannelPayload = ActiveChannelInfo & {

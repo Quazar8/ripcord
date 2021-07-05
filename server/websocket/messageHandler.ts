@@ -6,6 +6,7 @@ import { isUserDoc, UserDoc } from "../types/UserTypes.js";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { isOnline, sendSocketMsg } from './onlineUsers.js'
 import { genId } from '../methods/utils.js'
+import { getUserStatus } from "../methods/userMethods.js";
 
 const createNewChannel = async (byUser: UserDoc, receiver: UserDoc): Promise<Document> => {
     if (byUser.equals(receiver)) {
@@ -159,6 +160,7 @@ const handleChatMessage = async (payload: ChatMessagePayload, byUserId: Types.Ob
                 recipientId: recipient._id.toHexString(),
                 recipientUsername: recipient.username,
                 recipientPic: recipient.profilePic,
+                recipientStatus: getUserStatus(recipient),
                 newMessages
             }
 
