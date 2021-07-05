@@ -27,8 +27,8 @@ export enum UserStatus {
 
 export type FriendClientInfo = {
     id: string
-    username: string,
-    status: UserStatus,
+    username: string
+    status: UserStatus
     profilePic: string
 }
 

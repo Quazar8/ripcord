@@ -6,6 +6,7 @@ import { ReqWUser } from '../../../types/RequestTypes'
 import { WSMessage, WSDataType } from '../../../types/WebsocketTypes.js'
 import { FriendClientInfo, PendingFriendInfo, isUserDoc, UserStatus, UserDoc } from "../../../types/UserTypes.js";
 import mongoose, { Types } from "mongoose";
+import { getUserStatus } from "../../../methods/userMethods.js";
 
 export type AddFriendRes = ServerResponse<{
     found: boolean,
@@ -158,12 +159,11 @@ export const getFriends = async (req: ReqWUser, res: Response) => {
             const friendInfo: FriendClientInfo = {
                 id: friend._id.toHexString(),
                 username: friend.username,
-                status: UserStatus.Offline,
+                status: getUserStatus(friend),
                 profilePic: friend.profilePic
             }
 
-            if (onlineUsers[id.toHexString()]) {
-                friendInfo.status = UserStatus.Online
+            if (friendInfo.status !== UserStatus.Offline) {
                 online.push(friendInfo)
             } else {
                 offline.push(friendInfo)
