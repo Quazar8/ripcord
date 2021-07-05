@@ -1,0 +1,16 @@
+.status-icon {
+    position: absolute;
+    width: 0.9vw;
+    height: 0.9vw;
+    border-radius: 50%;
+    right: 0;
+    bottom: 0;
+
+    &.online {
+        background-color: hsl(84, 93%, 45%);
+    }
+
+    &.offline {
+        background-color: grey;
+    }
+}
