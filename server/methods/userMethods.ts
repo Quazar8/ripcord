@@ -1,5 +1,6 @@
 import { ProfilePicJson, UserDoc, UserStatus } from "../types/UserTypes.js"
-import { isOnline } from "../websocket/onlineUsers.js"
+import { StatusChangePayload, WSDataType, WSMessage } from "../types/WebsocketTypes.js"
+import { isOnline, sendMultipleSocket } from "../websocket/onlineUsers.js"
 import { genRandomNum } from "./utils.js"
 
 export const genProfilePicColorJson = (username: string): ProfilePicJson => {
@@ -32,4 +33,18 @@ export const getUserStatus = (user: UserDoc) => {
     }
 
     return UserStatus.Offline
+}
+
+export const notifyFriendsUserOnline = (userInfo: Pick<UserDoc, 'id' | 'friendsIds' | 'onlineStatus'>) => {
+    if (userInfo.friendsIds.length < 1) return
+
+    const socketMsg: WSMessage<StatusChangePayload> = {
+        type: WSDataType.FRIEND_STATUS_CHANGE,
+        payload: {
+            userId: userInfo.id,
+            status: userInfo.onlineStatus
+        }
+    }
+
+    sendMultipleSocket(userInfo.friendsIds, socketMsg)
 }

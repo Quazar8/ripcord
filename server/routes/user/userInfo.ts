@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import passport from 'passport'
+import { notifyFriendsUserOnline } from "../../methods/userMethods.js"
 import { errorResponse, ServerResponse, successResponse } from "../../responses.js"
 import { UserClientInfo, UserDoc } from "../../types/UserTypes.js"
 
@@ -31,5 +32,11 @@ export const userInfoFromToken = (req: Request, res: Response) => {
         }
 
         res.status(status).send(response)
+
+        notifyFriendsUserOnline({
+            id: user._id,
+            friendsIds: user.friendsIds,
+            onlineStatus: user.onlineStatus
+        })
     })(req, res)
 }
