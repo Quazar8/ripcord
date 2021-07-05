@@ -32,7 +32,9 @@ const ActiveChannelPlate = ({ channel }: Props) => {
     return (
         <div onClick = { handlePlateClick } className = "active-channel-plate">
             <div className = "recipient-info">
-                <ProfilePic picNameOrJson = { channel.recipientPic } />
+                <ProfilePic picNameOrJson = { channel.recipientPic } 
+                    onlineStatus = { channel.recipientStatus }
+                />
                 <h4>{ channel.recipientUsername}</h4>
             </div>
             <button onClick = { removeChannelFromActive }>&#x2716;</button>
