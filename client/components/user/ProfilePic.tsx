@@ -1,6 +1,7 @@
 import React from 'react'
 import { ProfilePicJson } from '../../../server/types/UserTypes'
 import { genProfilePicUrl } from '../../api/userApi'
+import StatusIcon from './StatusIcon'
 
 type Props = {
     picNameOrJson: string
@@ -38,6 +39,7 @@ const ProfilePic = ({ picNameOrJson }: Props) => {
             <div className = "image-container">
                 { PicComponent }
             </div>
+            <StatusIcon />
         </div>
     )
 }
