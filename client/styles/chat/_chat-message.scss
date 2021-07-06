@@ -1,4 +1,5 @@
 @use '../user//profile-pic.scss';
+@use '../svgs/logo-svg.scss';
 
 .message {
     $content-width: 83%;
@@ -16,6 +17,8 @@
         height: 4vw;
         @include profile-pic.profilePicMixin(100%, 0.2vw, 2vw);
 
+        @include logo-svg.logoSvg();
+        
         &:empty {
             margin-top: 0;
             height: 1.5vw;
