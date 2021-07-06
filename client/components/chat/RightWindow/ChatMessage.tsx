@@ -2,6 +2,7 @@ import React from 'react'
 import { ChatMessageStatus } from '../../../../server/types/ChatTypes'
 import { PendingMsg } from '../../../types/ChatClientTypes'
 import { getChatDateStr } from '../../../utils/utils'
+import LogoSvg from '../../svgs/LogoSvg'
 import ProfilePic from '../../user/ProfilePic'
 
 type Props = {
@@ -28,13 +29,19 @@ export const ChatMessage = ({ message, authorName, isNewBlock, authorPic }: Prop
         return ''
     }
 
+    const getProfileComponent = (message: PendingMsg, authorPic: string, needsPic: boolean) => {
+        if (!message.authorId) return <LogoSvg />
+
+        if (!needsPic) return null
+
+        return <ProfilePic picNameOrJson = { authorPic } />
+    }
+
     return (
         <div className = { "message" + " " + getAuxClassname(message) }>
             <div className = "left-section">
                 {
-                    isNewBlock
-                    ? <ProfilePic picNameOrJson = { authorPic }/>
-                    : null
+                   getProfileComponent(message, authorPic, isNewBlock)
                 }
             </div>
             <div className = "middle-section">
