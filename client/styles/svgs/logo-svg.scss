@@ -1,0 +1,10 @@
+@mixin logoSvg() {
+    .logo-svg {
+        width: 100%;
+        fill: white;
+
+        path {
+            fill: hsl(240, 22%, 12%);
+        }
+    }
+}
