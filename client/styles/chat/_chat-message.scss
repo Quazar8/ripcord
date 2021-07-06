@@ -17,8 +17,16 @@
         height: 4vw;
         @include profile-pic.profilePicMixin(100%, 0.2vw, 2vw);
 
-        @include logo-svg.logoSvg();
-        
+        .logo-svg-container {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            @include logo-svg.logoSvg(90%);
+        }
+
         &:empty {
             margin-top: 0;
             height: 1.5vw;

@@ -1,6 +1,6 @@
-@mixin logoSvg() {
+@mixin logoSvg($width) {
     .logo-svg {
-        width: 100%;
+        width: $width;
         fill: white;
 
         path {

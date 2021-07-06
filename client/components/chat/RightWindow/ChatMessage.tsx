@@ -30,7 +30,11 @@ export const ChatMessage = ({ message, authorName, isNewBlock, authorPic }: Prop
     }
 
     const getProfileComponent = (message: PendingMsg, authorPic: string, needsPic: boolean) => {
-        if (!message.authorId) return <LogoSvg />
+        if (!message.authorId) return (
+            <div className = "logo-svg-container">
+                <LogoSvg />
+            </div>
+        )
 
         if (!needsPic) return null
 

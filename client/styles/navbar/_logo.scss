@@ -11,5 +11,5 @@
         width: 25%;
     }
 
-    @include logo-svg.logoSvg();
+    @include logo-svg.logoSvg(100%);
 }
