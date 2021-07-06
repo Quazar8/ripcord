@@ -1,0 +1,22 @@
+.logo-container {
+    width: 20%;
+    margin: 0 1%;
+
+    a {
+        color: white;
+        text-decoration: none;
+        font-size: 2vw;
+        display: block;
+        width: 40%;
+        // text-align: center;
+    }
+
+    .logo-svg {
+        width: 60%;
+        fill: white;
+
+        path {
+            fill: hsl(240, 22%, 12%);
+        }
+    }
+}
