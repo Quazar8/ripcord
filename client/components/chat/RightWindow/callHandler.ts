@@ -38,13 +38,18 @@ const sendCallOffer = async (pc: RTCPeerConnection, recipientId: string) => {
     sendSocketMessage(socketMsg)
 }
 
-export const startCall = async (args: StartCallArgs) => {
+const createPeerConnection = () => {
     if (peerConnection) {
         console.error('Already in a call')
         return
     }
 
     peerConnection = new RTCPeerConnection()
+}
+
+export const startCall = async (args: StartCallArgs) => {
+    createPeerConnection()
+    
     let localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: args.isVideoCall})
     .catch(userMediaErrorHandler)
     if(!localStream) return
