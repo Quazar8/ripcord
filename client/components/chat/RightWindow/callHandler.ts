@@ -71,6 +71,8 @@ const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
             sdp: pc.localDescription,
         }
     }
+
+    sendSocketMessage(socketMsg)
 }
 
 export const startCall = async (args: StartCallArgs) => {
