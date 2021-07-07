@@ -1,5 +1,5 @@
-import { MutableRefObject } from "react";
-import { CallOfferPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
+import { MutableRefObject} from "react";
+import { CallAnswerPayload, CallOfferPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
 import { sendSocketMessage } from "../../../socket/socket";
 
 let peerConnection: RTCPeerConnection = null
@@ -49,12 +49,28 @@ const createPeerConnection = () => {
     peerConnection = new RTCPeerConnection()
 }
 
-const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>, pc: RTCPeerConnection) => {
+const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
+    pc: RTCPeerConnection, ref: MutableRefObject<HTMLVideoElement>) => {
     createPeerConnection()
     const desc = new RTCSessionDescription(msg.payload.sdp)
 
     await pc.setRemoteDescription(desc)
-    // let localStream = await navigator.mediaDevices.getUserMedia()
+    let localStream = await navigator.mediaDevices.getUserMedia(msg.payload.mediaConstraints)
+        .catch(userMediaErrorHandler)
+    if (!localStream) return 
+
+    ref.current.srcObject = localStream
+    localStream.getTracks().forEach(track => pc.addTrack(track, localStream as MediaStream))
+    
+    const answer = await pc.createAnswer()
+    await pc.setLocalDescription(answer)
+
+    const socketMsg: WSMessage<CallAnswerPayload> = {
+        type: WSDataType.CALL_ANSWER,
+        payload: {
+            sdp: pc.localDescription,
+        }
+    }
 }
 
 export const startCall = async (args: StartCallArgs) => {

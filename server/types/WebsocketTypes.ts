@@ -8,7 +8,8 @@ export enum WSDataType {
     CHAT_MESSAGE_STATUS,
     NEW_ACTIVE_CHANNEL,
     FRIEND_STATUS_CHANGE,
-    CALL_OFFER
+    CALL_OFFER,
+    CALL_ANSWER
 }
 
 export type WSMessage<P> = {
@@ -28,4 +29,8 @@ export type CallOfferPayload = {
         audio: boolean
         video: boolean
     }
+}
+
+export type CallAnswerPayload = {
+    sdp: RTCSessionDescription
 }
