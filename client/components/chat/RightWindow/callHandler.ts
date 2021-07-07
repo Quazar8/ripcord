@@ -23,7 +23,8 @@ const userMediaErrorHandler = (e: Error) => {
     }
 }
 
-const sendCallOffer = async (pc: RTCPeerConnection, recipientId: string) => {
+const sendCallOffer = async (pc: RTCPeerConnection,
+        recipientId: string, mediaConstraints: CallOfferPayload['mediaConstraints']) => {
     const offer = await pc.createOffer()
     await pc.setLocalDescription(offer)
     
@@ -31,7 +32,8 @@ const sendCallOffer = async (pc: RTCPeerConnection, recipientId: string) => {
         type: WSDataType.CALL_OFFER,
         payload: {
             sdp: pc.localDescription,
-            recipientId
+            recipientId,
+            mediaConstraints
         }
     }
 
@@ -47,15 +49,28 @@ const createPeerConnection = () => {
     peerConnection = new RTCPeerConnection()
 }
 
+const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>, pc: RTCPeerConnection) => {
+    createPeerConnection()
+    const desc = new RTCSessionDescription(msg.payload.sdp)
+
+    await pc.setRemoteDescription(desc)
+    // let localStream = await navigator.mediaDevices.getUserMedia()
+}
+
 export const startCall = async (args: StartCallArgs) => {
     createPeerConnection()
-    
-    let localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: args.isVideoCall})
+
+    const mediaConstraints: CallOfferPayload['mediaConstraints'] = {
+        audio: true,
+        video: args.isVideoCall
+    }
+
+    let localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints)
     .catch(userMediaErrorHandler)
     if(!localStream) return
 
     args.ref.current.srcObject = localStream
     localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream as MediaStream))
 
-    sendCallOffer(peerConnection, args.recipientId)
+    sendCallOffer(peerConnection, args.recipientId, mediaConstraints)
 }

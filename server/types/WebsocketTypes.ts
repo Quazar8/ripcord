@@ -12,16 +12,20 @@ export enum WSDataType {
 }
 
 export type WSMessage<P> = {
-    type: WSDataType,
+    type: WSDataType
     payload: P
 }
 
 export type StatusChangePayload = {
-    userId: string,
+    userId: string
     status: UserStatus
 }
 
 export type CallOfferPayload = {
-    recipientId: string,
+    recipientId: string
     sdp: RTCSessionDescription
+    mediaConstraints: {
+        audio: boolean
+        video: boolean
+    }
 }
