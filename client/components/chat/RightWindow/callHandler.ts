@@ -1,4 +1,6 @@
 import { MutableRefObject } from "react";
+import { CallOfferPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
+import { sendSocketMessage } from "../../../socket/socket";
 
 let peerConnection: RTCPeerConnection = null
 
@@ -21,6 +23,21 @@ const userMediaErrorHandler = (e: Error) => {
     }
 }
 
+const sendCallOffer = async (pc: RTCPeerConnection, recipientId: string) => {
+    const offer = await pc.createOffer()
+    await pc.setLocalDescription(offer)
+    
+    const socketMsg: WSMessage<CallOfferPayload> = {
+        type: WSDataType.CALL_OFFER,
+        payload: {
+            sdp: pc.localDescription,
+            recipientId
+        }
+    }
+
+    sendSocketMessage(socketMsg)
+}
+
 export const startCall = async (args: StartCallArgs) => {
     if (peerConnection) {
         console.error('Already in a call')
@@ -34,4 +51,6 @@ export const startCall = async (args: StartCallArgs) => {
 
     args.ref.current.srcObject = localStream
     localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream as MediaStream))
+
+    sendCallOffer(peerConnection, args.recipientId)
 }
