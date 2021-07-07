@@ -5,7 +5,8 @@ import { sendSocketMessage } from "../../../socket/socket";
 let peerConnection: RTCPeerConnection = null
 
 type StartCallArgs = {
-    ref: MutableRefObject<HTMLVideoElement>
+    thisVideoEl: HTMLVideoElement
+    otherVideoEl: HTMLVideoElement
     userId: string
     recipientId: string
     isVideoCall: boolean
@@ -50,7 +51,7 @@ const createPeerConnection = () => {
 }
 
 const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
-    pc: RTCPeerConnection, ref: MutableRefObject<HTMLVideoElement>) => {
+    pc: RTCPeerConnection, thisVideoEl: HTMLVideoElement) => {
     createPeerConnection()
     const desc = new RTCSessionDescription(msg.payload.sdp)
 
@@ -59,7 +60,7 @@ const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
         .catch(userMediaErrorHandler)
     if (!localStream) return 
 
-    ref.current.srcObject = localStream
+    thisVideoEl.srcObject = localStream
     localStream.getTracks().forEach(track => pc.addTrack(track, localStream as MediaStream))
     
     const answer = await pc.createAnswer()
@@ -87,7 +88,7 @@ export const startCall = async (args: StartCallArgs) => {
     .catch(userMediaErrorHandler)
     if(!localStream) return
 
-    args.ref.current.srcObject = localStream
+    args.thisVideoEl.srcObject = localStream
     localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream as MediaStream))
 
     sendCallOffer(peerConnection, args.recipientId, mediaConstraints)
