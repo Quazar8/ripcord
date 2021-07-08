@@ -46,7 +46,7 @@ const sendCallOffer = async (pc: RTCPeerConnection,
     sendSocketMessage(socketMsg)
 }
 
-const createPeerConnection = (recipientId: string) => {
+const createPeerConnection = (recipientId: string, otherVideoEl: HTMLVideoElement) => {
     if (peerConnection) {
         console.error('Already in a call')
         return
@@ -55,6 +55,11 @@ const createPeerConnection = (recipientId: string) => {
     peerConnection = new RTCPeerConnection()
 
     peerConnection.onicecandidate = (ev) => handleIceCandidateEv(ev, recipientId) 
+    peerConnection.ontrack = (ev) => handleTrackEv(ev, otherVideoEl)
+}
+
+const handleTrackEv = (ev: RTCTrackEvent, otherVideoEl: HTMLVideoElement) => {
+    otherVideoEl.srcObject = ev.streams[0]
 }
 
 const handleIceCandidateEv = (ev: RTCPeerConnectionIceEvent, recipientId: string) => {
@@ -81,7 +86,7 @@ export const handleNewIceCandidateMsg = (msg: WSMessage<NewICECandPayload>) => {
 
 export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
     pc: RTCPeerConnection, args: IncCallArgs) => {
-    createPeerConnection(msg.payload.recipientId)
+    createPeerConnection(msg.payload.recipientId, args.otherVideoEl)
     const desc = new RTCSessionDescription(msg.payload.sdp)
 
     await pc.setRemoteDescription(desc)
@@ -106,7 +111,7 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
 }
 
 export const startCall = async (args: StartCallArgs) => {
-    createPeerConnection(args.otherUserId)
+    createPeerConnection(args.otherUserId, args.otherVideoEl)
 
     const mediaConstraints: CallOfferPayload['mediaConstraints'] = {
         audio: true,
