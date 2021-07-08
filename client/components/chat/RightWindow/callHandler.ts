@@ -58,8 +58,24 @@ const createPeerConnection = (recipientId: string, otherVideoEl: HTMLVideoElemen
     peerConnection.ontrack = (ev) => handleTrackEv(ev, otherVideoEl)
 }
 
-const closeCall = () => {
-    throw new Error('Close call not implemented yet')
+const closeCall = (thisVideoEl: HTMLVideoElement,
+    otherVideoEl: HTMLVideoElement) => {
+    
+    if (peerConnection) {
+        peerConnection.ontrack = null
+        peerConnection.onicecandidate = null
+    }
+
+    if (otherVideoEl.srcObject) {
+        (otherVideoEl.srcObject as MediaStream).getTracks().forEach(track => track.stop())
+    }
+
+    if (thisVideoEl.srcObject) {
+        (thisVideoEl.srcObject as MediaStream).getTracks().forEach(track => track.stop())
+    }
+
+    peerConnection.close()
+    peerConnection = null
 }
 
 const handleTrackEv = (ev: RTCTrackEvent, otherVideoEl: HTMLVideoElement) => {
