@@ -1,5 +1,5 @@
 import { MutableRefObject} from "react";
-import { CallAnswerPayload, CallOfferPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
+import { CallAnswerPayload, CallOfferPayload, NewICECandPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
 import { sendSocketMessage } from "../../../socket/socket";
 
 let peerConnection: RTCPeerConnection = null
@@ -41,7 +41,7 @@ const sendCallOffer = async (pc: RTCPeerConnection,
     sendSocketMessage(socketMsg)
 }
 
-const createPeerConnection = () => {
+const createPeerConnection = (recipientId: string) => {
     if (peerConnection) {
         console.error('Already in a call')
         return
@@ -50,9 +50,20 @@ const createPeerConnection = () => {
     peerConnection = new RTCPeerConnection()
 }
 
+// const handleIceCandidateEv = (ev: RTCPeerConnectionIceEvent) => {
+//     if (ev.candidate) {
+//         const msg: WSMessage<NewICECandPayload> = {
+//             type: WSDataType.NEW_ICE_CAND,
+//             payload: {
+
+//             }
+//         }
+//     }
+// }
+
 const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
     pc: RTCPeerConnection, thisVideoEl: HTMLVideoElement) => {
-    createPeerConnection()
+    createPeerConnection(msg.payload.recipientId)
     const desc = new RTCSessionDescription(msg.payload.sdp)
 
     await pc.setRemoteDescription(desc)
@@ -77,7 +88,7 @@ const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
 }
 
 export const startCall = async (args: StartCallArgs) => {
-    createPeerConnection()
+    createPeerConnection(args.recipientId)
 
     const mediaConstraints: CallOfferPayload['mediaConstraints'] = {
         audio: true,
