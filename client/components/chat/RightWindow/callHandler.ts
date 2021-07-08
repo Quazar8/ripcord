@@ -2,6 +2,8 @@ import { CallAnswerPayload, CallOfferPayload, HangUpCallPayload, NewICECandPaylo
 import { sendSocketMessage } from "../../../socket/socket";
 
 let peerConnection: RTCPeerConnection = null
+let localVidEl: HTMLVideoElement = null
+let remoteVidEl: HTMLVideoElement = null
 
 type StartCallArgs = {
     thisVideoEl: HTMLVideoElement
@@ -56,22 +58,39 @@ const createPeerConnection = (recipientId: string, otherVideoEl: HTMLVideoElemen
 
     peerConnection.onicecandidate = (ev) => handleIceCandidateEv(ev, recipientId) 
     peerConnection.ontrack = (ev) => handleTrackEv(ev, otherVideoEl)
+    peerConnection.oniceconnectionstatechange = handleIceStateEv
 }
 
-const closeCall = (thisVideoEl: HTMLVideoElement,
-    otherVideoEl: HTMLVideoElement) => {
+const handleIceStateEv = () => {
+    switch(peerConnection.iceConnectionState) {
+        case 'closed': {
+            console.log('RTC connection closed')
+            closeCall()
+            break;
+        }
+        case 'failed': {
+            console.log('RTC ICE connection state failed')
+            closeCall()
+            break;
+        }
+        default: break;
+    }
+}
+
+const closeCall = () => {
     
     if (peerConnection) {
         peerConnection.ontrack = null
         peerConnection.onicecandidate = null
+        peerConnection.oniceconnectionstatechange = null
     }
 
-    if (otherVideoEl.srcObject) {
-        (otherVideoEl.srcObject as MediaStream).getTracks().forEach(track => track.stop())
+    if (remoteVidEl.srcObject) {
+        (remoteVidEl.srcObject as MediaStream).getTracks().forEach(track => track.stop())
     }
 
-    if (thisVideoEl.srcObject) {
-        (thisVideoEl.srcObject as MediaStream).getTracks().forEach(track => track.stop())
+    if (localVidEl.srcObject) {
+        (localVidEl.srcObject as MediaStream).getTracks().forEach(track => track.stop())
     }
 
     peerConnection.close()
