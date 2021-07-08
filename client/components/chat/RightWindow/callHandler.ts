@@ -1,4 +1,4 @@
-import { CallAnswerPayload, CallOfferPayload, NewICECandPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
+import { CallAnswerPayload, CallOfferPayload, HangUpCallPayload, NewICECandPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
 import { sendSocketMessage } from "../../../socket/socket";
 
 let peerConnection: RTCPeerConnection = null
@@ -56,6 +56,10 @@ const createPeerConnection = (recipientId: string, otherVideoEl: HTMLVideoElemen
 
     peerConnection.onicecandidate = (ev) => handleIceCandidateEv(ev, recipientId) 
     peerConnection.ontrack = (ev) => handleTrackEv(ev, otherVideoEl)
+}
+
+const closeCall = () => {
+    throw new Error('Close call not implemented yet')
 }
 
 const handleTrackEv = (ev: RTCTrackEvent, otherVideoEl: HTMLVideoElement) => {
@@ -126,4 +130,15 @@ export const startCall = async (args: StartCallArgs) => {
     localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream as MediaStream))
 
     sendCallOffer(peerConnection, args.otherUserId, mediaConstraints)
+}
+
+export const hangUpCall = (otherUserId: string) => {
+    const msg: WSMessage<HangUpCallPayload> = {
+        type: WSDataType.HANG_UP,
+        payload: {
+            otherUserId
+        }
+    }
+
+    sendSocketMessage(msg)
 }

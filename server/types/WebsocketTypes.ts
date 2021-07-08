@@ -10,7 +10,8 @@ export enum WSDataType {
     FRIEND_STATUS_CHANGE,
     CALL_OFFER,
     CALL_ANSWER,
-    NEW_ICE_CAND
+    NEW_ICE_CAND,
+    HANG_UP
 }
 
 export type WSMessage<P> = {
@@ -39,4 +40,8 @@ export type CallAnswerPayload = {
 export type NewICECandPayload = {
     recipientId: string,
     candidate: RTCIceCandidate
+}
+
+export type HangUpCallPayload = {
+    otherUserId: string
 }
