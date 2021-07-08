@@ -48,18 +48,23 @@ const createPeerConnection = (recipientId: string) => {
     }
 
     peerConnection = new RTCPeerConnection()
+
+    peerConnection.onicecandidate = (ev) => handleIceCandidateEv(ev, recipientId) 
 }
 
-// const handleIceCandidateEv = (ev: RTCPeerConnectionIceEvent) => {
-//     if (ev.candidate) {
-//         const msg: WSMessage<NewICECandPayload> = {
-//             type: WSDataType.NEW_ICE_CAND,
-//             payload: {
+const handleIceCandidateEv = (ev: RTCPeerConnectionIceEvent, recipientId: string) => {
+    if (ev.candidate) {
+        const msg: WSMessage<NewICECandPayload> = {
+            type: WSDataType.NEW_ICE_CAND,
+            payload: {
+                recipientId,
+                candidate: ev.candidate
+            }
+        }
 
-//             }
-//         }
-//     }
-// }
+        sendSocketMessage(msg)
+    }
+}
 
 const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
     pc: RTCPeerConnection, thisVideoEl: HTMLVideoElement) => {

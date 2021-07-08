@@ -9,7 +9,8 @@ export enum WSDataType {
     NEW_ACTIVE_CHANNEL,
     FRIEND_STATUS_CHANGE,
     CALL_OFFER,
-    CALL_ANSWER
+    CALL_ANSWER,
+    NEW_ICE_CAND
 }
 
 export type WSMessage<P> = {
@@ -33,4 +34,9 @@ export type CallOfferPayload = {
 
 export type CallAnswerPayload = {
     sdp: RTCSessionDescription
+}
+
+export type NewICECandPayload = {
+    recipientId: string,
+    candidate: RTCIceCandidate
 }
