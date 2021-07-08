@@ -6,9 +6,15 @@ let peerConnection: RTCPeerConnection = null
 type StartCallArgs = {
     thisVideoEl: HTMLVideoElement
     otherVideoEl: HTMLVideoElement
-    userId: string
-    recipientId: string
+    thisUserId: string
+    otherUserId: string
     isVideoCall: boolean
+}
+
+type IncCallArgs = {
+    thisVideoEl: HTMLVideoElement
+    otherVideoEl: HTMLVideoElement
+    thisUserId: string
 }
 
 const userMediaErrorHandler = (e: Error) => {
@@ -74,7 +80,7 @@ export const handleNewIceCandidateMsg = (msg: WSMessage<NewICECandPayload>) => {
 }
 
 export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
-    pc: RTCPeerConnection, thisVideoEl: HTMLVideoElement) => {
+    pc: RTCPeerConnection, args: IncCallArgs) => {
     createPeerConnection(msg.payload.recipientId)
     const desc = new RTCSessionDescription(msg.payload.sdp)
 
@@ -83,7 +89,7 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
         .catch(userMediaErrorHandler)
     if (!localStream) return 
 
-    thisVideoEl.srcObject = localStream
+    args.thisVideoEl.srcObject = localStream
     localStream.getTracks().forEach(track => pc.addTrack(track, localStream as MediaStream))
     
     const answer = await pc.createAnswer()
@@ -100,11 +106,11 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
 }
 
 export const startCall = async (args: StartCallArgs) => {
-    createPeerConnection(args.recipientId)
+    createPeerConnection(args.otherUserId)
 
     const mediaConstraints: CallOfferPayload['mediaConstraints'] = {
         audio: true,
-        video: args.isVideoCall
+        video: args.isVideoCall || false
     }
 
     let localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints)
@@ -114,5 +120,5 @@ export const startCall = async (args: StartCallArgs) => {
     args.thisVideoEl.srcObject = localStream
     localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream as MediaStream))
 
-    sendCallOffer(peerConnection, args.recipientId, mediaConstraints)
+    sendCallOffer(peerConnection, args.otherUserId, mediaConstraints)
 }
