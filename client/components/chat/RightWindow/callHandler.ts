@@ -1,4 +1,3 @@
-import { MutableRefObject} from "react";
 import { CallAnswerPayload, CallOfferPayload, NewICECandPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
 import { sendSocketMessage } from "../../../socket/socket";
 
@@ -66,7 +65,15 @@ const handleIceCandidateEv = (ev: RTCPeerConnectionIceEvent, recipientId: string
     }
 }
 
-const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
+export const handleNewIceCandidateMsg = (msg: WSMessage<NewICECandPayload>) => {
+    const cand = new RTCIceCandidate(msg.payload.candidate)
+
+    peerConnection.addIceCandidate(cand).catch(err => {
+        console.log('Handling ice candidate message error', err)
+    })
+}
+
+export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
     pc: RTCPeerConnection, thisVideoEl: HTMLVideoElement) => {
     createPeerConnection(msg.payload.recipientId)
     const desc = new RTCSessionDescription(msg.payload.sdp)
