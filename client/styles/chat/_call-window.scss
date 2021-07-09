@@ -34,9 +34,9 @@
 
         button {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            background: hsl(0, 14%, 22%);
+            background: hsl(0, 79%, 34%);
             border: none;
             border-radius: 50%;
             font-size: 4vw;
@@ -46,6 +46,13 @@
 
             &:hover {
                 cursor: pointer;
+                background: hsl(0, 46%, 77%);
+            }
+
+            span {
+                display: block;
+                width: 80%;
+                height: 80%;
             }
         }
     }

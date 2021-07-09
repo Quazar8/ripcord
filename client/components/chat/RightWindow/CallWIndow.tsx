@@ -14,7 +14,7 @@ const CallWIndow = (props: Props) => {
                 <ProfilePic picNameOrJson = { props.remoteUserProfilePic } />
             </div>
             <div className = "buttons-container">
-                <button>&#128222;</button>
+                <button><span>&#128222;</span></button>
             </div>
         </div>
     )
