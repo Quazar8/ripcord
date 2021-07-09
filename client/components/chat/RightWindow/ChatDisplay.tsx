@@ -180,7 +180,10 @@ const ChatDisplay = (props: Props) => {
             </div>
             {
                 showCallWindow
-                ? <CallWIndow />
+                ? <CallWIndow 
+                    thisUserProfilePic = { props.user.profilePic }
+                    remoteUserProfilePic = { props.channelInfo.recipient.profilePic }
+                />
                 : null
             }
             <div className = "user-field">

@@ -64,7 +64,7 @@ const createPeerConnection = (recipientId: string, otherVideoEl: HTMLVideoElemen
 const handleIceStateEv = () => {
     switch(peerConnection.iceConnectionState) {
         case 'closed': {
-            console.log('RTC connection closed')
+            console.log('RTC ICE connection closed')
             closeCall()
             break;
         }
