@@ -1,9 +1,52 @@
+@use '../user//profile-pic.scss';
+
 .call-window {
     background: hsl(0, 0%, 9%);
     color: white;
     position: absolute;
-    top: 15%;
+    top: 13%;
     left: 0;
     width: 100%;
     height: 55%;
+
+    .profile-pics-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60%;
+
+        @include profile-pic.profilePicMixin(10vw, 0.2vw, 5vw);
+
+        .profile-pic:first-child {
+            margin-right: 2%;
+        }
+
+        .profile-pic:last-child {
+            margin-left: 2%;
+        }
+    }
+
+    .buttons-container {
+        height: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: hsl(0, 14%, 22%);
+            border: none;
+            border-radius: 50%;
+            font-size: 4vw;
+            transform: rotateZ(100deg);
+            width: 6vw;
+            height: 6vw;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
 }
