@@ -27,6 +27,28 @@
         h4 {
             font-size: 1vw;
         }
+
+        .button-container {
+            padding: 0 2%;
+            display: flex;
+            align-items: center;
+
+            button {
+                background-color: inherit;
+                border: none;
+                height: 70%;
+                color: hsl(0, 3%, 85%);
+                font-size: 3vw;
+                display: flex;
+                align-items: center;
+                transition: transform 0.4s ease-out;
+
+                &:hover {
+                    cursor: pointer;
+                    transform: scale(1.1);
+                }
+            }
+        }
     }
 
     .chat-monitor {

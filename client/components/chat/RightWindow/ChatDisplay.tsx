@@ -161,6 +161,9 @@ const ChatDisplay = (props: Props) => {
                     <h2>{ info.recipient.username }</h2>
                     <h4>{ info.recipient.status }</h4>
                 </div>
+                <div className = "button-container">
+                    <button>&#9743;</button>
+                </div>
             </div>
             <div ref = { chatMonitorRef } className = "chat-monitor">
                 { 
