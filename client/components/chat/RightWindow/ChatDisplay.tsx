@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, KeyboardEvent } from 'react'
+import React, { useRef, useEffect, KeyboardEvent, useState } from 'react'
 import { sendSocketMessage, socketIsClosed } from '../../../socket/socket'
 import { resHasError } from '../../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../../api/chatApi'
@@ -11,6 +11,7 @@ import { PendingMsg } from '../../../types/ChatClientTypes'
 import { RightWindowProps } from './RightWindow'
 import ProfilePic from '../../user/ProfilePic'
 import { getDateDiffInMin } from '../../../utils/utils'
+import CallWIndow from './CallWIndow'
 
 type Props = Pick<RightWindowProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
@@ -30,6 +31,8 @@ const ChatDisplay = (props: Props) => {
 
     const messageInputRef = useRef<HTMLDivElement>(null)
     const chatMonitorRef = useRef<HTMLDivElement>()
+    const [showCallWindow, setShowCallWindow] = useState(false)
+
     const info = props.channelInfo
 
     const scrollMonitorToBottom = () => {
@@ -153,6 +156,10 @@ const ChatDisplay = (props: Props) => {
         )
     })
 
+    const handleCallClick = () => {
+        setShowCallWindow(true)
+    }
+
     return (
         <section className = "chat-display">
             <div className = "user-info">
@@ -162,7 +169,7 @@ const ChatDisplay = (props: Props) => {
                     <h4>{ info.recipient.status }</h4>
                 </div>
                 <div className = "button-container">
-                    <button>&#9743;</button>
+                    <button onClick = { handleCallClick }>&#9743;</button>
                 </div>
             </div>
             <div ref = { chatMonitorRef } className = "chat-monitor">
@@ -170,6 +177,11 @@ const ChatDisplay = (props: Props) => {
                     messages.length > 0
                     ? messages
                     : <h2>No chat history as of yet</h2>
+                }
+                {
+                    showCallWindow
+                    ? <CallWIndow />
+                    : null
                 }
             </div>
             <div className = "user-field">
