@@ -168,7 +168,7 @@ const ChatDisplay = (props: Props) => {
                     <h4>{ info.recipient.status }</h4>
                 </div>
                 <div className = "button-container">
-                    <button onClick = { handleCallClick }>&#9743;</button>
+                    <button onClick = { handleCallClick }>&#9990;</button>
                 </div>
             </div>
             <div ref = { chatMonitorRef } className = "chat-monitor">
