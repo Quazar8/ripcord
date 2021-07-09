@@ -4,6 +4,7 @@
 @use 'active-channels';
 @use 'chat-message';
 @use './user-menu/user-menu';
+@use './call-window';
 
 .chat-app {
     display: flex;

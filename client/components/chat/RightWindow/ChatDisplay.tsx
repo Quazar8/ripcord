@@ -27,7 +27,6 @@ const ChatDisplay = (props: Props) => {
         return (
             <h2 className = "no-conversations">No open conversations</h2>
         )
-    
 
     const messageInputRef = useRef<HTMLDivElement>(null)
     const chatMonitorRef = useRef<HTMLDivElement>()
@@ -157,7 +156,7 @@ const ChatDisplay = (props: Props) => {
     })
 
     const handleCallClick = () => {
-        setShowCallWindow(true)
+        setShowCallWindow(!showCallWindow)
     }
 
     return (
@@ -178,12 +177,12 @@ const ChatDisplay = (props: Props) => {
                     ? messages
                     : <h2>No chat history as of yet</h2>
                 }
-                {
-                    showCallWindow
-                    ? <CallWIndow />
-                    : null
-                }
             </div>
+            {
+                showCallWindow
+                ? <CallWIndow />
+                : null
+            }
             <div className = "user-field">
                 <div 
                     className = "user-input"
