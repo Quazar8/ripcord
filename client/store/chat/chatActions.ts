@@ -1,4 +1,5 @@
 import { ActiveChannelInfo, ChatMessageStatusPayload, ChatReceiverPayload } from "../../../server/types/ChatTypes";
+import { ReceivingCallPayload } from "../../../server/types/WebsocketTypes";
 import { ClientActiveChannel, PendingMsg } from "../../types/ChatClientTypes";
 import { Action } from "../storeComponents/StoreTypes";
 import { ChatChannelState } from "./chatReducer";
@@ -16,7 +17,8 @@ export enum ChatActionTypes {
     ADD_ACTIVE_CHANNEL = "ADD_ACTIVE_CHANNEL",
     MOVE_ACTIVE_CHANNEL_TOP = "MOVE_ACTIVE_CHANNEL_TOP",
     INC_ACTIVE_CHANNEL_NEW_MSG = "INC_ACTIVE_CHANNEL_NEW_MSG",
-    CLEAR_ACTIVE_CHANNEL_NOTIF = "CLEAR_ACTIVE_CHANNEL_NOTIF"
+    CLEAR_ACTIVE_CHANNEL_NOTIF = "CLEAR_ACTIVE_CHANNEL_NOTIF",
+    RECEIVING_CALL = "RECEIVING_CALL"
 }
 
 export type ChatAction = Action<ChatActionTypes, any>
@@ -84,4 +86,9 @@ export const incrementActiveChannelNewMsgAction = (channelId: string): ChatActio
 export const clearActiveChannelNotifAction = (channelId: string): ChatAction => ({
     type: ChatActionTypes.CLEAR_ACTIVE_CHANNEL_NOTIF,
     payload: channelId
+})
+
+export const receivingCallAction = (payload: ReceivingCallPayload): ChatAction => ({
+    type: ChatActionTypes.RECEIVING_CALL,
+    payload
 })

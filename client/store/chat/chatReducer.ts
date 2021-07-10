@@ -1,5 +1,6 @@
 import { ChatMessageStatus, ChatMessageStatusPayload, ChatReceiverPayload, RecipientInfo } from "../../../server/types/ChatTypes";
 import { UserStatus } from "../../../server/types/UserTypes";
+import { ReceivingCallPayload } from "../../../server/types/WebsocketTypes";
 import { ClientActiveChannel, ClientChannelInfoWPending, PendingMsg } from "../../types/ChatClientTypes";
 import { ChatAction, ChatActionTypes } from "./chatActions";
 
@@ -9,11 +10,15 @@ export type ChatChannelState = {
 }
 
 export type ChatState = {
-    currentRecipientId: string,
-    activeChannels: ClientActiveChannel[],
-    currentChannelId: string,
+    currentRecipientId: string
+    activeChannels: ClientActiveChannel[]
+    currentChannelId: string
     chatChannel: ChatChannelState
-    newMessages: number
+    receivingCall: {
+        callerId: string
+        callerName: string
+        callerProfilePic: string
+    } | null
 }
 
 export const chatStateInit: ChatState = {
@@ -34,7 +39,7 @@ export const chatStateInit: ChatState = {
             participantTwo: null
         }
     },
-    newMessages: 0
+    receivingCall: null
 }
 
 const changeRecipient = (state: ChatState, recipientId: string): ChatState => {
@@ -234,6 +239,13 @@ const clearActiveChannelNotif = (state: ChatState, channelId: string) => {
     return newState
 }
 
+const handleReceivingCall = (state: ChatState, callInfo: ReceivingCallPayload) => {
+    return {
+        ...state,
+        receivingCall: callInfo
+    }
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -262,6 +274,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return incrementActiveChannelNewMsg(state, action.payload)
         case ChatActionTypes.CLEAR_ACTIVE_CHANNEL_NOTIF:
             return clearActiveChannelNotif(state, action.payload)
+        case ChatActionTypes.RECEIVING_CALL:
+            return handleReceivingCall(state, action.payload)
         default: return state
     }
 }
