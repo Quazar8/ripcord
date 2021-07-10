@@ -8,6 +8,10 @@ type OnlineUsers = {
 
 export const onlineUsers: OnlineUsers = {}
 
+const isObjectId = (id: Types.ObjectId | string): id is Types.ObjectId => {
+    return id.valueOf() === Object
+}
+
 export const sendSocketMsg = (userId: Types.ObjectId, msg: WSMessage<any>) => {
     const socket = onlineUsers[userId.toHexString()]
 
@@ -16,8 +20,12 @@ export const sendSocketMsg = (userId: Types.ObjectId, msg: WSMessage<any>) => {
     }
 }
 
-export const isOnline = (userId: Types.ObjectId): boolean => {
-    if (onlineUsers[userId.toHexString()]) return true
+export const isOnline = (userId: Types.ObjectId | string): boolean => {
+    if (isObjectId(userId)) {
+        if (onlineUsers[userId.toHexString()]) return true
+    } else {
+        if (onlineUsers[userId]) return true
+    }
 
     return false
 }
