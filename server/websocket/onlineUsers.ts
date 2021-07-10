@@ -12,8 +12,9 @@ const isObjectId = (id: Types.ObjectId | string): id is Types.ObjectId => {
     return id.valueOf() === Object
 }
 
-export const sendSocketMsg = (userId: Types.ObjectId, msg: WSMessage<any>) => {
-    const socket = onlineUsers[userId.toHexString()]
+export const sendSocketMsg = (userId: Types.ObjectId | string, msg: WSMessage<any>) => {
+    const id = isObjectId(userId) ? userId.toHexString() : userId
+    const socket = onlineUsers[id]
 
     if (socket) {
         socket.send(JSON.stringify(msg))
