@@ -1,4 +1,4 @@
-import { CallAnswerPayload, CallOfferPayload, HangUpCallPayload, NewICECandPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
+import { CallAnswerPayload, CallOfferPayload, HangUpCallPayload, NewICECandPayload, StartCallPayload, WSDataType, WSMessage } from "../../../../server/types/WebsocketTypes";
 import { sendSocketMessage } from "../../../socket/socket";
 
 let peerConnection: RTCPeerConnection = null
@@ -149,7 +149,7 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
     sendSocketMessage(socketMsg)
 }
 
-export const startCall = async (args: StartCallArgs) => {
+const handleAcceptedCall = async (args: StartCallArgs) => {
     createPeerConnection(args.otherUserId, args.otherVideoEl)
 
     const mediaConstraints: CallOfferPayload['mediaConstraints'] = {
@@ -172,6 +172,17 @@ export const hangUpCall = (otherUserId: string) => {
         type: WSDataType.HANG_UP,
         payload: {
             otherUserId
+        }
+    }
+
+    sendSocketMessage(msg)
+}
+
+export const startCall = (recipientId: string) => {
+    const msg: WSMessage<StartCallPayload> = {
+        type: WSDataType.START_CALL,
+        payload: {
+            recipientId
         }
     }
 

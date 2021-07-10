@@ -12,6 +12,7 @@ import { RightWindowProps } from './RightWindow'
 import ProfilePic from '../../user/ProfilePic'
 import { getDateDiffInMin } from '../../../utils/utils'
 import CallWIndow from './CallWIndow'
+import { startCall } from './callHandler'
 
 type Props = Pick<RightWindowProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
@@ -157,6 +158,7 @@ const ChatDisplay = (props: Props) => {
 
     const handleCallClick = () => {
         setShowCallWindow(!showCallWindow)
+        startCall(props.channelInfo.recipient.id)
     }
 
     return (
