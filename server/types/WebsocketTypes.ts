@@ -12,7 +12,8 @@ export enum WSDataType {
     CALL_ANSWER,
     NEW_ICE_CAND,
     HANG_UP,
-    START_CALL
+    START_CALL,
+    RECEIVING_CALL
 }
 
 export type WSMessage<P> = {
@@ -49,4 +50,10 @@ export type HangUpCallPayload = {
 
 export type StartCallPayload = {
     recipientId: string
+}
+
+export type ReceivingCallPayload = {
+    callerId: string
+    callerName: string
+    callerProfilePic: string
 }
