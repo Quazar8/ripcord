@@ -21,11 +21,9 @@ export const sendSocketMsg = (userId: Types.ObjectId, msg: WSMessage<any>) => {
 }
 
 export const isOnline = (userId: Types.ObjectId | string): boolean => {
-    if (isObjectId(userId)) {
-        if (onlineUsers[userId.toHexString()]) return true
-    } else {
-        if (onlineUsers[userId]) return true
-    }
+    const id = isObjectId(userId) ? userId.toHexString() : userId
+
+    if (onlineUsers[id]) return true
 
     return false
 }
