@@ -7,13 +7,13 @@ import { ActiveChannelInfo } from '../../../../server/types/ChatTypes'
 
 export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' | 'user' 
-        | 'channelId' | 'friendRequests'
+        | 'channelId'
         | 'updateChannelInfoFn' | 'channelInfo'
         | 'pushSentMsgToStoreFn' | 'markMsgAsFailedFn' 
         | 'appendActiveChannelFn' | 'moveActiveChToTopFn'
         | 'fillFriendRequestsFn' | 'removeFriendRequestFn'
-        | 'pendingRequests' | 'clearPendingButtonNotifFn'
-        | 'friendsList' | 'fillFriendsListFn'
+        | 'clearPendingButtonNotifFn'
+        | 'fillFriendsListFn' | 'friendsState'
         | 'removeFriendFromListFn' | 'callState'> & {
             toggleChatWRecipientId: (recipientId: string) => void
             showFriendsWindow: boolean,
@@ -22,10 +22,12 @@ export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
 
 type RightContextType = Pick<RightWindowProps, 'dispNotification' 
      | 'toggleChatWRecipientId' | 'fillFriendRequestsFn'
-     | 'friendRequests' | 'removeFriendRequestFn'
-     | 'pendingRequests' | 'clearPendingButtonNotifFn'
-     | 'friendsList' | 'fillFriendsListFn'
-     | 'removeFriendFromListFn'>
+     | 'removeFriendRequestFn'
+     | 'clearPendingButtonNotifFn'
+     | 'fillFriendsListFn'
+     | 'removeFriendFromListFn'> 
+     & Pick<RightWindowProps['friendsState'], 'pendingRequests'
+     | 'friendsList' | 'friendRequests'>
 
 export const RightWindowContext = createContext<RightContextType>({
     friendRequests: { incoming: [], outgoing: []},
@@ -49,13 +51,13 @@ const RightWindow = (props: RightWindowProps) => {
     }
 
     const contextValue: RightContextType = {
-        friendsList: props.friendsList,
-        friendRequests: props.friendRequests,
+        friendsList: props.friendsState.friendsList,
+        friendRequests: props.friendsState.friendRequests,
+        pendingRequests: props.friendsState.pendingRequests,
         dispNotification: props.dispNotification,
         toggleChatWRecipientId: props.toggleChatWRecipientId,
         fillFriendRequestsFn: props.fillFriendRequestsFn,
         removeFriendRequestFn: props.removeFriendRequestFn,
-        pendingRequests: props.pendingRequests,
         clearPendingButtonNotifFn: props.clearPendingButtonNotifFn,
         fillFriendsListFn: props.fillFriendsListFn,
         removeFriendFromListFn: props.removeFriendFromListFn

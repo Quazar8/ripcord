@@ -33,14 +33,20 @@ import { clearFriendsButtonNotifAction,
 type ChatStateProps = {
     user: UserState
     showUserMenu: boolean
-    friendNotifications: number
-    pendingRequests: number
+    // friendNotifications: number
+    // pendingRequests: number
     recipientId: string
     channelId: string
     activeChannels: ClientActiveChannel[]
     channelInfo: ChatChannelState
-    friendRequests: FriendRequestsState
-    friendsList: FriendsState['friendsList']
+    // friendRequests: FriendRequestsState
+    // friendsList: FriendsState['friendsList']
+    friendsState: {
+        friendNotifications: FriendsState['friendWindowNotifs']
+        pendingRequests: FriendsState['pendingNotifs']
+        friendRequests: FriendsState['friendRequests']
+        friendsList: FriendsState['friendsList']
+    }
     callState: {
         receivingCall: ChatState['receivingCall']
     }
@@ -130,7 +136,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 user = { props.user }
                 showUserMenuFn = { props.showUserMenuFn }
                 toggleFriendsWindowFn = { toggleFriendsWindow }
-                friendNotifications = { props.friendNotifications }
+                friendNotifications = { props.friendsState.friendNotifications }
                 updateActiveChannelsFn = { props.updateActiveChannelsFn }
                 activeChannels = { props.activeChannels }
                 toggleChatWChannelId = { toggleChatWChannelId }
@@ -143,7 +149,6 @@ const ChatAppView = (props: ChatAppProps) => {
                 dispNotification = { props.dispNotification }
                 recipientId = { props.recipientId }
                 user = { props.user }
-                friendRequests = { props.friendRequests }
                 channelId = { props.channelId }
                 toggleChatWRecipientId = { toggleChatWRecipientId }
                 updateChannelInfoFn = { props.updateChannelInfoFn }
@@ -155,12 +160,11 @@ const ChatAppView = (props: ChatAppProps) => {
                 moveActiveChToTopFn = { props.moveActiveChToTopFn }
                 fillFriendRequestsFn = { props.fillFriendRequestsFn }
                 removeFriendRequestFn = { props.removeFriendRequestFn }
-                pendingRequests = { props.pendingRequests }
                 clearPendingButtonNotifFn = { props.clearPendingButtonNotifFn }
-                friendsList = { props.friendsList }
                 fillFriendsListFn = { props.fillFriendsListFn }
                 removeFriendFromListFn = { props.removeFriendFromListFn }
                 callState = { props.callState }
+                friendsState = { props.friendsState }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -175,14 +179,16 @@ const ChatAppView = (props: ChatAppProps) => {
 const mapState: MapStateFn<ChatStateProps> = (state) => ({
     user: state.global.user,
     showUserMenu: state.global.showUserOptions,
-    friendNotifications: state.friends.friendWindowNotifs,
     recipientId: state.chat.currentRecipientId,
     activeChannels: state.chat.activeChannels,
     channelId: state.chat.currentChannelId,
     channelInfo: state.chat.chatChannel,
-    friendRequests: state.friends.friendRequests,
-    pendingRequests: state.friends.pendingNotifs,
-    friendsList: state.friends.friendsList,
+    friendsState: {
+        friendsList: state.friends.friendsList,
+        pendingRequests: state.friends.pendingNotifs,
+        friendNotifications: state.friends.friendWindowNotifs,
+        friendRequests: state.friends.friendRequests
+    },
     callState: {
         receivingCall: state.chat.receivingCall
     }
