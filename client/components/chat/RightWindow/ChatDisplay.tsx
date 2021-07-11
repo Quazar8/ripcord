@@ -15,16 +15,14 @@ import CallWIndow from './call/CallWIndow'
 import { startCall } from './call/callHandler'
 import ReceivingCallBlock from './call/ReceivingCallBlock'
 
-type Props = Pick<RightWindowProps, 'dispNotification'
+export type ChatDisplayProps = Pick<RightWindowProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
         | 'updateChannelInfoFn' | 'channelInfo'
-        | 'pushSentMsgToStoreFn'
-        | 'markMsgAsFailedFn'
-        | 'appendActiveChannelFn'
-        | 'activeChannels'
-        | 'moveActiveChToTopFn'>
+        | 'pushSentMsgToStoreFn' | 'markMsgAsFailedFn'
+        | 'appendActiveChannelFn' | 'activeChannels'
+        | 'moveActiveChToTopFn' | 'callState'>
 
-const ChatDisplay = (props: Props) => {
+const ChatDisplay = (props: ChatDisplayProps) => {
     if (!props.recipientId && !props.channelId) 
         return (
             <h2 className = "no-conversations">No open conversations</h2>
@@ -201,7 +199,7 @@ const ChatDisplay = (props: Props) => {
                     Send
                 </button>
             </div>
-            <ReceivingCallBlock />
+            <ReceivingCallBlock receivingCall = { props.callState.receivingCall }/>
         </section>
     )
 }

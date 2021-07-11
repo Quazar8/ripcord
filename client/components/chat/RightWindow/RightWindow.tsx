@@ -14,7 +14,7 @@ export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
         | 'fillFriendRequestsFn' | 'removeFriendRequestFn'
         | 'pendingRequests' | 'clearPendingButtonNotifFn'
         | 'friendsList' | 'fillFriendsListFn'
-        | 'removeFriendFromListFn'> & {
+        | 'removeFriendFromListFn' | 'callState'> & {
             toggleChatWRecipientId: (recipientId: string) => void
             showFriendsWindow: boolean,
             activeChannels: ActiveChannelInfo[]
@@ -78,6 +78,7 @@ const RightWindow = (props: RightWindowProps) => {
                     appendActiveChannelFn = { props.appendActiveChannelFn }
                     activeChannels = { props.activeChannels }
                     moveActiveChToTopFn = { props.moveActiveChToTopFn }
+                    callState = { props.callState }
                 />
                 { AuxComponent }
             </RightWindowContext.Provider>

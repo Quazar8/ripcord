@@ -20,7 +20,7 @@ import { addActiveChannelAction, changeChannelIdAction,
          sendChatMsgAction,
          updateActiveChannelsAction,
          updateChatChannelAction } from '../../store/chat/chatActions'
-import { ChatChannelState } from '../../store/chat/chatReducer'
+import { ChatChannelState, ChatState } from '../../store/chat/chatReducer'
 import { ClientActiveChannel, PendingMsg } from '../../types/ChatClientTypes'
 import { FriendRequestsState, FriendsState } from '../../store/friends/friendsReducer'
 import { clearFriendsButtonNotifAction,
@@ -41,6 +41,9 @@ type ChatStateProps = {
     channelInfo: ChatChannelState
     friendRequests: FriendRequestsState
     friendsList: FriendsState['friendsList']
+    callState: {
+        receivingCall: ChatState['receivingCall']
+    }
 }
 
 type ChatDispProps = {
@@ -157,6 +160,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 friendsList = { props.friendsList }
                 fillFriendsListFn = { props.fillFriendsListFn }
                 removeFriendFromListFn = { props.removeFriendFromListFn }
+                callState = { props.callState }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -178,7 +182,10 @@ const mapState: MapStateFn<ChatStateProps> = (state) => ({
     channelInfo: state.chat.chatChannel,
     friendRequests: state.friends.friendRequests,
     pendingRequests: state.friends.pendingNotifs,
-    friendsList: state.friends.friendsList
+    friendsList: state.friends.friendsList,
+    callState: {
+        receivingCall: state.chat.receivingCall
+    }
 })
 
 const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
