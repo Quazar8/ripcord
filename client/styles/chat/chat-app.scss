@@ -4,8 +4,7 @@
 @use 'active-channels';
 @use 'chat-message';
 @use './user-menu/user-menu';
-@use './call-window';
-@use './receiving-call-block';
+@use './call/call-styles.scss';
 
 .chat-app {
     display: flex;
