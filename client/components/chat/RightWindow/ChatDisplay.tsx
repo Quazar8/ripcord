@@ -13,6 +13,7 @@ import ProfilePic from '../../user/ProfilePic'
 import { getDateDiffInMin } from '../../../utils/utils'
 import CallWIndow from './CallWIndow'
 import { startCall } from './callHandler'
+import ReceivingCallBlock from './ReceivingCallBlock'
 
 type Props = Pick<RightWindowProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
@@ -200,6 +201,7 @@ const ChatDisplay = (props: Props) => {
                     Send
                 </button>
             </div>
+            <ReceivingCallBlock />
         </section>
     )
 }
