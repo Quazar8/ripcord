@@ -1,5 +1,6 @@
 import React from 'react'
 import ProfilePic from '../../../user/ProfilePic'
+import HangUpButton from './HangUpButton'
 
 type Props = {
     thisUserProfilePic: string
@@ -14,7 +15,7 @@ const CallWIndow = (props: Props) => {
                 <ProfilePic picNameOrJson = { props.remoteUserProfilePic } />
             </div>
             <div className = "buttons-container">
-                <button><span>&#128222;</span></button>
+                <HangUpButton />
             </div>
         </div>
     )
