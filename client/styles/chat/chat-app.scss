@@ -5,6 +5,7 @@
 @use 'chat-message';
 @use './user-menu/user-menu';
 @use './call-window';
+@use './receiving-call-block';
 
 .chat-app {
     display: flex;
