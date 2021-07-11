@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfilePic from '../../user/ProfilePic'
+import ProfilePic from '../../../user/ProfilePic'
 
 type Props = {
     thisUserProfilePic: string
