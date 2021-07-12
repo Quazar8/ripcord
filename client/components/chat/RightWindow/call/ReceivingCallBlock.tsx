@@ -1,7 +1,7 @@
 import React from 'react'
 import ProfilePic from '../../../user/ProfilePic'
 import { ChatDisplayProps } from '../ChatDisplay'
-import ReceiveCallButton from './AcceptCallButton'
+import AnswerCallButton from './AnswerCallButton'
 import HangUpButton from './HangUpButton'
 
 type Props = {
@@ -16,7 +16,7 @@ const ReceivingCallBlock = (props: Props) => {
             <ProfilePic picNameOrJson = { props.receivingCall.callerProfilePic }/>
             <h3>{ props.receivingCall.callerName }</h3>
             <div className = "buttons-container">
-                <ReceiveCallButton />
+                <AnswerCallButton />
                 <HangUpButton />
             </div>
         </div>
