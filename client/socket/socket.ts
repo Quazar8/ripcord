@@ -1,8 +1,8 @@
 import { Dispatch } from 'react'
 import { pushNotification } from '../store/globalActions'
 import { AppAction } from '../store/store'
-import { WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
-import { addActiveChannelAction, incrementActiveChannelNewMsgAction, moveChannelToTopAction, pushReceivedMsgAction, sentMsgResponseAction } from '../store/chat/chatActions'
+import { ReceivingCallPayload, WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
+import { addActiveChannelAction, incrementActiveChannelNewMsgAction, moveChannelToTopAction, pushReceivedMsgAction, receivingCallAction, sentMsgResponseAction } from '../store/chat/chatActions'
 import { addIncFriendRequestAction } from '../store/friends/friendsActions'
 import { ChatMessageStatusPayload, ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
 import { triggerFrReqSound, triggerMsgSound } from '../tone/tone'
@@ -42,6 +42,10 @@ const handleIncFriendRequest = (dispatch: Dispatch<AppAction>, pendingReq: Pendi
     triggerFrReqSound()
 }
 
+const handleReceivingCall = (dispatch: Dispatch<AppAction>, payload: ReceivingCallPayload) => {
+    dispatch(receivingCallAction(payload))
+}
+
 const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
     const data: WSMessage<any> = JSON.parse(dataStr)
 
@@ -54,6 +58,8 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
             handleChatMsgReceived(dispatch, data.payload); break;
         case WSDataType.NEW_ACTIVE_CHANNEL:
             handleNewActiveChannel(dispatch, data.payload); break;
+        case WSDataType.RECEIVING_CALL:
+            handleReceivingCall(dispatch, data.payload); break;
         default: break;
     }
 }
