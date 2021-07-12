@@ -1,8 +1,16 @@
-@mixin init($size, $font-size) {
+@use 'sass:map';
+
+@mixin init($size, $font-size,
+    $span-sizes: ('height': 95%, 'width': 80%)) {
     .answer-call-button {
         width: $size;
         height: $size;
         font-size: $font-size;
+
+        span {
+            width: map.get($span-sizes, 'width');
+            height: map.get($span-sizes, 'height')l
+        }
     }
 }
 
@@ -22,7 +30,5 @@
     span {
         transform: rotateZ(20deg);
         display: block;
-        height: 95%;
-        width: 80%;
     }
 }

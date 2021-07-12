@@ -1,8 +1,16 @@
-@mixin init($size, $font-size) {
+@use 'sass:map';
+
+@mixin init($size, $font-size, 
+    $span-sizes: ('height': 80%, 'width': 80%)) {
     .hang-up-button {
         width: $size;
         height: $size;
         font-size: $font-size;
+
+        span {
+            height: map.get($span-sizes, 'height');
+            width: map.get($span-sizes, 'width');
+        }
     }
 }
 
@@ -17,12 +25,10 @@
 
     &:hover {
         cursor: pointer;
-        background: hsl(0, 46%, 77%);
+        background: hsl(0, 36%, 45%);
     }
 
     span {
         display: block;
-        width: 80%;
-        height: 80%;
     }
 }
