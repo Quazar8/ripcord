@@ -7,7 +7,6 @@ import { ChatAppProps } from '../ChatApp'
 
 export type ChatMenuProps = Pick<ChatAppProps, 'user'
     | 'showUserMenuFn'
-    | 'friendNotifications'
     | 'updateActiveChannelsFn'
     | 'activeChannels'
     | 'removeChannelFromListFn'
@@ -15,6 +14,7 @@ export type ChatMenuProps = Pick<ChatAppProps, 'user'
     | 'clearActiveChannelNotifFn'> & {
         toggleChatWChannelId: (channelId: string) => void
         toggleFriendsWindowFn: () => void
+        friendNotifications: ChatAppProps['friendsState']['friendNotifications']
     } 
 
 type ChatMenuContext = Pick<ChatMenuProps, 'toggleChatWChannelId'

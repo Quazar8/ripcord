@@ -33,14 +33,10 @@ import { clearFriendsButtonNotifAction,
 type ChatStateProps = {
     user: UserState
     showUserMenu: boolean
-    // friendNotifications: number
-    // pendingRequests: number
     recipientId: string
     channelId: string
     activeChannels: ClientActiveChannel[]
     channelInfo: ChatChannelState
-    // friendRequests: FriendRequestsState
-    // friendsList: FriendsState['friendsList']
     friendsState: {
         friendNotifications: FriendsState['friendWindowNotifs']
         pendingRequests: FriendsState['pendingNotifs']

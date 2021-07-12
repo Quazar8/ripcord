@@ -13,7 +13,6 @@ const ChatMenuButtons = (props: Props) => {
         props.clearFriendButtonNotifFn()
     }
 
-
     return (
         <div className = "chat-menu-buttons-container">
             <div className = "button-container">
