@@ -2,7 +2,7 @@ import React from 'react'
 
 const AnswerCallButton = () => {
     return (
-        <button className = "receive-call-button">
+        <button className = "answer-call-button">
             <span>&#128222;</span>
         </button>
     )

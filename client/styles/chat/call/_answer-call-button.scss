@@ -1,0 +1,28 @@
+@mixin init($size, $font-size) {
+    .answer-call-button {
+        width: $size;
+        height: $size;
+        font-size: $font-size;
+    }
+}
+
+.answer-call-button {
+    background: green;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background: hsl(120, 91%, 69%);
+        cursor: pointer;
+    }
+
+    span {
+        transform: rotateZ(20deg);
+        display: block;
+        height: 95%;
+        width: 80%;
+    }
+}
