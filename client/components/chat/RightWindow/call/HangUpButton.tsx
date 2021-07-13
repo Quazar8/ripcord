@@ -1,8 +1,12 @@
 import React from 'react'
 
-const HangUpButton = () => {
+type Props = {
+    hangUpCallFn: () => void
+}
+
+const HangUpButton = (props: Props) => {
     return (
-        <button className = "hang-up-button">
+        <button onClick = { props.hangUpCallFn } className = "hang-up-button">
             <span>&#128222;</span>
         </button>
     )
