@@ -17,6 +17,7 @@ import { addActiveChannelAction, changeChannelIdAction,
          clearActiveChannelNotifAction,
          moveChannelToTopAction,
          removeActiveChannelAction,
+         removeIncCallInfoAction,
          sendChatMsgAction,
          updateActiveChannelsAction,
          updateChatChannelAction } from '../../store/chat/chatActions'
@@ -70,6 +71,9 @@ type ChatDispProps = {
     clearActiveChannelNotifFn: (channelId: string) => void
     fillFriendsListFn: (listObj: FriendsState['friendsList']) => void
     removeFriendFromListFn: (id: string) => void
+    callFns: {
+        hangUpCall: () => void
+    }
 }
 
 export type ChatAppProps = ChatStateProps & ChatDispProps
@@ -161,6 +165,7 @@ const ChatAppView = (props: ChatAppProps) => {
                 removeFriendFromListFn = { props.removeFriendFromListFn }
                 callState = { props.callState }
                 friendsState = { props.friendsState }
+                callFns = { props.callFns }
             />
             <UserMenu 
                 showUserMenu = { props.showUserMenu }
@@ -253,6 +258,11 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     removeFriendFromListFn: (friendId: string) => {
         dispatch(removeFriendFromListAction(friendId))
+    },
+    callFns: {
+        hangUpCall: () => {
+            dispatch(removeIncCallInfoAction())
+        }
     }
 })
 
