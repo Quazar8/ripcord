@@ -42,9 +42,7 @@ export const RightWindowContext = createContext<RightContextType>({
     clearPendingButtonNotifFn: () => {},
     fillFriendsListFn: () => {},
     removeFriendFromListFn: () => {},
-    callFns: {
-        hangUpCall: () => {}
-    }
+    callFns: null
 }) 
 
 const RightWindow = (props: RightWindowProps) => {

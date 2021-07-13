@@ -20,7 +20,7 @@ const ReceivingCallBlock = (props: Props) => {
             <h3>{ props.receivingCall.callerName }</h3>
             <div className = "buttons-container">
                 <AnswerCallButton />
-                <HangUpButton hangUpCallFn = { callFns.hangUpCall } />
+                <HangUpButton removeCallInfoStore = { callFns.removeCallInfoStore } />
             </div>
         </div>
     )

@@ -72,7 +72,7 @@ type ChatDispProps = {
     fillFriendsListFn: (listObj: FriendsState['friendsList']) => void
     removeFriendFromListFn: (id: string) => void
     callFns: {
-        hangUpCall: () => void
+        removeCallInfoStore: () => void
     }
 }
 
@@ -260,7 +260,7 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
         dispatch(removeFriendFromListAction(friendId))
     },
     callFns: {
-        hangUpCall: () => {
+        removeCallInfoStore: () => {
             dispatch(removeIncCallInfoAction())
         }
     }
