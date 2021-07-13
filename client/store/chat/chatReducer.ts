@@ -249,7 +249,7 @@ const handleReceivingCall = (state: ChatState, callInfo: ReceivingCallPayload) =
 const removeIncCallInfo = (state: ChatState) => {
     return {
         ...state,
-        receivingCall: null
+        receivingCall: chatStateInit.receivingCall
     }
 }
 
