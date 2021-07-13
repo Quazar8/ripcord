@@ -12,7 +12,7 @@ type Props = {
 const ReceivingCallBlock = (props: Props) => {
     if (!props.receivingCall) return null
 
-    const { callFns } = useContext(RightWindowContext)
+    const { callFns, userId } = useContext(RightWindowContext)
 
     return (
         <div className = "receiving-call-block">
@@ -20,7 +20,11 @@ const ReceivingCallBlock = (props: Props) => {
             <h3>{ props.receivingCall.callerName }</h3>
             <div className = "buttons-container">
                 <AnswerCallButton />
-                <HangUpButton removeCallInfoStore = { callFns.removeCallInfoStore } />
+                <HangUpButton 
+                    removeCallInfoStore = { callFns.removeCallInfoStore }
+                    recipientId = { userId }
+                    callerId = { props.receivingCall.callerId }
+                />
             </div>
         </div>
     )

@@ -23,18 +23,20 @@ export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
 
 type RightContextType = Pick<RightWindowProps, 'dispNotification' 
      | 'toggleChatWRecipientId' | 'fillFriendRequestsFn'
-     | 'removeFriendRequestFn'
-     | 'clearPendingButtonNotifFn'
-     | 'fillFriendsListFn'
-     | 'removeFriendFromListFn'
+     | 'removeFriendRequestFn' | 'clearPendingButtonNotifFn'
+     | 'fillFriendsListFn' | 'removeFriendFromListFn'
      | 'callFns'> 
      & Pick<RightWindowProps['friendsState'], 'pendingRequests'
      | 'friendsList' | 'friendRequests'>
+     & {
+         userId: RightWindowProps['user']['id']
+     }
 
 export const RightWindowContext = createContext<RightContextType>({
     friendRequests: { incoming: [], outgoing: []},
     pendingRequests: 0,
     friendsList: { online: [], offline: [] },
+    userId: null,
     dispNotification: () => {},
     toggleChatWRecipientId: () => {},
     fillFriendRequestsFn: () => {},
@@ -55,6 +57,7 @@ const RightWindow = (props: RightWindowProps) => {
 
     const contextValue: RightContextType = {
         friendsList: props.friendsState.friendsList,
+        userId: props.user.id,
         friendRequests: props.friendsState.friendRequests,
         pendingRequests: props.friendsState.pendingRequests,
         dispNotification: props.dispNotification,
