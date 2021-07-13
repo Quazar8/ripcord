@@ -246,6 +246,13 @@ const handleReceivingCall = (state: ChatState, callInfo: ReceivingCallPayload) =
     }
 }
 
+const removeIncCallInfo = (state: ChatState) => {
+    return {
+        ...state,
+        receivingCall: null
+    }
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -276,6 +283,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return clearActiveChannelNotif(state, action.payload)
         case ChatActionTypes.RECEIVING_CALL:
             return handleReceivingCall(state, action.payload)
+        case ChatActionTypes.REMOVE_INC_CALL:
+            return removeIncCallInfo(state)
         default: return state
     }
 }
