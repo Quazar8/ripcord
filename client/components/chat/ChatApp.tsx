@@ -45,7 +45,7 @@ type ChatStateProps = {
         friendsList: FriendsState['friendsList']
     }
     callState: {
-        receivingCall: ChatState['receivingCall']
+        callInfo: ChatState['callInfo']
     }
 }
 
@@ -191,7 +191,7 @@ const mapState: MapStateFn<ChatStateProps> = (state) => ({
         friendRequests: state.friends.friendRequests
     },
     callState: {
-        receivingCall: state.chat.receivingCall
+        callInfo: state.chat.callInfo
     }
 })
 

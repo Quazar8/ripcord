@@ -14,10 +14,10 @@ export type ChatState = {
     activeChannels: ClientActiveChannel[]
     currentChannelId: string
     chatChannel: ChatChannelState
-    receivingCall: {
-        callerId: string
-        callerName: string
-        callerProfilePic: string
+    callInfo: {
+        otherUserId: string
+        otherUserName: string
+        otherUserProfilePic: string
     } | null
 }
 
@@ -39,7 +39,7 @@ export const chatStateInit: ChatState = {
             participantTwo: null
         }
     },
-    receivingCall: null
+    callInfo: null
 }
 
 const changeRecipient = (state: ChatState, recipientId: string): ChatState => {
@@ -240,16 +240,20 @@ const clearActiveChannelNotif = (state: ChatState, channelId: string) => {
 }
 
 const handleReceivingCall = (state: ChatState, callInfo: ReceivingCallPayload) => {
-    return {
-        ...state,
-        receivingCall: callInfo
+    const newState = { ...state }
+    newState.callInfo = {
+        otherUserId: callInfo.callerId,
+        otherUserName: callInfo.callerName,
+        otherUserProfilePic: callInfo.callerProfilePic
     }
+
+    return newState
 }
 
 const removeIncCallInfo = (state: ChatState) => {
     return {
         ...state,
-        receivingCall: chatStateInit.receivingCall
+        callInfo: chatStateInit.callInfo
     }
 }
 
