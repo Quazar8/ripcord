@@ -165,7 +165,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
 
     const hangUpCall = () => {
         setShowCallWindow(false)
-        
+
         if (props.callState.callInfo) {
             sendHangUpMsg(props.callState.callInfo.otherUserId, props.user.id)
             context.callFns.removeCallInfoStore()
@@ -220,7 +220,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                 </button>
             </div>
             <ReceivingCallBlock 
-                receivingCall = { props.callState.callInfo }
+                receivingCall = { props.callState.receivingCallInfo }
             />
         </section>
     )

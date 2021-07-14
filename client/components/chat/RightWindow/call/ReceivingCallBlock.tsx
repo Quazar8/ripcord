@@ -7,7 +7,7 @@ import { sendHangUpMsg } from './callHandler'
 import HangUpButton from './HangUpButton'
 
 type Props = {
-    receivingCall: ChatDisplayProps['callState']['callInfo']
+    receivingCall: ChatDisplayProps['callState']['receivingCallInfo']
 }
 
 const ReceivingCallBlock = (props: Props) => {
@@ -16,14 +16,14 @@ const ReceivingCallBlock = (props: Props) => {
     const { callFns, userId } = useContext(RightWindowContext)
 
     const hangUpCall = () => {
-        sendHangUpMsg(props.receivingCall.otherUserId, userId)
+        sendHangUpMsg(props.receivingCall.callerId, userId)
         callFns.removeCallInfoStore()
     }
 
     return (
         <div className = "receiving-call-block">
-            <ProfilePic picNameOrJson = { props.receivingCall.otherUserProfilePic }/>
-            <h3>{ props.receivingCall.otherUserName }</h3>
+            <ProfilePic picNameOrJson = { props.receivingCall.callerProfilePic }/>
+            <h3>{ props.receivingCall.callerName }</h3>
             <div className = "buttons-container">
                 <AnswerCallButton />
                 <HangUpButton hangUpCall = { hangUpCall }/>
