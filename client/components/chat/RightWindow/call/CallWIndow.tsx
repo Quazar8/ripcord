@@ -8,7 +8,7 @@ type Props = {
     hangUpCall: () => void
 }
 
-const CallWIndow = (props: Props) => {
+const CallWindow = (props: Props) => {
     return (
         <div className = "call-window">
             <div className = "profile-pics-container">
@@ -24,4 +24,4 @@ const CallWIndow = (props: Props) => {
     )
 }
 
-export default CallWIndow
+export default CallWindow

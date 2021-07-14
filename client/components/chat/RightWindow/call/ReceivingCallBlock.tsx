@@ -16,8 +16,8 @@ const ReceivingCallBlock = (props: Props) => {
     const { callFns, userId } = useContext(RightWindowContext)
 
     const hangUpCall = () => {
-        callFns.removeCallInfoStore()
         sendHangUpMsg(props.receivingCall.callerId, userId)
+        callFns.removeCallInfoStore()
     }
 
     return (

@@ -4,6 +4,7 @@ import { sendSocketMessage } from "../../../../socket/socket";
 let peerConnection: RTCPeerConnection = null
 let localVidEl: HTMLVideoElement = null
 let remoteVidEl: HTMLVideoElement = null
+let callButtonEl: HTMLButtonElement = null
 
 type StartCallArgs = {
     thisVideoEl: HTMLVideoElement
@@ -178,7 +179,10 @@ export const hangUpCall = (otherUserId: string) => {
     sendSocketMessage(msg)
 }
 
-export const startCall = (recipientId: string) => {
+export const startCall = (recipientId: string, callButton: HTMLButtonElement) => {
+    callButtonEl = callButton
+    callButtonEl.disabled = true
+
     const msg: WSMessage<StartCallPayload> = {
         type: WSDataType.START_CALL,
         payload: {
@@ -190,6 +194,10 @@ export const startCall = (recipientId: string) => {
 }
 
 export const sendHangUpMsg = (callerId: string, recipientId: string) => {
+    if (callButtonEl) {
+        callButtonEl.disabled = false
+    }
+
     const msg: WSMessage<DenyingCallPayload> = {
         type: WSDataType.RECEIVING_CALL_DENIED,
         payload: {

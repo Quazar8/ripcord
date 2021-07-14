@@ -11,7 +11,7 @@ import { PendingMsg } from '../../../types/ChatClientTypes'
 import { RightWindowContext, RightWindowProps } from './RightWindow'
 import ProfilePic from '../../user/ProfilePic'
 import { getDateDiffInMin } from '../../../utils/utils'
-import CallWIndow from './call/CallWIndow'
+import CallWindow from './call/CallWindow'
 import { sendHangUpMsg, startCall } from './call/callHandler'
 import ReceivingCallBlock from './call/ReceivingCallBlock'
 
@@ -28,8 +28,10 @@ const ChatDisplay = (props: ChatDisplayProps) => {
             <h2 className = "no-conversations">No open conversations</h2>
         )
 
-    const messageInputRef = useRef<HTMLDivElement>(null)
+    const messageInputRef = useRef<HTMLDivElement>()
     const chatMonitorRef = useRef<HTMLDivElement>()
+    const callButtonRef = useRef<HTMLButtonElement>()
+
     const [showCallWindow, setShowCallWindow] = useState(false)
     const context = useContext(RightWindowContext)
 
@@ -157,14 +159,14 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     })
 
     const handleCallClick = () => {
-        setShowCallWindow(!showCallWindow)
-        startCall(props.channelInfo.recipient.id)
+        setShowCallWindow(true)
+        startCall(props.channelInfo.recipient.id, callButtonRef.current)
     }
 
     const hangUpCall = () => {
         setShowCallWindow(false)
-        context.callFns.removeCallInfoStore()
         sendHangUpMsg(props.callState.receivingCall.callerId, props.user.id)
+        context.callFns.removeCallInfoStore()
     }
 
     return (
@@ -176,7 +178,12 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                     <h4>{ info.recipient.status }</h4>
                 </div>
                 <div className = "button-container">
-                    <button onClick = { handleCallClick }>&#9990;</button>
+                    <button 
+                        ref = { callButtonRef }
+                        onClick = { handleCallClick }
+                    >
+                        &#9990;
+                    </button>
                 </div>
             </div>
             <div ref = { chatMonitorRef } className = "chat-monitor">
@@ -188,7 +195,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
             </div>
             {
                 showCallWindow
-                ? <CallWIndow 
+                ? <CallWindow 
                     thisUserProfilePic = { props.user.profilePic }
                     remoteUserProfilePic = { props.channelInfo.recipient.profilePic }
                     hangUpCall = { hangUpCall }
