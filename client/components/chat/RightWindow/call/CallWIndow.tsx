@@ -5,6 +5,7 @@ import HangUpButton from './HangUpButton'
 type Props = {
     thisUserProfilePic: string
     remoteUserProfilePic: string
+    hangUpCall: () => void
 }
 
 const CallWIndow = (props: Props) => {
@@ -15,7 +16,9 @@ const CallWIndow = (props: Props) => {
                 <ProfilePic picNameOrJson = { props.remoteUserProfilePic } />
             </div>
             <div className = "buttons-container">
-                {/* <HangUpButton /> */}
+                <HangUpButton 
+                    hangUpCall = { props.hangUpCall }
+                />
             </div>
         </div>
     )

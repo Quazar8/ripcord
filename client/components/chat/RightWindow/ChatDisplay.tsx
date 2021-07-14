@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, KeyboardEvent, useState } from 'react'
+import React, { useRef, useEffect, KeyboardEvent, useState, useContext } from 'react'
 import { sendSocketMessage, socketIsClosed } from '../../../socket/socket'
 import { resHasError } from '../../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../../api/chatApi'
@@ -8,11 +8,11 @@ import ChatMessage from './ChatMessage'
 import { WSDataType, WSMessage } from '../../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../../server/types/ChatResponses'
 import { PendingMsg } from '../../../types/ChatClientTypes'
-import { RightWindowProps } from './RightWindow'
+import { RightWindowContext, RightWindowProps } from './RightWindow'
 import ProfilePic from '../../user/ProfilePic'
 import { getDateDiffInMin } from '../../../utils/utils'
 import CallWIndow from './call/CallWIndow'
-import { startCall } from './call/callHandler'
+import { sendHangUpMsg, startCall } from './call/callHandler'
 import ReceivingCallBlock from './call/ReceivingCallBlock'
 
 export type ChatDisplayProps = Pick<RightWindowProps, 'dispNotification'
@@ -31,6 +31,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     const messageInputRef = useRef<HTMLDivElement>(null)
     const chatMonitorRef = useRef<HTMLDivElement>()
     const [showCallWindow, setShowCallWindow] = useState(false)
+    const context = useContext(RightWindowContext)
 
     const info = props.channelInfo
 
@@ -160,6 +161,12 @@ const ChatDisplay = (props: ChatDisplayProps) => {
         startCall(props.channelInfo.recipient.id)
     }
 
+    const hangUpCall = () => {
+        setShowCallWindow(false)
+        context.callFns.removeCallInfoStore()
+        sendHangUpMsg(props.callState.receivingCall.callerId, props.user.id)
+    }
+
     return (
         <section className = "chat-display">
             <div className = "user-info">
@@ -184,6 +191,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                 ? <CallWIndow 
                     thisUserProfilePic = { props.user.profilePic }
                     remoteUserProfilePic = { props.channelInfo.recipient.profilePic }
+                    hangUpCall = { hangUpCall }
                 />
                 : null
             }
@@ -199,7 +207,9 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                     Send
                 </button>
             </div>
-            <ReceivingCallBlock receivingCall = { props.callState.receivingCall }/>
+            <ReceivingCallBlock 
+                receivingCall = { props.callState.receivingCall }
+            />
         </section>
     )
 }
