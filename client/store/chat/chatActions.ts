@@ -20,6 +20,7 @@ export enum ChatActionTypes {
     CLEAR_ACTIVE_CHANNEL_NOTIF = "CLEAR_ACTIVE_CHANNEL_NOTIF",
     RECEIVING_CALL = "RECEIVING_CALL",
     REMOVE_INC_CALL = "REMOVE_INC_CALL",
+    ADD_CALL_INFO = "ADD_CALL_INFO"
 }
 
 export type ChatAction = Action<ChatActionTypes, any>
@@ -97,4 +98,9 @@ export const receivingCallAction = (payload: ReceivingCallPayload): ChatAction =
 export const removeIncCallInfoAction = (): ChatAction => ({
     type: ChatActionTypes.REMOVE_INC_CALL,
     payload: null
+})
+
+export const addCallInfoAction = (otherUserId: string): ChatAction => ({
+    type: ChatActionTypes.ADD_CALL_INFO,
+    payload: otherUserId
 })
