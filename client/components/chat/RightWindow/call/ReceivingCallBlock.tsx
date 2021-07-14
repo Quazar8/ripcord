@@ -1,10 +1,9 @@
 import React, { useContext } from 'react'
-import { DenyingCallPayload, WSDataType, WSMessage } from '../../../../../server/types/WebsocketTypes'
-import { sendSocketMessage } from '../../../../socket/socket'
 import ProfilePic from '../../../user/ProfilePic'
 import { ChatDisplayProps } from '../ChatDisplay'
 import { RightWindowContext } from '../RightWindow'
 import AnswerCallButton from './AnswerCallButton'
+import { sendHangUpMsg } from './callHandler'
 import HangUpButton from './HangUpButton'
 
 type Props = {
@@ -18,15 +17,7 @@ const ReceivingCallBlock = (props: Props) => {
 
     const hangUpCall = () => {
         callFns.removeCallInfoStore()
-        const msg: WSMessage<DenyingCallPayload> = {
-            type: WSDataType.RECEIVING_CALL_DENIED,
-            payload: {
-                callerId: props.receivingCall.callerId,
-                recipientId: userId
-            }
-        }
-
-        sendSocketMessage(msg)
+        sendHangUpMsg(props.receivingCall.callerId, userId)
     }
 
     return (

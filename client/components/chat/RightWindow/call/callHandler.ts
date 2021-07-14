@@ -1,4 +1,4 @@
-import { CallAnswerPayload, CallOfferPayload, HangUpCallPayload, NewICECandPayload, StartCallPayload, WSDataType, WSMessage } from "../../../../../server/types/WebsocketTypes";
+import { CallAnswerPayload, CallOfferPayload, DenyingCallPayload, HangUpCallPayload, NewICECandPayload, StartCallPayload, WSDataType, WSMessage } from "../../../../../server/types/WebsocketTypes";
 import { sendSocketMessage } from "../../../../socket/socket";
 
 let peerConnection: RTCPeerConnection = null
@@ -182,6 +182,18 @@ export const startCall = (recipientId: string) => {
     const msg: WSMessage<StartCallPayload> = {
         type: WSDataType.START_CALL,
         payload: {
+            recipientId
+        }
+    }
+
+    sendSocketMessage(msg)
+}
+
+export const sendHangUpMsg = (callerId: string, recipientId: string) => {
+    const msg: WSMessage<DenyingCallPayload> = {
+        type: WSDataType.RECEIVING_CALL_DENIED,
+        payload: {
+            callerId,
             recipientId
         }
     }
