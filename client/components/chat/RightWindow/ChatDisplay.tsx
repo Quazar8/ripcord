@@ -165,8 +165,13 @@ const ChatDisplay = (props: ChatDisplayProps) => {
 
     const hangUpCall = () => {
         setShowCallWindow(false)
-        sendHangUpMsg(props.callState.callInfo.otherUserId  , props.user.id)
-        context.callFns.removeCallInfoStore()
+        
+        if (props.callState.callInfo) {
+            sendHangUpMsg(props.callState.callInfo.otherUserId, props.user.id)
+            context.callFns.removeCallInfoStore()
+        } else {
+            callButtonRef.current.disabled = false
+        }
     }
 
     return (
