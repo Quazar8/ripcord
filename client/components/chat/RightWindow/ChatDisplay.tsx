@@ -12,7 +12,7 @@ import { RightWindowContext, RightWindowProps } from './RightWindow'
 import ProfilePic from '../../user/ProfilePic'
 import { getDateDiffInMin } from '../../../utils/utils'
 import CallWindow from './callComponents/CallWindow'
-import { sendHangUpMsg, startCall } from './callComponents/callClientHandler'
+import { sendHangUpMsg, startCall } from '../../../call/callClientHandler'
 import ReceivingCallBlock from './callComponents/ReceivingCallBlock'
 
 export type ChatDisplayProps = Pick<RightWindowProps, 'dispNotification'

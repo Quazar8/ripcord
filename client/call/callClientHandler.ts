@@ -1,5 +1,8 @@
-import { CallAnswerPayload, CallOfferPayload, DenyingCallPayload, HangUpCallPayload, NewICECandPayload, StartCallPayload, WSDataType, WSMessage } from "../../../../../server/types/WebsocketTypes";
-import { sendSocketMessage } from "../../../../socket/socket";
+import { CallAnswerPayload, CallOfferPayload,
+         DenyingCallPayload, HangUpCallPayload,
+         NewICECandPayload, StartCallPayload,
+         WSDataType, WSMessage } from "../../server/types/WebsocketTypes";
+import { sendSocketMessage } from "../socket/socket";
 
 let peerConnection: RTCPeerConnection = null
 let localVidEl: HTMLVideoElement = null
