@@ -3,7 +3,7 @@ import ProfilePic from '../../../user/ProfilePic'
 import { ChatDisplayProps } from '../ChatDisplay'
 import { RightWindowContext } from '../RightWindow'
 import AnswerCallButton from './AnswerCallButton'
-import { sendHangUpMsg } from './callHandler'
+import { sendHangUpMsg } from './callClientHandler'
 import HangUpButton from './HangUpButton'
 
 type Props = {
