@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, KeyboardEvent, useState, useContext } from 'react'
+import React, { useRef, useEffect, KeyboardEvent, useContext } from 'react'
 import { sendSocketMessage, socketIsClosed } from '../../../socket/socket'
 import { resHasError } from '../../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../../api/chatApi'
@@ -31,8 +31,6 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     const messageInputRef = useRef<HTMLDivElement>()
     const chatMonitorRef = useRef<HTMLDivElement>()
     const callButtonRef = useRef<HTMLButtonElement>()
-
-    const [showCallWindow, setShowCallWindow] = useState(false)
     const context = useContext(RightWindowContext)
 
     const info = props.channelInfo
@@ -159,14 +157,11 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     })
 
     const handleCallClick = () => {
-        setShowCallWindow(true)
         startCall(props.channelInfo.recipient.id, callButtonRef.current)
         context.callFns.addCallInfo(props.channelInfo.recipient.id)
     }
 
     const hangUpCallWindow = () => {
-        setShowCallWindow(false)
-
         if (props.callState.callInfo) {
             sendHangUpMsg(props.callState.callInfo.otherUserId, props.user.id)
             context.callFns.removeCallInfoStore()
@@ -200,7 +195,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                 }
             </div>
             {
-                showCallWindow
+                props.callState.callInfo
                 ? <CallWindow 
                     thisUserProfilePic = { props.user.profilePic }
                     remoteUserProfilePic = { props.channelInfo.recipient.profilePic }
