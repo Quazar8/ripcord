@@ -11,7 +11,7 @@ import { toggleUserMenuAction,
 import RightWindow from './RightWindow/RightWindow'
 import ChatMenu from './ChatMenu/ChatMenu'
 import UserMenu from '../user-menu/UserMenu'
-import { addActiveChannelAction, changeChannelIdAction,
+import { addActiveChannelAction, addCallInfoAction, changeChannelIdAction,
          changeCHatRecipientAction,
          changeMsgToFailAction,
          clearActiveChannelNotifAction,
@@ -76,6 +76,7 @@ type ChatDispProps = {
     callFns: {
         removeCallInfoStore: () => void
         removeReceivingCallInfo: () => void
+        addCallInfo: (id: string) => void
     }
 }
 
@@ -269,6 +270,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
         },
         removeReceivingCallInfo: () => {
             dispatch(removeIncCallInfoAction())
+        },
+        addCallInfo: (otherUserId) => {
+            dispatch(addCallInfoAction(otherUserId))
         }
     }
 })

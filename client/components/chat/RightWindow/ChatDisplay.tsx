@@ -161,9 +161,10 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     const handleCallClick = () => {
         setShowCallWindow(true)
         startCall(props.channelInfo.recipient.id, callButtonRef.current)
+        context.callFns.addCallInfo(props.channelInfo.recipient.id)
     }
 
-    const hangUpCall = () => {
+    const hangUpCallWindow = () => {
         setShowCallWindow(false)
 
         if (props.callState.callInfo) {
@@ -203,7 +204,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                 ? <CallWindow 
                     thisUserProfilePic = { props.user.profilePic }
                     remoteUserProfilePic = { props.channelInfo.recipient.profilePic }
-                    hangUpCall = { hangUpCall }
+                    hangUpCall = { hangUpCallWindow }
                 />
                 : null
             }
