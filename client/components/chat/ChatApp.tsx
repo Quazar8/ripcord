@@ -17,6 +17,7 @@ import { addActiveChannelAction, changeChannelIdAction,
          clearActiveChannelNotifAction,
          moveChannelToTopAction,
          removeActiveChannelAction,
+         removeCallInfoAction,
          removeIncCallInfoAction,
          sendChatMsgAction,
          updateActiveChannelsAction,
@@ -74,6 +75,7 @@ type ChatDispProps = {
     removeFriendFromListFn: (id: string) => void
     callFns: {
         removeCallInfoStore: () => void
+        removeReceivingCallInfo: () => void
     }
 }
 
@@ -263,6 +265,9 @@ const mapDisp: MapDispatchFn<ChatDispProps> = (dispatch, state) => ({
     },
     callFns: {
         removeCallInfoStore: () => {
+            dispatch(removeCallInfoAction())
+        },
+        removeReceivingCallInfo: () => {
             dispatch(removeIncCallInfoAction())
         }
     }
