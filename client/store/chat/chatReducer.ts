@@ -266,6 +266,13 @@ const addCallInfo = (state: ChatState, otherUserId: string) => {
     return newState
 }
 
+const removeCallInfo = (state: ChatState) => {
+    return {
+        ...state,
+        callInfo: chatStateInit.callInfo
+    }
+}
+
 export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction): ChatState => {
     switch (action.type) {
         case ChatActionTypes.CHANGE_CHAT_RECIPIENT:
@@ -300,6 +307,8 @@ export const chatReducer = (state: ChatState = chatStateInit, action: ChatAction
             return removeIncCallInfo(state)
         case ChatActionTypes.ADD_CALL_INFO:
             return addCallInfo(state, action.payload)
+        case ChatActionTypes.REMOVE_CALL_INFO:
+            return removeCallInfo(state)
         default: return state
     }
 }
