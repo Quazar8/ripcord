@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { handleChatMessage } from './messageHandlers/chatMessageHandler.js'
-import { startCallHandler } from './messageHandlers/callHandler.js'
+import { startCallHandler } from './messageHandlers/callServerHandler.js'
 
 const messageHandler = async (wsMsg: WSMessage<any>, userId: Types.ObjectId) => {
     console.log('socket message', wsMsg)
