@@ -33,8 +33,6 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     const callButtonRef = useRef<HTMLButtonElement>()
     const context = useContext(RightWindowContext)
 
-    const info = props.channelInfo
-
     const scrollMonitorToBottom = () => {
         const div = chatMonitorRef.current
         div.scrollTo(0, div.scrollHeight)
@@ -68,17 +66,17 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     
     const sendMsg = async () => {
         const content = messageInputRef.current.innerText
-        if (!info.channel || !content || socketIsClosed()) {
+        if (!props.channelInfo.channel || !content || socketIsClosed()) {
             return
         }
 
-        const channelId = info.channel.id
+        const channelId = props.channelInfo.channel.id
 
         const payloadMsg: ChatMessagePayload = {
             content,
             channelId,
             authorId: props.user.id,
-            recipientId: info.recipient.id,
+            recipientId: props.channelInfo.recipient.id,
             temporaryId: channelId + "_" + Date.now()
         }
 
@@ -133,14 +131,14 @@ const ChatDisplay = (props: ChatDisplayProps) => {
         return false
     }
 
-    const messages = info.channel.messages.map((m, i) => {
-        let authorname = info.recipient.username
-        let authorPic = info.recipient.profilePic
+    const messages = props.channelInfo.channel.messages.map((m, i) => {
+        let authorname = props.channelInfo.recipient.username
+        let authorPic = props.channelInfo.recipient.profilePic
 
         if (!m.authorId) {
             authorname = 'Ripcord System'
             authorPic = ''
-        } else if (m.authorId !== info.recipient.id) {
+        } else if (m.authorId !== props.channelInfo.recipient.id) {
             authorname = 'You'
             authorPic = props.user.profilePic
         }
@@ -150,7 +148,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                 message = { m } 
                 key = { i }
                 authorName = { authorname }
-                isNewBlock = { determineIFNewBlock(info.channel.messages, i) }
+                isNewBlock = { determineIFNewBlock(props.channelInfo.channel.messages, i) }
                 authorPic = { authorPic }
             />
         )
@@ -173,10 +171,10 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     return (
         <section className = "chat-display">
             <div className = "user-info">
-                <ProfilePic picNameOrJson = { info.recipient.profilePic }/>
+                <ProfilePic picNameOrJson = { props.channelInfo.recipient.profilePic }/>
                 <div className = "text-block">
-                    <h2>{ info.recipient.username }</h2>
-                    <h4>{ info.recipient.status }</h4>
+                    <h2>{ props.channelInfo.recipient.username }</h2>
+                    <h4>{ props.channelInfo.recipient.status }</h4>
                 </div>
                 <div className = "button-container">
                     <button 
