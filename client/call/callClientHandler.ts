@@ -1,4 +1,4 @@
-import { CallAnswerPayload, CallOfferPayload,
+import { CallAcceptedPayload, CallAnswerPayload, CallOfferPayload,
          DenyingCallPayload, HangUpCallPayload,
          NewICECandPayload, StartCallPayload,
          WSDataType, WSMessage } from "../../server/types/WebsocketTypes";
@@ -219,6 +219,21 @@ const sendHangUpMsg = (remoteUserId: string, localUserId: string) => {
     sendSocketMessage(msg)
 }
 
+const sendCallAcceptedMsg = (remoteUserId: string) => {
+    const msg: WSMessage<CallAcceptedPayload> = {
+        type: WSDataType.CALL_ACCEPTED,
+        payload: {
+            acceptedId: remoteUserId
+        }
+    }
+
+    sendSocketMessage(msg)
+}
+
 export const RTChangUpCall = (remoteUserId: string, localUserId: string) => {
     sendHangUpMsg(remoteUserId, localUserId)
+}
+
+export const RTCacceptCall = (remoteUserId: string) => {
+    sendCallAcceptedMsg(remoteUserId)
 }
