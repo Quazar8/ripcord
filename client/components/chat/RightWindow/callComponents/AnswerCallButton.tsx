@@ -1,8 +1,12 @@
 import React from 'react'
 
-const AnswerCallButton = () => {
+type Props = {
+    answerCall: () => void
+}
+
+const AnswerCallButton = (props: Props) => {
     return (
-        <button className = "answer-call-button">
+        <button onClick = { props.answerCall } className = "answer-call-button">
             <span>&#128222;</span>
         </button>
     )

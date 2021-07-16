@@ -3,7 +3,7 @@ import ProfilePic from '../../../user/ProfilePic'
 import { ChatDisplayProps } from '../ChatDisplay'
 import { RightWindowContext } from '../RightWindow'
 import AnswerCallButton from './AnswerCallButton'
-import { RTChangUpCall } from '../../../../call/callClientHandler'
+import { RTCacceptCall, RTChangUpCall } from '../../../../call/callClientHandler'
 import HangUpButton from './HangUpButton'
 
 type Props = {
@@ -20,12 +20,16 @@ const ReceivingCallBlock = (props: Props) => {
         callFns.removeReceivingCallInfo()
     }
 
+    const answerCall = () => {
+        RTCacceptCall(props.receivingCall.callerId)
+    }
+
     return (
         <div className = "receiving-call-block">
             <ProfilePic picNameOrJson = { props.receivingCall.callerProfilePic }/>
             <h3>{ props.receivingCall.callerName }</h3>
             <div className = "buttons-container">
-                <AnswerCallButton />
+                <AnswerCallButton answerCall = { answerCall } />
                 <HangUpButton hangUpCall = { hangUpCall }/>
             </div>
         </div>
