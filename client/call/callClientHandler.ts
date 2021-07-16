@@ -8,6 +8,7 @@ let peerConnection: RTCPeerConnection = null
 let localVidEl: HTMLVideoElement = null
 let remoteVidEl: HTMLVideoElement = null
 let callButtonEl: HTMLButtonElement = null
+let remoteCallerId = null
 
 type StartCallArgs = {
     thisVideoEl: HTMLVideoElement
@@ -185,6 +186,7 @@ export const hangUpCall = (otherUserId: string) => {
 export const startCall = (recipientId: string, callButton: HTMLButtonElement) => {
     callButtonEl = callButton
     callButtonEl.disabled = true
+    remoteCallerId = recipientId
 
     const msg: WSMessage<StartCallPayload> = {
         type: WSDataType.START_CALL,
