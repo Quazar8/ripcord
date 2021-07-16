@@ -198,6 +198,15 @@ export const startCall = (recipientId: string, callButton: HTMLButtonElement) =>
     sendSocketMessage(msg)
 }
 
+export const answerCall = (callerId: string) => {
+    if (remoteCallerId) {
+        console.log('Remote caller is already set')
+        return
+    }
+
+    remoteCallerId = callerId
+}
+
 export const sendHangUpMsg = (callerId: string, recipientId: string) => {
     if (callButtonEl) {
         callButtonEl.disabled = false
