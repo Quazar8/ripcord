@@ -12,7 +12,7 @@ import { RightWindowContext, RightWindowProps } from './RightWindow'
 import ProfilePic from '../../user/ProfilePic'
 import { getDateDiffInMin } from '../../../utils/utils'
 import CallWindow from './callComponents/CallWindow'
-import { sendHangUpMsg, startCall } from '../../../call/callClientHandler'
+import { RTChangUpCall, startCall } from '../../../call/callClientHandler'
 import ReceivingCallBlock from './callComponents/ReceivingCallBlock'
 
 export type ChatDisplayProps = Pick<RightWindowProps, 'dispNotification'
@@ -161,7 +161,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
 
     const hangUpCallWindow = () => {
         if (props.callState.callInfo) {
-            sendHangUpMsg(props.callState.callInfo.otherUserId, props.user.id)
+            RTChangUpCall(props.callState.callInfo.otherUserId, props.user.id)
             context.callFns.removeCallInfoStore()
         } else {
             callButtonRef.current.disabled = false

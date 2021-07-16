@@ -207,18 +207,18 @@ export const answerCall = (callerId: string) => {
     remoteCallerId = callerId
 }
 
-export const sendHangUpMsg = (callerId: string, recipientId: string) => {
-    if (callButtonEl) {
-        callButtonEl.disabled = false
-    }
-
+const sendHangUpMsg = (remoteUserId: string, localUserId: string) => {
     const msg: WSMessage<DenyingCallPayload> = {
         type: WSDataType.RECEIVING_CALL_DENIED,
         payload: {
-            callerId,
-            recipientId
+            callerId: remoteUserId,
+            recipientId: localUserId
         }
     }
 
     sendSocketMessage(msg)
+}
+
+export const RTChangUpCall = (remoteUserId: string, localUserId: string) => {
+    sendHangUpMsg(remoteUserId, localUserId)
 }
