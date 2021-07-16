@@ -3,7 +3,7 @@ import ProfilePic from '../../../user/ProfilePic'
 import { ChatDisplayProps } from '../ChatDisplay'
 import { RightWindowContext } from '../RightWindow'
 import AnswerCallButton from './AnswerCallButton'
-import { sendHangUpMsg } from '../../../../call/callClientHandler'
+import { RTChangUpCall } from '../../../../call/callClientHandler'
 import HangUpButton from './HangUpButton'
 
 type Props = {
@@ -16,7 +16,7 @@ const ReceivingCallBlock = (props: Props) => {
     const { callFns, userId } = useContext(RightWindowContext)
 
     const hangUpCall = () => {
-        sendHangUpMsg(props.receivingCall.callerId, userId)
+        RTChangUpCall(props.receivingCall.callerId, userId)
         callFns.removeReceivingCallInfo()
     }
 
