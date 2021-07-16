@@ -163,9 +163,9 @@ const ChatDisplay = (props: ChatDisplayProps) => {
         if (props.callState.callInfo) {
             RTChangUpCall(props.callState.callInfo.otherUserId, props.user.id)
             context.callFns.removeCallInfoStore()
-        } else {
-            callButtonRef.current.disabled = false
-        }
+        } 
+
+        callButtonRef.current.disabled = false
     }
 
     return (
