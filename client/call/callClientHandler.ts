@@ -8,7 +8,7 @@ let peerConnection: RTCPeerConnection = null
 let localVidEl: HTMLVideoElement = null
 let remoteVidEl: HTMLVideoElement = null
 let callButtonEl: HTMLButtonElement = null
-let remoteCallerId = null
+let remoteCallerId: string = null
 
 type StartCallArgs = {
     thisVideoEl: HTMLVideoElement
@@ -236,4 +236,5 @@ export const RTChangUpCall = (remoteUserId: string, localUserId: string) => {
 
 export const RTCacceptCall = (remoteUserId: string) => {
     sendCallAcceptedMsg(remoteUserId)
+    remoteCallerId = remoteUserId
 }

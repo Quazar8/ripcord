@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { User } from "../../db/models/user.js";
 import { isUserDoc } from "../../types/UserTypes.js";
-import { ReceivingCallPayload, StartCallPayload, WSDataType, WSMessage } from "../../types/WebsocketTypes.js";
+import { CallAcceptedPayload, ReceivingCallPayload, StartCallPayload, WSDataType, WSMessage } from "../../types/WebsocketTypes.js";
 import { isOnline, sendSocketMsg } from "../onlineUsers.js";
 
 export const startCallHandler = async (msgPayload: StartCallPayload, userId: Types.ObjectId) => {
@@ -31,4 +31,15 @@ export const startCallHandler = async (msgPayload: StartCallPayload, userId: Typ
     catch (err) {
         console.error('Error starting call', err)
     }
+}
+
+export const acceptedCallHandler = (msgPayload: CallAcceptedPayload, byUserId: Types.ObjectId) => {
+    const msg: WSMessage<CallAcceptedPayload> = {
+        type: WSDataType.CALL_ACCEPTED,
+        payload: {
+            acceptedId: byUserId.toHexString()
+        }
+    }
+
+    sendSocketMsg(msgPayload.acceptedId, msg)
 }
