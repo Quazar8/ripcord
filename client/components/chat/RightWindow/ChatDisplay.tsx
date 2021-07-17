@@ -155,7 +155,8 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     })
 
     const handleCallClick = () => {
-        startCall(props.channelInfo.recipient.id, callButtonRef.current)
+        startCall(props.user.id, props.channelInfo.recipient.id,
+            callButtonRef.current)
         context.callFns.addCallInfo(props.channelInfo.recipient.id)
     }
 

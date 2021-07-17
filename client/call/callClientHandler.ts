@@ -9,6 +9,7 @@ let localVidEl: HTMLVideoElement = null
 let remoteVidEl: HTMLVideoElement = null
 let callButtonEl: HTMLButtonElement = null
 let remoteCallerId: string = null
+let localUserId: string = null
 
 type StartCallArgs = {
     thisVideoEl: HTMLVideoElement
@@ -83,7 +84,6 @@ const handleIceStateEv = () => {
 }
 
 const closeCall = () => {
-    
     if (peerConnection) {
         peerConnection.ontrack = null
         peerConnection.onicecandidate = null
@@ -183,10 +183,11 @@ export const hangUpCall = (otherUserId: string) => {
     sendSocketMessage(msg)
 }
 
-export const startCall = (recipientId: string, callButton: HTMLButtonElement) => {
+export const startCall = (localUserId: string, recipientId: string, callButton: HTMLButtonElement) => {
     callButtonEl = callButton
     callButtonEl.disabled = true
     remoteCallerId = recipientId
+    localUserId = localUserId
 
     const msg: WSMessage<StartCallPayload> = {
         type: WSDataType.START_CALL,
