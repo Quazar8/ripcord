@@ -198,15 +198,6 @@ export const startCall = (recipientId: string, callButton: HTMLButtonElement) =>
     sendSocketMessage(msg)
 }
 
-export const answerCall = (callerId: string) => {
-    if (remoteCallerId) {
-        console.log('Remote caller is already set')
-        return
-    }
-
-    remoteCallerId = callerId
-}
-
 const sendHangUpMsg = (remoteUserId: string, localUserId: string) => {
     const msg: WSMessage<DenyingCallPayload> = {
         type: WSDataType.RECEIVING_CALL_DENIED,
@@ -230,11 +221,20 @@ const sendCallAcceptedMsg = (remoteUserId: string) => {
     sendSocketMessage(msg)
 }
 
+const isInACall = (): boolean => {
+    return typeof remoteCallerId === 'string'
+}
+
 export const RTChangUpCall = (remoteUserId: string, localUserId: string) => {
     sendHangUpMsg(remoteUserId, localUserId)
 }
 
 export const RTCacceptCall = (remoteUserId: string) => {
+    if (isInACall()) {
+        console.log('Already in a call')
+        return
+    }
+
     sendCallAcceptedMsg(remoteUserId)
     remoteCallerId = remoteUserId
 }
