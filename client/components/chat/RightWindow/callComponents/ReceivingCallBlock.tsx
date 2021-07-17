@@ -21,7 +21,7 @@ const ReceivingCallBlock = (props: Props) => {
     }
 
     const answerCall = () => {
-        RTCacceptCall(props.receivingCall.callerId)
+        RTCacceptCall(userId, props.receivingCall.callerId)
     }
 
     return (

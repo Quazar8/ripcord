@@ -176,11 +176,11 @@ const handleAcceptedCall = async (args: StartCallArgs) => {
     sendCallOffer(peerConnection, args.otherUserId, mediaConstraints)
 }
 
-export const startCall = (localUserId: string, recipientId: string, callButton: HTMLButtonElement) => {
+export const startCall = (thisUserId: string, recipientId: string, callButton: HTMLButtonElement) => {
     callButtonEl = callButton
     callButtonEl.disabled = true
     remoteCallerId = recipientId
-    localUserId = localUserId
+    localUserId = thisUserId
 
     const msg: WSMessage<StartCallPayload> = {
         type: WSDataType.START_CALL,
@@ -219,7 +219,7 @@ export const RTChangUpCall = (remoteUserId: string, localUserId: string) => {
     sendHangUpMsg(remoteUserId, localUserId)
 }
 
-export const RTCacceptCall = (remoteUserId: string) => {
+export const RTCacceptCall = (remoteUserId: string, thisUserId: string) => {
     if (isInACall()) {
         console.log('Already in a call')
         return
@@ -227,4 +227,5 @@ export const RTCacceptCall = (remoteUserId: string) => {
 
     sendCallAcceptedMsg(remoteUserId)
     remoteCallerId = remoteUserId
+    localUserId = thisUserId
 }
