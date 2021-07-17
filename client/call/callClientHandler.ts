@@ -83,6 +83,10 @@ const handleIceStateEv = () => {
     }
 }
 
+const isInACall = (): boolean => {
+    return typeof remoteCallerId === 'string'
+}
+
 const closeCall = () => {
     if (peerConnection) {
         peerConnection.ontrack = null
@@ -172,17 +176,6 @@ const handleAcceptedCall = async (args: StartCallArgs) => {
     sendCallOffer(peerConnection, args.otherUserId, mediaConstraints)
 }
 
-export const hangUpCall = (otherUserId: string) => {
-    const msg: WSMessage<HangUpCallPayload> = {
-        type: WSDataType.HANG_UP,
-        payload: {
-            otherUserId
-        }
-    }
-
-    sendSocketMessage(msg)
-}
-
 export const startCall = (localUserId: string, recipientId: string, callButton: HTMLButtonElement) => {
     callButtonEl = callButton
     callButtonEl.disabled = true
@@ -220,10 +213,6 @@ const sendCallAcceptedMsg = (remoteUserId: string) => {
     }
 
     sendSocketMessage(msg)
-}
-
-const isInACall = (): boolean => {
-    return typeof remoteCallerId === 'string'
 }
 
 export const RTChangUpCall = (remoteUserId: string, localUserId: string) => {
