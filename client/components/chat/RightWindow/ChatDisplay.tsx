@@ -31,6 +31,9 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     const messageInputRef = useRef<HTMLDivElement>()
     const chatMonitorRef = useRef<HTMLDivElement>()
     const callButtonRef = useRef<HTMLButtonElement>()
+    const localVideoRef = useRef<HTMLVideoElement>()
+    const remoteVideoRef = useRef<HTMLVideoElement>()
+
     const context = useContext(RightWindowContext)
 
     const scrollMonitorToBottom = () => {
@@ -155,8 +158,8 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     })
 
     const handleCallClick = () => {
-        startCall(props.user.id, props.channelInfo.recipient.id,
-            callButtonRef.current)
+        // startCall(props.user.id, props.channelInfo.recipient.id,
+        //     callButtonRef.current)
         context.callFns.addCallInfo(props.channelInfo.recipient.id)
     }
 
@@ -199,6 +202,9 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                     thisUserProfilePic = { props.user.profilePic }
                     remoteUserProfilePic = { props.channelInfo.recipient.profilePic }
                     hangUpCall = { hangUpCallWindow }
+                    localVideoRef = { localVideoRef }
+                    otherVideoRef = { remoteVideoRef }
+                    isVideoCall = { false }
                 />
                 : null
             }
