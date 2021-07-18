@@ -158,8 +158,16 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     })
 
     const handleCallClick = () => {
-        // startCall(props.user.id, props.channelInfo.recipient.id,
-        //     callButtonRef.current)
+        const startCallArgs: Parameters<typeof startCall>[0] = {
+            isVideoCall: false,
+            thisUserId: props.user.id,
+            otherUserId: props.channelInfo.recipient.id,
+            otherVideoEl: remoteVideoRef.current,
+            thisVideoEl: localVideoRef.current,
+            callButtonEl: callButtonRef.current,
+        }
+
+        startCall(startCallArgs)
         context.callFns.addCallInfo(props.channelInfo.recipient.id)
     }
 
