@@ -8,7 +8,7 @@ let peerConnection: RTCPeerConnection = null
 let localVidEl: HTMLVideoElement = null
 let remoteVidEl: HTMLVideoElement = null
 let callButtonEl: HTMLButtonElement = null
-let remoteCallerId: string = null
+let remoteUserId: string = null
 let localUserId: string = null
 
 type StartCallArgs = {
@@ -85,7 +85,7 @@ const handleIceStateEv = () => {
 }
 
 const isInACall = (): boolean => {
-    return typeof remoteCallerId === 'string'
+    return typeof remoteUserId === 'string'
 }
 
 const closeCall = () => {
@@ -160,7 +160,7 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
 }
 
 export const RTCsetupAndCallOffer = async (msgPayload: CallAcceptedPayload) => {
-    // createPeerConnection(args.otherUserId, args.otherVideoEl)
+    // createPeerConnection(remoteUserId, remoteVidEl)
 
     // const mediaConstraints: CallOfferPayload['mediaConstraints'] = {
     //     audio: true,
@@ -181,7 +181,7 @@ export const startCall = (args: StartCallArgs) => {
     callButtonEl = args.callButtonEl
     remoteVidEl = args.otherVideoEl
     localVidEl = args.thisVideoEl
-    remoteCallerId = args.otherUserId
+    remoteUserId = args.otherUserId
     localUserId = args.thisUserId
 
     callButtonEl.disabled = true
@@ -189,7 +189,7 @@ export const startCall = (args: StartCallArgs) => {
     const msg: WSMessage<StartCallPayload> = {
         type: WSDataType.START_CALL,
         payload: {
-            recipientId: remoteCallerId
+            recipientId: remoteUserId
         }
     }
 
@@ -230,6 +230,6 @@ export const RTCacceptCall = (remoteUserId: string, thisUserId: string) => {
     }
 
     sendCallAcceptedMsg(remoteUserId)
-    remoteCallerId = remoteUserId
+    remoteUserId = remoteUserId
     localUserId = thisUserId
 }
