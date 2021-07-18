@@ -12,26 +12,14 @@ type Props = {
 }
 
 const CallWindow = (props: Props) => {
-    const getMainContainer = () => {
-        if (props.isVideoCall) {
-            return <h3>Not implemented yet</h3>
-        }
-
-        return (
-            <div className = "profile-pics-container">
-                <ProfilePic picNameOrJson = { props.thisUserProfilePic } />
-                <video ref = { props.localVideoRef } />
-                <ProfilePic picNameOrJson = { props.remoteUserProfilePic } />
-                <video ref = { props.localVideoRef } />
-            </div>
-        )
-    }
-
     return (
         <div className = "call-window">
-            {
-                getMainContainer()
-            }
+            <div className = "profile-pics-container">
+                <ProfilePic picNameOrJson = { props.thisUserProfilePic } />
+                <ProfilePic picNameOrJson = { props.remoteUserProfilePic } />
+                <video ref = { props.localVideoRef } />
+                <video ref = { props.localVideoRef } />
+            </div>
             <div className = "buttons-container">
                 <HangUpButton 
                     hangUpCall = { props.hangUpCall }
