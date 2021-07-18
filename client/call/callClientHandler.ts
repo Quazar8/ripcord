@@ -159,23 +159,23 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
     sendSocketMessage(socketMsg)
 }
 
-// const handleAcceptedCall = async (msgPayload: CallAcceptedPayload) => {
-//     createPeerConnection(args.otherUserId, args.otherVideoEl)
+export const RTCsetupAndCallOffer = async (msgPayload: CallAcceptedPayload) => {
+    // createPeerConnection(args.otherUserId, args.otherVideoEl)
 
-//     const mediaConstraints: CallOfferPayload['mediaConstraints'] = {
-//         audio: true,
-//         video: args.isVideoCall || false
-//     }
+    // const mediaConstraints: CallOfferPayload['mediaConstraints'] = {
+    //     audio: true,
+    //     video: args.isVideoCall || false
+    // }
 
-//     let localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints)
-//     .catch(userMediaErrorHandler)
-//     if(!localStream) return
+    // let localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints)
+    // .catch(userMediaErrorHandler)
+    // if(!localStream) return
 
-//     args.thisVideoEl.srcObject = localStream
-//     localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream as MediaStream))
+    // args.thisVideoEl.srcObject = localStream
+    // localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream as MediaStream))
 
-//     sendCallOffer(peerConnection, args.otherUserId, mediaConstraints)
-// }
+    // sendCallOffer(peerConnection, args.otherUserId, mediaConstraints)
+}
 
 export const startCall = (args: StartCallArgs) => {
     callButtonEl = args.callButtonEl

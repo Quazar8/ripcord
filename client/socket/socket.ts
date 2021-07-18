@@ -1,12 +1,13 @@
 import { Dispatch } from 'react'
 import { pushNotification } from '../store/globalActions'
 import { AppAction } from '../store/store'
-import { ReceivingCallPayload, WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
+import { CallAcceptedPayload, ReceivingCallPayload, WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
 import { addActiveChannelAction, incrementActiveChannelNewMsgAction, moveChannelToTopAction, pushReceivedMsgAction, receivingCallAction, sentMsgResponseAction } from '../store/chat/chatActions'
 import { addIncFriendRequestAction } from '../store/friends/friendsActions'
 import { ChatMessageStatusPayload, ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
 import { triggerFrReqSound, triggerMsgSound } from '../tone/tone'
 import { PendingFriendInfo } from '../../server/types/UserTypes'
+import { RTCsetupAndCallOffer } from '../call/callClientHandler'
 
 let socket: WebSocket = null
 
@@ -46,6 +47,10 @@ const handleReceivingCall = (dispatch: Dispatch<AppAction>, payload: ReceivingCa
     dispatch(receivingCallAction(payload))
 }
 
+const handleAcceptedCall = (msgPayload: CallAcceptedPayload) => {
+    RTCsetupAndCallOffer(msgPayload)
+}
+
 const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
     const data: WSMessage<any> = JSON.parse(dataStr)
 
@@ -60,6 +65,8 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
             handleNewActiveChannel(dispatch, data.payload); break;
         case WSDataType.RECEIVING_CALL:
             handleReceivingCall(dispatch, data.payload); break;
+        case WSDataType.CALL_ACCEPTED:
+            handleAcceptedCall(data.payload); break;
         default: break;
     }
 }
@@ -73,7 +80,7 @@ export const establishWS = (dispatch: Dispatch<AppAction>) => {
 
     socket = new WebSocket('ws://localhost:8000')
 
-    socket.onopen = (ev) => {
+    socket.onopen = (_ev) => {
         console.log('socket connection is opened')
     }
 
