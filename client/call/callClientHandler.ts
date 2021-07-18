@@ -179,9 +179,12 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
 
 export const startCall = (args: StartCallArgs) => {
     callButtonEl = args.callButtonEl
-    callButtonEl.disabled = true
+    remoteVidEl = args.otherVideoEl
+    localVidEl = args.thisVideoEl
     remoteCallerId = args.otherUserId
     localUserId = args.thisUserId
+
+    callButtonEl.disabled = true
 
     const msg: WSMessage<StartCallPayload> = {
         type: WSDataType.START_CALL,
