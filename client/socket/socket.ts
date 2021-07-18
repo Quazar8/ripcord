@@ -11,11 +11,13 @@ import { RTCsetupAndCallOffer } from '../call/callClientHandler'
 
 let socket: WebSocket = null
 
-const handleNewActiveChannel = (dispatch: Dispatch<AppAction>, activeCh: NewActiveChannelPayload) => {
+type SocketHandler<P> = (dispatch: Dispatch<AppAction>, msgPayload: P) => void
+
+const handleNewActiveChannel: SocketHandler<NewActiveChannelPayload> = (dispatch, activeCh) => {
     dispatch(addActiveChannelAction(activeCh))
 }
 
-const handleChatMsgReceived = (dispatch: Dispatch<AppAction>, msg: ChatReceiverPayload) => {
+const handleChatMsgReceived: SocketHandler<ChatReceiverPayload> = (dispatch, msg) => {
     dispatch(pushReceivedMsgAction(msg))
 
     if (msg.newActiveChannel) {
@@ -28,7 +30,7 @@ const handleChatMsgReceived = (dispatch: Dispatch<AppAction>, msg: ChatReceiverP
     triggerMsgSound()
 }
 
-const handleChatMessageStatus = (dispatch: Dispatch<AppAction>, payload: ChatMessageStatusPayload) => {
+const handleChatMessageStatus: SocketHandler<ChatMessageStatusPayload> = (dispatch, payload) => {
     dispatch(sentMsgResponseAction(payload))
 
     if (payload.newActiveChannel) {
@@ -38,16 +40,16 @@ const handleChatMessageStatus = (dispatch: Dispatch<AppAction>, payload: ChatMes
     }
 }
 
-const handleIncFriendRequest = (dispatch: Dispatch<AppAction>, pendingReq: PendingFriendInfo) => {
+const handleIncFriendRequest: SocketHandler<PendingFriendInfo> = (dispatch, pendingReq) => {
     dispatch(addIncFriendRequestAction(pendingReq))
     triggerFrReqSound()
 }
 
-const handleReceivingCall = (dispatch: Dispatch<AppAction>, payload: ReceivingCallPayload) => {
+const handleReceivingCall: SocketHandler<ReceivingCallPayload> = (dispatch, payload) => {
     dispatch(receivingCallAction(payload))
 }
 
-const handleAcceptedCall = (msgPayload: CallAcceptedPayload) => {
+const handleAcceptedCall: SocketHandler<CallAcceptedPayload> = (_dispatch, msgPayload: CallAcceptedPayload) => {
     RTCsetupAndCallOffer(msgPayload)
 }
 
@@ -66,7 +68,7 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
         case WSDataType.RECEIVING_CALL:
             handleReceivingCall(dispatch, data.payload); break;
         case WSDataType.CALL_ACCEPTED:
-            handleAcceptedCall(data.payload); break;
+            handleAcceptedCall(dispatch, data.payload); break;
         default: break;
     }
 }
