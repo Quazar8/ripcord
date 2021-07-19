@@ -8,7 +8,7 @@ export enum WSDataType {
     CHAT_MESSAGE_STATUS,
     NEW_ACTIVE_CHANNEL,
     FRIEND_STATUS_CHANGE,
-    CALL_ANSWER,
+    CALL_ANSWER_DETAILS,
     NEW_ICE_CAND,
     HANG_UP,
     START_CALL,
@@ -37,8 +37,9 @@ export type CallDetailsPayload = {
     }
 }
 
-export type CallAnswerPayload = {
-    sdp: RTCSessionDescription
+export type CallAnswerDetailsPayload = {
+    sdp: RTCSessionDescription,
+    recipientId: string
 }
 
 export type NewICECandPayload = {
