@@ -142,13 +142,13 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
     sendSocketMessage(socketMsg)
 }
 
-const sendCallOffer = async (pc: RTCPeerConnection,
+const sendCallOffer = (sdp: CallOfferPayload['sdp'],
         recipientId: string, mediaConstraints: CallOfferPayload['mediaConstraints']) => {
     
     const socketMsg: WSMessage<CallOfferPayload> = {
         type: WSDataType.CALL_OFFER,
         payload: {
-            sdp: pc.localDescription,
+            sdp,
             recipientId,
             mediaConstraints
         }
@@ -175,7 +175,8 @@ export const RTCsetupAndCallOffer = async (msgPayload: CallAcceptedPayload) => {
 
     const offer = await peerConnection.createOffer()
     await peerConnection.setLocalDescription(offer)
-    // sendCallOffer(peerConnection, args.otherUserId, mediaConstraints)
+
+    sendCallOffer(peerConnection.localDescription, msgPayload.acceptedId, mediaConstraints)
 }
 
 export const startCall = (args: StartCallArgs) => {
