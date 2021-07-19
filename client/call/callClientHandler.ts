@@ -223,13 +223,13 @@ export const RTChangUpCall = (remoteUserId: string, localUserId: string) => {
     sendHangUpMsg(remoteUserId, localUserId)
 }
 
-export const RTCacceptCall = (remoteUserId: string, thisUserId: string) => {
+export const RTCacceptCall = (thisUserId: string, otherUserId: string) => {
     if (isInACall()) {
         console.log('Already in a call')
         return
     }
 
-    remoteUserId = remoteUserId
+    remoteUserId = otherUserId
     localUserId = thisUserId
     sendCallAcceptedMsg(remoteUserId)
 }
