@@ -110,6 +110,12 @@ export const handleNewIceCandidateMsg = (msg: WSMessage<NewICECandPayload>) => {
     })
 }
 
+export const handleIncAnswerCallDetails = (payload: CallAnswerDetailsPayload) => {
+    peerConnection.setRemoteDescription(payload.sdp).catch(err => {
+        console.log('handling inc call answer details error', err)
+    })
+}
+
 const sendAnswerDetails = (otherUserId: string, sdp: CallAnswerDetailsPayload['sdp']) => {
     const msg: WSMessage<CallAnswerDetailsPayload> = {
         type: WSDataType.CALL_ANSWER_DETAILS,

@@ -7,7 +7,7 @@ import { addIncFriendRequestAction } from '../store/friends/friendsActions'
 import { ChatMessageStatusPayload, ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
 import { triggerFrReqSound, triggerMsgSound } from '../tone/tone'
 import { PendingFriendInfo } from '../../server/types/UserTypes'
-import { RTCsetupAndCallOffer } from '../call/callClientHandler'
+import { handleIncAnswerCallDetails, RTCsetupAndCallOffer } from '../call/callClientHandler'
 
 let socket: WebSocket = null
 
@@ -69,6 +69,8 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
             handleReceivingCall(dispatch, data.payload); break;
         case WSDataType.CALL_ACCEPTED:
             handleAcceptedCall(dispatch, data.payload); break;
+        case WSDataType.CALL_ANSWER_DETAILS:
+            handleIncAnswerCallDetails(data.payload); break;
         default: break;
     }
 }
