@@ -39,7 +39,7 @@ export type CallDetailsPayload = {
 
 export type CallAnswerDetailsPayload = {
     sdp: RTCSessionDescription,
-    recipientId: string
+    callerId: string
 }
 
 export type NewICECandPayload = {

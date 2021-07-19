@@ -1,4 +1,4 @@
-import { CallAcceptedPayload, CallAnswerPayload, CallDetailsPayload,
+import { CallAcceptedPayload, CallAnswerDetailsPayload, CallDetailsPayload,
          DenyingCallPayload, HangUpCallPayload,
          NewICECandPayload, StartCallPayload,
          WSDataType, WSMessage } from "../../server/types/WebsocketTypes";
@@ -110,6 +110,18 @@ export const handleNewIceCandidateMsg = (msg: WSMessage<NewICECandPayload>) => {
     })
 }
 
+const sendAnswerDetails = (otherUserId: string, sdp: CallAnswerDetailsPayload['sdp']) => {
+    const msg: WSMessage<CallAnswerDetailsPayload> = {
+        type: WSDataType.CALL_ANSWER_DETAILS,
+        payload: {
+            sdp,
+            callerId: otherUserId
+        }
+    }
+
+    sendSocketMessage(msg)
+}
+
 export const handleIncCallDetailsMsg = async (msg: WSMessage<CallDetailsPayload>) => {
     createPeerConnection(msg.payload.recipientId, remoteVidEl)
     const desc = new RTCSessionDescription(msg.payload.sdp)
@@ -125,14 +137,7 @@ export const handleIncCallDetailsMsg = async (msg: WSMessage<CallDetailsPayload>
     const answer = await peerConnection.createAnswer()
     await peerConnection.setLocalDescription(answer)
 
-//     const socketMsg: WSMessage<CallAnswerPayload> = {
-//         type: WSDataType.CALL_ANSWER,
-//         payload: {
-//             sdp: pc.localDescription,
-//         }
-//     }
-
-//     sendSocketMessage(socketMsg)
+    sendAnswerDetails(remoteUserId, peerConnection.localDescription)
 }
 
 const sendCallDetails = (sdp: CallDetailsPayload['sdp'],
