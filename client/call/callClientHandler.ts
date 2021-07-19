@@ -1,4 +1,4 @@
-import { CallAcceptedPayload, CallAnswerPayload, CallOfferPayload,
+import { CallAcceptedPayload, CallAnswerPayload, CallDetailsPayload,
          DenyingCallPayload, HangUpCallPayload,
          NewICECandPayload, StartCallPayload,
          WSDataType, WSMessage } from "../../server/types/WebsocketTypes";
@@ -116,7 +116,7 @@ export const handleNewIceCandidateMsg = (msg: WSMessage<NewICECandPayload>) => {
     })
 }
 
-export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
+export const handleIncOfferMsg = async (msg: WSMessage<CallDetailsPayload>,
     pc: RTCPeerConnection, args: IncCallArgs) => {
     createPeerConnection(msg.payload.recipientId, args.otherVideoEl)
     const desc = new RTCSessionDescription(msg.payload.sdp)
@@ -142,11 +142,11 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
     sendSocketMessage(socketMsg)
 }
 
-const sendCallOffer = (sdp: CallOfferPayload['sdp'],
-        recipientId: string, mediaConstraints: CallOfferPayload['mediaConstraints']) => {
+const sendCallDetails = (sdp: CallDetailsPayload['sdp'],
+        recipientId: string, mediaConstraints: CallDetailsPayload['mediaConstraints']) => {
     
-    const socketMsg: WSMessage<CallOfferPayload> = {
-        type: WSDataType.CALL_OFFER,
+    const socketMsg: WSMessage<CallDetailsPayload> = {
+        type: WSDataType.CALL_DETAILS,
         payload: {
             sdp,
             recipientId,
@@ -161,7 +161,7 @@ const sendCallOffer = (sdp: CallOfferPayload['sdp'],
 export const RTCsetupAndCallOffer = async (msgPayload: CallAcceptedPayload) => {
     createPeerConnection(remoteUserId, remoteVidEl)
 
-    const mediaConstraints: CallOfferPayload['mediaConstraints'] = {
+    const mediaConstraints: CallDetailsPayload['mediaConstraints'] = {
         audio: true,
         video: false
     }
@@ -176,7 +176,7 @@ export const RTCsetupAndCallOffer = async (msgPayload: CallAcceptedPayload) => {
     const offer = await peerConnection.createOffer()
     await peerConnection.setLocalDescription(offer)
 
-    sendCallOffer(peerConnection.localDescription, msgPayload.acceptedId, mediaConstraints)
+    sendCallDetails(peerConnection.localDescription, msgPayload.acceptedId, mediaConstraints)
 }
 
 export const startCall = (args: StartCallArgs) => {

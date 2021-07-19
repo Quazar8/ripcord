@@ -8,14 +8,14 @@ export enum WSDataType {
     CHAT_MESSAGE_STATUS,
     NEW_ACTIVE_CHANNEL,
     FRIEND_STATUS_CHANGE,
-    CALL_OFFER,
     CALL_ANSWER,
     NEW_ICE_CAND,
     HANG_UP,
     START_CALL,
     RECEIVING_CALL,
     RECEIVING_CALL_DENIED,
-    CALL_ACCEPTED
+    CALL_ACCEPTED,
+    CALL_DETAILS,
 }
 
 export type WSMessage<P> = {
@@ -28,7 +28,7 @@ export type StatusChangePayload = {
     status: UserStatus
 }
 
-export type CallOfferPayload = {
+export type CallDetailsPayload = {
     recipientId: string
     sdp: RTCSessionDescription
     mediaConstraints: {
