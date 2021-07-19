@@ -20,12 +20,6 @@ type StartCallArgs = {
     isVideoCall: boolean
 }
 
-type IncCallArgs = {
-    thisVideoEl: HTMLVideoElement
-    otherVideoEl: HTMLVideoElement
-    thisUserId: string
-}
-
 const userMediaErrorHandler = (e: Error) => {
     switch (e.name) {
         case "NotFoundError": {
@@ -116,30 +110,29 @@ export const handleNewIceCandidateMsg = (msg: WSMessage<NewICECandPayload>) => {
     })
 }
 
-export const handleIncOfferMsg = async (msg: WSMessage<CallDetailsPayload>,
-    pc: RTCPeerConnection, args: IncCallArgs) => {
-    createPeerConnection(msg.payload.recipientId, args.otherVideoEl)
+export const handleIncCallDetailsMsg = async (msg: WSMessage<CallDetailsPayload>) => {
+    createPeerConnection(msg.payload.recipientId, remoteVidEl)
     const desc = new RTCSessionDescription(msg.payload.sdp)
 
-    await pc.setRemoteDescription(desc)
+    await peerConnection.setRemoteDescription(desc)
     let localStream = await navigator.mediaDevices.getUserMedia(msg.payload.mediaConstraints)
         .catch(userMediaErrorHandler)
     if (!localStream) return 
 
-    args.thisVideoEl.srcObject = localStream
-    localStream.getTracks().forEach(track => pc.addTrack(track, localStream as MediaStream))
+    remoteVidEl.srcObject = localStream
+    localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream as MediaStream))
     
-    const answer = await pc.createAnswer()
-    await pc.setLocalDescription(answer)
+    const answer = await peerConnection.createAnswer()
+    await peerConnection.setLocalDescription(answer)
 
-    const socketMsg: WSMessage<CallAnswerPayload> = {
-        type: WSDataType.CALL_ANSWER,
-        payload: {
-            sdp: pc.localDescription,
-        }
-    }
+//     const socketMsg: WSMessage<CallAnswerPayload> = {
+//         type: WSDataType.CALL_ANSWER,
+//         payload: {
+//             sdp: pc.localDescription,
+//         }
+//     }
 
-    sendSocketMessage(socketMsg)
+//     sendSocketMessage(socketMsg)
 }
 
 const sendCallDetails = (sdp: CallDetailsPayload['sdp'],
