@@ -38,23 +38,6 @@ const userMediaErrorHandler = (e: Error) => {
     }
 }
 
-const sendCallOffer = async (pc: RTCPeerConnection,
-        recipientId: string, mediaConstraints: CallOfferPayload['mediaConstraints']) => {
-    const offer = await pc.createOffer()
-    await pc.setLocalDescription(offer)
-    
-    const socketMsg: WSMessage<CallOfferPayload> = {
-        type: WSDataType.CALL_OFFER,
-        payload: {
-            sdp: pc.localDescription,
-            recipientId,
-            mediaConstraints
-        }
-    }
-
-    sendSocketMessage(socketMsg)
-}
-
 const createPeerConnection = (recipientId: string, otherVideoEl: HTMLVideoElement) => {
     if (peerConnection) {
         console.error('Already in a call')
@@ -159,6 +142,22 @@ export const handleIncOfferMsg = async (msg: WSMessage<CallOfferPayload>,
     sendSocketMessage(socketMsg)
 }
 
+const sendCallOffer = async (pc: RTCPeerConnection,
+        recipientId: string, mediaConstraints: CallOfferPayload['mediaConstraints']) => {
+    
+    const socketMsg: WSMessage<CallOfferPayload> = {
+        type: WSDataType.CALL_OFFER,
+        payload: {
+            sdp: pc.localDescription,
+            recipientId,
+            mediaConstraints
+        }
+    }
+
+    sendSocketMessage(socketMsg)
+}
+
+
 export const RTCsetupAndCallOffer = async (msgPayload: CallAcceptedPayload) => {
     createPeerConnection(remoteUserId, remoteVidEl)
 
@@ -174,6 +173,8 @@ export const RTCsetupAndCallOffer = async (msgPayload: CallAcceptedPayload) => {
     localVidEl.srcObject = localStream
     localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream as MediaStream))
 
+    const offer = await peerConnection.createOffer()
+    await peerConnection.setLocalDescription(offer)
     // sendCallOffer(peerConnection, args.otherUserId, mediaConstraints)
 }
 
