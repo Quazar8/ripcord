@@ -1,7 +1,7 @@
 import { Dispatch } from 'react'
 import { pushNotification } from '../store/globalActions'
 import { AppAction } from '../store/store'
-import { CallAcceptedPayload, ReceivingCallPayload, WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
+import { CallAcceptedPayload, DenyingCallPayload, ReceivingCallPayload, WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
 import { addActiveChannelAction, incrementActiveChannelNewMsgAction, moveChannelToTopAction, pushReceivedMsgAction, receivingCallAction, sentMsgResponseAction } from '../store/chat/chatActions'
 import { addIncFriendRequestAction } from '../store/friends/friendsActions'
 import { ChatMessageStatusPayload, ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
@@ -53,6 +53,10 @@ const handleAcceptedCall: SocketHandler<CallAcceptedPayload> = (_dispatch, msgPa
     RTCsetupAndCallOffer(msgPayload)
 }
 
+const handleCallDenied: SocketHandler<DenyingCallPayload> = (dispatch, payload) => {
+
+}
+
 const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
     const data: WSMessage<any> = JSON.parse(dataStr)
 
@@ -71,6 +75,8 @@ const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
             handleAcceptedCall(dispatch, data.payload); break;
         case WSDataType.CALL_ANSWER_DETAILS:
             handleIncAnswerCallDetails(data.payload); break;
+        case WSDataType.CALL_DENIED:
+            handleCallDenied(dispatch, data.payload); break;
         default: break;
     }
 }
