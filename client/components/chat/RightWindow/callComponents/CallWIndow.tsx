@@ -7,7 +7,7 @@ type Props = {
     remoteUserProfilePic: string
     hangUpCall: () => void
     localVideoRef: MutableRefObject<HTMLVideoElement>
-    otherVideoRef: MutableRefObject<HTMLVideoElement>
+    remoteVideoRef: MutableRefObject<HTMLVideoElement>
     isVideoCall: boolean
 }
 
@@ -18,7 +18,7 @@ const CallWindow = (props: Props) => {
                 <ProfilePic picNameOrJson = { props.thisUserProfilePic } />
                 <ProfilePic picNameOrJson = { props.remoteUserProfilePic } />
                 <video ref = { props.localVideoRef } />
-                <video ref = { props.localVideoRef } />
+                <video ref = { props.remoteVideoRef } />
             </div>
             <div className = "buttons-container">
                 <HangUpButton 

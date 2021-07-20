@@ -211,7 +211,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                     remoteUserProfilePic = { props.channelInfo.recipient.profilePic }
                     hangUpCall = { hangUpCallWindow }
                     localVideoRef = { localVideoRef }
-                    otherVideoRef = { remoteVideoRef }
+                    remoteVideoRef = { remoteVideoRef }
                     isVideoCall = { false }
                 />
                 : null
