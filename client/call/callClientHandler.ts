@@ -49,12 +49,12 @@ const handleIceStateEv = () => {
     switch(peerConnection.iceConnectionState) {
         case 'closed': {
             console.log('RTC ICE connection closed')
-            closeCall()
+            closeCallDetails()
             break;
         }
         case 'failed': {
             console.log('RTC ICE connection state failed')
-            closeCall()
+            closeCallDetails()
             break;
         }
         default: break;
@@ -63,25 +63,6 @@ const handleIceStateEv = () => {
 
 const isInACall = (): boolean => {
     return typeof remoteUserId === 'string'
-}
-
-const closeCall = () => {
-    if (peerConnection) {
-        peerConnection.ontrack = null
-        peerConnection.onicecandidate = null
-        peerConnection.oniceconnectionstatechange = null
-    }
-
-    if (remoteVidEl.srcObject) {
-        (remoteVidEl.srcObject as MediaStream).getTracks().forEach(track => track.stop())
-    }
-
-    if (localVidEl.srcObject) {
-        (localVidEl.srcObject as MediaStream).getTracks().forEach(track => track.stop())
-    }
-
-    peerConnection.close()
-    peerConnection = null
 }
 
 const handleTrackEv = (ev: RTCTrackEvent, otherVideoEl: HTMLVideoElement) => {
@@ -225,8 +206,35 @@ const sendCallAcceptedMsg = (remoteUserId: string) => {
     sendSocketMessage(msg)
 }
 
+const closeCallDetails = () => {
+    if (peerConnection) {
+        peerConnection.onicecandidate = null 
+        peerConnection.ontrack = null
+        peerConnection.oniceconnectionstatechange = null
+
+        remoteUserId = null
+        localUserId = null
+
+        if (localVidEl && localVidEl.srcObject) {
+            (localVidEl.srcObject as MediaStream).getTracks().forEach(t => t.stop())
+        }
+
+        if (remoteVidEl && remoteVidEl.srcObject) {
+            (remoteVidEl.srcObject as MediaStream).getTracks().forEach(t => t.stop())
+        }
+
+        localVidEl = null
+        remoteVidEl = null
+        callButtonEl = null
+
+        peerConnection.close()
+        peerConnection = null
+    }
+}
+
 export const RTChangUpCall = (remoteUserId: string, localUserId: string) => {
     sendHangUpMsg(remoteUserId, localUserId)
+    closeCallDetails()
 }
 
 export const RTCacceptCall = (thisUserId: string, otherUserId: string) => {
