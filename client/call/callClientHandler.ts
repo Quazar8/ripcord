@@ -207,13 +207,13 @@ const sendCallAcceptedMsg = (remoteUserId: string) => {
 }
 
 const closeCallDetails = () => {
+    remoteUserId = null
+    localUserId = null
+
     if (peerConnection) {
         peerConnection.onicecandidate = null 
         peerConnection.ontrack = null
         peerConnection.oniceconnectionstatechange = null
-
-        remoteUserId = null
-        localUserId = null
 
         if (localVidEl && localVidEl.srcObject) {
             (localVidEl.srcObject as MediaStream).getTracks().forEach(t => t.stop())
