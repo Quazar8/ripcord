@@ -158,6 +158,10 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     })
 
     const handleCallClick = () => {
+        context.callFns.addCallInfo(props.channelInfo.recipient.id)
+    }
+
+    const snedCallDetalls = () => {
         const startCallArgs: Parameters<typeof startCall>[0] = {
             isVideoCall: false,
             thisUserId: props.user.id,
@@ -168,7 +172,6 @@ const ChatDisplay = (props: ChatDisplayProps) => {
         }
 
         startCall(startCallArgs)
-        context.callFns.addCallInfo(props.channelInfo.recipient.id)
     }
 
     const hangUpCallWindow = () => {
@@ -210,6 +213,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                     thisUserProfilePic = { props.user.profilePic }
                     remoteUserProfilePic = { props.channelInfo.recipient.profilePic }
                     hangUpCall = { hangUpCallWindow }
+                    sendCallDetails = { snedCallDetalls }
                     localVideoRef = { localVideoRef }
                     remoteVideoRef = { remoteVideoRef }
                     isVideoCall = { false }
