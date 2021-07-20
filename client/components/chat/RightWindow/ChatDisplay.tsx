@@ -42,7 +42,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     }
     
     const fetchInfo = async () => {
-        let res: ChatChannelInfoRes | ChatCHannelWIdRes;
+        let res: ChatChannelInfoRes | ChatCHannelWIdRes = null
 
         if (props.recipientId)
             res = await getChannelInfo(props.recipientId)
@@ -53,7 +53,7 @@ const ChatDisplay = (props: ChatDisplayProps) => {
             console.error(res.errorMsg)
             return
         }
-        console.log('hcannel info fetch', res.data)
+
         props.updateChannelInfoFn(res.data)
     }
 

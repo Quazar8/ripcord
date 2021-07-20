@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { User } from "../../db/models/user.js";
 import { isUserDoc } from "../../types/UserTypes.js";
-import { CallAcceptedPayload, ReceivingCallPayload, StartCallPayload, WSDataType, WSMessage } from "../../types/WebsocketTypes.js";
+import { CallAcceptedPayload, CallDeniedPayload, DenyingCallPayload, ReceivingCallPayload, StartCallPayload, WSDataType, WSMessage } from "../../types/WebsocketTypes.js";
 import { isOnline, sendSocketMsg } from "../onlineUsers.js";
 
 export const startCallHandler = async (msgPayload: StartCallPayload, userId: Types.ObjectId) => {
@@ -42,4 +42,12 @@ export const acceptedCallHandler = (msgPayload: CallAcceptedPayload, byUserId: T
     }
 
     sendSocketMsg(msgPayload.acceptedId, msg)
+}
+
+export const receivingCallDeniedHandler = (payload: DenyingCallPayload) => {
+    const msg: WSMessage<CallDeniedPayload> = {
+        type: WSDataType.CALL_DENIED,
+        payload
+    }
+    sendSocketMsg(payload.callerId, msg)
 }

@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { WSDataType, WSMessage } from "../types/WebsocketTypes.js";
 import { handleChatMessage } from './messageHandlers/chatMessageHandler.js'
-import { acceptedCallHandler, startCallHandler } from './messageHandlers/callServerHandler.js'
+import { acceptedCallHandler, receivingCallDeniedHandler, startCallHandler } from './messageHandlers/callServerHandler.js'
 
 const messageHandler = async (wsMsg: WSMessage<any>, userId: Types.ObjectId) => {
     console.log('socket message', wsMsg)
@@ -13,6 +13,8 @@ const messageHandler = async (wsMsg: WSMessage<any>, userId: Types.ObjectId) => 
             startCallHandler(wsMsg.payload, userId); break;
         case WSDataType.CALL_ACCEPTED:
             acceptedCallHandler(wsMsg.payload, userId); break;
+        case WSDataType.RECEIVING_CALL_DENIED:
+            receivingCallDeniedHandler(wsMsg.payload); break;
         default: break;
     }
 }
