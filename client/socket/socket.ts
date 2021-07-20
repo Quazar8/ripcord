@@ -2,12 +2,12 @@ import { Dispatch } from 'react'
 import { pushNotification } from '../store/globalActions'
 import { AppAction } from '../store/store'
 import { CallAcceptedPayload, DenyingCallPayload, ReceivingCallPayload, WSDataType, WSMessage } from '../../server/types/WebsocketTypes'
-import { addActiveChannelAction, incrementActiveChannelNewMsgAction, moveChannelToTopAction, pushReceivedMsgAction, receivingCallAction, sentMsgResponseAction } from '../store/chat/chatActions'
+import { addActiveChannelAction, incrementActiveChannelNewMsgAction, moveChannelToTopAction, pushReceivedMsgAction, receivingCallAction, removeCallInfoAction, sentMsgResponseAction } from '../store/chat/chatActions'
 import { addIncFriendRequestAction } from '../store/friends/friendsActions'
 import { ChatMessageStatusPayload, ChatReceiverPayload, NewActiveChannelPayload } from '../../server/types/ChatTypes'
 import { triggerFrReqSound, triggerMsgSound } from '../tone/tone'
 import { PendingFriendInfo } from '../../server/types/UserTypes'
-import { handleIncAnswerCallDetails, RTCsetupAndCallOffer } from '../call/callClientHandler'
+import { closeCallDetails, handleIncAnswerCallDetails, RTCsetupAndCallOffer } from '../call/callClientHandler'
 
 let socket: WebSocket = null
 
@@ -53,8 +53,9 @@ const handleAcceptedCall: SocketHandler<CallAcceptedPayload> = (_dispatch, msgPa
     RTCsetupAndCallOffer(msgPayload)
 }
 
-const handleCallDenied: SocketHandler<DenyingCallPayload> = (dispatch, payload) => {
-
+const handleCallDenied: SocketHandler<DenyingCallPayload> = (dispatch, _payload) => {
+    dispatch(removeCallInfoAction())
+    closeCallDetails()
 }
 
 const handleMessage = (dataStr: string, dispatch: Dispatch<AppAction>) => {
