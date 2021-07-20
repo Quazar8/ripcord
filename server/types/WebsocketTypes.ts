@@ -16,6 +16,7 @@ export enum WSDataType {
     RECEIVING_CALL_DENIED,
     CALL_ACCEPTED,
     CALL_DETAILS,
+    CALL_DENIED,
 }
 
 export type WSMessage<P> = {
@@ -69,3 +70,5 @@ export type DenyingCallPayload = {
 export type CallAcceptedPayload = {
     acceptedId: string
 }
+
+export type CallDeniedPayload = DenyingCallPayload
