@@ -1,4 +1,15 @@
-export * from './wsPayloads/callPayloads'
+export {
+    CallAcceptedPayload,
+    StartCallPayload,
+    CallAnswerDetailsPayload,
+    CallDetailsPayload,
+    CallDeniedPayload,
+    DenyingCallPayload,
+    HangUpCallPayload,
+    NewICECandPayload,
+    StatusChangePayload,
+    ReceivingCallPayload
+} from './wsPayloads/callPayloads'
 
 export enum WSDataType {
     FRIEND_REQUEST,
@@ -17,8 +28,6 @@ export enum WSDataType {
     CALL_ACCEPTED,
     CALL_DETAILS,
     CALL_DENIED,
-    NEW_MESSAGE,
-    delete_message
 }
 
 export type WSMessage<P> = {
