@@ -1,5 +1,5 @@
 import { WSDataType, WSMessage } from '../WebsocketTypes'
-
+import { UserStatus } from '../UserTypes'
 
 export type StatusChangePayload = {
     userId: string
