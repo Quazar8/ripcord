@@ -66,6 +66,7 @@ const isInACall = (): boolean => {
 }
 
 const handleTrackEv = (ev: RTCTrackEvent, otherVideoEl: HTMLVideoElement) => {
+    console.log('track event')
     otherVideoEl.srcObject = ev.streams[0]
 }
 
@@ -206,7 +207,7 @@ const sendCallAcceptedMsg = (remoteUserId: string) => {
     sendSocketMessage(msg)
 }
 
-const closeCallDetails = () => {
+export const closeCallDetails = () => {
     remoteUserId = null
     localUserId = null
 
