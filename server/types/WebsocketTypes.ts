@@ -17,7 +17,8 @@ export enum WSDataType {
     CALL_ACCEPTED,
     CALL_DETAILS,
     CALL_DENIED,
-    NEW_MESSAGE
+    NEW_MESSAGE,
+    delete_message
 }
 
 export type WSMessage<P> = {
