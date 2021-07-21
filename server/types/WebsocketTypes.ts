@@ -1,4 +1,4 @@
-export * from './wsPayloads/callPayloads.js'
+export * from './wsPayloads/callPayloads'
 
 export enum WSDataType {
     FRIEND_REQUEST,
@@ -17,6 +17,7 @@ export enum WSDataType {
     CALL_ACCEPTED,
     CALL_DETAILS,
     CALL_DENIED,
+    NEW_MESSAGE
 }
 
 export type WSMessage<P> = {
