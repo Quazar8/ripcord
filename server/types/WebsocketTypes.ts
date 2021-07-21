@@ -1,4 +1,4 @@
-export * from './wsPayloads/callPayloads'
+export * from './wsPayloads/callPayloads.js'
 
 export enum WSDataType {
     FRIEND_REQUEST,
