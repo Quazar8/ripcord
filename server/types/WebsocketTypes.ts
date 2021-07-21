@@ -1,3 +1,5 @@
+export * from './wsPayloads/callPayloads'
+
 export enum WSDataType {
     FRIEND_REQUEST,
     REMOVE_INC_FRIEND,
