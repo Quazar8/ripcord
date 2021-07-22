@@ -12,9 +12,9 @@ type Props = {
     user: ChatDisplayProps['user']
     callButtonRef: MutableRefObject<HTMLButtonElement>
     chatMonitorRef: MutableRefObject<HTMLDivElement>
-    messageInputRef: MutableRefObject<HTMLInputElement>
-    handleCallClick: () => {}
-    sendMsg: () => {}
+    messageInputRef: MutableRefObject<HTMLDivElement>
+    handleCallClick: () => void
+    sendMsg: () => void
 }
 
 const Messenger = (props: Props) => {

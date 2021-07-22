@@ -1,19 +1,16 @@
-import React, { useRef, useEffect, KeyboardEvent, useContext } from 'react'
+import React, { useRef, useEffect, useContext } from 'react'
 import { sendSocketMessage, socketIsClosed } from '../../../socket/socket'
 import { resHasError } from '../../../api/utils'
 import { getChannelInfo, getChannelInfoWId } from '../../../api/chatApi'
 
 import { ChatMessagePayload, ChatMessageStatus } from '../../../../server/types/ChatTypes'
-import ChatMessage from './ChatMessage'
 import { WSDataType, WSMessage } from '../../../../server/types/WebsocketTypes'
 import { ChatChannelInfoRes, ChatCHannelWIdRes } from '../../../../server/types/ChatResponses'
 import { PendingMsg } from '../../../types/ChatClientTypes'
 import { RightWindowContext, RightWindowProps } from './RightWindow'
-import ProfilePic from '../../user/ProfilePic'
-import { getDateDiffInMin } from '../../../utils/utils'
 import CallWindow from './callComponents/CallWindow'
 import { RTChangUpCall, startCall } from '../../../call/callClientHandler'
-import ReceivingCallBlock from './callComponents/ReceivingCallBlock'
+import Messenger from './Messenger'
 
 export type ChatDisplayProps = Pick<RightWindowProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
@@ -114,49 +111,6 @@ const ChatDisplay = (props: ChatDisplayProps) => {
         messageInputRef.current.innerText = ''
     }
 
-    const handleInputKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault()
-            sendMsg()
-        }
-    }
-
-    const determineIFNewBlock = (messages: PendingMsg[], index: number) => {
-        if (index < 1) return true
-        
-        const prevMsg = messages[index - 1]
-        const currentMsg = messages[index]
-        if (prevMsg.authorId !== currentMsg.authorId) return true
-
-        const diffInMin = getDateDiffInMin(new Date(currentMsg.date), new Date(prevMsg.date))
-        if (diffInMin >= 60) return true
-        
-        return false
-    }
-
-    const messages = props.channelInfo.channel.messages.map((m, i) => {
-        let authorname = props.channelInfo.recipient.username
-        let authorPic = props.channelInfo.recipient.profilePic
-
-        if (!m.authorId) {
-            authorname = 'Ripcord System'
-            authorPic = ''
-        } else if (m.authorId !== props.channelInfo.recipient.id) {
-            authorname = 'You'
-            authorPic = props.user.profilePic
-        }
-
-        return (
-            <ChatMessage 
-                message = { m } 
-                key = { i }
-                authorName = { authorname }
-                isNewBlock = { determineIFNewBlock(props.channelInfo.channel.messages, i) }
-                authorPic = { authorPic }
-            />
-        )
-    })
-
     const handleCallClick = () => {
         context.callFns.addCallInfo(props.channelInfo.recipient.id)
     }
@@ -185,28 +139,16 @@ const ChatDisplay = (props: ChatDisplayProps) => {
 
     return (
         <section className = "chat-display">
-            <div className = "user-info">
-                <ProfilePic picNameOrJson = { props.channelInfo.recipient.profilePic }/>
-                <div className = "text-block">
-                    <h2>{ props.channelInfo.recipient.username }</h2>
-                    <h4>{ props.channelInfo.recipient.status }</h4>
-                </div>
-                <div className = "button-container">
-                    <button 
-                        ref = { callButtonRef }
-                        onClick = { handleCallClick }
-                    >
-                        &#9990;
-                    </button>
-                </div>
-            </div>
-            <div ref = { chatMonitorRef } className = "chat-monitor">
-                { 
-                    messages.length > 0
-                    ? messages
-                    : <h2>No chat history as of yet</h2>
-                }
-            </div>
+            <Messenger 
+                channelInfo = { props.channelInfo }
+                callState = { props.callState }
+                user = { props.user }
+                callButtonRef = { callButtonRef }
+                chatMonitorRef = { chatMonitorRef }
+                messageInputRef = { messageInputRef }
+                handleCallClick = { handleCallClick }
+                sendMsg = { sendMsg }
+            />
             {
                 props.callState.callInfo
                 ? <CallWindow 
@@ -220,21 +162,6 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                 />
                 : null
             }
-            <div className = "user-field">
-                <div 
-                    className = "user-input"
-                    contentEditable
-                    ref = { messageInputRef }
-                    onKeyDown = { handleInputKeyDown }
-                >
-                </div>
-                <button onClick = { sendMsg }>
-                    Send
-                </button>
-            </div>
-            <ReceivingCallBlock 
-                receivingCall = { props.callState.receivingCallInfo }
-            />
         </section>
     )
 }
