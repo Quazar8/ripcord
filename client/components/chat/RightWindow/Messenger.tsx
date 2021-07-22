@@ -1,4 +1,4 @@
-import React, { MutableRefObject, KeyboardEvent } from 'react'
+import React, { MutableRefObject, KeyboardEvent, useRef, useEffect } from 'react'
 import { PendingMsg } from '../../../types/ChatClientTypes'
 import { getDateDiffInMin } from '../../../utils/utils'
 import ProfilePic from '../../user/ProfilePic'
@@ -10,14 +10,32 @@ type Props = {
     channelInfo: ChatDisplayProps['channelInfo']
     callState: ChatDisplayProps['callState']
     user: ChatDisplayProps['user']
+    channelId: ChatDisplayProps['channelId']
+    recipientId: ChatDisplayProps['recipientId']
     callButtonRef: MutableRefObject<HTMLButtonElement>
-    chatMonitorRef: MutableRefObject<HTMLDivElement>
     messageInputRef: MutableRefObject<HTMLDivElement>
     handleCallClick: () => void
     sendMsg: () => void
 }
 
 const Messenger = (props: Props) => {
+    if (!props.recipientId && !props.channelId) {
+        return (
+            <h2 className = "no-conversations">No open conversations</h2>
+        )
+    }
+    
+    const chatMonitorRef = useRef<HTMLDivElement>()
+    
+    const scrollMonitorToBottom = () => {
+        const div = chatMonitorRef.current
+        div.scrollTo(0, div.scrollHeight)
+    }
+
+    useEffect(() => {
+        scrollMonitorToBottom()
+    }, [props.channelInfo.channel.messages.length])
+    
     const handleInputKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault()
@@ -78,7 +96,7 @@ const Messenger = (props: Props) => {
                     </button>
                 </div>
             </div>
-            <div ref = { props.chatMonitorRef } className = "chat-monitor">
+            <div ref = { chatMonitorRef } className = "chat-monitor">
                 { 
                     messages.length > 0
                     ? messages

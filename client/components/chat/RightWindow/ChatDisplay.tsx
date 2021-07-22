@@ -20,24 +20,13 @@ export type ChatDisplayProps = Pick<RightWindowProps, 'dispNotification'
         | 'moveActiveChToTopFn' | 'callState'>
 
 const ChatDisplay = (props: ChatDisplayProps) => {
-    if (!props.recipientId && !props.channelId) 
-        return (
-            <h2 className = "no-conversations">No open conversations</h2>
-        )
-
     const messageInputRef = useRef<HTMLDivElement>()
-    const chatMonitorRef = useRef<HTMLDivElement>()
     const callButtonRef = useRef<HTMLButtonElement>()
     const localVideoRef = useRef<HTMLVideoElement>()
     const remoteVideoRef = useRef<HTMLVideoElement>()
 
     const context = useContext(RightWindowContext)
 
-    const scrollMonitorToBottom = () => {
-        const div = chatMonitorRef.current
-        div.scrollTo(0, div.scrollHeight)
-    }
-    
     const fetchInfo = async () => {
         let res: ChatChannelInfoRes | ChatCHannelWIdRes = null
 
@@ -55,15 +44,11 @@ const ChatDisplay = (props: ChatDisplayProps) => {
     }
 
     useEffect(() => {
-        fetchInfo().then(() => {
-            scrollMonitorToBottom()
-        })
+        if (props.recipientId || props.channelId) {
+            fetchInfo()
+        }
     }, [props.recipientId, props.channelId])
 
-    useEffect(() => {
-        scrollMonitorToBottom()
-    }, [props.channelInfo.channel.messages.length])
-    
     const sendMsg = async () => {
         const content = messageInputRef.current.innerText
         if (!props.channelInfo.channel || !content || socketIsClosed()) {
@@ -143,8 +128,9 @@ const ChatDisplay = (props: ChatDisplayProps) => {
                 channelInfo = { props.channelInfo }
                 callState = { props.callState }
                 user = { props.user }
+                channelId = { props.channelId }
+                recipientId = { props.recipientId }
                 callButtonRef = { callButtonRef }
-                chatMonitorRef = { chatMonitorRef }
                 messageInputRef = { messageInputRef }
                 handleCallClick = { handleCallClick }
                 sendMsg = { sendMsg }
