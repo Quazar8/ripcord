@@ -110,12 +110,12 @@ const sendAnswerDetails = (otherUserId: string, sdp: CallAnswerDetailsPayload['s
     sendSocketMessage(msg)
 }
 
-export const handleIncCallDetailsMsg = async (msg: WSMessage<CallDetailsPayload>) => {
-    createPeerConnection(msg.payload.recipientId, remoteVidEl)
-    const desc = new RTCSessionDescription(msg.payload.sdp)
+export const recordCallerDetails = async (payload: CallDetailsPayload) => {
+    createPeerConnection(payload.recipientId, remoteVidEl)
+    const desc = new RTCSessionDescription(payload.sdp)
 
     await peerConnection.setRemoteDescription(desc)
-    let localStream = await navigator.mediaDevices.getUserMedia(msg.payload.mediaConstraints)
+    let localStream = await navigator.mediaDevices.getUserMedia(payload.mediaConstraints)
         .catch(userMediaErrorHandler)
     if (!localStream) return 
 
