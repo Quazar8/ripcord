@@ -31,10 +31,6 @@ const Messenger = (props: Props) => {
         const div = chatMonitorRef.current
         div.scrollTo(0, div.scrollHeight)
     }
-
-    useEffect(() => {
-        scrollMonitorToBottom()
-    }, [props.channelInfo.channel.messages.length])
     
     const handleInputKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -78,6 +74,10 @@ const Messenger = (props: Props) => {
             />
         )
     })
+
+    useEffect(() => {
+        scrollMonitorToBottom()
+    }, [props.channelInfo.channel.messages.length])
 
     return (
         <div className = "messenger">

@@ -11,7 +11,7 @@ let callButtonEl: HTMLButtonElement = null
 let remoteUserId: string = null
 let localUserId: string = null
 
-type StartCallArgs = {
+type InitCallArgs = {
     thisVideoEl: HTMLVideoElement
     otherVideoEl: HTMLVideoElement
     callButtonEl: HTMLButtonElement
@@ -165,7 +165,7 @@ export const RTCsetupAndCallOffer = async (msgPayload: CallAcceptedPayload) => {
     sendCallDetails(peerConnection.localDescription, msgPayload.acceptedId, mediaConstraints)
 }
 
-export const startCall = (args: StartCallArgs) => {
+export const startCall = (args: InitCallArgs) => {
     callButtonEl = args.callButtonEl
     remoteVidEl = args.otherVideoEl
     localVidEl = args.thisVideoEl
@@ -238,13 +238,16 @@ export const RTChangUpCall = (remoteUserId: string, localUserId: string) => {
     closeCallDetails()
 }
 
-export const RTCacceptCall = (thisUserId: string, otherUserId: string) => {
+export const RTCacceptCall = (args: InitCallArgs) => {
     if (isInACall()) {
         console.log('Already in a call')
         return
     }
 
-    remoteUserId = otherUserId
-    localUserId = thisUserId
+    remoteUserId = args.otherUserId
+    localUserId = args.thisUserId
+    localVidEl = args.thisVideoEl
+    remoteVidEl = args.otherVideoEl
+
     sendCallAcceptedMsg(remoteUserId)
 }

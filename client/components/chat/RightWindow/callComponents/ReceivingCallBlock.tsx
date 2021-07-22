@@ -21,7 +21,16 @@ const ReceivingCallBlock = (props: Props) => {
     }
 
     const answerCall = () => {
-        RTCacceptCall(userId, props.receivingCall.callerId)
+        const args: Parameters<typeof RTCacceptCall>[0] = {
+            thisVideoEl: null,
+            otherVideoEl: null,
+            callButtonEl: null,
+            thisUserId: userId,
+            otherUserId: props.receivingCall.callerId,
+            isVideoCall: false
+        }
+
+        RTCacceptCall(args)
     }
 
     return (
