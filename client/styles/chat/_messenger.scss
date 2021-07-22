@@ -1,0 +1,107 @@
+@use '../user/profile-pic.scss';
+
+.messenger {
+    $monitor-bg: hsl(0, 1%, 21%);
+    height: 100%;
+
+    .user-info {
+        height: 13%;
+        display: flex;
+        padding: 1%;
+
+        @include profile-pic.profilePicMixin(4.3vw, 0.2vw, 2vw);
+        
+        .text-block {
+            margin-left: 1%;
+        }
+
+        h2, h4 {
+            font-weight: normal;
+        }
+
+        h2 {
+            font-size: 2vw;
+        }
+
+        h4 {
+            font-size: 1vw;
+        }
+
+        .button-container {
+            padding: 0 2%;
+            display: flex;
+            align-items: center;
+
+            button {
+                background-color: inherit;
+                border: none;
+                height: 70%;
+                color: hsl(0, 3%, 85%);
+                font-size: 3.5vw;
+                display: flex;
+                align-items: center;
+                transition: transform 0.4s ease-out;
+
+                &:hover {
+                    cursor: pointer;
+                    transform: scale(1.1);
+                }
+
+                &:disabled, &[disabled=disabled] {
+                    display: none;
+                    background-color: red;
+                }
+            }
+        }
+    }
+
+    .chat-monitor {
+        height: 70%;
+        background: hsl(0, 1%, 21%);
+        border-radius: 1%;
+        overflow: scroll;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .user-field {
+        display: flex;
+        height: 15%;
+        margin-top: 1%;
+        
+        button {
+            width: 10%;
+            background: inherit;
+            font-size: 1.3vw;
+            font-weight: bold;
+            border: none;
+            color: white;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .user-input {
+        background: $monitor-bg;
+        width: 90%;
+        padding: 1% 2%;
+        height: 100%;
+        font-size: 1.5vw;
+        word-break: break-word;
+        overflow: scroll;
+        scrollbar-width: none;
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

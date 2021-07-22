@@ -5,6 +5,7 @@
 @use 'chat-message';
 @use './user-menu/user-menu';
 @use './call/call-styles.scss';
+@use './messenger';
 
 .chat-app {
     display: flex;
