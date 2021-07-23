@@ -11,6 +11,7 @@ import { RightWindowContext, RightWindowProps } from './RightWindow'
 import CallWindow from './callComponents/CallWindow'
 import { RTChangUpCall, startCall } from '../../../call/callClientHandler'
 import Messenger from './Messenger'
+import ReceivingCallBlock from './callComponents/ReceivingCallBlock'
 
 export type ChatDisplayProps = Pick<RightWindowProps, 'dispNotification'
         | 'recipientId' | 'user' | 'channelId'
@@ -126,7 +127,6 @@ const ChatDisplay = (props: ChatDisplayProps) => {
         <section className = "chat-display">
             <Messenger 
                 channelInfo = { props.channelInfo }
-                callState = { props.callState }
                 user = { props.user }
                 channelId = { props.channelId }
                 recipientId = { props.recipientId }

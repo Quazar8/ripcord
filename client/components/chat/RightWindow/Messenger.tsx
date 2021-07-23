@@ -2,13 +2,11 @@ import React, { MutableRefObject, KeyboardEvent, useRef, useEffect } from 'react
 import { PendingMsg } from '../../../types/ChatClientTypes'
 import { getDateDiffInMin } from '../../../utils/utils'
 import ProfilePic from '../../user/ProfilePic'
-import ReceivingCallBlock from './callComponents/ReceivingCallBlock'
 import { ChatDisplayProps } from './ChatDisplay'
 import ChatMessage from './ChatMessage'
 
 type Props = {
     channelInfo: ChatDisplayProps['channelInfo']
-    callState: ChatDisplayProps['callState']
     user: ChatDisplayProps['user']
     channelId: ChatDisplayProps['channelId']
     recipientId: ChatDisplayProps['recipientId']
@@ -115,9 +113,6 @@ const Messenger = (props: Props) => {
                     Send
                 </button>
             </div>
-            <ReceivingCallBlock 
-                receivingCall = { props.callState.receivingCallInfo }
-            />
         </div>
     )
 }

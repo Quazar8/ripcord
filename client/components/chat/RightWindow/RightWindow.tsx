@@ -4,6 +4,7 @@ import { ChatAppProps } from '../ChatApp'
 
 import FriendsWindow from './FriendsWindow/FriendsWindow'
 import { ActiveChannelInfo } from '../../../../server/types/ChatTypes'
+import ReceivingCallBlock from './callComponents/ReceivingCallBlock'
 
 export type RightWindowProps = Pick<ChatAppProps, 'dispNotification'
         | 'recipientId' | 'user' 
@@ -90,6 +91,9 @@ const RightWindow = (props: RightWindowProps) => {
                     callState = { props.callState }
                 />
                 { AuxComponent }
+                <ReceivingCallBlock 
+                    receivingCall = { props.callState.receivingCallInfo }
+                />
             </RightWindowContext.Provider>
         </section>
     )
